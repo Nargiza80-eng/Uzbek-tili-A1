@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>Salom! O‘zbek tili – A1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f4f8;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: white;
+      max-width: 420px;
+      margin: 15px auto;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .uzbek {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .pronunciation {
+      font-style: italic;
+      color: #777;
+      margin-top: 5px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #4CAF50;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Salom! O‘zbek tili – A1</h1>
+<div class="subtitle">1-dars · Salomlashuv</div>
+
+<div class="card">
+  <div class="uzbek">Salom</div>
+  <div class="pronunciation">sa-LOM</div>
+
+  <button onclick="document.getElementById('audio-salom').play()">
+    ▶ Tinglash
+  </button>
+
+  <audio id="audio-salom" src="audio/salom.mp3"></audio>
+</div>
+
+</body>
+</html>
