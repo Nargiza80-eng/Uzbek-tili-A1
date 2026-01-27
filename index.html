@@ -6,172 +6,177 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f4f8;
-      margin: 0;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-      margin: 0;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #666;
-      margin-top: 6px;
-      margin-bottom: 22px;
-    }
+    body { font-family: Arial, sans-serif; background:#f2f4f8; margin:0; padding:20px; }
+    h1 { text-align:center; color:#2c3e50; margin:0; }
+    .subtitle { text-align:center; color:#666; margin:6px 0 22px; }
 
     .card {
-      background: #ffffff;
-      max-width: 480px;
-      margin: 12px auto;
-      padding: 14px 16px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      background:#fff; max-width:480px; margin:12px auto; padding:14px 16px;
+      border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08);
     }
+    .uz { font-size:24px; font-weight:bold; margin-bottom:4px; text-align:center; }
+    .pron { font-style:italic; color:#777; margin-bottom:6px; text-align:center; }
+    .en { color:#333; font-size:15px; text-align:center; margin-bottom:12px; }
 
-    .uzbek {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 4px;
+    button {
+      width:100%; padding:10px; font-size:16px; border:none; border-radius:8px;
+      background:#4CAF50; color:#fff;
     }
-
-    .pron {
-      font-style: italic;
-      color: #777;
-      margin-bottom: 6px;
-    }
-
-    .en {
-      color: #333;
-      font-size: 15px;
-    }
-
-    .tag {
-      display: inline-block;
-      font-size: 12px;
-      color: #555;
-      background: #eef2f7;
-      padding: 4px 8px;
-      border-radius: 999px;
-      margin-top: 10px;
-    }
-
-    .footer {
-      text-align: center;
-      color: #888;
-      font-size: 13px;
-      margin-top: 26px;
-    }
+    .footer { text-align:center; color:#888; font-size:13px; margin-top:26px; }
   </style>
+
+  <script>
+    function play(id){
+      const a = document.getElementById(id);
+      if (!a) return;
+      a.currentTime = 0;
+      a.play();
+    }
+  </script>
 </head>
 
 <body>
 
-  <h1>Salom Uzbek – A1</h1>
-  <div class="subtitle">1-dars · Salomlashuv</div>
+<h1>Salom Uzbek – A1</h1>
+<div class="subtitle">1-dars · Salomlashuv</div>
 
-  <div class="card">
-    <div class="uzbek">Salom</div>
-    <div class="pron">sa-LOM</div>
-    <div class="en">Hello</div>
-  </div>
+<!-- 01 -->
+<div class="card">
+  <div class="uz">Salom</div>
+  <div class="pron">sa-LOM</div>
+  <div class="en">Hello</div>
+  <button onclick="play('a01')">▶ Tinglash</button>
+  <audio id="a01" src="a/01.mp3"></audio>
+</div>
 
-  <div class="card">
-    <div class="uzbek">Assalomu alaykum</div>
-    <div class="pron">as-sa-LO-mu a-LAY-kum</div>
-    <div class="en">Hello (formal)</div>
-    <div class="tag">rasmiy</div>
-  </div>
+<!-- 02 -->
+<div class="card">
+  <div class="uz">Assalomu alaykum</div>
+  <div class="pron">as-sa-LO-mu a-LAY-kum</div>
+  <div class="en">Hello (formal)</div>
+  <button onclick="play('a02')">▶ Tinglash</button>
+  <audio id="a02" src="a/02.mp3"></audio>
+</div>
 
-  <div class="card">
-    <div class="uzbek">Va alaykum assalom</div>
-    <div class="pron">va a-LAY-kum as-sa-LOM</div>
-    <div class="en">Hello (reply to “Assalomu alaykum”)</div>
-    <div class="tag">javob</div>
-  </div>
+<!-- 03 -->
+<div class="card">
+  <div class="uz">Va alaykum assalom</div>
+  <div class="pron">va a-LAY-kum as-sa-LOM</div>
+  <div class="en">Reply to “Assalomu alaykum”</div>
+  <button onclick="play('a03')">▶ Tinglash</button>
+  <audio id="a03" src="a/03.mp3"></audio>
+</div>
 
-  <div class="card">
-    <div class="uzbek">Yaxshimisiz?</div>
-    <div class="pron">yakh-shi-MI-siz</div>
-    <div class="en">How are you? (polite)</div>
-  </div>
+<!-- 04 -->
+<div class="card">
+  <div class="uz">Yaxshimisiz?</div>
+  <div class="pron">yakh-shi-MI-siz</div>
+  <div class="en">How are you? (polite)</div>
+  <button onclick="play('a04')">▶ Tinglash</button>
+  <audio id="a04" src="a/04.mp3"></audio>
+</div>
 
-  <div class="card">
-    <div class="uzbek">Yaxshi, rahmat</div>
-    <div class="pron">yakh-SHI, rakh-MAT</div>
-    <div class="en">Fine, thank you</div>
-  </div>
+<!-- 05 -->
+<div class="card">
+  <div class="uz">Yaxshi, rahmat</div>
+  <div class="pron">yakh-SHI, rakh-MAT</div>
+  <div class="en">Fine, thank you</div>
+  <button onclick="play('a05')">▶ Tinglash</button>
+  <audio id="a05" src="a/05.mp3"></audio>
+</div>
 
-  <div class="card">
-    <div class="uzbek">Rahmat</div>
-    <div class="pron">rakh-MAT</div>
-    <div class="en">Thank you</div>
-  </div>
+<!-- 06 -->
+<div class="card">
+  <div class="uz">Rahmat</div>
+  <div class="pron">rakh-MAT</div>
+  <div class="en">Thank you</div>
+  <button onclick="play('a06')">▶ Tinglash</button>
+  <audio id="a06" src="a/06.mp3"></audio>
+</div>
 
-  <div class="card">
-    <div class="uzbek">Katta rahmat</div>
-    <div class="pron">KAT-ta rakh-MAT</div>
-    <div class="en">Thank you very much</div>
-  </div>
+<!-- 07 -->
+<div class="card">
+  <div class="uz">Katta rahmat</div>
+  <div class="pron">KAT-ta rakh-MAT</div>
+  <div class="en">Thank you very much</div>
+  <button onclick="play('a07')">▶ Tinglash</button>
+  <audio id="a07" src="a/07.mp3"></audio>
+</div>
 
-  <div class="card">
-    <div class="uzbek">Marhamat</div>
-    <div class="pron">mar-ha-MAT</div>
-    <div class="en">You’re welcome / Here you go</div>
-  </div>
+<!-- 08 -->
+<div class="card">
+  <div class="uz">Marhamat</div>
+  <div class="pron">mar-ha-MAT</div>
+  <div class="en">You’re welcome / Here you go</div>
+  <button onclick="play('a08')">▶ Tinglash</button>
+  <audio id="a08" src="a/08.mp3"></audio>
+</div>
 
-  <div class="card">
-    <div class="uzbek">Iltimos</div>
-    <div class="pron">il-ti-MOS</div>
-    <div class="en">Please</div>
-  </div>
+<!-- 09 -->
+<div class="card">
+  <div class="uz">Iltimos</div>
+  <div class="pron">il-ti-MOS</div>
+  <div class="en">Please</div>
+  <button onclick="play('a09')">▶ Tinglash</button>
+  <audio id="a09" src="a/09.mp3"></audio>
+</div>
 
-  <div class="card">
-    <div class="uzbek">Kechirasiz</div>
-    <div class="pron">ke-chi-RA-siz</div>
-    <div class="en">Excuse me / Sorry (polite)</div>
-  </div>
+<!-- 10 -->
+<div class="card">
+  <div class="uz">Kechirasiz</div>
+  <div class="pron">ke-chi-RA-siz</div>
+  <div class="en">Excuse me / Sorry (polite)</div>
+  <button onclick="play('a10')">▶ Tinglash</button>
+  <audio id="a10" src="a/10.mp3"></audio>
+</div>
 
-  <div class="card">
-    <div class="uzbek">Xayr</div>
-    <div class="pron">khayr</div>
-    <div class="en">Bye</div>
-  </div>
+<!-- 11 -->
+<div class="card">
+  <div class="uz">Xayr</div>
+  <div class="pron">khayr</div>
+  <div class="en">Bye</div>
+  <button onclick="play('a11')">▶ Tinglash</button>
+  <audio id="a11" src="a/11.mp3"></audio>
+</div>
 
-  <div class="card">
-    <div class="uzbek">Xayr, ko‘rishamiz</div>
-    <div class="pron">khayr, ko-ri-sha-MIZ</div>
-    <div class="en">Bye, see you (informal)</div>
-    <div class="tag">norasmiy</div>
-  </div>
+<!-- 12 -->
+<div class="card">
+  <div class="uz">Xayr, ko‘rishamiz</div>
+  <div class="pron">khayr, ko-ri-sha-MIZ</div>
+  <div class="en">Bye, see you (informal)</div>
+  <button onclick="play('a12')">▶ Tinglash</button>
+  <audio id="a12" src="a/12.mp3"></audio>
+</div>
 
-  <div class="card">
-    <div class="uzbek">Ko‘rishguncha</div>
-    <div class="pron">ko-ri-sh-GUN-cha</div>
-    <div class="en">See you</div>
-  </div>
+<!-- 13 -->
+<div class="card">
+  <div class="uz">Ko‘rishguncha</div>
+  <div class="pron">ko-ri-sh-GUN-cha</div>
+  <div class="en">See you</div>
+  <button onclick="play('a13')">▶ Tinglash</button>
+  <audio id="a13" src="a/13.mp3"></audio>
+</div>
 
-  <div class="card">
-    <div class="uzbek">Xayrli tong</div>
-    <div class="pron">KHAIR-li tong</div>
-    <div class="en">Good morning</div>
-  </div>
+<!-- 14 -->
+<div class="card">
+  <div class="uz">Xayrli tong</div>
+  <div class="pron">KHAIR-li tong</div>
+  <div class="en">Good morning</div>
+  <button onclick="play('a14')">▶ Tinglash</button>
+  <audio id="a14" src="a/14.mp3"></audio>
+</div>
 
-  <div class="card">
-    <div class="uzbek">Xayrli kun</div>
-    <div class="pron">KHAIR-li kun</div>
-    <div class="en">Good day / Good afternoon</div>
-  </div>
+<!-- 15 -->
+<div class="card">
+  <div class="uz">Xayrli kun</div>
+  <div class="pron">KHAIR-li kun</div>
+  <div class="en">Good day / Good afternoon</div>
+  <button onclick="play('a15')">▶ Tinglash</button>
+  <audio id="a15" src="a/15.mp3"></audio>
+</div>
 
-  <div class="footer">
-    Boshlang‘ich daraja · A1
-  </div>
+<div class="footer">Boshlang‘ich daraja · A1</div>
 
 </body>
 </html>
+
