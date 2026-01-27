@@ -32,6 +32,11 @@
       a.currentTime = 0;
       a.play();
     }
+    function showPremium(){
+      const p = document.getElementById('premiumInfo');
+      if (!p) return;
+      p.style.display = (p.style.display === 'block') ? 'none' : 'block';
+    }
   </script>
 </head>
 
@@ -40,7 +45,6 @@
 <h1>Salom Uzbek – A1</h1>
 <div class="subtitle">1-dars · Salomlashuv</div>
 
-<!-- 1 -->
 <div class="card">
   <div class="uz">Salom</div>
   <div class="pron">sa-LOM</div>
@@ -49,7 +53,6 @@
   <audio id="a1" src="a/1.mp3"></audio>
 </div>
 
-<!-- 2 -->
 <div class="card">
   <div class="uz">Assalomu alaykum</div>
   <div class="pron">as-sa-LO-mu a-LAY-kum</div>
@@ -58,7 +61,6 @@
   <audio id="a2" src="a/2.mp3"></audio>
 </div>
 
-<!-- 3 -->
 <div class="card">
   <div class="uz">Va alaykum assalom</div>
   <div class="pron">va a-LAY-kum as-sa-LOM</div>
@@ -67,7 +69,6 @@
   <audio id="a3" src="a/3.mp3"></audio>
 </div>
 
-<!-- 4 -->
 <div class="card">
   <div class="uz">Yaxshimisiz?</div>
   <div class="pron">yakh-shi-MI-siz</div>
@@ -76,7 +77,6 @@
   <audio id="a4" src="a/4.mp3"></audio>
 </div>
 
-<!-- 5 -->
 <div class="card">
   <div class="uz">Yaxshi, rahmat</div>
   <div class="pron">yakh-SHI, rakh-MAT</div>
@@ -85,7 +85,6 @@
   <audio id="a5" src="a/5.mp3"></audio>
 </div>
 
-<!-- 6 -->
 <div class="card">
   <div class="uz">Rahmat</div>
   <div class="pron">rakh-MAT</div>
@@ -94,7 +93,6 @@
   <audio id="a6" src="a/6.mp3"></audio>
 </div>
 
-<!-- 7 -->
 <div class="card">
   <div class="uz">Katta rahmat</div>
   <div class="pron">KAT-ta rakh-MAT</div>
@@ -103,7 +101,6 @@
   <audio id="a7" src="a/7.mp3"></audio>
 </div>
 
-<!-- 8 -->
 <div class="card">
   <div class="uz">Marhamat</div>
   <div class="pron">mar-ha-MAT</div>
@@ -112,7 +109,6 @@
   <audio id="a8" src="a/8.mp3"></audio>
 </div>
 
-<!-- 9 -->
 <div class="card">
   <div class="uz">Iltimos</div>
   <div class="pron">il-ti-MOS</div>
@@ -121,7 +117,6 @@
   <audio id="a9" src="a/9.mp3"></audio>
 </div>
 
-<!-- 10 -->
 <div class="card">
   <div class="uz">Kechirasiz</div>
   <div class="pron">ke-chi-RA-siz</div>
@@ -130,7 +125,6 @@
   <audio id="a10" src="a/10.mp3"></audio>
 </div>
 
-<!-- 11 -->
 <div class="card">
   <div class="uz">Xayr</div>
   <div class="pron">khayr</div>
@@ -139,7 +133,6 @@
   <audio id="a11" src="a/11.mp3"></audio>
 </div>
 
-<!-- 12 -->
 <div class="card">
   <div class="uz">Xayr, ko‘rishamiz</div>
   <div class="pron">khayr, ko-ri-sha-MIZ</div>
@@ -148,7 +141,6 @@
   <audio id="a12" src="a/12.mp3"></audio>
 </div>
 
-<!-- 13 -->
 <div class="card">
   <div class="uz">Ko‘rishguncha</div>
   <div class="pron">ko-ri-sh-GUN-cha</div>
@@ -157,7 +149,6 @@
   <audio id="a13" src="a/13.mp3"></audio>
 </div>
 
-<!-- 14 -->
 <div class="card">
   <div class="uz">Xayrli tong</div>
   <div class="pron">KHAIR-li tong</div>
@@ -166,7 +157,6 @@
   <audio id="a14" src="a/14.mp3"></audio>
 </div>
 
-<!-- 15 -->
 <div class="card">
   <div class="uz">Xayrli kun</div>
   <div class="pron">KHAIR-li kun</div>
@@ -176,51 +166,65 @@
 </div>
 
 <div class="footer">Boshlang‘ich daraja · A1</div>
+
+<!-- PREMIUM -->
 <hr style="max-width:480px;margin:28px auto;border:none;border-top:1px solid #e6e6e6;">
 
 <div style="max-width:480px;margin:0 auto;background:#ffffff;padding:16px;border-radius:12px;
             box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+
   <h2 style="margin:0 0 6px 0;color:#2c3e50;text-align:center;">Premium (Yopiq)</h2>
   <p style="margin:0 0 12px 0;color:#666;text-align:center;">
-    Keyingi darslar va mashqlar Premiumda.
+    Keyingi darslar va mashqlar faqat Premium uchun.
   </p>
 
   <div style="background:#f6f8fb;border:1px solid #e6ebf2;border-radius:10px;padding:12px;">
     <div style="font-weight:bold;margin-bottom:8px;">Premium ichida:</div>
     <ul style="margin:0;padding-left:18px;color:#333;line-height:1.6;">
-      <li>2-dars: Tanishuv (My name is…, I am from…)</li>
+      <li>2-dars: Tanishuv</li>
       <li>3-dars: Sonlar 1–100</li>
       <li>4-dars: Kafe / Restoran</li>
       <li>5-dars: Yo‘l so‘rash</li>
-      <li>+ Har dars uchun audio + mini-quiz</li>
+      <li>Har dars uchun audio + mini-quiz</li>
     </ul>
   </div>
 
-  <div style="margin-top:14px;">
-    <button
-      style="width:100%;padding:10px;font-size:16px;border:none;border-radius:8px;background:#111827;color:#fff;"
-      onclick="document.getElementById('premiumInfo').style.display='block';">
-      🔒 Premiumni ochish
-    </button>
-  </div>
+  <button
+    style="width:100%;padding:10px;font-size:16px;border:none;border-radius:8px;background:#111827;color:#fff;margin-top:12px;"
+    onclick="showPremium()">
+    🔒 Premiumni ochish
+  </button>
 
-  <div id="premiumInfo" style="display:none;margin-top:12px;background:#fff7ed;border:1px solid #fed7aa;
-                              border-radius:10px;padding:12px;color:#7c2d12;">
-    <div style="font-weight:bold;margin-bottom:6px;">Premiumni olish:</div>
-    <div style="margin-bottom:8px;">
-      Menga yozing va Premium kodni oling (24 soat ichida javob).
+  <div id="premiumInfo"
+       style="display:none;margin-top:12px;background:#fff7ed;border:1px solid #fed7aa;
+              border-radius:10px;padding:12px;">
+
+    <div style="font-weight:bold;margin-bottom:8px;color:#7c2d12;">
+      Premiumni olish uchun menga yozing:
     </div>
 
-    <!-- Ersetze den Link -->
-    <a href="https://wa.me/41765438401"
-       style="display:block;text-align:center;background:#fb923c;color:#111827;
-              padding:10px;border-radius:8px;text-decoration:none;font-weight:bold;">
-      💬 Kontakt / Buyurtma
+    <a href="https://wa.me/41765438401?text=Salom!%20Men%20Premium%20darslarni%20ochmoqchiman.%20Rahmat!"
+       style="display:block;text-align:center;background:#25D366;color:#ffffff;
+              padding:10px;border-radius:8px;text-decoration:none;font-weight:bold;margin-bottom:8px;">
+      💬 WhatsApp orqali yozish
     </a>
 
-    <div style="font-size:12px;color:#7c2d12;margin-top:8px;text-align:center;">
-      (Masalan: Telegram/WhatsApp/E-mail)
+    <a href="https://t.me/DEIN_TELEGRAM_USERNAME"
+       style="display:block;text-align:center;background:#229ED9;color:#ffffff;
+              padding:10px;border-radius:8px;text-decoration:none;font-weight:bold;margin-bottom:8px;">
+      ✈️ Telegram orqali yozish
+    </a>
+
+    <a href="mailto:nargiz.riza@gmail.com?subject=Salom%20Uzbek%20Premium&body=Salom!%0AMen%20Premium%20darslarni%20ochmoqchiman.%20Rahmat!"
+       style="display:block;text-align:center;background:#fb923c;color:#111827;
+              padding:10px;border-radius:8px;text-decoration:none;font-weight:bold;">
+      ✉️ E-mail yozish
+    </a>
+
+    <div style="font-size:12px;color:#7c2d12;margin-top:10px;text-align:center;">
+      Telegram uchun username kerak (Settings → Username)
     </div>
+
   </div>
 </div>
 
