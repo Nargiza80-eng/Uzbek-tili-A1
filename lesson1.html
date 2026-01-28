@@ -46,7 +46,6 @@
     h1{margin:0;font-size:22px;}
     .sub{margin-top:6px;color:var(--muted)}
 
-    /* 🌍 Language Switch */
     .langSwitch{
       display:flex;
       gap:6px;
@@ -90,6 +89,19 @@
     .en{font-size:16px;font-weight:700;margin-top:8px;display:none}
     .pr{color:var(--muted);font-style:italic;margin-top:6px}
 
+    .audioBtn{
+      width:100%;
+      margin-top:10px;
+      padding:10px;
+      font-size:15px;
+      border:none;
+      border-radius:14px;
+      background: var(--accent2);
+      color:#3b2a10;
+      font-weight:900;
+      cursor:pointer;
+    }
+
     .navRow{
       display:flex;
       gap:10px;
@@ -117,11 +129,28 @@
 
   <script>
     function setLang(lang){
-      document.querySelectorAll('.uz').forEach(e=>e.style.display = (lang==='uz')?'block':'none');
-      document.querySelectorAll('.en').forEach(e=>e.style.display = (lang==='en')?'block':'none');
+      document.querySelectorAll('.uz').forEach(e => e.style.display = (lang==='uz') ? 'block' : 'none');
+      document.querySelectorAll('.en').forEach(e => e.style.display = (lang==='en') ? 'block' : 'none');
 
       document.getElementById('btn-uz').classList.toggle('active', lang==='uz');
       document.getElementById('btn-en').classList.toggle('active', lang==='en');
+    }
+
+    // ✅ AUDIO PLAY FUNCTION (fehlte vorher)
+    function play(id){
+      const a = document.getElementById(id);
+      if(!a){
+        alert("Audio element topilmadi: " + id);
+        return;
+      }
+      a.currentTime = 0;
+
+      const p = a.play();
+      if (p && typeof p.catch === "function") {
+        p.catch(() => {
+          alert("Audio o‘ynamadi. Fayl nomi/papka (a/1.mp3) tekshiring.");
+        });
+      }
     }
   </script>
 </head>
@@ -135,7 +164,6 @@
           <div class="sub">Yaxshi so‘zlar — do‘stlikni boshlaydi 😊</div>
         </div>
 
-        <!-- 🌍 Language Buttons -->
         <div class="langSwitch">
           <button id="btn-uz" class="langBtn active" onclick="setLang('uz')">UZ</button>
           <button id="btn-en" class="langBtn" onclick="setLang('en')">EN</button>
@@ -148,9 +176,8 @@
           <div class="uz">Salom</div>
           <div class="en">Hello</div>
           <div class="pr">sa-LOM</div>
-          <button onclick="play('a1')">▶ Tinglash</button>
-          <audio id="a1" src="a/1.mp3"></audio>
-
+          <button class="audioBtn" onclick="play('a1')">▶ Tinglash</button>
+          <audio id="a1" src="a/1.mp3" preload="none" playsinline></audio>
         </div>
 
         <div class="card">
@@ -158,9 +185,8 @@
           <div class="uz">Rahmat</div>
           <div class="en">Thank you</div>
           <div class="pr">rakh-MAT</div>
-          <button onclick="play('a6')">▶ Tinglash</button>
-          <audio id="a6" src="a/6.mp3"></audio>
-
+          <button class="audioBtn" onclick="play('a6')">▶ Tinglash</button>
+          <audio id="a6" src="a/6.mp3" preload="none" playsinline></audio>
         </div>
 
         <div class="card">
@@ -168,9 +194,8 @@
           <div class="uz">Iltimos</div>
           <div class="en">Please</div>
           <div class="pr">il-ti-MOS</div>
-          <button onclick="play('a9')">▶ Tinglash</button>
-          <audio id="a9" src="a/9.mp3"></audio>
-
+          <button class="audioBtn" onclick="play('a9')">▶ Tinglash</button>
+          <audio id="a9" src="a/9.mp3" preload="none" playsinline></audio>
         </div>
 
         <div class="card">
@@ -178,9 +203,8 @@
           <div class="uz">Yaxshimisiz?</div>
           <div class="en">How are you?</div>
           <div class="pr">yakh-shi-MI-siz</div>
-          <button onclick="play('a4')">▶ Tinglash</button>
-          <audio id="a4" src="a/4.mp3"></audio>
-
+          <button class="audioBtn" onclick="play('a4')">▶ Tinglash</button>
+          <audio id="a4" src="a/4.mp3" preload="none" playsinline></audio>
         </div>
 
         <div class="card">
@@ -188,9 +212,8 @@
           <div class="uz">Xayr</div>
           <div class="en">Bye</div>
           <div class="pr">khayr</div>
-          <button onclick="play('a11')">▶ Tinglash</button>
-          <audio id="a11" src="a/11.mp3"></audio>
-
+          <button class="audioBtn" onclick="play('a11')">▶ Tinglash</button>
+          <audio id="a11" src="a/11.mp3" preload="none" playsinline></audio>
         </div>
       </div>
 
@@ -202,5 +225,3 @@
   </div>
 </body>
 </html>
-
-
