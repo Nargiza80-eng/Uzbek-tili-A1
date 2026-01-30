@@ -4,40 +4,147 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>3-dars – Hayvonlar</title>
+
   <style>
-    body{font-family:Arial;margin:0;background:#f6f7fb;padding:18px}
-    .app{max-width:720px;margin:0 auto}
-    .top{background:#fff;border-radius:16px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
-    h1{margin:0;font-size:22px}
-    .sub{color:#666;margin-top:6px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px}
-    .card{background:#fff;border-radius:16px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.08);text-align:center}
+    :root{
+      --bg:#F7F3EE; --card:#FFFFFF; --ink:#1F2937; --muted:#6B7280; --line:#E7E0D8;
+      --accent:#6FA8A1; --accent2:#F2C98A; --shadow:0 8px 24px rgba(31,41,55,0.08); --radius:18px;
+    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);padding:18px;}
+    .app{max-width:860px;margin:0 auto;}
+    .top{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;}
+    .headRow{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;}
+    h1{margin:0;font-size:22px;}
+    .sub{margin-top:6px;color:var(--muted)}
+    .langSwitch{display:flex;gap:6px;background:#F1FBF9;border:1px solid #D7F1ED;padding:6px;border-radius:999px;}
+    .langBtn{border:none;background:transparent;padding:6px 12px;border-radius:999px;font-weight:800;cursor:pointer;color:#1B4D48;}
+    .langBtn.active{background:var(--accent);color:#fff;}
+    .grid{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;text-align:center;}
     .emoji{font-size:34px}
-    .uz{font-size:24px;font-weight:bold;margin-top:6px}
-    .pr{color:#777;font-style:italic;margin-top:6px}
-    .en{color:#444;margin-top:8px}
-    a.nav{display:inline-block;margin-top:14px;text-decoration:none;background:#111827;color:#fff;padding:10px 14px;border-radius:12px;font-weight:bold}
-    a.nav2{display:inline-block;margin-top:14px;text-decoration:none;background:#4CAF50;color:#fff;padding:10px 14px;border-radius:12px;font-weight:bold}
+    .uz{font-size:28px;font-weight:900;margin-top:8px}
+    .en{font-size:16px;font-weight:700;margin-top:8px;display:none}
+    .pr{color:var(--muted);font-style:italic;margin-top:6px}
+    .audioBtn{width:100%;margin-top:10px;padding:10px;font-size:15px;border:none;border-radius:14px;background:var(--accent2);color:#3b2a10;font-weight:900;cursor:pointer;}
+    .navRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+    a.nav,a.next{flex:1;min-width:200px;text-align:center;text-decoration:none;padding:12px;border-radius:14px;font-weight:900;}
+    a.nav{background:#fff;border:1px solid var(--line);color:var(--ink);}
+    a.next{background:var(--accent);color:#fff;}
   </style>
+
+  <script>
+    let currentLang = "uz";
+    function setLang(lang){
+      currentLang = lang;
+      document.querySelectorAll('.uz').forEach(e => e.style.display = (lang==='uz')?'block':'none');
+      document.querySelectorAll('.en').forEach(e => e.style.display = (lang==='en')?'block':'none');
+      document.getElementById('btn-uz').classList.toggle('active', lang==='uz');
+      document.getElementById('btn-en').classList.toggle('active', lang==='en');
+    }
+    function play(key){
+      const id = (currentLang === "en") ? ("en_" + key) : ("uz_" + key);
+      const a = document.getElementById(id);
+      if(!a){ alert("Audio topilmadi: " + id); return; }
+      a.currentTime = 0;
+      const p = a.play();
+      if(p && typeof p.catch === "function"){ p.catch(()=>alert("Audio o‘ynamadi. Fayl nomi/papka tekshiring.")); }
+    }
+  </script>
 </head>
-<body>
+
+<body onload="setLang('uz')">
   <div class="app">
     <div class="top">
-      <h1>🐾 3-dars: Hayvonlar</h1>
-      <div class="sub">Qaysi hayvonni yoqtirasan? 😊</div>
-
-      <div class="grid">
-        <div class="card"><div class="emoji">🐱</div><div class="uz">mushuk</div><div class="pr">moo-SHUK</div><div class="en">cat</div></div>
-        <div class="card"><div class="emoji">🐶</div><div class="uz">it</div><div class="pr">eet</div><div class="en">dog</div></div>
-        <div class="card"><div class="emoji">🐰</div><div class="uz">quyon</div><div class="pr">kuy-ON</div><div class="en">rabbit</div></div>
-        <div class="card"><div class="emoji">🐦</div><div class="uz">qush</div><div class="pr">koosh</div><div class="en">bird</div></div>
-        <div class="card"><div class="emoji">🐟</div><div class="uz">baliq</div><div class="pr">ba-LIK</div><div class="en">fish</div></div>
-        <div class="card"><div class="emoji">🦁</div><div class="uz">sher</div><div class="pr">sher</div><div class="en">lion</div></div>
+      <div class="headRow">
+        <div>
+          <h1>🐾 3-dars: Hayvonlar</h1>
+          <div class="sub">Hayvonlarni aytamiz! 😊</div>
+        </div>
+        <div class="langSwitch">
+          <button id="btn-uz" class="langBtn active" onclick="setLang('uz')">UZ</button>
+          <button id="btn-en" class="langBtn" onclick="setLang('en')">EN</button>
+        </div>
       </div>
 
-      <a class="nav" href="lesson2.html">⬅️ Oldingi</a>
-      <a class="nav2" href="./">🏠 Bosh sahifa</a>
-    </div>
-  </div>
-</body>
-</html>
+      <div class="grid">
+        <!-- cat -->
+        <div class="card">
+          <div class="emoji">🐱</div>
+          <div class="uz">Mushuk</div>
+          <div class="en">Cat</div>
+          <div class="pr">mu-SHUK</div>
+          <button class="audioBtn" onclick="play('cat')">▶ Tinglash</button>
+          <audio id="uz_cat" src="a/cat.mp3" preload="none" playsinline></audio>
+          <audio id="en_cat" src="en/cat.mp3" preload="none" playsinline></audio>
+        </div>
+
+        <!-- dog -->
+        <div class="card">
+          <div class="emoji">🐶</div>
+          <div class="uz">It</div>
+          <div class="en">Dog</div>
+          <div class="pr">it</div>
+          <button class="audioBtn" onclick="play('dog')">▶ Tinglash</button>
+          <audio id="uz_dog" src="a/dog.mp3" preload="none" playsinline></audio>
+          <audio id="en_dog" src="en/dog.mp3" preload="none" playsinline></audio>
+        </div>
+
+        <!-- bird -->
+        <div class="card">
+          <div class="emoji">🐦</div>
+          <div class="uz">Qush</div>
+          <div class="en">Bird</div>
+          <div class="pr">qush</div>
+          <button class="audioBtn" onclick="play('bird')">▶ Tinglash</button>
+          <audio id="uz_bird" src="a/bird.mp3" preload="none" playsinline></audio>
+          <audio id="en_bird" src="en/bird.mp3" preload="none" playsinline></audio>
+        </div>
+
+        <!-- fish -->
+        <div class="card">
+          <div class="emoji">🐟</div>
+          <div class="uz">Baliq</div>
+          <div class="en">Fish</div>
+          <div class="pr">ba-LIQ</div>
+          <button class="audioBtn" onclick="play('fish')">▶ Tinglash</button>
+          <audio id="uz_fish" src="a/fish.mp3" preload="none" playsinline></audio>
+          <audio id="en_fish" src="en/fish.mp3" preload="none" playsinline></audio>
+        </div>
+
+        <!-- horse -->
+        <div class="card">
+          <div class="emoji">🐴</div>
+          <div class="uz">Ot</div>
+          <div class="en">Horse</div>
+          <div class="pr">ot</div>
+          <button class="audioBtn" onclick="play('horse')">▶ Tinglash</button>
+          <audio id="uz_horse" src="a/horse.mp3" preload="none" playsinline></audio>
+          <audio id="en_horse" src="en/horse.mp3" preload="none" playsinline></audio>
+        </div>
+
+        <!-- cow -->
+        <div class="card">
+          <div class="emoji">🐮</div>
+          <div class="uz">Sigir</div>
+          <div class="en">Cow</div>
+          <div class="pr">si-GIR</div>
+          <button class="audioBtn" onclick="play('cow')">▶ Tinglash</button>
+          <audio id="uz_cow" src="a/cow.mp3" preload="none" playsinline></audio>
+          <audio id="en_cow" src="en/cow.mp3" preload="none" playsinline></audio>
+        </div>
+
+        <!-- rabbit -->
+        <div class="card">
+          <div class="emoji">🐰</div>
+          <div class="uz">Quyon</div>
+          <div class="en">Rabbit</div>
+          <div class="pr">qu-YON</div>
+          <button class="audioBtn" onclick="play('rabbit')">▶ Tinglash</button>
+          <audio id="uz_rabbit" src="a/rabbit.mp3" preload="none" playsinline></audio>
+          <audio id="en_rabbit" src="en/rabbit.mp3" preload="none" playsinline></audio>
+        </div>
+
+        <!-- lion -->
+        <div class="card">
+          <div class="emoji">🦁</div>
+          <
