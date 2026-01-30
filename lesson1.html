@@ -48,7 +48,7 @@
     }
 
     h1{margin:0;font-size:22px;}
-    .sub{margin-top:6px;color:var(--muted);font-weight:700}
+    .sub{margin-top:6px;color:var(--muted);font-weight:800}
 
     /* Language switch */
     .langSwitch{
@@ -65,7 +65,7 @@
       background:transparent;
       padding:6px 12px;
       border-radius:999px;
-      font-weight:900;
+      font-weight:1000;
       cursor:pointer;
       color:#1B4D48;
     }
@@ -120,7 +120,7 @@
 
     .emoji{font-size:50px; line-height:1;}
     .uz{font-size:30px;font-weight:1000;margin-top:8px}
-    .en{font-size:18px;font-weight:900;margin-top:8px;display:none}
+    .en{font-size:18px;font-weight:1000;margin-top:8px;display:none}
     .pr{color:var(--muted);font-style:italic;margin-top:6px;font-size:13px}
 
     .audioBtn{
@@ -160,7 +160,7 @@
       justify-content:space-between;
       gap:10px;
     }
-    .qText{margin:0 0 10px;color:var(--muted);font-weight:800}
+    .qText{margin:0 0 10px;color:var(--muted);font-weight:900}
     .opts{display:grid;gap:8px;}
     .opt{
       width:100%;
@@ -198,6 +198,10 @@
       padding:12px;
       border-radius:14px;
       font-weight:1000;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
     }
     a.nav{background:#fff;border:1px solid var(--line);color:var(--ink);}
     a.next{background:var(--accent);color:#fff;}
@@ -206,7 +210,7 @@
     .celebrate{
       position:absolute;
       inset:0;
-      background:rgba(247,243,238,0.88);
+      background:rgba(247,243,238,0.90);
       display:none;
       align-items:center;
       justify-content:center;
@@ -227,7 +231,7 @@
       overflow:hidden;
     }
     .big{font-size:44px; font-weight:1000; margin:6px 0;}
-    .small{color:var(--muted); font-weight:800; margin:0 0 12px;}
+    .small{color:var(--muted); font-weight:900; margin:0 0 12px;}
     .ctaRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;}
     .cta{
       flex:1; min-width:200px;
@@ -237,14 +241,31 @@
     .cta.primary{background:var(--accent);color:#fff;}
     .cta.secondary{background:#fff;border:1px solid var(--line);}
 
-    /* Balloons */
+    /* Confetti + balloons area inside card */
+    .confetti{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .dot{
+      position:absolute;
+      width:10px;height:10px;border-radius:50%;
+      opacity:0.9;
+      animation: fall 2.6s linear forwards;
+    }
+    @keyframes fall{
+      0%{transform:translateY(-20px) rotate(0deg);opacity:1}
+      100%{transform:translateY(520px) rotate(360deg);opacity:0.9}
+    }
+
     .balloon{
       position:absolute;
-      bottom:-60px;
+      bottom:-80px;
       width:46px;height:60px;
       border-radius:50% 50% 45% 45%;
       opacity:0.95;
-      animation: floatUp 6s linear infinite;
+      animation: floatUp 6s linear forwards;
       box-shadow: 0 10px 18px rgba(0,0,0,0.10);
     }
     .balloon:after{
@@ -257,24 +278,6 @@
       0%{transform:translateY(0) translateX(0);}
       100%{transform:translateY(-720px) translateX(40px);}
     }
-
-    /* Confetti dots */
-    .confetti{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      overflow:hidden;
-    }
-    .dot{
-      position:absolute;
-      width:10px;height:10px;border-radius:50%;
-      opacity:0.9;
-      animation: fall 2.8s ease-out forwards;
-    }
-    @keyframes fall{
-      0%{transform:translateY(-20px) rotate(0deg);opacity:1}
-      100%{transform:translateY(520px) rotate(360deg);opacity:0.9}
-    }
   </style>
 </head>
 
@@ -282,12 +285,12 @@
   <div class="app">
     <div class="top" id="top">
 
-      <!-- Celebration -->
+      <!-- Celebration overlay -->
       <div class="celebrate" id="celebrate">
         <div class="celebrateCard">
           <div class="confetti" id="confetti"></div>
           <div style="font-size:54px">🎈🎉</div>
-          <div class="big" id="celebrateTitle">Barakalla!</div>
+          <div class="big" id="celebrateTitle">Barakalla! 🎉</div>
           <p class="small" id="celebrateText">Siz 1-darsni tugatdingiz! Juda zo‘r! 🌟</p>
 
           <div class="ctaRow">
@@ -314,7 +317,7 @@
       <div class="bar">
         <div class="barRow">
           <div style="font-weight:1000" id="progressLabel">Darsdagi natija</div>
-          <div style="color:var(--muted);font-weight:900" id="progressText">0 / 5</div>
+          <div style="color:var(--muted);font-weight:1000" id="progressText">0 / 5</div>
         </div>
         <div class="track"><div class="fill" id="progressFill"></div></div>
       </div>
@@ -328,37 +331,36 @@
         <a class="next" href="lesson2.html" id="nextBtn">Keyingi ➡️</a>
       </div>
 
-      <!-- Optional external sounds (if you upload them) -->
-      <audio id="sndSuccess" src="s/success.mp3" preload="auto"></audio>
-      <audio id="sndFail" src="s/fail.mp3" preload="auto"></audio>
     </div>
   </div>
 
 <script>
-  // -----------------------------
-  // DATA (you may change ONLY the visible text)
-  // KEYS stay as: 1,4,6,9,11 (matching your mp3 names)
-  // -----------------------------
+  // =============================
+  // CONFIG
+  // =============================
   const LESSON_ID = "lesson1";
+
+  // IMPORTANT: keys must match your mp3 names:
+  // UZ: a/1.mp3 etc
+  // EN: en/1.mp3 etc
   const items = [
-    { key:"1", emoji:"👋", uz:"Salom", en:"Hello", pr:"sa-LOM",
+    { key:"1",  emoji:"👋", uz:"Salom",       en:"Hello",        pr:"sa-LOM",
       quiz: { uzQ:"“Salom” nimani anglatadi?", enQ:"What does “Salom” mean?",
               correctEn:"Hello", wrongEn:["Thank you","Bye"] } },
-    { key:"6", emoji:"🙏", uz:"Rahmat", en:"Thank you", pr:"rakh-MAT",
+    { key:"6",  emoji:"🙏", uz:"Rahmat",      en:"Thank you",    pr:"rakh-MAT",
       quiz: { uzQ:"“Rahmat” nimani anglatadi?", enQ:"What does “Rahmat” mean?",
               correctEn:"Thank you", wrongEn:["Please","Hello"] } },
-    { key:"9", emoji:"🌸", uz:"Iltimos", en:"Please", pr:"il-ti-MOS",
+    { key:"9",  emoji:"🌸", uz:"Iltimos",     en:"Please",       pr:"il-ti-MOS",
       quiz: { uzQ:"“Iltimos” nimani anglatadi?", enQ:"What does “Iltimos” mean?",
               correctEn:"Please", wrongEn:["Sorry","Bye"] } },
-    { key:"4", emoji:"🙂", uz:"Yaxshimisiz?", en:"How are you?", pr:"yakh-shi-MI-siz",
+    { key:"4",  emoji:"🙂", uz:"Yaxshimisiz?", en:"How are you?", pr:"yakh-shi-MI-siz",
       quiz: { uzQ:"“Yaxshimisiz?” nimani anglatadi?", enQ:"What does “Yaxshimisiz?” mean?",
               correctEn:"How are you?", wrongEn:["Good night","Thank you"] } },
-    { key:"11", emoji:"🌙", uz:"Xayr", en:"Bye", pr:"khayr",
+    { key:"11", emoji:"🌙", uz:"Xayr",        en:"Bye",          pr:"khayr",
       quiz: { uzQ:"“Xayr” nimani anglatadi?", enQ:"What does “Xayr” mean?",
               correctEn:"Bye", wrongEn:["Hello","Please"] } },
   ];
 
-  // UI text by language
   const ui = {
     uz: {
       title: "👋 1-dars: Salomlashuv",
@@ -392,36 +394,26 @@
     }
   };
 
-  // -----------------------------
+  // =============================
   // STATE
-  // -----------------------------
+  // =============================
   let currentLang = "uz";
 
-  function loadState(){
-    try {
-      return JSON.parse(localStorage.getItem(LESSON_ID) || "{}");
-    } catch {
-      return {};
-    }
-  }
-  function saveState(state){
-    localStorage.setItem(LESSON_ID, JSON.stringify(state));
-  }
-
-  // state structure:
-  // { stars:{key:n}, quizDone:{key:true} }
   function getDefaultState(){
     return { stars:{}, quizDone:{} };
   }
+  function loadState(){
+    try { return JSON.parse(localStorage.getItem(LESSON_ID) || "{}"); }
+    catch { return {}; }
+  }
+  function saveState(s){ localStorage.setItem(LESSON_ID, JSON.stringify(s)); }
 
-  // -----------------------------
-  // SOUND (external mp3 optional; fallback to WebAudio beeps)
-  // -----------------------------
+  // =============================
+  // SOUND (beeps only, no extra files needed)
+  // =============================
   let audioCtx = null;
   function beep(type){
-    // type: "success" or "fail"
     if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
     const t = audioCtx.currentTime;
     const o = audioCtx.createOscillator();
     const g = audioCtx.createGain();
@@ -447,36 +439,13 @@
   }
 
   function playFeedback(which){
-    // Try external mp3 first; if not available -> beep
-    const el = (which === "success") ? document.getElementById("sndSuccess") : document.getElementById("sndFail");
-    if(el && el.src && !el.src.endsWith("/")) {
-      el.currentTime = 0;
-      el.play().catch(()=>beep(which));
-    } else {
-      beep(which);
-    }
+    // unlock audio context on first user click automatically (beep call is enough)
+    beep(which);
   }
 
-  // -----------------------------
-  // BUILD UI
-  // -----------------------------
-  function setLang(lang){
-    currentLang = lang;
-
-    document.getElementById("btn-uz").classList.toggle("active", lang==="uz");
-    document.getElementById("btn-en").classList.toggle("active", lang==="en");
-
-    const T = ui[lang];
-    document.getElementById("title").innerText = T.title;
-    document.getElementById("subtitle").innerText = T.subtitle;
-    document.getElementById("progressLabel").innerText = T.progressLabel;
-    document.getElementById("homeBtn").innerText = T.home;
-    document.getElementById("nextBtn").innerText = T.next;
-
-    // Re-render cards (so quiz text buttons update)
-    render();
-  }
-
+  // =============================
+  // UI HELPERS
+  // =============================
   function starText(n){
     n = Math.max(0, Math.min(3, n));
     return "★".repeat(n) + "☆".repeat(3-n);
@@ -491,6 +460,24 @@
     return a;
   }
 
+  // =============================
+  // RENDER
+  // =============================
+  function setLang(lang){
+    currentLang = lang;
+    document.getElementById("btn-uz").classList.toggle("active", lang==="uz");
+    document.getElementById("btn-en").classList.toggle("active", lang==="en");
+
+    const T = ui[lang];
+    document.getElementById("title").innerText = T.title;
+    document.getElementById("subtitle").innerText = T.subtitle;
+    document.getElementById("progressLabel").innerText = T.progressLabel;
+    document.getElementById("homeBtn").innerText = T.home;
+    document.getElementById("nextBtn").innerText = T.next;
+
+    render();
+  }
+
   function render(){
     const T = ui[currentLang];
     const state = Object.keys(loadState()).length ? loadState() : getDefaultState();
@@ -501,8 +488,6 @@
     items.forEach(it=>{
       const stars = state.stars[it.key] || 0;
       const done = !!state.quizDone[it.key];
-
-      // Quiz options
       const options = shuffle([it.quiz.correctEn, ...it.quiz.wrongEn]);
 
       const card = document.createElement("div");
@@ -516,10 +501,7 @@
 
         <div class="pr">${it.pr}</div>
 
-        <button class="audioBtn" data-key="${it.key}">
-          ${T.listen}
-        </button>
-
+        <button class="audioBtn" data-key="${it.key}">${T.listen}</button>
         <div class="stars" id="star-${it.key}">${starText(stars)}</div>
 
         <audio id="uz_${it.key}" src="a/${it.key}.mp3" preload="none" playsinline></audio>
@@ -536,9 +518,7 @@
 
           <div class="opts">
             ${options.map(opt => `
-              <button class="opt" data-qkey="${it.key}" data-opt="${opt}">
-                ${opt}
-              </button>
+              <button class="opt" data-qkey="${it.key}" data-opt="${opt}">${opt}</button>
             `).join("")}
           </div>
 
@@ -549,7 +529,7 @@
       grid.appendChild(card);
     });
 
-    // Bind audio buttons
+    // audio buttons
     grid.querySelectorAll(".audioBtn").forEach(btn=>{
       btn.addEventListener("click", ()=>{
         const key = btn.getAttribute("data-key");
@@ -557,7 +537,7 @@
       });
     });
 
-    // Bind quiz options
+    // quiz buttons
     grid.querySelectorAll(".opt").forEach(btn=>{
       btn.addEventListener("click", ()=>{
         const key = btn.getAttribute("data-qkey");
@@ -566,22 +546,18 @@
       });
     });
 
-    updateProgress();
+    updateProgress(false);
   }
 
   function playWordAudio(key){
     const id = (currentLang === "en") ? ("en_" + key) : ("uz_" + key);
     const a = document.getElementById(id);
-    if(!a){
-      alert("Audio topilmadi: " + id);
-      return;
-    }
-    a.currentTime = 0;
-    a.play().catch(()=>{
-      alert("Audio o‘ynamayapti. Faylni tekshiring: " + a.src);
-    });
+    if(!a) return;
 
-    // Stars +1 when listening
+    a.currentTime = 0;
+    a.play().catch(()=>{ /* if autoplay blocked, user click usually allows */ });
+
+    // stars +1
     const state = Object.keys(loadState()).length ? loadState() : getDefaultState();
     state.stars[key] = Math.min(3, (state.stars[key] || 0) + 1);
     saveState(state);
@@ -595,9 +571,10 @@
     const item = items.find(x=>x.key===key);
     if(!item) return;
 
-    const isCorrect = (chosen === item.quiz.correctEn);
     const res = document.getElementById("res-"+key);
     if(!res) return;
+
+    const isCorrect = (chosen === item.quiz.correctEn);
 
     if(isCorrect){
       res.className = "result good";
@@ -609,17 +586,16 @@
       saveState(state);
 
       updateProgress(true);
-      // re-render this card header (Done badge)
+      // refresh to show "Done" badge
       render();
-
-    }else{
+    } else {
       res.className = "result bad";
       res.innerText = T.wrongMsg;
       playFeedback("fail");
     }
   }
 
-  function updateProgress(checkCelebrate=false){
+  function updateProgress(checkCelebrate){
     const state = Object.keys(loadState()).length ? loadState() : getDefaultState();
     const doneCount = Object.values(state.quizDone || {}).filter(Boolean).length;
 
@@ -632,101 +608,101 @@
     }
   }
 
-  // -----------------------------
-  // CELEBRATION (balloons + confetti)
-  // -----------------------------
-function celebrate(){
-  const T = ui[currentLang];
+  // =============================
+  // CELEBRATION
+  // =============================
+  function celebrate(){
+    const T = ui[currentLang];
 
-  // Text
-  document.getElementById("celebrateTitle").innerText = T.celebrateTitle;
-  document.getElementById("celebrateText").innerText  = T.celebrateText;
+    document.getElementById("celebrateTitle").innerText = T.celebrateTitle;
+    document.getElementById("celebrateText").innerText  = T.celebrateText;
 
-  // Overlay anzeigen
-  document.getElementById("celebrate").classList.add("show");
+    // show overlay
+    document.getElementById("celebrate").classList.add("show");
 
-  // 🎉 Confetti
-  const conf = document.getElementById("confetti");
-  conf.innerHTML = "";
+    // confetti
+    const conf = document.getElementById("confetti");
+    conf.innerHTML = "";
+    const colors = ["#F59E0B","#EF4444","#10B981","#3B82F6","#A855F7","#F97316"];
 
-  const colors = ["#F59E0B","#EF4444","#10B981","#3B82F6","#A855F7","#F97316"];
-  for(let i=0;i<50;i++){
-    const d = document.createElement("div");
-    d.className = "dot";
-    d.style.left = Math.random()*100 + "%";
-    d.style.top  = (-20 - Math.random()*200) + "px";
-    d.style.background = colors[Math.floor(Math.random()*colors.length)];
-    d.style.animationDelay = (Math.random()*0.6) + "s";
-    d.style.animationDuration = (2 + Math.random()*1.2) + "s";
-    conf.appendChild(d);
+    for(let i=0;i<60;i++){
+      const d = document.createElement("div");
+      d.className = "dot";
+      d.style.left = Math.random()*100 + "%";
+      d.style.top  = (-20 - Math.random()*200) + "px";
+      d.style.background = colors[Math.floor(Math.random()*colors.length)];
+      d.style.animationDelay = (Math.random()*0.3) + "s";
+      d.style.animationDuration = (1.8 + Math.random()*1.2) + "s";
+      conf.appendChild(d);
+    }
+
+    // balloons
+    spawnBalloons(10);
+
+    // sound + voice
+    playFeedback("success");
+    celebrateVoice();
   }
 
-  // 🎈 Balloons
-  spawnBalloons(10);
+  function spawnBalloons(n){
+    // remove old balloons
+    document.querySelectorAll(".balloon").forEach(b=>b.remove());
 
-  // 🔊 Sound + Jubel
-  playFeedback("success");
-  celebrateVoice();
-}
+    const top = document.getElementById("top");
+    const colors = ["#F59E0B","#EF4444","#10B981","#3B82F6","#A855F7","#F2C98A"];
 
-function spawnBalloons(n){
-  document.querySelectorAll(".balloon").forEach(b=>b.remove());
-
-  const top = document.getElementById("top");
-  const colors = ["#F59E0B","#EF4444","#10B981","#3B82F6","#A855F7","#F2C98A"];
-
-  for(let i=0;i<n;i++){
-    const b = document.createElement("div");
-    b.className = "balloon";
-    b.style.left = Math.random()*100 + "%";
-    b.style.background = colors[Math.floor(Math.random()*colors.length)];
-    b.style.animationDelay = Math.random() + "s";
-    b.style.animationDuration = (5 + Math.random()*2) + "s";
-    top.appendChild(b);
+    for(let i=0;i<n;i++){
+      const b = document.createElement("div");
+      b.className = "balloon";
+      b.style.left = Math.random()*100 + "%";
+      b.style.background = colors[Math.floor(Math.random()*colors.length)];
+      b.style.animationDelay = (Math.random()*0.6) + "s";
+      b.style.animationDuration = (4.8 + Math.random()*2.2) + "s";
+      top.appendChild(b);
+    }
   }
-}
 
-function celebrateVoice(){
-  try{
-    const u = new SpeechSynthesisUtterance("Heeey! Bravo! You did it!");
-    u.lang = "en-US";
-    u.rate = 0.95;
-    u.pitch = 1.25;
-    u.volume = 1;
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(u);
-  }catch(e){
-    beep("success");
-    setTimeout(()=>beep("success"),150);
-    setTimeout(()=>beep("success"),300);
-  }
-}
-
-function restartLesson(){
-  localStorage.removeItem(LESSON_ID);
-  document.getElementById("celebrate").classList.remove("show");
-  render();
-}
-
-function goNext(){
-  window.location.href = "lesson2.html";
-}
-
-function init(){
-  if(!localStorage.getItem(LESSON_ID)){
-    saveState(getDefaultState());
-  }
-  setLang("uz");
-}
-init();
-
-    // Fallback: kurze Jubel-Töne (falls Speech nicht geht)
+  function celebrateVoice(){
+    // Text-to-Speech "HEEEY" (works in most browsers after user interaction)
     try{
+      const u = new SpeechSynthesisUtterance("Heeey! Bravo! You did it!");
+      u.lang = "en-US";
+      u.rate = 0.95;
+      u.pitch = 1.25;
+      u.volume = 1.0;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(u);
+    } catch(e) {
+      // fallback beeps
       beep("success");
-      setTimeout(()=>beep("success"), 180);
-      setTimeout(()=>beep("success"), 360);
-    }catch(e){}
+      setTimeout(()=>beep("success"), 160);
+      setTimeout(()=>beep("success"), 320);
+    }
   }
+
+  // =============================
+  // NAV
+  // =============================
+  function restartLesson(){
+    localStorage.removeItem(LESSON_ID);
+    document.getElementById("celebrate").classList.remove("show");
+    render();
+  }
+
+  function goNext(){
+    window.location.href = "lesson2.html";
+  }
+
+  // =============================
+  // INIT
+  // =============================
+  (function init(){
+    if(!localStorage.getItem(LESSON_ID)){
+      saveState(getDefaultState());
+    }
+    setLang("uz");
+  })();
 </script>
 </body>
 </html>
+
