@@ -83,7 +83,7 @@
       const learned = new Set(getLearned());
       const learnedCount = learned.size;
       const pct = Math.round((learnedCount / TOTAL_WORDS_ALL) * 100);
-      document.getElementById("pText").innerText = `${learnedCount} / ${TOTAL_WORDS_ALL} Wörter`;
+      document.getElementById("pText").innerText = `${learnedCount} / ${TOTAL_WORDS_ALL} So`zlar`;
       document.getElementById("pFill").style.width = `${pct}%`;
 
       // lesson pill
@@ -169,10 +169,10 @@
       <div class="bar">
         <div class="barRow">
           <div class="barLabel">Fortschritt</div>
-          <div id="pText" style="color:var(--muted);font-weight:800;">0 / 23 Wörter</div>
+          <div id="pText" style="color:var(--muted);font-weight:800;">0 / 23 So`zlar </div>
         </div>
         <div class="barRow" style="margin-top:8px">
-          <div id="pLesson" style="color:var(--muted);font-weight:800;">0 / 5 in dieser Lektion</div>
+          <div id="pLesson" style="color:var(--muted);font-weight:800;">0 / 5 bu darsda </div>
           <div id="quizPill" style="color:var(--muted);font-weight:900;">Quiz: ❓ offen</div>
         </div>
         <div class="track"><div class="fill" id="pFill"></div></div>
@@ -231,8 +231,8 @@
       </div>
 
       <div class="quiz card">
-        <div class="qTitle">🎯 Mini-Quiz</div>
-        <p class="qText"><strong>Was heißt „Salom“?</strong></p>
+        <div class="qTitle">🎯 kichik-test </div>
+        <p class="qText"><strong>How do you translate „Salom“?</strong></p>
         <button class="opt" onclick="answer(true)">Hello</button>
         <button class="opt" onclick="answer(false)">Thank you</button>
         <button class="opt" onclick="answer(false)">Bye</button>
