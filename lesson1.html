@@ -635,10 +635,38 @@
   // -----------------------------
   // CELEBRATION (balloons + confetti)
   // -----------------------------
-  function celebrate(){
-    const T = ui[currentLang];
-    document.getElementById("celebrateTitle").innerText = T.celebrateTitle;
-    document.getElementById("celebrateText").innerText = T.celebrateText;
+function celebrate(){
+  const T = ui[currentLang];
+
+  // Text setzen
+  document.getElementById("celebrateTitle").innerText = T.celebrateTitle;
+  document.getElementById("celebrateText").innerText  = T.celebrateText;
+
+  // 🎉 CONFETTI
+  const conf = document.getElementById("confetti");
+  conf.innerHTML = "";
+
+  const colors = ["#F59E0B","#EF4444","#10B981","#3B82F6","#A855F7","#F97316"];
+  for(let i=0;i<40;i++){
+    const d = document.createElement("div");
+    d.className = "dot";
+    d.style.left = Math.random()*100 + "%";
+    d.style.background = colors[Math.floor(Math.random()*colors.length)];
+    d.style.animationDelay = (Math.random()*0.6) + "s";
+    conf.appendChild(d);
+  }
+
+  // 🎈 BALLOONS
+  for(let i=0;i<6;i++){
+    const b = document.createElement("div");
+    b.className = "balloon";
+    b.style.left = (10 + i*13) + "%";
+    conf.appendChild(b);
+  }
+
+  // 🔊 HEYYY + Jubel
+  celebrateVoice();
+}
 
     // confetti dots
     const conf = document.getElementById("confetti");
@@ -701,6 +729,28 @@
     setLang("uz"); // will render()
   }
   init();
+  
+  function celebrateVoice(){
+    // Versuche zuerst Text-to-Speech: "Heeey!"
+    try{
+      const u = new SpeechSynthesisUtterance("Heeey! Bravo! Very good!");
+      u.lang = "en-US";            // klingt wie Jubel auf Englisch
+      u.rate = 0.95;
+      u.pitch = 1.25;
+      u.volume = 1.0;
+
+      // kleine Pause davor wirkt "show" + laut
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(u);
+    }catch(e){}
+
+    // Fallback: kurze Jubel-Töne (falls Speech nicht geht)
+    try{
+      beep("success");
+      setTimeout(()=>beep("success"), 180);
+      setTimeout(()=>beep("success"), 360);
+    }catch(e){}
+  }
 </script>
 </body>
 </html>
