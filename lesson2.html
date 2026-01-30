@@ -3,43 +3,194 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2-dars – Sonlar</title>
+  <title>2-dars – Sonlar 1–10</title>
+
   <style>
-    body{font-family:Arial;margin:0;background:#f6f7fb;padding:18px}
-    .app{max-width:720px;margin:0 auto}
-    .top{background:#fff;border-radius:16px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
-    h1{margin:0;font-size:22px}
-    .sub{color:#666;margin-top:6px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:14px}
-    .card{background:#fff;border-radius:16px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.08);text-align:center}
-    .num{font-size:30px;font-weight:bold}
-    .uz{font-size:18px;margin-top:6px}
-    .pr{color:#777;font-style:italic;margin-top:6px}
-    a.nav{display:inline-block;margin-top:14px;text-decoration:none;background:#111827;color:#fff;padding:10px 14px;border-radius:12px;font-weight:bold}
-    a.nav2{display:inline-block;margin-top:14px;text-decoration:none;background:#4CAF50;color:#fff;padding:10px 14px;border-radius:12px;font-weight:bold}
+    :root{
+      --bg:#F7F3EE;
+      --card:#FFFFFF;
+      --ink:#1F2937;
+      --muted:#6B7280;
+      --line:#E7E0D8;
+      --accent:#6FA8A1;
+      --accent2:#F2C98A;
+      --shadow:0 8px 24px rgba(31,41,55,0.08);
+      --radius:18px;
+    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);padding:18px;}
+    .app{max-width:860px;margin:0 auto;}
+    .top{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;}
+    .headRow{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;}
+    h1{margin:0;font-size:22px;}
+    .sub{margin-top:6px;color:var(--muted)}
+    .langSwitch{display:flex;gap:6px;background:#F1FBF9;border:1px solid #D7F1ED;padding:6px;border-radius:999px;}
+    .langBtn{border:none;background:transparent;padding:6px 12px;border-radius:999px;font-weight:800;cursor:pointer;color:#1B4D48;}
+    .langBtn.active{background:var(--accent);color:#fff;}
+    .grid{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;text-align:center;}
+    .emoji{font-size:34px}
+    .uz{font-size:28px;font-weight:900;margin-top:8px}
+    .en{font-size:16px;font-weight:700;margin-top:8px;display:none}
+    .pr{color:var(--muted);font-style:italic;margin-top:6px}
+    .audioBtn{width:100%;margin-top:10px;padding:10px;font-size:15px;border:none;border-radius:14px;background:var(--accent2);color:#3b2a10;font-weight:900;cursor:pointer;}
+    .navRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+    a.nav,a.next{flex:1;min-width:200px;text-align:center;text-decoration:none;padding:12px;border-radius:14px;font-weight:900;}
+    a.nav{background:#fff;border:1px solid var(--line);color:var(--ink);}
+    a.next{background:var(--accent);color:#fff;}
   </style>
+
+  <script>
+    let currentLang = "uz";
+
+    function setLang(lang){
+      currentLang = lang;
+      document.querySelectorAll('.uz').forEach(e => e.style.display = (lang==='uz')?'block':'none');
+      document.querySelectorAll('.en').forEach(e => e.style.display = (lang==='en')?'block':'none');
+      document.getElementById('btn-uz').classList.toggle('active', lang==='uz');
+      document.getElementById('btn-en').classList.toggle('active', lang==='en');
+    }
+
+    function play(key){
+      const id = (currentLang === "en") ? ("en_" + key) : ("uz_" + key);
+      const a = document.getElementById(id);
+      if(!a){ alert("Audio topilmadi: " + id); return; }
+      a.currentTime = 0;
+      const p = a.play();
+      if(p && typeof p.catch === "function"){ p.catch(()=>alert("Audio o‘ynamadi. Fayl nomi/papka tekshiring.")); }
+    }
+  </script>
 </head>
-<body>
+
+<body onload="setLang('uz')">
   <div class="app">
     <div class="top">
-      <h1>🔢 2-dars: Sonlar 1–10</h1>
-      <div class="sub">Bir, ikki, uch… sanaymiz! 🎈</div>
-
-      <div class="grid">
-        <div class="card"><div class="num">1</div><div class="uz">bir</div><div class="pr">beer</div></div>
-        <div class="card"><div class="num">2</div><div class="uz">ikki</div><div class="pr">ik-KI</div></div>
-        <div class="card"><div class="num">3</div><div class="uz">uch</div><div class="pr">ooch</div></div>
-        <div class="card"><div class="num">4</div><div class="uz">to‘rt</div><div class="pr">turt</div></div>
-        <div class="card"><div class="num">5</div><div class="uz">besh</div><div class="pr">besh</div></div>
-        <div class="card"><div class="num">6</div><div class="uz">olti</div><div class="pr">ol-TI</div></div>
-        <div class="card"><div class="num">7</div><div class="uz">yetti</div><div class="pr">yet-TI</div></div>
-        <div class="card"><div class="num">8</div><div class="uz">sakkiz</div><div class="pr">sak-KIZ</div></div>
-        <div class="card"><div class="num">9</div><div class="uz">to‘qqiz</div><div class="pr">tok-KIZ</div></div>
-        <div class="card"><div class="num">10</div><div class="uz">o‘n</div><div class="pr">un</div></div>
+      <div class="headRow">
+        <div>
+          <h1>🔢 2-dars: Sonlar 1–10</h1>
+          <div class="sub">Birga sanaymiz! 😊</div>
+        </div>
+        <div class="langSwitch">
+          <button id="btn-uz" class="langBtn active" onclick="setLang('uz')">UZ</button>
+          <button id="btn-en" class="langBtn" onclick="setLang('en')">EN</button>
+        </div>
       </div>
 
-      <a class="nav" href="lesson1.html">⬅️ Oldingi</a>
-      <a class="nav2" href="lesson3.html">Keyingi ➡️</a>
+      <div class="grid">
+        <!-- 1 -->
+        <div class="card">
+          <div class="emoji">1️⃣</div>
+          <div class="uz">Bir</div>
+          <div class="en">One</div>
+          <div class="pr">bir</div>
+          <button class="audioBtn" onclick="play('1')">▶ Tinglash</button>
+          <audio id="uz_1" src="a/1.mp3" preload="none" playsinline></audio>
+          <audio id="en_1" src="en/1.mp3" preload="none" playsinline></audio>
+        </div>
+
+        <!-- 2 -->
+        <div class="card">
+          <div class="emoji">2️⃣</div>
+          <div class="uz">Ikki</div>
+          <div class="en">Two</div>
+          <div class="pr">IK-ki</div>
+          <button class="audioBtn" onclick="play('2')">▶ Tinglash</button>
+          <audio id="uz_2" src="a/2.mp3" preload="none" playsinline></audio>
+          <audio id="en_2" src="en/2.mp3" preload="none" playsinline></audio>
+        </div>
+
+        <!-- 3 -->
+        <div class="card">
+          <div class="emoji">3️⃣</div>
+          <div class="uz">Uch</div>
+          <div class="en">Three</div>
+          <div class="pr">uch</div>
+          <button class="audioBtn" onclick="play('3')">▶ Tinglash</button>
+          <audio id="uz_3" src="a/3.mp3" preload="none" playsinline></audio>
+          <audio id="en_3" src="en/3.mp3" preload="none" playsinline></audio>
+        </div>
+
+        <!-- 4 -->
+        <div class="card">
+          <div class="emoji">4️⃣</div>
+          <div class="uz">To‘rt</div>
+          <div class="en">Four</div>
+          <div class="pr">tort</div>
+          <button class="audioBtn" onclick="play('4')">▶ Tinglash</button>
+          <audio id="uz_4" src="a/4.mp3" preload="none" playsinline></audio>
+          <audio id="en_4" src="en/4.mp3" preload="none" playsinline></audio>
+        </div>
+
+        <!-- 5 -->
+        <div class="card">
+          <div class="emoji">5️⃣</div>
+          <div class="uz">Besh</div>
+          <div class="en">Five</div>
+          <div class="pr">besh</div>
+          <button class="audioBtn" onclick="play('5')">▶ Tinglash</button>
+          <audio id="uz_5" src="a/5.mp3" preload="none" playsinline></audio>
+          <audio id="en_5" src="en/5.mp3" preload="none" playsinline></audio>
+        </div>
+
+        <!-- 6 -->
+        <div class="card">
+          <div class="emoji">6️⃣</div>
+          <div class="uz">Olti</div>
+          <div class="en">Six</div>
+          <div class="pr">OL-ti</div>
+          <button class="audioBtn" onclick="play('6')">▶ Tinglash</button>
+          <audio id="uz_6" src="a/6.mp3" preload="none" playsinline></audio>
+          <audio id="en_6" src="en/6.mp3" preload="none" playsinline></audio>
+        </div>
+
+        <!-- 7 -->
+        <div class="card">
+          <div class="emoji">7️⃣</div>
+          <div class="uz">Yetti</div>
+          <div class="en">Seven</div>
+          <div class="pr">YET-ti</div>
+          <button class="audioBtn" onclick="play('7')">▶ Tinglash</button>
+          <audio id="uz_7" src="a/7.mp3" preload="none" playsinline></audio>
+          <audio id="en_7" src="en/7.mp3" preload="none" playsinline></audio>
+        </div>
+
+        <!-- 8 -->
+        <div class="card">
+          <div class="emoji">8️⃣</div>
+          <div class="uz">Sakkiz</div>
+          <div class="en">Eight</div>
+          <div class="pr">sak-KIZ</div>
+          <button class="audioBtn" onclick="play('8')">▶ Tinglash</button>
+          <audio id="uz_8" src="a/8.mp3" preload="none" playsinline></audio>
+          <audio id="en_8" src="en/8.mp3" preload="none" playsinline></audio>
+        </div>
+
+        <!-- 9 -->
+        <div class="card">
+          <div class="emoji">9️⃣</div>
+          <div class="uz">To‘qqiz</div>
+          <div class="en">Nine</div>
+          <div class="pr">tok-KIZ</div>
+          <button class="audioBtn" onclick="play('9')">▶ Tinglash</button>
+          <audio id="uz_9" src="a/9.mp3" preload="none" playsinline></audio>
+          <audio id="en_9" src="en/9.mp3" preload="none" playsinline></audio>
+        </div>
+
+        <!-- 10 -->
+        <div class="card">
+          <div class="emoji">🔟</div>
+          <div class="uz">O‘n</div>
+          <div class="en">Ten</div>
+          <div class="pr">un</div>
+          <button class="audioBtn" onclick="play('10')">▶ Tinglash</button>
+          <audio id="uz_10" src="a/10.mp3" preload="none" playsinline></audio>
+          <audio id="en_10" src="en/10.mp3" preload="none" playsinline></audio>
+        </div>
+      </div>
+
+      <div class="navRow">
+        <a class="nav" href="lesson1.html">⬅️ Orqaga</a>
+        <a class="next" href="lesson3.html">Keyingi ➡️</a>
+      </div>
     </div>
   </div>
 </body>
