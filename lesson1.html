@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>1-dars – Salomlashuv</title>
+
   <style>
     :root{
       --bg:#F7F3EE; --card:#FFFFFF; --ink:#1F2937; --muted:#6B7280; --line:#E7E0D8;
@@ -19,11 +20,6 @@
     .langSwitch{display:flex;gap:6px;background:#F1FBF9;border:1px solid #D7F1ED;padding:6px;border-radius:999px;}
     .langBtn{border:none;background:transparent;padding:6px 12px;border-radius:999px;font-weight:800;cursor:pointer;color:#1B4D48;}
     .langBtn.active{background:var(--accent);color:#fff;}
-    .bar{margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:var(--shadow);}
-    .barRow{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
-    .barLabel{font-weight:900}
-    .track{height:12px;background:#F3F4F6;border-radius:999px;overflow:hidden;border:1px solid #E5E7EB;flex:1;min-width:220px}
-    .fill{height:100%;width:0%;background:var(--accent)}
     .grid{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;}
     .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;text-align:center;}
     .emoji{font-size:48px}
@@ -32,122 +28,65 @@
     .pr{color:var(--muted);font-style:italic;margin-top:6px;font-size:13px}
     .audioBtn{width:100%;margin-top:10px;padding:10px;font-size:15px;border:none;border-radius:14px;background:var(--accent2);color:#3b2a10;font-weight:900;cursor:pointer;}
     .stars{margin-top:8px;font-size:20px;color:#F59E0B;font-weight:900}
+    .quiz{margin-top:16px}
+    .opt{width:100%;padding:12px;border-radius:14px;border:1px solid var(--line);background:#fff;font-weight:900;cursor:pointer;margin-top:8px}
+    .result{margin-top:10px;font-weight:900}
     .navRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
     a.nav,a.next{flex:1;min-width:200px;text-align:center;text-decoration:none;padding:12px;border-radius:14px;font-weight:900;}
     a.nav{background:#fff;border:1px solid var(--line);color:var(--ink);}
     a.next{background:var(--accent);color:#fff;}
-    .quiz{margin-top:16px}
-    .qTitle{font-size:18px;font-weight:900;margin:0 0 8px}
-    .qText{color:var(--muted);margin:0 0 10px}
-    .opt{width:100%;padding:12px;border-radius:14px;border:1px solid var(--line);background:#fff;font-weight:900;cursor:pointer;margin-top:8px}
-    .result{margin-top:10px;font-weight:900}
   </style>
 
   <script>
-    // -------- settings per lesson --------
-    const LESSON = "1";
-    const TOTAL_WORDS_ALL = 23;
-    const WORDS_IN_LESSON = 5;
-
-    // -------- state --------
     let currentLang = "uz";
+    const LESSON = "1";
 
     function setLang(lang){
       currentLang = lang;
-      document.querySelectorAll('.uz').forEach(e => e.style.display = (lang==='uz')?'block':'none');
-      document.querySelectorAll('.en').forEach(e => e.style.display = (lang==='en')?'block':'none');
+      document.querySelectorAll('.uz').forEach(e => e.style.display = (lang==='uz') ? 'block' : 'none');
+      document.querySelectorAll('.en').forEach(e => e.style.display = (lang==='en') ? 'block' : 'none');
       document.getElementById('btn-uz').classList.toggle('active', lang==='uz');
       document.getElementById('btn-en').classList.toggle('active', lang==='en');
     }
 
-    function getStars(){
-      try { return JSON.parse(localStorage.getItem("stars") || "{}"); }
-      catch { return {}; }
-    }
-    function setStars(obj){ localStorage.setItem("stars", JSON.stringify(obj)); }
+    function getStars(){ try { return JSON.parse(localStorage.getItem("stars") || "{}"); } catch { return {}; } }
+    function setStars(o){ localStorage.setItem("stars", JSON.stringify(o)); }
 
-    function getLearned(){
-      try { return JSON.parse(localStorage.getItem("learned") || "[]"); }
-      catch { return []; }
-    }
-    function setLearned(arr){ localStorage.setItem("learned", JSON.stringify(arr)); }
-
-    function markLearned(wordKey){
-      const key = `L${LESSON}_${wordKey}`;
-      const learned = new Set(getLearned());
-      learned.add(key);
-      setLearned([...learned]);
-    }
-
-    function updateProgressUI(){
-      const learned = new Set(getLearned());
-      const learnedCount = learned.size;
-      const pct = Math.round((learnedCount / TOTAL_WORDS_ALL) * 100);
-      document.getElementById("pText").innerText = `${learnedCount} / ${TOTAL_WORDS_ALL} So`zlar`;
-      document.getElementById("pFill").style.width = `${pct}%`;
-
-      // lesson pill
-      let inLesson = 0;
-      for (const k of learned) if (k.startsWith("L"+LESSON+"_")) inLesson++;
-      document.getElementById("pLesson").innerText = `${inLesson} / ${WORDS_IN_LESSON} in dieser Lektion`;
-    }
-
-    function renderStars(wordKey){
+    function renderStars(key){
       const stars = getStars();
-      const n = Math.min(3, stars[`L${LESSON}_${wordKey}`] || 0);
-      document.getElementById("star-"+wordKey).innerText = "★".repeat(n) + "☆".repeat(3-n);
+      const n = Math.min(3, stars[`L${LESSON}_${key}`] || 0);
+      document.getElementById("star-"+key).innerText = "★".repeat(n) + "☆".repeat(3-n);
     }
 
-    function play(wordKey, audioKey){
-      const id = (currentLang === "en") ? ("en_" + audioKey) : ("uz_" + audioKey);
+    function play(key){
+      const id = (currentLang === "en") ? ("en_" + key) : ("uz_" + key);
       const a = document.getElementById(id);
       if(!a){ alert("Audio fehlt: " + id); return; }
-      a.currentTime = 0;
-      a.play().catch(()=>alert("Audio spielt nicht. Prüfe Datei/Ordner."));
 
-      // add stars
+      a.currentTime = 0;
+      a.play().catch(()=>alert("Audio spielt nicht. Prüfe Datei: " + a.src));
+
       const stars = getStars();
-      const sKey = `L${LESSON}_${wordKey}`;
+      const sKey = `L${LESSON}_${key}`;
       stars[sKey] = Math.min(3, (stars[sKey] || 0) + 1);
       setStars(stars);
-      renderStars(wordKey);
-
-      // learned after first listen
-      markLearned(wordKey);
-      updateProgressUI();
+      renderStars(key);
     }
-
-    // -------- quiz --------
-    function getQuiz(){ try { return JSON.parse(localStorage.getItem("quiz") || "{}"); } catch { return {}; } }
-    function setQuiz(o){ localStorage.setItem("quiz", JSON.stringify(o)); }
 
     function answer(correct){
       const r = document.getElementById("quizResult");
-      const quiz = getQuiz();
-      const k = "L"+LESSON+"_quiz1";
       if(correct){
         r.innerText = "✅ Richtig! Super!";
         r.style.color = "var(--good)";
-        quiz[k] = true;
-        setQuiz(quiz);
-        updateQuizPill();
-      }else{
+      } else {
         r.innerText = "❌ Nicht ganz. Versuch’s nochmal!";
         r.style.color = "var(--bad)";
       }
     }
 
-    function updateQuizPill(){
-      const quiz = getQuiz();
-      const done = !!quiz["L"+LESSON+"_quiz1"];
-      document.getElementById("quizPill").innerText = done ? "Quiz: ✅ geschafft" : "Quiz: ❓ offen";
-    }
-
     window.onload = () => {
       setLang("uz");
-      ["salom","rahmat","iltimos","yaxshimisiz","xayr"].forEach(renderStars);
-      updateProgressUI();
-      updateQuizPill();
+      ["1","4","6","9","11"].forEach(renderStars);
     };
   </script>
 </head>
@@ -158,81 +97,80 @@
       <div class="headRow">
         <div>
           <h1>👋 1-dars: Salomlashuv</h1>
-          <div class="sub">Yaxshi so‘zlar — do‘stlikni boshlaydi 😊</div>
+          <div class="sub">Du darfst Texte ändern – die Zahlen-Keys bitte lassen 😊</div>
         </div>
+
         <div class="langSwitch">
           <button id="btn-uz" class="langBtn active" onclick="setLang('uz')">UZ</button>
           <button id="btn-en" class="langBtn" onclick="setLang('en')">EN</button>
         </div>
       </div>
 
-      <div class="bar">
-        <div class="barRow">
-          <div class="barLabel">Fortschritt</div>
-          <div id="pText" style="color:var(--muted);font-weight:800;">0 / 23 So`zlar </div>
-        </div>
-        <div class="barRow" style="margin-top:8px">
-          <div id="pLesson" style="color:var(--muted);font-weight:800;">0 / 5 bu darsda </div>
-          <div id="quizPill" style="color:var(--muted);font-weight:900;">Quiz: ❓ offen</div>
-        </div>
-        <div class="track"><div class="fill" id="pFill"></div></div>
-      </div>
-
       <div class="grid">
+        <!-- KEY 1 -->
         <div class="card">
           <div class="emoji">👋</div>
-          <div class="uz">Salom</div><div class="en">Hello</div>
+          <div class="uz">Salom</div>
+          <div class="en">Hello</div>
           <div class="pr">sa-LOM</div>
-          <button class="audioBtn" onclick="play('salom','1')">▶ Tinglash</button>
-          <div class="stars" id="star-salom">☆ ☆ ☆</div>
+          <button class="audioBtn" onclick="play('1')">▶ Tinglash</button>
+          <div class="stars" id="star-1">☆ ☆ ☆</div>
           <audio id="uz_1" src="a/1.mp3" preload="none" playsinline></audio>
           <audio id="en_1" src="en/1.mp3" preload="none" playsinline></audio>
         </div>
 
+        <!-- KEY 6 -->
         <div class="card">
           <div class="emoji">🙏</div>
-          <div class="uz">Rahmat</div><div class="en">Thank you</div>
+          <div class="uz">Rahmat</div>
+          <div class="en">Thank you</div>
           <div class="pr">rakh-MAT</div>
-          <button class="audioBtn" onclick="play('rahmat','6')">▶ Tinglash</button>
-          <div class="stars" id="star-rahmat">☆ ☆ ☆</div>
+          <button class="audioBtn" onclick="play('6')">▶ Tinglash</button>
+          <div class="stars" id="star-6">☆ ☆ ☆</div>
           <audio id="uz_6" src="a/6.mp3" preload="none" playsinline></audio>
           <audio id="en_6" src="en/6.mp3" preload="none" playsinline></audio>
         </div>
 
+        <!-- KEY 9 -->
         <div class="card">
           <div class="emoji">🌸</div>
-          <div class="uz">Iltimos</div><div class="en">Please</div>
+          <div class="uz">Iltimos</div>
+          <div class="en">Please</div>
           <div class="pr">il-ti-MOS</div>
-          <button class="audioBtn" onclick="play('iltimos','9')">▶ Tinglash</button>
-          <div class="stars" id="star-iltimos">☆ ☆ ☆</div>
+          <button class="audioBtn" onclick="play('9')">▶ Tinglash</button>
+          <div class="stars" id="star-9">☆ ☆ ☆</div>
           <audio id="uz_9" src="a/9.mp3" preload="none" playsinline></audio>
           <audio id="en_9" src="en/9.mp3" preload="none" playsinline></audio>
         </div>
 
+        <!-- KEY 4 -->
         <div class="card">
           <div class="emoji">🙂</div>
-          <div class="uz">Yaxshimisiz?</div><div class="en">How are you?</div>
+          <div class="uz">Yaxshimisiz?</div>
+          <div class="en">How are you?</div>
           <div class="pr">yakh-shi-MI-siz</div>
-          <button class="audioBtn" onclick="play('yaxshimisiz','4')">▶ Tinglash</button>
-          <div class="stars" id="star-yaxshimisiz">☆ ☆ ☆</div>
+          <button class="audioBtn" onclick="play('4')">▶ Tinglash</button>
+          <div class="stars" id="star-4">☆ ☆ ☆</div>
           <audio id="uz_4" src="a/4.mp3" preload="none" playsinline></audio>
           <audio id="en_4" src="en/4.mp3" preload="none" playsinline></audio>
         </div>
 
+        <!-- KEY 11 -->
         <div class="card">
           <div class="emoji">🌙</div>
-          <div class="uz">Xayr</div><div class="en">Bye</div>
+          <div class="uz">Xayr</div>
+          <div class="en">Bye</div>
           <div class="pr">khayr</div>
-          <button class="audioBtn" onclick="play('xayr','11')">▶ Tinglash</button>
-          <div class="stars" id="star-xayr">☆ ☆ ☆</div>
+          <button class="audioBtn" onclick="play('11')">▶ Tinglash</button>
+          <div class="stars" id="star-11">☆ ☆ ☆</div>
           <audio id="uz_11" src="a/11.mp3" preload="none" playsinline></audio>
           <audio id="en_11" src="en/11.mp3" preload="none" playsinline></audio>
         </div>
       </div>
 
       <div class="quiz card">
-        <div class="qTitle">🎯 kichik-test </div>
-        <p class="qText"><strong>How do you translate „Salom“?</strong></p>
+        <h2 style="margin:0 0 8px;">🎯 Mini-Quiz</h2>
+        <p style="margin:0;color:var(--muted)"><strong>Was heißt „Salom“?</strong></p>
         <button class="opt" onclick="answer(true)">Hello</button>
         <button class="opt" onclick="answer(false)">Thank you</button>
         <button class="opt" onclick="answer(false)">Bye</button>
@@ -247,4 +185,5 @@
   </div>
 </body>
 </html>
+
 
