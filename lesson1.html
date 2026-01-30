@@ -3,101 +3,305 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1-dars – Salomlashuv</title>
+  <title>1-dars – Salomlashuv (Kids)</title>
 
   <style>
     :root{
-      --bg:#F7F3EE; --card:#FFFFFF; --ink:#1F2937; --muted:#6B7280; --line:#E7E0D8;
-      --accent:#6FA8A1; --accent2:#F2C98A; --shadow:0 10px 26px rgba(31,41,55,0.10); --radius:18px;
-      --good:#16a34a; --bad:#dc2626;
+      --bg:#F7F3EE;
+      --card:#FFFFFF;
+      --ink:#1F2937;
+      --muted:#6B7280;
+      --line:#E7E0D8;
+      --accent:#6FA8A1;
+      --accent2:#F2C98A;
+      --good:#16a34a;
+      --bad:#dc2626;
+      --shadow:0 10px 26px rgba(31,41,55,0.10);
+      --radius:18px;
     }
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);padding:18px;}
-    .app{max-width:920px;margin:0 auto;}
-    .top{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;}
-    .headRow{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;}
+
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      padding: 18px;
+    }
+
+    .app{max-width:980px;margin:0 auto;}
+    .top{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      position: relative;
+      overflow:hidden;
+    }
+
+    .headRow{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
     h1{margin:0;font-size:22px;}
-    .sub{margin-top:6px;color:var(--muted)}
-    .langSwitch{display:flex;gap:6px;background:#F1FBF9;border:1px solid #D7F1ED;padding:6px;border-radius:999px;}
-    .langBtn{border:none;background:transparent;padding:6px 12px;border-radius:999px;font-weight:800;cursor:pointer;color:#1B4D48;}
-    .langBtn.active{background:var(--accent);color:#fff;}
-    .grid{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;text-align:center;}
-    .emoji{font-size:48px}
-    .uz{font-size:28px;font-weight:900;margin-top:8px}
-    .en{font-size:16px;font-weight:800;margin-top:8px;display:none}
+    .sub{margin-top:6px;color:var(--muted);font-weight:700}
+
+    /* Language switch */
+    .langSwitch{
+      display:flex;
+      gap:6px;
+      background:#F1FBF9;
+      border:1px solid #D7F1ED;
+      padding:6px;
+      border-radius:999px;
+      user-select:none;
+    }
+    .langBtn{
+      border:none;
+      background:transparent;
+      padding:6px 12px;
+      border-radius:999px;
+      font-weight:900;
+      cursor:pointer;
+      color:#1B4D48;
+    }
+    .langBtn.active{
+      background:var(--accent);
+      color:#fff;
+    }
+
+    /* Progress */
+    .bar{
+      margin-top:12px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px;
+      box-shadow: var(--shadow);
+    }
+    .barRow{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .track{
+      height:12px;
+      background:#F3F4F6;
+      border-radius:999px;
+      overflow:hidden;
+      border:1px solid #E5E7EB;
+      margin-top:10px;
+    }
+    .fill{height:100%;width:0%;background:var(--accent);transition:width .25s ease;}
+
+    /* Cards */
+    .grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:12px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+      padding:14px;
+      text-align:center;
+      position:relative;
+    }
+
+    .emoji{font-size:50px; line-height:1;}
+    .uz{font-size:30px;font-weight:1000;margin-top:8px}
+    .en{font-size:18px;font-weight:900;margin-top:8px;display:none}
     .pr{color:var(--muted);font-style:italic;margin-top:6px;font-size:13px}
-    .audioBtn{width:100%;margin-top:10px;padding:10px;font-size:15px;border:none;border-radius:14px;background:var(--accent2);color:#3b2a10;font-weight:900;cursor:pointer;}
-    .stars{margin-top:8px;font-size:20px;color:#F59E0B;font-weight:900}
-    .quiz{margin-top:16px}
-    .opt{width:100%;padding:12px;border-radius:14px;border:1px solid var(--line);background:#fff;font-weight:900;cursor:pointer;margin-top:8px}
-    .result{margin-top:10px;font-weight:900}
-    .navRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
-    a.nav,a.next{flex:1;min-width:200px;text-align:center;text-decoration:none;padding:12px;border-radius:14px;font-weight:900;}
+
+    .audioBtn{
+      width:100%;
+      margin-top:10px;
+      padding:12px;
+      font-size:15px;
+      border:none;
+      border-radius:14px;
+      background:var(--accent2);
+      color:#3b2a10;
+      font-weight:1000;
+      cursor:pointer;
+    }
+
+    .stars{
+      margin-top:8px;
+      font-size:18px;
+      color:#F59E0B;
+      font-weight:1000;
+    }
+
+    /* Quiz */
+    .quizWrap{
+      margin-top:12px;
+      background:#F9FAFB;
+      border:1px dashed #E5E7EB;
+      border-radius:14px;
+      padding:12px;
+      text-align:left;
+    }
+    .qTitle{
+      font-weight:1000;
+      margin:0 0 8px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .qText{margin:0 0 10px;color:var(--muted);font-weight:800}
+    .opts{display:grid;gap:8px;}
+    .opt{
+      width:100%;
+      padding:12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-weight:1000;
+      cursor:pointer;
+      text-align:left;
+    }
+    .result{
+      margin-top:10px;
+      font-weight:1000;
+      display:none;
+      padding:10px;
+      border-radius:14px;
+      border:1px solid transparent;
+    }
+    .result.good{display:block;color:var(--good);background:#ECFDF5;border-color:#BBF7D0;}
+    .result.bad{display:block;color:var(--bad);background:#FEF2F2;border-color:#FECACA;}
+
+    /* Navigation */
+    .navRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+    a.nav,a.next{
+      flex:1;
+      min-width:200px;
+      text-align:center;
+      text-decoration:none;
+      padding:12px;
+      border-radius:14px;
+      font-weight:1000;
+    }
     a.nav{background:#fff;border:1px solid var(--line);color:var(--ink);}
     a.next{background:var(--accent);color:#fff;}
+
+    /* Celebration overlay */
+    .celebrate{
+      position:absolute;
+      inset:0;
+      background:rgba(247,243,238,0.88);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      z-index:20;
+    }
+    .celebrate.show{display:flex;}
+    .celebrateCard{
+      max-width:560px;
+      width:100%;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:20px;
+      box-shadow: var(--shadow);
+      padding:18px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .big{font-size:44px; font-weight:1000; margin:6px 0;}
+    .small{color:var(--muted); font-weight:800; margin:0 0 12px;}
+    .ctaRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;}
+    .cta{
+      flex:1; min-width:200px;
+      border:none; border-radius:14px;
+      padding:12px; font-weight:1000; cursor:pointer;
+    }
+    .cta.primary{background:var(--accent);color:#fff;}
+    .cta.secondary{background:#fff;border:1px solid var(--line);}
+
+    /* Balloons */
+    .balloon{
+      position:absolute;
+      bottom:-60px;
+      width:46px;height:60px;
+      border-radius:50% 50% 45% 45%;
+      opacity:0.95;
+      animation: floatUp 6s linear infinite;
+      box-shadow: 0 10px 18px rgba(0,0,0,0.10);
+    }
+    .balloon:after{
+      content:"";
+      position:absolute;left:50%;top:58px;
+      width:2px;height:44px;background:rgba(0,0,0,0.15);
+      transform:translateX(-50%);
+    }
+    @keyframes floatUp{
+      0%{transform:translateY(0) translateX(0);}
+      100%{transform:translateY(-720px) translateX(40px);}
+    }
+
+    /* Confetti dots */
+    .confetti{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .dot{
+      position:absolute;
+      width:10px;height:10px;border-radius:50%;
+      opacity:0.9;
+      animation: fall 2.8s linear infinite;
+    }
+    @keyframes fall{
+      0%{transform:translateY(-20px) rotate(0deg);opacity:1}
+      100%{transform:translateY(520px) rotate(360deg);opacity:0.9}
+    }
   </style>
-
-  <script>
-    let currentLang = "uz";
-    const LESSON = "1";
-
-    function setLang(lang){
-      currentLang = lang;
-      document.querySelectorAll('.uz').forEach(e => e.style.display = (lang==='uz') ? 'block' : 'none');
-      document.querySelectorAll('.en').forEach(e => e.style.display = (lang==='en') ? 'block' : 'none');
-      document.getElementById('btn-uz').classList.toggle('active', lang==='uz');
-      document.getElementById('btn-en').classList.toggle('active', lang==='en');
-    }
-
-    function getStars(){ try { return JSON.parse(localStorage.getItem("stars") || "{}"); } catch { return {}; } }
-    function setStars(o){ localStorage.setItem("stars", JSON.stringify(o)); }
-
-    function renderStars(key){
-      const stars = getStars();
-      const n = Math.min(3, stars[`L${LESSON}_${key}`] || 0);
-      document.getElementById("star-"+key).innerText = "★".repeat(n) + "☆".repeat(3-n);
-    }
-
-    function play(key){
-      const id = (currentLang === "en") ? ("en_" + key) : ("uz_" + key);
-      const a = document.getElementById(id);
-      if(!a){ alert("Audio fehlt: " + id); return; }
-
-      a.currentTime = 0;
-      a.play().catch(()=>alert("Audio spielt nicht. Prüfe Datei: " + a.src));
-
-      const stars = getStars();
-      const sKey = `L${LESSON}_${key}`;
-      stars[sKey] = Math.min(3, (stars[sKey] || 0) + 1);
-      setStars(stars);
-      renderStars(key);
-    }
-
-    function answer(correct){
-      const r = document.getElementById("quizResult");
-      if(correct){
-        r.innerText = "✅ Richtig! Super!";
-        r.style.color = "var(--good)";
-      } else {
-        r.innerText = "❌ Nicht ganz. Versuch’s nochmal!";
-        r.style.color = "var(--bad)";
-      }
-    }
-
-    window.onload = () => {
-      setLang("uz");
-      ["1","4","6","9","11"].forEach(renderStars);
-    };
-  </script>
 </head>
 
 <body>
   <div class="app">
-    <div class="top">
+    <div class="top" id="top">
+
+      <!-- Celebration -->
+      <div class="celebrate" id="celebrate">
+        <div class="celebrateCard">
+          <div class="confetti" id="confetti"></div>
+          <div style="font-size:54px">🎈🎉</div>
+          <div class="big" id="celebrateTitle">Barakalla!</div>
+          <p class="small" id="celebrateText">Siz 1-darsni tugatdingiz! Juda zo‘r! 🌟</p>
+
+          <div class="ctaRow">
+            <button class="cta primary" onclick="goNext()">➡️ Keyingi dars</button>
+            <button class="cta secondary" onclick="restartLesson()">🔁 Qaytadan</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Header -->
       <div class="headRow">
         <div>
-          <h1>👋 1-dars: Salomlashuv</h1>
-          <div class="sub">Du darfst Texte ändern – die Zahlen-Keys bitte lassen 😊</div>
+          <h1 id="title">👋 1-dars: Salomlashuv</h1>
+          <div class="sub" id="subtitle">Eshit, takrorla, o‘yna! ⭐</div>
         </div>
 
         <div class="langSwitch">
@@ -106,84 +310,397 @@
         </div>
       </div>
 
-      <div class="grid">
-        <!-- KEY 1 -->
-        <div class="card">
-          <div class="emoji">👋</div>
-          <div class="uz">Salom</div>
-          <div class="en">Hello</div>
-          <div class="pr">sa-LOM</div>
-          <button class="audioBtn" onclick="play('1')">▶ Tinglash</button>
-          <div class="stars" id="star-1">☆ ☆ ☆</div>
-          <audio id="uz_1" src="a/1.mp3" preload="none" playsinline></audio>
-          <audio id="en_1" src="en/1.mp3" preload="none" playsinline></audio>
+      <!-- Progress -->
+      <div class="bar">
+        <div class="barRow">
+          <div style="font-weight:1000" id="progressLabel">Darsdagi natija</div>
+          <div style="color:var(--muted);font-weight:900" id="progressText">0 / 5</div>
         </div>
-
-        <!-- KEY 6 -->
-        <div class="card">
-          <div class="emoji">🙏</div>
-          <div class="uz">Rahmat</div>
-          <div class="en">Thank you</div>
-          <div class="pr">rakh-MAT</div>
-          <button class="audioBtn" onclick="play('6')">▶ Tinglash</button>
-          <div class="stars" id="star-6">☆ ☆ ☆</div>
-          <audio id="uz_6" src="a/6.mp3" preload="none" playsinline></audio>
-          <audio id="en_6" src="en/6.mp3" preload="none" playsinline></audio>
-        </div>
-
-        <!-- KEY 9 -->
-        <div class="card">
-          <div class="emoji">🌸</div>
-          <div class="uz">Iltimos</div>
-          <div class="en">Please</div>
-          <div class="pr">il-ti-MOS</div>
-          <button class="audioBtn" onclick="play('9')">▶ Tinglash</button>
-          <div class="stars" id="star-9">☆ ☆ ☆</div>
-          <audio id="uz_9" src="a/9.mp3" preload="none" playsinline></audio>
-          <audio id="en_9" src="en/9.mp3" preload="none" playsinline></audio>
-        </div>
-
-        <!-- KEY 4 -->
-        <div class="card">
-          <div class="emoji">🙂</div>
-          <div class="uz">Yaxshimisiz?</div>
-          <div class="en">How are you?</div>
-          <div class="pr">yakh-shi-MI-siz</div>
-          <button class="audioBtn" onclick="play('4')">▶ Tinglash</button>
-          <div class="stars" id="star-4">☆ ☆ ☆</div>
-          <audio id="uz_4" src="a/4.mp3" preload="none" playsinline></audio>
-          <audio id="en_4" src="en/4.mp3" preload="none" playsinline></audio>
-        </div>
-
-        <!-- KEY 11 -->
-        <div class="card">
-          <div class="emoji">🌙</div>
-          <div class="uz">Xayr</div>
-          <div class="en">Bye</div>
-          <div class="pr">khayr</div>
-          <button class="audioBtn" onclick="play('11')">▶ Tinglash</button>
-          <div class="stars" id="star-11">☆ ☆ ☆</div>
-          <audio id="uz_11" src="a/11.mp3" preload="none" playsinline></audio>
-          <audio id="en_11" src="en/11.mp3" preload="none" playsinline></audio>
-        </div>
+        <div class="track"><div class="fill" id="progressFill"></div></div>
       </div>
 
-      <div class="quiz card">
-        <h2 style="margin:0 0 8px;">🎯 Mini-Quiz</h2>
-        <p style="margin:0;color:var(--muted)"><strong>Was heißt „Salom“?</strong></p>
-        <button class="opt" onclick="answer(true)">Hello</button>
-        <button class="opt" onclick="answer(false)">Thank you</button>
-        <button class="opt" onclick="answer(false)">Bye</button>
-        <div class="result" id="quizResult"></div>
-      </div>
+      <!-- Cards -->
+      <div class="grid" id="grid"></div>
 
+      <!-- Nav -->
       <div class="navRow">
-        <a class="nav" href="index.html">⬅️ Bosh sahifa</a>
-        <a class="next" href="lesson2.html">Keyingi ➡️</a>
+        <a class="nav" href="index.html" id="homeBtn">⬅️ Bosh sahifa</a>
+        <a class="next" href="lesson2.html" id="nextBtn">Keyingi ➡️</a>
       </div>
+
+      <!-- Optional external sounds (if you upload them) -->
+      <audio id="sndSuccess" src="s/success.mp3" preload="auto"></audio>
+      <audio id="sndFail" src="s/fail.mp3" preload="auto"></audio>
     </div>
   </div>
+
+<script>
+  // -----------------------------
+  // DATA (you may change ONLY the visible text)
+  // KEYS stay as: 1,4,6,9,11 (matching your mp3 names)
+  // -----------------------------
+  const LESSON_ID = "lesson1";
+  const items = [
+    { key:"1", emoji:"👋", uz:"Salom", en:"Hello", pr:"sa-LOM",
+      quiz: { uzQ:"“Salom” nimani anglatadi?", enQ:"What does “Salom” mean?",
+              correctEn:"Hello", wrongEn:["Thank you","Bye"] } },
+    { key:"6", emoji:"🙏", uz:"Rahmat", en:"Thank you", pr:"rakh-MAT",
+      quiz: { uzQ:"“Rahmat” nimani anglatadi?", enQ:"What does “Rahmat” mean?",
+              correctEn:"Thank you", wrongEn:["Please","Hello"] } },
+    { key:"9", emoji:"🌸", uz:"Iltimos", en:"Please", pr:"il-ti-MOS",
+      quiz: { uzQ:"“Iltimos” nimani anglatadi?", enQ:"What does “Iltimos” mean?",
+              correctEn:"Please", wrongEn:["Sorry","Bye"] } },
+    { key:"4", emoji:"🙂", uz:"Yaxshimisiz?", en:"How are you?", pr:"yakh-shi-MI-siz",
+      quiz: { uzQ:"“Yaxshimisiz?” nimani anglatadi?", enQ:"What does “Yaxshimisiz?” mean?",
+              correctEn:"How are you?", wrongEn:["Good night","Thank you"] } },
+    { key:"11", emoji:"🌙", uz:"Xayr", en:"Bye", pr:"khayr",
+      quiz: { uzQ:"“Xayr” nimani anglatadi?", enQ:"What does “Xayr” mean?",
+              correctEn:"Bye", wrongEn:["Hello","Please"] } },
+  ];
+
+  // UI text by language
+  const ui = {
+    uz: {
+      title: "👋 1-dars: Salomlashuv",
+      subtitle: "Eshit, takrorla, o‘yna! ⭐",
+      progressLabel: "Darsdagi natija",
+      home: "⬅️ Bosh sahifa",
+      next: "Keyingi ➡️",
+      listen: "▶ Tinglash",
+      quizTitle: "🎯 Mini-test",
+      correctMsg: "✅ To‘g‘ri! Barakalla!",
+      wrongMsg: "❌ Xato. Yana urinib ko‘r!",
+      celebrateTitle: "Barakalla! 🎉",
+      celebrateText: "Siz 1-darsni tugatdingiz! Juda zo‘r! 🌟",
+      quizDone: "✅ Bajarildi",
+      quizOpen: "❓ Test"
+    },
+    en: {
+      title: "👋 Lesson 1: Greetings",
+      subtitle: "Listen, repeat, play! ⭐",
+      progressLabel: "Lesson progress",
+      home: "⬅️ Home",
+      next: "Next ➡️",
+      listen: "▶ Listen",
+      quizTitle: "🎯 Mini quiz",
+      correctMsg: "✅ Correct! Great job!",
+      wrongMsg: "❌ Oops! Try again!",
+      celebrateTitle: "Well done! 🎉",
+      celebrateText: "You finished Lesson 1! Amazing! 🌟",
+      quizDone: "✅ Done",
+      quizOpen: "❓ Quiz"
+    }
+  };
+
+  // -----------------------------
+  // STATE
+  // -----------------------------
+  let currentLang = "uz";
+
+  function loadState(){
+    try {
+      return JSON.parse(localStorage.getItem(LESSON_ID) || "{}");
+    } catch {
+      return {};
+    }
+  }
+  function saveState(state){
+    localStorage.setItem(LESSON_ID, JSON.stringify(state));
+  }
+
+  // state structure:
+  // { stars:{key:n}, quizDone:{key:true} }
+  function getDefaultState(){
+    return { stars:{}, quizDone:{} };
+  }
+
+  // -----------------------------
+  // SOUND (external mp3 optional; fallback to WebAudio beeps)
+  // -----------------------------
+  let audioCtx = null;
+  function beep(type){
+    // type: "success" or "fail"
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    const t = audioCtx.currentTime;
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.connect(g); g.connect(audioCtx.destination);
+
+    if(type === "success"){
+      o.type = "triangle";
+      o.frequency.setValueAtTime(440, t);
+      o.frequency.exponentialRampToValueAtTime(880, t + 0.15);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.25, t + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
+      o.start(t); o.stop(t + 0.24);
+    } else {
+      o.type = "sawtooth";
+      o.frequency.setValueAtTime(220, t);
+      o.frequency.exponentialRampToValueAtTime(140, t + 0.18);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.20, t + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.20);
+      o.start(t); o.stop(t + 0.22);
+    }
+  }
+
+  function playFeedback(which){
+    // Try external mp3 first; if not available -> beep
+    const el = (which === "success") ? document.getElementById("sndSuccess") : document.getElementById("sndFail");
+    if(el && el.src && !el.src.endsWith("/")) {
+      el.currentTime = 0;
+      el.play().catch(()=>beep(which));
+    } else {
+      beep(which);
+    }
+  }
+
+  // -----------------------------
+  // BUILD UI
+  // -----------------------------
+  function setLang(lang){
+    currentLang = lang;
+
+    document.getElementById("btn-uz").classList.toggle("active", lang==="uz");
+    document.getElementById("btn-en").classList.toggle("active", lang==="en");
+
+    const T = ui[lang];
+    document.getElementById("title").innerText = T.title;
+    document.getElementById("subtitle").innerText = T.subtitle;
+    document.getElementById("progressLabel").innerText = T.progressLabel;
+    document.getElementById("homeBtn").innerText = T.home;
+    document.getElementById("nextBtn").innerText = T.next;
+
+    // Re-render cards (so quiz text buttons update)
+    render();
+  }
+
+  function starText(n){
+    n = Math.max(0, Math.min(3, n));
+    return "★".repeat(n) + "☆".repeat(3-n);
+  }
+
+  function shuffle(arr){
+    const a = [...arr];
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  function render(){
+    const T = ui[currentLang];
+    const state = Object.keys(loadState()).length ? loadState() : getDefaultState();
+
+    const grid = document.getElementById("grid");
+    grid.innerHTML = "";
+
+    items.forEach(it=>{
+      const stars = state.stars[it.key] || 0;
+      const done = !!state.quizDone[it.key];
+
+      // Quiz options
+      const options = shuffle([it.quiz.correctEn, ...it.quiz.wrongEn]);
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <div class="emoji">${it.emoji}</div>
+
+        <div class="uz" style="display:${currentLang==='uz'?'block':'none'}">${it.uz}</div>
+        <div class="en" style="display:${currentLang==='en'?'block':'none'}">${it.en}</div>
+
+        <div class="pr">${it.pr}</div>
+
+        <button class="audioBtn" data-key="${it.key}">
+          ${T.listen}
+        </button>
+
+        <div class="stars" id="star-${it.key}">${starText(stars)}</div>
+
+        <audio id="uz_${it.key}" src="a/${it.key}.mp3" preload="none" playsinline></audio>
+        <audio id="en_${it.key}" src="en/${it.key}.mp3" preload="none" playsinline></audio>
+
+        <div class="quizWrap">
+          <div class="qTitle">
+            <span>${T.quizTitle}</span>
+            <span style="font-weight:1000;color:${done?'var(--good)':'var(--muted)'}">
+              ${done ? T.quizDone : T.quizOpen}
+            </span>
+          </div>
+          <p class="qText">${currentLang==='uz' ? it.quiz.uzQ : it.quiz.enQ}</p>
+
+          <div class="opts">
+            ${options.map(opt => `
+              <button class="opt" data-qkey="${it.key}" data-opt="${opt}">
+                ${opt}
+              </button>
+            `).join("")}
+          </div>
+
+          <div class="result" id="res-${it.key}"></div>
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+
+    // Bind audio buttons
+    grid.querySelectorAll(".audioBtn").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const key = btn.getAttribute("data-key");
+        playWordAudio(key);
+      });
+    });
+
+    // Bind quiz options
+    grid.querySelectorAll(".opt").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const key = btn.getAttribute("data-qkey");
+        const opt = btn.getAttribute("data-opt");
+        checkQuiz(key, opt);
+      });
+    });
+
+    updateProgress();
+  }
+
+  function playWordAudio(key){
+    const id = (currentLang === "en") ? ("en_" + key) : ("uz_" + key);
+    const a = document.getElementById(id);
+    if(!a){
+      alert("Audio topilmadi: " + id);
+      return;
+    }
+    a.currentTime = 0;
+    a.play().catch(()=>{
+      alert("Audio o‘ynamayapti. Faylni tekshiring: " + a.src);
+    });
+
+    // Stars +1 when listening
+    const state = Object.keys(loadState()).length ? loadState() : getDefaultState();
+    state.stars[key] = Math.min(3, (state.stars[key] || 0) + 1);
+    saveState(state);
+
+    const starEl = document.getElementById("star-"+key);
+    if(starEl) starEl.innerText = starText(state.stars[key]);
+  }
+
+  function checkQuiz(key, chosen){
+    const T = ui[currentLang];
+    const item = items.find(x=>x.key===key);
+    if(!item) return;
+
+    const isCorrect = (chosen === item.quiz.correctEn);
+    const res = document.getElementById("res-"+key);
+    if(!res) return;
+
+    if(isCorrect){
+      res.className = "result good";
+      res.innerText = T.correctMsg;
+      playFeedback("success");
+
+      const state = Object.keys(loadState()).length ? loadState() : getDefaultState();
+      state.quizDone[key] = true;
+      saveState(state);
+
+      updateProgress(true);
+      // re-render this card header (Done badge)
+      render();
+
+    }else{
+      res.className = "result bad";
+      res.innerText = T.wrongMsg;
+      playFeedback("fail");
+    }
+  }
+
+  function updateProgress(checkCelebrate=false){
+    const state = Object.keys(loadState()).length ? loadState() : getDefaultState();
+    const doneCount = Object.values(state.quizDone || {}).filter(Boolean).length;
+
+    document.getElementById("progressText").innerText = `${doneCount} / ${items.length}`;
+    const pct = Math.round((doneCount / items.length) * 100);
+    document.getElementById("progressFill").style.width = pct + "%";
+
+    if(checkCelebrate && doneCount === items.length){
+      celebrate();
+    }
+  }
+
+  // -----------------------------
+  // CELEBRATION (balloons + confetti)
+  // -----------------------------
+  function celebrate(){
+    const T = ui[currentLang];
+    document.getElementById("celebrateTitle").innerText = T.celebrateTitle;
+    document.getElementById("celebrateText").innerText = T.celebrateText;
+
+    // confetti dots
+    const conf = document.getElementById("confetti");
+    conf.innerHTML = "";
+    const colors = ["#F59E0B","#EF4444","#10B981","#3B82F6","#A855F7","#F97316"];
+    for(let i=0;i<40;i++){
+      const d = document.createElement("div");
+      d.className = "dot";
+      d.style.left = Math.random()*100 + "%";
+      d.style.top = (-20 - Math.random()*200) + "px";
+      d.style.background = colors[Math.floor(Math.random()*colors.length)];
+      d.style.animationDelay = (Math.random()*1.2) + "s";
+      d.style.animationDuration = (2.2 + Math.random()*1.4) + "s";
+      conf.appendChild(d);
+    }
+
+    // balloons
+    spawnBalloons(10);
+
+    // show overlay + success sound
+    document.getElementById("celebrate").classList.add("show");
+    playFeedback("success");
+  }
+
+  function spawnBalloons(n){
+    // Remove old balloons
+    document.querySelectorAll(".balloon").forEach(b=>b.remove());
+
+    const top = document.getElementById("top");
+    const colors = ["#F59E0B","#EF4444","#10B981","#3B82F6","#A855F7","#F2C98A"];
+    for(let i=0;i<n;i++){
+      const b = document.createElement("div");
+      b.className = "balloon";
+      b.style.left = Math.random()*100 + "%";
+      b.style.background = colors[Math.floor(Math.random()*colors.length)];
+      b.style.animationDelay = (Math.random()*1.6) + "s";
+      b.style.animationDuration = (5.2 + Math.random()*2.2) + "s";
+      top.appendChild(b);
+    }
+  }
+
+  function restartLesson(){
+    localStorage.removeItem(LESSON_ID);
+    document.getElementById("celebrate").classList.remove("show");
+    render();
+  }
+
+  function goNext(){
+    window.location.href = "lesson2.html";
+  }
+
+  // -----------------------------
+  // INIT
+  // -----------------------------
+  function init(){
+    // Ensure state exists
+    if(!localStorage.getItem(LESSON_ID)){
+      saveState(getDefaultState());
+    }
+    setLang("uz"); // will render()
+  }
+  init();
+</script>
 </body>
 </html>
-
-
