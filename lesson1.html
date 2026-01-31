@@ -74,7 +74,7 @@
       color:#fff;
     }
 
-    /* Progress */
+    /* Progress + blocks */
     .bar{
       margin-top:12px;
       background:#fff;
@@ -172,6 +172,7 @@
       cursor:pointer;
       text-align:left;
     }
+    .opt[disabled]{opacity:.6; cursor:not-allowed;}
     .result{
       margin-top:10px;
       font-weight:1000;
@@ -241,7 +242,7 @@
     .cta.primary{background:var(--accent);color:#fff;}
     .cta.secondary{background:#fff;border:1px solid var(--line);}
 
-    /* Confetti + balloons area inside card */
+    /* Confetti */
     .confetti{
       position:absolute;
       inset:0;
@@ -259,25 +260,9 @@
       100%{transform:translateY(520px) rotate(360deg);opacity:0.9}
     }
 
-    .balloon{
-      position:absolute;
-      bottom:-80px;
-      width:46px;height:60px;
-      border-radius:50% 50% 45% 45%;
-      opacity:0.95;
-      animation: floatUp 6s linear forwards;
-      box-shadow: 0 10px 18px rgba(0,0,0,0.10);
-    }
-    .balloon:after{
-      content:"";
-      position:absolute;left:50%;top:58px;
-      width:2px;height:44px;background:rgba(0,0,0,0.15);
-      transform:translateX(-50%);
-    }
-    @keyframes floatUp{
-      0%{transform:translateY(0) translateX(0);}
-      100%{transform:translateY(-720px) translateX(40px);}
-    }
+    /* Gentle feedback */
+    .card.correct{ box-shadow: 0 0 0 3px rgba(111,168,161,.35); }
+    .card.wrong{   box-shadow: 0 0 0 3px rgba(242,201,138,.45); }
   </style>
 </head>
 
@@ -288,15 +273,17 @@
       <!-- Celebration overlay -->
       <div class="celebrate" id="celebrate">
         <div class="celebrateCard">
-          
+
+          <!-- FX sounds -->
           <audio id="fx_success" src="sounds/success.mp3" preload="auto"></audio>
           <audio id="fx_fail"    src="sounds/fail.mp3"    preload="auto"></audio>
           <audio id="fx_cheer"   src="sounds/cheer.mp3"   preload="auto"></audio>
 
           <div class="confetti" id="confetti"></div>
-          <div style="font-size:54px">🎈🎉</div>
+          <div style="font-size:54px">🎉</div>
           <div class="big" id="celebrateTitle">Barakalla! 🎉</div>
           <p class="small" id="celebrateText">Siz 1-darsni tugatdingiz! Juda zo‘r! 🌟</p>
+          <div id="stickerLine" class="small" style="font-weight:1000;">🏷️ Stiker: —</div>
 
           <div class="ctaRow">
             <button class="cta primary" onclick="goNext()">➡️ Keyingi dars</button>
@@ -318,6 +305,26 @@
         </div>
       </div>
 
+      <!-- Name setup -->
+      <div class="bar">
+        <div class="barRow">
+          <div style="font-weight:1000">👧🧒 Isming nima?</div>
+          <div style="color:var(--muted);font-weight:1000" id="childHello">Salom! 😊</div>
+        </div>
+
+        <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+          <input id="childNameInput" placeholder="Masalan: Damian"
+            style="flex:1; min-width:220px; padding:12px; border-radius:14px; border:1px solid var(--line); font-weight:900;">
+          <button class="audioBtn" id="saveNameBtn" style="flex:0; min-width:160px; background:var(--accent); color:#fff;">
+            ✅ Saqlash
+          </button>
+        </div>
+
+        <div style="margin-top:10px; color:var(--muted); font-weight:900;" id="nameTip">
+          Ism saqlanadi. Keyin ham shu ism bilan davom etasan.
+        </div>
+      </div>
+
       <!-- Progress -->
       <div class="bar">
         <div class="barRow">
@@ -330,6 +337,30 @@
       <!-- Cards -->
       <div class="grid" id="grid"></div>
 
+      <!-- Mini-Game -->
+      <div class="bar" style="margin-top:14px;">
+        <div class="barRow">
+          <div style="font-weight:1000">😊 Mini-o‘yin: Qaysi so‘z?</div>
+          <div style="color:var(--muted);font-weight:1000" id="friendlyScore">0 / 3</div>
+        </div>
+
+        <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="audioBtn" id="friendlyStartBtn" style="flex:1; min-width:200px; background:var(--accent); color:#fff;">
+            ▶ Boshlash
+          </button>
+          <button class="audioBtn" id="friendlyRepeatBtn" style="flex:1; min-width:200px;">
+            🔁 Yana eshitish
+          </button>
+        </div>
+
+        <div style="margin-top:10px; font-weight:900; color:var(--muted);" id="friendlyHint">
+          “Boshlash”ni bosing, so‘zni eshiting va mos belgini tanlang.
+        </div>
+
+        <div class="opts" style="margin-top:10px;" id="friendlyOpts"></div>
+        <div class="result" id="friendlyRes"></div>
+      </div>
+
       <!-- Nav -->
       <div class="navRow">
         <a class="nav" href="index.html" id="homeBtn">⬅️ Bosh sahifa</a>
@@ -341,13 +372,12 @@
 
 <script>
   // =============================
-  // CONFIG
+  // CONFIG + DATA
   // =============================
-  const LESSON_ID = "lesson1_state_v2"; // neuer Key, damit alte Bugs nicht stören
+  const STORAGE_KEY = "lesson1_state_v3";     // stable state key
+  const NAME_KEY    = "kids_child_name_v1";
+  const STICKER_KEY = "kids_stickers_v1";
 
-  // IMPORTANT: keys must match your mp3 names:
-  // UZ: a/<key>.mp3
-  // EN: en/<key>.mp3
   const items = [
     { key:"1",  emoji:"👋", uz:"Salom",        en:"Hello",        pr:"sa-LOM",
       quiz: { uzQ:"“Salom” nimani anglatadi?", enQ:"What does “Salom” mean?",
@@ -381,7 +411,7 @@
       celebrateText: "Siz 1-darsni tugatdingiz! Juda zo‘r! 🌟",
       quizDone: "✅ Bajarildi",
       quizOpen: "❓ Test",
-      resetOne: "↩️ Reset"
+      resetOne: "↩️ Qaytarish"
     },
     en: {
       title: "👋 Lesson 1: Greetings",
@@ -401,28 +431,19 @@
     }
   };
 
+  let currentLang = "uz";
+
   // =============================
   // STATE
   // =============================
-  let currentLang = "uz";
-
   function getDefaultState(){
-    return {
-      stars: {},        // key -> 0..3
-      quizDone: {},     // key -> true/false
-      celebrated: false // end cheer already played
-    };
+    return { stars:{}, quizDone:{}, celebrated:false };
   }
-
   function loadState(){
-    try { return JSON.parse(localStorage.getItem(LESSON_ID) || "{}"); }
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
     catch { return {}; }
   }
-
-  function saveState(s){
-    localStorage.setItem(LESSON_ID, JSON.stringify(s));
-  }
-
+  function saveState(s){ localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
   function getState(){
     const s = loadState();
     const d = getDefaultState();
@@ -434,14 +455,65 @@
   }
 
   // =============================
-  // FX SOUND (MP3)
+  // CHILD NAME
+  // =============================
+  function getChildName(){ return (localStorage.getItem(NAME_KEY) || "").trim(); }
+  function setChildName(name){
+    const clean = (name || "").trim().slice(0, 20);
+    if(clean) localStorage.setItem(NAME_KEY, clean);
+  }
+  function updateNameUI(){
+    const n = getChildName();
+    const hello = document.getElementById("childHello");
+    const input = document.getElementById("childNameInput");
+    if(hello) hello.innerText = n ? `Salom, ${n}! 😊` : "Salom! 😊";
+    if(input) input.value = n || "";
+  }
+  function bindNameEvents(){
+    const btn = document.getElementById("saveNameBtn");
+    const input = document.getElementById("childNameInput");
+    if(!btn || !input) return;
+
+    btn.addEventListener("click", ()=>{
+      setChildName(input.value);
+      updateNameUI();
+      btn.innerText = "✅ Saqlandi!";
+      setTimeout(()=> btn.innerText = "✅ Saqlash", 900);
+      updateProgress(false);
+    });
+
+    input.addEventListener("keydown", (e)=>{
+      if(e.key === "Enter") btn.click();
+    });
+  }
+
+  // =============================
+  // STICKERS
+  // =============================
+  function getStickers(){
+    try { return JSON.parse(localStorage.getItem(STICKER_KEY) || "[]"); }
+    catch { return []; }
+  }
+  function saveStickers(list){
+    localStorage.setItem(STICKER_KEY, JSON.stringify(list));
+  }
+  function addStickerOnce(stickerId, stickerLabel){
+    const list = getStickers();
+    const exists = list.some(s => s.id === stickerId);
+    if(exists) return list;
+    list.push({ id: stickerId, label: stickerLabel, date: new Date().toISOString() });
+    saveStickers(list);
+    return list;
+  }
+
+  // =============================
+  // FX AUDIO
   // =============================
   function playFx(which){
     const id =
       which === "success" ? "fx_success" :
       which === "fail"    ? "fx_fail" :
       "fx_cheer";
-
     const a = document.getElementById(id);
     if(!a) return;
     a.pause();
@@ -450,13 +522,12 @@
   }
 
   // =============================
-  // UI HELPERS
+  // UTILS
   // =============================
   function starText(n){
     n = Math.max(0, Math.min(3, n));
     return "★".repeat(n) + "☆".repeat(3-n);
   }
-
   function shuffle(arr){
     const a = [...arr];
     for(let i=a.length-1;i>0;i--){
@@ -464,6 +535,14 @@
       [a[i],a[j]] = [a[j],a[i]];
     }
     return a;
+  }
+  function flashEmoji(cardEl, face){
+    if(!cardEl) return;
+    const emojiEl = cardEl.querySelector(".emoji");
+    if(!emojiEl) return;
+    const old = emojiEl.innerText;
+    emojiEl.innerText = face;
+    setTimeout(()=>{ emojiEl.innerText = old; }, 600);
   }
 
   // =============================
@@ -481,15 +560,13 @@
     document.getElementById("homeBtn").innerText = T.home;
     document.getElementById("nextBtn").innerText = T.next;
 
-    // overlay texts also update with language
-    document.getElementById("celebrateTitle").innerText = T.celebrateTitle;
-    document.getElementById("celebrateText").innerText  = T.celebrateText;
-
     render();
+    renderFriendlyOptions(); // mini-game labels update
+    updateNameUI();
   }
 
   // =============================
-  // RENDER
+  // RENDER CARDS
   // =============================
   function render(){
     const T = ui[currentLang];
@@ -548,7 +625,7 @@
       grid.appendChild(card);
     });
 
-    // listeners (fresh every render)
+    // audio buttons
     grid.querySelectorAll(".audioBtn").forEach(btn=>{
       btn.addEventListener("click", ()=>{
         const key = btn.getAttribute("data-key");
@@ -556,16 +633,14 @@
       });
     });
 
+    // options + reset buttons
     grid.querySelectorAll(".opt").forEach(btn=>{
       btn.addEventListener("click", ()=>{
-        // reset button
-        const r = btn.getAttribute("data-reset");
-        if(r){
-          resetOne(r);
+        const resetKey = btn.getAttribute("data-reset");
+        if(resetKey){
+          resetOne(resetKey);
           return;
         }
-
-        // quiz option
         const key = btn.getAttribute("data-qkey");
         const opt = btn.getAttribute("data-opt");
         if(!key || !opt) return;
@@ -604,24 +679,40 @@
     if(!item) return;
 
     const state = getState();
-    if(state.quizDone[key]) return; // already done, ignore
+    if(state.quizDone[key]) return;
 
     const res = document.getElementById("res-"+key);
     if(!res) return;
 
+    const card = res.closest(".card");
     const isCorrect = (chosen === item.quiz.correctEn);
 
     if(isCorrect){
+      flashEmoji(card, "😊");
+      if(card){
+        card.classList.add("correct");
+        setTimeout(()=>card.classList.remove("correct"), 450);
+      }
+
+      const n = getChildName();
       res.className = "result good";
-      res.innerText = T.correctMsg;
+      res.innerText = n ? `✅ To‘g‘ri, ${n}! Barakalla!` : T.correctMsg;
       playFx("success");
 
+      // mastered word
+      state.stars[key] = 3;
       state.quizDone[key] = true;
       saveState(state);
 
       updateProgress(true);
-      render(); // show reset and disable options
+      render();
     } else {
+      flashEmoji(card, "😐");
+      if(card){
+        card.classList.add("wrong");
+        setTimeout(()=>card.classList.remove("wrong"), 450);
+      }
+
       res.className = "result bad";
       res.innerText = T.wrongMsg;
       playFx("fail");
@@ -629,18 +720,21 @@
   }
 
   // =============================
-  // PROGRESS + END CELEBRATE
+  // PROGRESS + CELEBRATE
   // =============================
   function updateProgress(checkCelebrate){
     const state = getState();
     const doneCount = Object.values(state.quizDone || {}).filter(Boolean).length;
 
-    document.getElementById("progressText").innerText = `${doneCount} / ${items.length}`;
+    const n = getChildName();
+    const base = `${doneCount} / ${items.length}`;
+    document.getElementById("progressText").innerText =
+      n ? `${n}, sen ${base} bajarding!` : base;
+
     const pct = Math.round((doneCount / items.length) * 100);
     document.getElementById("progressFill").style.width = pct + "%";
 
     if(checkCelebrate && doneCount === items.length){
-      // celebrate only once
       if(!state.celebrated){
         state.celebrated = true;
         saveState(state);
@@ -649,14 +743,24 @@
     }
   }
 
-  // =============================
-  // CELEBRATION (overlay + confetti + balloons + cheer sound)
-  // =============================
   function celebrate(){
     const T = ui[currentLang];
+    const n = getChildName();
 
-    document.getElementById("celebrateTitle").innerText = T.celebrateTitle;
-    document.getElementById("celebrateText").innerText  = T.celebrateText;
+    // mark lesson done for roadmap unlock
+    localStorage.setItem("lesson1_done", "1");
+
+    // sticker
+    const stickerId = "lesson1_friendliness";
+    const stickerLabel = "Do‘stona so‘zlar 💛";
+    addStickerOnce(stickerId, stickerLabel);
+
+    const line = document.getElementById("stickerLine");
+    if(line) line.innerText = "🏷️ Stiker: " + stickerLabel;
+
+    // texts with name
+    document.getElementById("celebrateTitle").innerText = n ? `Barakalla, ${n}! 🎉` : T.celebrateTitle;
+    document.getElementById("celebrateText").innerText  = n ? `${n}, siz 1-darsni tugatdingiz! Juda zo‘r! 🌟` : T.celebrateText;
 
     // show overlay
     document.getElementById("celebrate").classList.add("show");
@@ -665,7 +769,6 @@
     const conf = document.getElementById("confetti");
     conf.innerHTML = "";
     const colors = ["#F59E0B","#EF4444","#10B981","#3B82F6","#A855F7","#F97316"];
-
     for(let i=0;i<60;i++){
       const d = document.createElement("div");
       d.className = "dot";
@@ -677,42 +780,21 @@
       conf.appendChild(d);
     }
 
-    //spawnBalloons(10);
-
-    // ✅ cheer only at the end
+    // ✅ keep cheer
     playFx("cheer");
   }
 
-  function spawnBalloons(n){
-    document.querySelectorAll(".balloon").forEach(b=>b.remove());
-
-    const top = document.getElementById("top");
-    const colors = ["#F59E0B","#EF4444","#10B981","#3B82F6","#A855F7","#F2C98A"];
-
-    for(let i=0;i<n;i++){
-      const b = document.createElement("div");
-      b.className = "balloon";
-      b.style.left = Math.random()*100 + "%";
-      b.style.background = colors[Math.floor(Math.random()*colors.length)];
-      b.style.animationDelay = (Math.random()*0.6) + "s";
-      b.style.animationDuration = (4.8 + Math.random()*2.2) + "s";
-      top.appendChild(b);
-    }
-  }
-
   // =============================
-  // RESET (Undo)
+  // RESET
   // =============================
   function resetOne(key){
     const state = getState();
     state.quizDone[key] = false;
     state.stars[key] = 0;
-    state.celebrated = false; // allow future celebration again
+    state.celebrated = false;
     saveState(state);
 
-    // hide overlay if open
     document.getElementById("celebrate").classList.remove("show");
-
     render();
   }
 
@@ -720,6 +802,8 @@
     saveState(getDefaultState());
     document.getElementById("celebrate").classList.remove("show");
     render();
+    // mini-game reset
+    resetFriendlyGame();
   }
 
   function goNext(){
@@ -727,19 +811,179 @@
   }
 
   // =============================
+  // MINI-GAME (Salom/Rahmat/Iltimos)
+  // =============================
+  const FRIENDLY_EMOJIS = [
+    { emoji:"👋", uz:"Salom",   en:"Hello" },
+    { emoji:"🙏", uz:"Rahmat",  en:"Thank you" },
+    { emoji:"🌸", uz:"Iltimos", en:"Please" }
+  ];
+  const FRIENDLY_GAME_KEYS = ["1","6","9"];
+
+  let friendlyGame = { order:[], idx:0, currentKey:null, score:0 };
+
+  function initFriendlyGame(){
+    const startBtn = document.getElementById("friendlyStartBtn");
+    const repeatBtn = document.getElementById("friendlyRepeatBtn");
+    if(startBtn) startBtn.addEventListener("click", startFriendlyGame);
+    if(repeatBtn) repeatBtn.addEventListener("click", repeatFriendlyAudio);
+    updateFriendlyScore();
+    renderFriendlyOptions();
+  }
+
+  function renderFriendlyOptions(){
+    const wrap = document.getElementById("friendlyOpts");
+    if(!wrap) return;
+
+    wrap.innerHTML = FRIENDLY_EMOJIS.map(x => `
+      <button class="opt" data-friendly="${x.emoji}">
+        <span style="font-size:22px; margin-right:8px;">${x.emoji}</span>
+        <span>${currentLang === "uz" ? x.uz : x.en}</span>
+      </button>
+    `).join("");
+
+    wrap.querySelectorAll("button").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const chosenEmoji = btn.getAttribute("data-friendly");
+        checkFriendlyAnswer(chosenEmoji);
+      });
+    });
+  }
+
+  function setFriendlyHint(text){
+    const hint = document.getElementById("friendlyHint");
+    if(hint) hint.innerText = text;
+  }
+
+  function clearFriendlyResult(){
+    const res = document.getElementById("friendlyRes");
+    if(!res) return;
+    res.className = "result";
+    res.innerText = "";
+  }
+
+  function showFriendlyResult(ok, text){
+    const res = document.getElementById("friendlyRes");
+    if(!res) return;
+    res.className = ok ? "result good" : "result bad";
+    res.innerText = text;
+  }
+
+  function updateFriendlyScore(){
+    const el = document.getElementById("friendlyScore");
+    if(el) el.innerText = `${friendlyGame.score} / ${FRIENDLY_GAME_KEYS.length}`;
+  }
+
+  function startFriendlyGame(){
+    friendlyGame.order = shuffle(FRIENDLY_GAME_KEYS);
+    friendlyGame.idx = 0;
+    friendlyGame.score = 0;
+
+    setFriendlyHint(currentLang === "uz"
+      ? "🎧 Eshit! Qaysi so‘z?"
+      : "🎧 Listen! Which word?"
+    );
+
+    nextFriendlyRound();
+    updateFriendlyScore();
+  }
+
+  function nextFriendlyRound(){
+    clearFriendlyResult();
+
+    if(friendlyGame.idx >= friendlyGame.order.length){
+      setFriendlyHint(currentLang === "uz"
+        ? "🎉 O‘yin tugadi! Barakalla!"
+        : "🎉 Game finished!"
+      );
+      showFriendlyResult(true, `${friendlyGame.score} / ${FRIENDLY_GAME_KEYS.length}`);
+      return;
+    }
+
+    friendlyGame.currentKey = friendlyGame.order[friendlyGame.idx];
+    playFriendlyWord(friendlyGame.currentKey);
+  }
+
+  function playFriendlyWord(key){
+    const id = (currentLang === "en") ? ("en_" + key) : ("uz_" + key);
+    const a = document.getElementById(id);
+    if(!a){
+      setFriendlyHint("⚠️ Audio topilmadi: " + key);
+      return;
+    }
+    a.pause(); a.currentTime = 0;
+    a.play().catch(()=>{});
+  }
+
+  function repeatFriendlyAudio(){
+    if(!friendlyGame.currentKey){
+      setFriendlyHint(currentLang === "uz" ? "👉 Avval “Boshlash”ni bosing." : "👉 Press Start first.");
+      return;
+    }
+    playFriendlyWord(friendlyGame.currentKey);
+  }
+
+  function checkFriendlyAnswer(chosenEmoji){
+    const key = friendlyGame.currentKey;
+    if(!key) return;
+
+    const correctEmoji =
+      key === "1" ? "👋" :
+      key === "6" ? "🙏" :
+      key === "9" ? "🌸" :
+      null;
+
+    const resCardAnchor = document.getElementById("res-"+key);
+    const card = resCardAnchor ? resCardAnchor.closest(".card") : null;
+
+    if(chosenEmoji === correctEmoji){
+      friendlyGame.score++;
+      playFx("success");
+
+      flashEmoji(card, "😊");
+      if(card){
+        card.classList.add("correct");
+        setTimeout(()=>card.classList.remove("correct"), 450);
+      }
+
+      showFriendlyResult(true, currentLang === "uz" ? "✅ To‘g‘ri!" : "✅ Correct!");
+      friendlyGame.idx++;
+      updateFriendlyScore();
+      setTimeout(nextFriendlyRound, 500);
+    } else {
+      playFx("fail");
+
+      flashEmoji(card, "😐");
+      if(card){
+        card.classList.add("wrong");
+        setTimeout(()=>card.classList.remove("wrong"), 450);
+      }
+
+      showFriendlyResult(false, currentLang === "uz" ? "❌ Xato, yana!" : "❌ Try again!");
+    }
+  }
+
+  function resetFriendlyGame(){
+    friendlyGame = { order:[], idx:0, currentKey:null, score:0 };
+    updateFriendlyScore();
+    clearFriendlyResult();
+    setFriendlyHint("“Boshlash”ni bosing, so‘zni eshiting va mos belgini tanlang.");
+  }
+
+  // =============================
   // INIT
   // =============================
   (function init(){
-    // make sure state exists
-    if(!localStorage.getItem(LESSON_ID)){
+    if(!localStorage.getItem(STORAGE_KEY)){
       saveState(getDefaultState());
     }
-
-    // start
+    bindNameEvents();
+    updateNameUI();
+    initFriendlyGame();
     setLang("uz");
   })();
-
 </script>
 </body>
 </html>
+
 
