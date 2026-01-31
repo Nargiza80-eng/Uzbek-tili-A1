@@ -289,8 +289,10 @@
       <div class="celebrate" id="celebrate">
         <div class="celebrateCard">
           
-          <audio id="cheerSound" src="sounds/cheer.mp3" preload="auto"></audio>
-          
+          <audio id="fx_success" src="sounds/success.mp3" preload="auto"></audio>
+          <audio id="fx_fail"    src="sounds/fail.mp3"    preload="auto"></audio>
+          <audio id="fx_cheer"   src="sounds/cheer.mp3"   preload="auto"></audio>
+
           <div class="confetti" id="confetti"></div>
           <div style="font-size:54px">🎈🎉</div>
           <div class="big" id="celebrateTitle">Barakalla! 🎉</div>
@@ -341,25 +343,25 @@
   // =============================
   // CONFIG
   // =============================
-  const LESSON_ID = "lesson1";
+  const LESSON_ID = "lesson1_state_v2"; // neuer Key, damit alte Bugs nicht stören
 
   // IMPORTANT: keys must match your mp3 names:
-  // UZ: a/1.mp3 etc
-  // EN: en/1.mp3 etc
+  // UZ: a/<key>.mp3
+  // EN: en/<key>.mp3
   const items = [
-    { key:"1",  emoji:"👋", uz:"Salom",       en:"Hello",        pr:"sa-LOM",
+    { key:"1",  emoji:"👋", uz:"Salom",        en:"Hello",        pr:"sa-LOM",
       quiz: { uzQ:"“Salom” nimani anglatadi?", enQ:"What does “Salom” mean?",
               correctEn:"Hello", wrongEn:["Thank you","Bye"] } },
-    { key:"6",  emoji:"🙏", uz:"Rahmat",      en:"Thank you",    pr:"rakh-MAT",
+    { key:"6",  emoji:"🙏", uz:"Rahmat",       en:"Thank you",    pr:"rakh-MAT",
       quiz: { uzQ:"“Rahmat” nimani anglatadi?", enQ:"What does “Rahmat” mean?",
               correctEn:"Thank you", wrongEn:["Please","Hello"] } },
-    { key:"9",  emoji:"🌸", uz:"Iltimos",     en:"Please",       pr:"il-ti-MOS",
+    { key:"9",  emoji:"🌸", uz:"Iltimos",      en:"Please",       pr:"il-ti-MOS",
       quiz: { uzQ:"“Iltimos” nimani anglatadi?", enQ:"What does “Iltimos” mean?",
               correctEn:"Please", wrongEn:["Sorry","Bye"] } },
     { key:"4",  emoji:"🙂", uz:"Yaxshimisiz?", en:"How are you?", pr:"yakh-shi-MI-siz",
       quiz: { uzQ:"“Yaxshimisiz?” nimani anglatadi?", enQ:"What does “Yaxshimisiz?” mean?",
               correctEn:"How are you?", wrongEn:["Good night","Thank you"] } },
-    { key:"11", emoji:"🌙", uz:"Xayr",        en:"Bye",          pr:"khayr",
+    { key:"11", emoji:"🌙", uz:"Xayr",         en:"Bye",          pr:"khayr",
       quiz: { uzQ:"“Xayr” nimani anglatadi?", enQ:"What does “Xayr” mean?",
               correctEn:"Bye", wrongEn:["Hello","Please"] } },
   ];
@@ -378,7 +380,8 @@
       celebrateTitle: "Barakalla! 🎉",
       celebrateText: "Siz 1-darsni tugatdingiz! Juda zo‘r! 🌟",
       quizDone: "✅ Bajarildi",
-      quizOpen: "❓ Test"
+      quizOpen: "❓ Test",
+      resetOne: "↩️ Reset"
     },
     en: {
       title: "👋 Lesson 1: Greetings",
@@ -393,7 +396,8 @@
       celebrateTitle: "Well done! 🎉",
       celebrateText: "You finished Lesson 1! Amazing! 🌟",
       quizDone: "✅ Done",
-      quizOpen: "❓ Quiz"
+      quizOpen: "❓ Quiz",
+      resetOne: "↩️ Reset"
     }
   };
 
@@ -403,47 +407,46 @@
   let currentLang = "uz";
 
   function getDefaultState(){
-    return { stars:{}, quizDone:{} };
+    return {
+      stars: {},        // key -> 0..3
+      quizDone: {},     // key -> true/false
+      celebrated: false // end cheer already played
+    };
   }
+
   function loadState(){
     try { return JSON.parse(localStorage.getItem(LESSON_ID) || "{}"); }
     catch { return {}; }
   }
-  function saveState(s){ localStorage.setItem(LESSON_ID, JSON.stringify(s)); }
 
-  // =============================
-  // SOUND (beeps only, no extra files needed)
-  // =============================
-  let audioCtx = null;
-  function beep(type){
-    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const t = audioCtx.currentTime;
-    const o = audioCtx.createOscillator();
-    const g = audioCtx.createGain();
-    o.connect(g); g.connect(audioCtx.destination);
-
-    if(type === "success"){
-      o.type = "triangle";
-      o.frequency.setValueAtTime(440, t);
-      o.frequency.exponentialRampToValueAtTime(880, t + 0.15);
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(0.25, t + 0.02);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
-      o.start(t); o.stop(t + 0.24);
-    } else {
-      o.type = "sawtooth";
-      o.frequency.setValueAtTime(220, t);
-      o.frequency.exponentialRampToValueAtTime(140, t + 0.18);
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(0.20, t + 0.02);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.20);
-      o.start(t); o.stop(t + 0.22);
-    }
+  function saveState(s){
+    localStorage.setItem(LESSON_ID, JSON.stringify(s));
   }
 
-  function playFeedback(which){
-    // unlock audio context on first user click automatically (beep call is enough)
-    beep(which);
+  function getState(){
+    const s = loadState();
+    const d = getDefaultState();
+    return {
+      stars: s.stars || d.stars,
+      quizDone: s.quizDone || d.quizDone,
+      celebrated: !!s.celebrated
+    };
+  }
+
+  // =============================
+  // FX SOUND (MP3)
+  // =============================
+  function playFx(which){
+    const id =
+      which === "success" ? "fx_success" :
+      which === "fail"    ? "fx_fail" :
+      "fx_cheer";
+
+    const a = document.getElementById(id);
+    if(!a) return;
+    a.pause();
+    a.currentTime = 0;
+    a.play().catch(()=>{});
   }
 
   // =============================
@@ -464,7 +467,7 @@
   }
 
   // =============================
-  // RENDER
+  // LANGUAGE
   // =============================
   function setLang(lang){
     currentLang = lang;
@@ -478,12 +481,19 @@
     document.getElementById("homeBtn").innerText = T.home;
     document.getElementById("nextBtn").innerText = T.next;
 
+    // overlay texts also update with language
+    document.getElementById("celebrateTitle").innerText = T.celebrateTitle;
+    document.getElementById("celebrateText").innerText  = T.celebrateText;
+
     render();
   }
 
+  // =============================
+  // RENDER
+  // =============================
   function render(){
     const T = ui[currentLang];
-    const state = Object.keys(loadState()).length ? loadState() : getDefaultState();
+    const state = getState();
 
     const grid = document.getElementById("grid");
     grid.innerHTML = "";
@@ -513,15 +523,21 @@
         <div class="quizWrap">
           <div class="qTitle">
             <span>${T.quizTitle}</span>
-            <span style="font-weight:1000;color:${done?'var(--good)':'var(--muted)'}">
-              ${done ? T.quizDone : T.quizOpen}
-            </span>
+
+            <div style="display:flex;gap:8px;align-items:center;">
+              <span style="font-weight:1000;color:${done?'var(--good)':'var(--muted)'}">
+                ${done ? T.quizDone : T.quizOpen}
+              </span>
+
+              ${done ? `<button class="opt resetOne" data-reset="${it.key}" style="padding:6px 10px;">${T.resetOne}</button>` : ``}
+            </div>
           </div>
+
           <p class="qText">${currentLang==='uz' ? it.quiz.uzQ : it.quiz.enQ}</p>
 
           <div class="opts">
             ${options.map(opt => `
-              <button class="opt" data-qkey="${it.key}" data-opt="${opt}">${opt}</button>
+              <button class="opt" data-qkey="${it.key}" data-opt="${opt}" ${done ? "disabled" : ""}>${opt}</button>
             `).join("")}
           </div>
 
@@ -532,7 +548,7 @@
       grid.appendChild(card);
     });
 
-    // audio buttons
+    // listeners (fresh every render)
     grid.querySelectorAll(".audioBtn").forEach(btn=>{
       btn.addEventListener("click", ()=>{
         const key = btn.getAttribute("data-key");
@@ -540,11 +556,19 @@
       });
     });
 
-    // quiz buttons
     grid.querySelectorAll(".opt").forEach(btn=>{
       btn.addEventListener("click", ()=>{
+        // reset button
+        const r = btn.getAttribute("data-reset");
+        if(r){
+          resetOne(r);
+          return;
+        }
+
+        // quiz option
         const key = btn.getAttribute("data-qkey");
         const opt = btn.getAttribute("data-opt");
+        if(!key || !opt) return;
         checkQuiz(key, opt);
       });
     });
@@ -552,16 +576,18 @@
     updateProgress(false);
   }
 
+  // =============================
+  // WORD AUDIO + STARS
+  // =============================
   function playWordAudio(key){
     const id = (currentLang === "en") ? ("en_" + key) : ("uz_" + key);
     const a = document.getElementById(id);
     if(!a) return;
 
     a.currentTime = 0;
-    a.play().catch(()=>{ /* if autoplay blocked, user click usually allows */ });
+    a.play().catch(()=>{});
 
-    // stars +1
-    const state = Object.keys(loadState()).length ? loadState() : getDefaultState();
+    const state = getState();
     state.stars[key] = Math.min(3, (state.stars[key] || 0) + 1);
     saveState(state);
 
@@ -569,10 +595,16 @@
     if(starEl) starEl.innerText = starText(state.stars[key]);
   }
 
+  // =============================
+  // QUIZ
+  // =============================
   function checkQuiz(key, chosen){
     const T = ui[currentLang];
     const item = items.find(x=>x.key===key);
     if(!item) return;
+
+    const state = getState();
+    if(state.quizDone[key]) return; // already done, ignore
 
     const res = document.getElementById("res-"+key);
     if(!res) return;
@@ -582,24 +614,25 @@
     if(isCorrect){
       res.className = "result good";
       res.innerText = T.correctMsg;
-      playFeedback("success");
+      playFx("success");
 
-      const state = Object.keys(loadState()).length ? loadState() : getDefaultState();
       state.quizDone[key] = true;
       saveState(state);
 
       updateProgress(true);
-      // refresh to show "Done" badge
-      render();
+      render(); // show reset and disable options
     } else {
       res.className = "result bad";
       res.innerText = T.wrongMsg;
-      playFeedback("fail");
+      playFx("fail");
     }
   }
 
+  // =============================
+  // PROGRESS + END CELEBRATE
+  // =============================
   function updateProgress(checkCelebrate){
-    const state = Object.keys(loadState()).length ? loadState() : getDefaultState();
+    const state = getState();
     const doneCount = Object.values(state.quizDone || {}).filter(Boolean).length;
 
     document.getElementById("progressText").innerText = `${doneCount} / ${items.length}`;
@@ -607,12 +640,17 @@
     document.getElementById("progressFill").style.width = pct + "%";
 
     if(checkCelebrate && doneCount === items.length){
-      celebrate();
+      // celebrate only once
+      if(!state.celebrated){
+        state.celebrated = true;
+        saveState(state);
+        celebrate();
+      }
     }
   }
 
   // =============================
-  // CELEBRATION
+  // CELEBRATION (overlay + confetti + balloons + cheer sound)
   // =============================
   function celebrate(){
     const T = ui[currentLang];
@@ -639,16 +677,13 @@
       conf.appendChild(d);
     }
 
-    // balloons
     spawnBalloons(10);
 
-    // sound + voice
-    playFeedback("success");
-    celebrateVoice();
+    // ✅ cheer only at the end
+    playFx("cheer");
   }
 
   function spawnBalloons(n){
-    // remove old balloons
     document.querySelectorAll(".balloon").forEach(b=>b.remove());
 
     const top = document.getElementById("top");
@@ -665,29 +700,24 @@
     }
   }
 
-  function celebrateVoice(){
-    // Text-to-Speech "HEEEY" (works in most browsers after user interaction)
-    try{
-      const u = new SpeechSynthesisUtterance("Heeey! Bravo! You did it!");
-      u.lang = "en-US";
-      u.rate = 0.95;
-      u.pitch = 1.25;
-      u.volume = 1.0;
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(u);
-    } catch(e) {
-      // fallback beeps
-      beep("success");
-      setTimeout(()=>beep("success"), 160);
-      setTimeout(()=>beep("success"), 320);
-    }
+  // =============================
+  // RESET (Undo)
+  // =============================
+  function resetOne(key){
+    const state = getState();
+    state.quizDone[key] = false;
+    state.stars[key] = 0;
+    state.celebrated = false; // allow future celebration again
+    saveState(state);
+
+    // hide overlay if open
+    document.getElementById("celebrate").classList.remove("show");
+
+    render();
   }
 
-  // =============================
-  // NAV
-  // =============================
   function restartLesson(){
-    localStorage.removeItem(LESSON_ID);
+    saveState(getDefaultState());
     document.getElementById("celebrate").classList.remove("show");
     render();
   }
@@ -700,11 +730,15 @@
   // INIT
   // =============================
   (function init(){
+    // make sure state exists
     if(!localStorage.getItem(LESSON_ID)){
       saveState(getDefaultState());
     }
+
+    // start
     setLang("uz");
   })();
+
 </script>
 </body>
 </html>
