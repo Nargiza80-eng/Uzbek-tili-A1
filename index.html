@@ -1,888 +1,246 @@
+
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dono Bola! Uzbek – A1 (4–6)</title>
-  <style>
-    :root{
-      --bg1:#7dd3fc;
-      --bg2:#a7f3d0;
-      --card:#ffffff;
-      --ink:#0f172a;
-      --muted:#475569;
-      --line:rgba(15,23,42,.12);
-      --accent:#22c55e;
-      --accent2:#f59e0b;
-      --shadow:0 14px 30px rgba(2,6,23,.14);
-      --radius:22px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      color:var(--ink);
-      padding:16px;
-      background:
-        radial-gradient(circle at 20% 10%, rgba(255,255,255,.55), transparent 40%),
-        radial-gradient(circle at 85% 20%, rgba(255,255,255,.45), transparent 35%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-      min-height:100vh;
-      overflow-x:hidden;
-    }
-    .app{max-width:860px;margin:0 auto}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dono Bola! Uzbek – A1</title>
 
-    .top{
-      background:rgba(255,255,255,.92);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:16px;
-      backdrop-filter: blur(6px);
-      position:relative;
-      overflow:hidden;
-    }
+<style>
+:root{
+  --bg1:#7dd3fc;
+  --bg2:#a7f3d0;
+  --card:#ffffff;
+  --ink:#0f172a;
+  --muted:#475569;
+  --line:rgba(15,23,42,.12);
+  --accent:#22c55e;
+  --shadow:0 14px 30px rgba(2,6,23,.14);
+  --radius:22px;
+}
 
-    .hero{display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:space-between}
-    .heroLeft{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+/* ===== Base ===== */
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255,255,255,.55), transparent 40%),
+    radial-gradient(circle at 85% 20%, rgba(255,255,255,.45), transparent 35%),
+    linear-gradient(180deg, var(--bg1), var(--bg2));
+  min-height:100vh;
+  padding:16px;
+  color:var(--ink);
+}
+.app{max-width:760px;margin:0 auto}
 
-    /* Sonne + Sterne */
-    .sunWrap{position:relative; width:96px; height:96px; flex:0 0 auto;}
-    .sun{
-      width:96px;height:96px;border-radius:999px;
-      display:grid;place-items:center;
-      background: radial-gradient(circle at 30% 30%, #fff6cc, #fbbf24 55%, #f59e0b 100%);
-      box-shadow: 0 10px 24px rgba(245,158,11,.35);
-      border: 4px solid rgba(255,255,255,.7);
-      position:relative;
-    }
-    .sunPct{font-weight:1000;font-size:20px;color:#7c2d12;text-shadow: 0 2px 0 rgba(255,255,255,.35)}
-    .starsLayer{position:absolute; inset:-30px; pointer-events:none; overflow:visible;}
-    .star{
-      position:absolute; left:50%; top:50%;
-      width:10px; height:10px;
-      transform: translate(-50%,-50%);
-      opacity:0;
-      filter: drop-shadow(0 6px 10px rgba(2,6,23,.20));
-      animation: starPop 900ms ease-out forwards;
-    }
-    .star::before{content:"⭐"; font-size:16px; line-height:1; display:block;}
-    @keyframes starPop{
-      0%   { opacity:0; transform: translate(-50%,-50%) scale(.6) rotate(0deg); }
-      15%  { opacity:1; transform: translate(-50%,-50%) scale(1) rotate(8deg); }
-      100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(.9) rotate(35deg); }
-    }
+/* ===== Card ===== */
+.card{
+  background:rgba(255,255,255,.95);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:18px;
+}
 
-    h1{margin:0;font-size:22px;font-weight:1000;letter-spacing:.2px}
-    .sub{margin-top:4px;color:var(--muted);font-weight:800}
+/* ===== Header ===== */
+.header{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.sun{
+  width:92px;height:92px;border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, #fff6cc, #fbbf24);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:1000;font-size:20px;color:#7c2d12;
+}
+h1{margin:0;font-size:22px;font-weight:1000}
+.sub{color:var(--muted);font-weight:800}
 
-    /* Voice Button */
-    .voiceBtn{
-      display:flex; align-items:center; gap:8px;
-      border-radius:18px;
-      padding:12px 14px;
-      font-weight:1000;
-      border:1px solid rgba(15,23,42,.10);
-      background: rgba(255,255,255,.95);
-      cursor:pointer;
-      user-select:none;
-      min-width:200px;
-      justify-content:center;
-    }
-    .voiceBtn small{display:block;color:var(--muted);font-weight:900;font-size:12px}
-    .voiceStatus{margin-top:4px;font-size:12px;color:var(--muted);font-weight:900}
+/* ===== Lessons (1 column ALWAYS) ===== */
+.grid{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+}
 
-    .cheer{
-      margin-top:10px;
-      background: rgba(34,197,94,.12);
-      border:1px solid rgba(34,197,94,.25);
-      padding:10px 12px;
-      border-radius:16px;
-      font-weight:1000;
-      display:flex;
-      gap:8px;
-      align-items:center;
-      color:#064e3b;
-    }
+.tile{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  background:white;
+  border-radius:22px;
+  padding:22px;
+  min-height:140px;
+  text-decoration:none;
+  color:inherit;
+  box-shadow:0 10px 24px rgba(0,0,0,.12);
+  position:relative;
+  overflow:hidden;
+}
 
-    /* Tagesziel */
-    .goal{
-      margin-top:12px;
-      background: rgba(245,158,11,.14);
-      border:1px solid rgba(245,158,11,.25);
-      border-radius:18px;
-      padding:12px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      font-weight:1000;
-    }
-    .goal .left{display:flex;align-items:center;gap:10px}
-    .goal .badge{
-      background: rgba(255,255,255,.85);
-      border:1px solid rgba(15,23,42,.10);
-      padding:6px 10px;
-      border-radius:999px;
-      font-weight:1000;
-      font-size:12px;
-    }
-    .goal.done{background: rgba(34,197,94,.14);border-color: rgba(34,197,94,.25);}
+.icon{
+  width:96px;height:96px;
+  border-radius:24px;
+  background:#fde68a;
+  display:flex;align-items:center;justify-content:center;
+  font-size:54px;
+}
+.title{font-size:22px;font-weight:1000}
+.desc{font-size:16px;color:var(--muted);font-weight:800}
 
-    /* Progress */
-    .barWrap{
-      margin-top:12px;
-      background:rgba(255,255,255,.95);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:12px;
-      box-shadow: 0 10px 24px rgba(2,6,23,.08);
-    }
-    .barRow{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
-    .barLabel{font-weight:1000}
-    .barText{color:var(--muted);font-weight:900}
-    .bar{
-      margin-top:10px;
-      height:16px;
-      background: rgba(15,23,42,.08);
-      border-radius:999px;
-      overflow:hidden;
-      border:1px solid rgba(15,23,42,.10);
-    }
-    .fill{
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg, var(--accent), #16a34a);
-      border-radius:999px;
-      transition: width .45s ease;
-    }
+.pill{
+  position:absolute;
+  top:14px;right:14px;
+  background:#dcfce7;
+  color:#065f46;
+  padding:8px 14px;
+  border-radius:999px;
+  font-weight:1000;
+}
 
-    /* Lektionen */
-    .grid{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap:12px;
-    }
-    .tile{
-      background:rgba(255,255,255,.96);
-      border:1px solid var(--line);
-      border-radius:22px;
-      box-shadow: var(--shadow);
-      padding:14px;
-      text-decoration:none;
-      color:inherit;
-      display:flex;
-      gap:12px;
-      align-items:center;
-      transition: transform .10s ease, box-shadow .10s ease, filter .10s ease;
-      position:relative;
-      overflow:hidden;
-      min-height:92px;
-    }
-    .tile:active{transform: translateY(2px) scale(.995)}
-    .tile:hover{box-shadow: 0 18px 36px rgba(2,6,23,.16)}
-    .icon{
-      width:72px;height:72px;border-radius:20px;
-      display:grid;place-items:center;
-      background: rgba(245,158,11,.16);
-      border:1px solid rgba(245,158,11,.22);
-      font-size:40px;
-      flex:0 0 auto;
-    }
-    .tcol{flex:1;min-width:160px}
-    .title{font-size:18px;font-weight:1000}
-    .desc{margin-top:3px;color:var(--muted);font-weight:900}
-    .pill{
-      position:absolute;
-      top:12px; right:12px;
-      background: rgba(34,197,94,.14);
-      border:1px solid rgba(34,197,94,.24);
-      color:#065f46;
-      padding:6px 10px;
-      border-radius:999px;
-      font-weight:1000;
-      font-size:12px;
-      z-index:3;
-    }
+/* ===== Shine ===== */
+.tile::after{
+  content:"";
+  position:absolute;
+  top:0;left:-120%;
+  width:60%;height:100%;
+  background:linear-gradient(to right, transparent, rgba(255,255,255,.6), transparent);
+  transform:skewX(-25deg);
+}
+.shine::after{animation:shine 1.2s ease forwards}
+@keyframes shine{to{left:220%}}
 
-    /* Lock overlay */
-    .locked{filter: grayscale(.35) opacity(.88);}
-    .lockTag{
-      position:absolute;
-      left:12px; top:12px;
-      background: rgba(15,23,42,.76);
-      color:white;
-      border-radius:999px;
-      padding:6px 10px;
-      font-size:12px;
-      font-weight:1000;
-      z-index:4;
-      display:none;
-    }
-    .locked .lockTag{display:inline-block}
-    .locked .icon{background: rgba(148,163,184,.22); border-color: rgba(148,163,184,.25)}
+/* ===== iPad ===== */
+@media (min-width:768px){
+  body{padding:24px}
+  .tile{min-height:160px}
+  .icon{width:110px;height:110px;font-size:60px}
+  .title{font-size:24px}
+}
 
-    /* Shine */
-    .tile::after{
-      content:"";
-      position:absolute;
-      top:0;
-      left:-120%;
-      width:55%;
-      height:100%;
-      background: linear-gradient(to right, transparent, rgba(255,255,255,0.65), transparent);
-      transform: skewX(-25deg);
-      pointer-events:none;
-    }
-    .shine-anim::after{ animation: shine 1.15s ease-in-out forwards; }
-    @keyframes shine{ 100%{ left:220%; } }
-
-    /* Buttons */
-    .btnRow{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
-    .btn{
-      flex:1;min-width:240px;
-      text-align:center;
-      padding:14px;
-      border-radius:18px;
-      font-weight:1000;
-      border:1px solid transparent;
-      cursor:pointer;
-      user-select:none;
-    }
-    .btn.primary{
-      background: linear-gradient(180deg, #34d399, #22c55e);
-      color:#052e1b;
-      border-color: rgba(5,46,27,.10);
-      text-decoration:none;
-      display:block;
-    }
-    .btn.secondary{background: rgba(255,255,255,.95); color: var(--ink); border-color: var(--line);}
-    .btn.ghost{
-      background: transparent;
-      border:1px dashed rgba(15,23,42,.20);
-      color: rgba(15,23,42,.85);
-      padding:10px 12px;
-      border-radius:16px;
-      min-width:200px;
-      flex:0 0 auto;
-    }
-
-    .small{font-size:12.5px;color: rgba(15,23,42,.70);margin-top:10px;font-weight:800;}
-
-    /* Celebrate Overlay */
-    .celebrate{
-      position:fixed; inset:0;
-      display:none; align-items:center; justify-content:center;
-      z-index:9999;
-      background: rgba(2,6,23,.28);
-      padding:16px;
-    }
-    .celebrate.show{display:flex}
-    .celebrateCard{
-      width:min(520px, 92vw);
-      background: rgba(255,255,255,.95);
-      border:1px solid var(--line);
-      border-radius:24px;
-      box-shadow: var(--shadow);
-      padding:16px;
-      position:relative;
-      overflow:hidden;
-      text-align:center;
-    }
-    .celebrateTitle{font-size:22px;font-weight:1000;margin:2px 0 6px}
-    .celebrateText{color:var(--muted);font-weight:900;margin:0 0 10px}
-    .confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-    .dot{
-      position:absolute;width:10px;height:10px;border-radius:50%;
-      top:-20px; animation: fall 1.3s ease-in forwards; opacity:.95;
-    }
-    @keyframes fall{ to{ transform: translateY(120vh) rotate(240deg); opacity:1; } }
-    .closeBtn{
-      margin-top:10px;width:100%;padding:12px;
-      border-radius:16px;border:1px solid rgba(15,23,42,.10);
-      background:#fff;font-weight:1000;cursor:pointer;
-    }
-
-    /* ✅ NAME GATE (smoky style) */
-    .nameGate{
-      position:fixed;
-      inset:0;
-      z-index:10000;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:16px;
-      background:
-        radial-gradient(circle at 25% 15%, rgba(255,255,255,.18), transparent 35%),
-        radial-gradient(circle at 80% 25%, rgba(255,255,255,.14), transparent 40%),
-        rgba(2,6,23,.55);
-      backdrop-filter: blur(10px) saturate(1.1);
-    }
-    .nameGate.show{display:flex}
-
-    .gateCard{
-      width:min(520px, 92vw);
-      background: rgba(255,255,255,.92);
-      border:1px solid rgba(255,255,255,.35);
-      border-radius:26px;
-      box-shadow: 0 22px 70px rgba(2,6,23,.35);
-      padding:16px;
-      position:relative;
-      overflow:hidden;
-      text-align:center;
-    }
-    .gateTitle{
-      font-size:22px;
-      font-weight:1000;
-      margin:6px 0 6px;
-    }
-    .gateText{
-      margin:0 0 12px;
-      color: rgba(15,23,42,.78);
-      font-weight:900;
-    }
-    .nameRow{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:center;
-      flex-wrap:wrap;
-      margin-top:6px;
-    }
-    .nameInput{
-      width:min(360px, 86vw);
-      padding:14px 14px;
-      border-radius:18px;
-      border:1px solid rgba(15,23,42,.18);
-      font-weight:1000;
-      font-size:18px;
-      outline:none;
-      background: rgba(255,255,255,.95);
-    }
-    .nameInput:focus{
-      border-color: rgba(59,130,246,.55);
-      box-shadow: 0 0 0 6px rgba(59,130,246,.18);
-    }
-    .gateBtn{
-      width:min(360px, 86vw);
-      margin-top:10px;
-      padding:14px;
-      border-radius:18px;
-      border:1px solid rgba(5,46,27,.10);
-      background: linear-gradient(180deg, #34d399, #22c55e);
-      color:#052e1b;
-      font-weight:1000;
-      cursor:pointer;
-      opacity:.55;
-    }
-    .gateBtn.enabled{opacity:1}
-    .gateHint{
-      margin-top:10px;
-      font-size:12.5px;
-      font-weight:900;
-      color: rgba(15,23,42,.62);
-    }
-
-    /* Focus */
-    .tile:focus-visible, .btn:focus-visible, .closeBtn:focus-visible, .voiceBtn:focus-visible,
-    .gateBtn:focus-visible, .nameInput:focus-visible{
-      outline:4px solid rgba(59,130,246,.45);
-      outline-offset:3px;
-    }
-    @media (prefers-reduced-motion: reduce){
-      *{transition:none !important; animation:none !important}
-      .celebrate{display:none !important}
-    }
-  </style>
+/* ===== Name Gate ===== */
+.gate{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(10px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+.gateCard{
+  background:white;
+  border-radius:26px;
+  padding:22px;
+  width:90%;
+  max-width:420px;
+  text-align:center;
+}
+.gateCard input{
+  width:100%;
+  padding:14px;
+  border-radius:16px;
+  border:1px solid #ccc;
+  font-size:18px;
+  font-weight:800;
+}
+.gateCard button{
+  margin-top:12px;
+  width:100%;
+  padding:14px;
+  border-radius:16px;
+  border:none;
+  background:var(--accent);
+  font-weight:1000;
+  font-size:16px;
+}
+</style>
 </head>
 
 <body>
-  <div class="app">
-    <div class="top">
-
-      <div class="hero">
-        <div class="heroLeft">
-          <div class="sunWrap" aria-hidden="true">
-            <div class="sun"><div class="sunPct" id="mainPct">0%</div></div>
-            <div class="starsLayer" id="starsLayer"></div>
-          </div>
-
-          <div>
-            <h1>🌿 Dono Bola! Uzbek – A1</h1>
-            <div class="sub" id="helloLine">Tanla 👉 Eshit 🎧 Takrorla 🗣️ O'yna 🎲</div>
-            <div class="voiceStatus" id="voiceStatus">🗣️ Ovoz: tayyor</div>
-          </div>
-        </div>
-
-        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
-          <button class="voiceBtn" type="button" id="speakBtn" aria-label="Eshit (ovoz)">
-            🔊 Eshit!
-            <small>Matnni o'qiydi</small>
-          </button>
-          <button class="btn ghost" type="button" id="changeNameBtn">✏️ Ismni o'zgartir</button>
-        </div>
+<div class="app">
+  <div class="card">
+    <div class="header">
+      <div class="sun" id="pct">0%</div>
+      <div>
+        <h1 id="hello">Dono Bola!</h1>
+        <div class="sub">Tanla 👉 Eshit 🎧 Takrorla 🗣️</div>
       </div>
+    </div>
 
-      <div class="cheer" id="cheerText">✨ Keling, boshlaymiz!</div>
-
-      <div class="goal" id="goalCard">
-        <div class="left">
-          <div style="font-size:22px">🐣</div>
-          <div>Bugun: <span id="goalText">3 ta so'z</span></div>
+    <div class="grid">
+      <a class="tile shine" href="lesson1.html">
+        <div class="icon">👋</div>
+        <div>
+          <div class="title">1-dars: Salom!</div>
+          <div class="desc">Salom, rahmat, iltimos</div>
         </div>
-        <div class="badge" id="goalBadge">0 / 3</div>
-      </div>
+        <div class="pill">Boshlash</div>
+      </a>
 
-      <div class="barWrap">
-        <div class="barRow">
-          <div class="barLabel">⭐ Yutuq</div>
-          <div class="barText" id="progressText">0 / 23 so'z</div>
+      <a class="tile shine" href="lesson2.html">
+        <div class="icon">🔢</div>
+        <div>
+          <div class="title">2-dars: Sonlar</div>
+          <div class="desc">Bir, ikki, uch…</div>
         </div>
-        <div class="bar" aria-label="Progress">
-          <div class="fill" id="progressFill"></div>
+        <div class="pill">0 / 10</div>
+      </a>
+
+      <a class="tile shine" href="lesson3.html">
+        <div class="icon">🐾</div>
+        <div>
+          <div class="title">3-dars: Hayvonlar</div>
+          <div class="desc">Mushuk, it, qush</div>
         </div>
-      </div>
-
-      <div class="grid">
-        <a class="tile" id="tile1" href="lesson1.html" aria-label="1-dars: Salom">
-          <span class="lockTag">🔓</span>
-          <div class="icon">👋</div>
-          <div class="tcol">
-            <div class="title">1-dars: Salom!</div>
-            <div class="desc">Salom, rahmat, iltimos</div>
-          </div>
-          <span class="pill" id="p1">0 / 5</span>
-        </a>
-
-        <a class="tile" id="tile2" href="lesson2.html" aria-label="2-dars: Sonlar">
-          <span class="lockTag" id="lock2">🔒 Avval 1-dars</span>
-          <div class="icon">🔢</div>
-          <div class="tcol">
-            <div class="title">2-dars: Sonlar</div>
-            <div class="desc">Bir, ikki, uch…</div>
-          </div>
-          <span class="pill" id="p2">0 / 10</span>
-        </a>
-
-        <a class="tile" id="tile3" href="lesson3.html" aria-label="3-dars: Hayvonlar">
-          <span class="lockTag" id="lock3">🔒 Avval 2-dars</span>
-          <div class="icon">🐾</div>
-          <div class="tcol">
-            <div class="title">3-dars: Hayvonlar</div>
-            <div class="desc">Mushuk, it, qush</div>
-          </div>
-          <span class="pill" id="p3">0 / 8</span>
-        </a>
-      </div>
-
-      <div class="btnRow">
-        <a class="btn primary" id="parentsBtn" href="parents.html">👨‍👩‍👧 Ota-onalar uchun</a>
-        <button class="btn secondary" type="button" id="resetBtn">♻️ Qaytadan</button>
-      </div>
-
-      <div class="small">Maslahat: 2–3 marta eshit 👉 keyin takrorla ⭐</div>
+        <div class="pill">0 / 8</div>
+      </a>
     </div>
   </div>
+</div>
 
-  <!-- 🎉 Celebrate -->
-  <div class="celebrate" id="celebrate">
-    <div class="celebrateCard" role="dialog" aria-modal="true" aria-labelledby="celebrateTitle">
-      <div class="confetti" id="confetti"></div>
-      <div class="celebrateTitle" id="celebrateTitle">🎉 A'lo!</div>
-      <p class="celebrateText" id="celebrateText">Sen darsni tugatding! ⭐</p>
-      <button class="closeBtn" id="closeCelebrate" type="button">Yopish</button>
-    </div>
+<!-- ===== Name Gate ===== -->
+<div class="gate" id="gate">
+  <div class="gateCard">
+    <div style="font-size:42px">🧒✨</div>
+    <h2>Isming nima?</h2>
+    <p>Avval ismingni yoz ✍️</p>
+    <input id="nameInput" placeholder="Masalan: Ali">
+    <button id="startBtn">Boshlaymiz 🚀</button>
   </div>
-
-  <!-- ✅ Name Gate (smoky) -->
-  <div class="nameGate" id="nameGate">
-    <div class="gateCard" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
-      <div style="font-size:44px; line-height:1;">🧒✨</div>
-      <div class="gateTitle" id="gateTitle">Isming nima?</div>
-      <p class="gateText">Avval ismingni yoz ✍️ <br/> Keyin o'ynaymiz 🎲</p>
-
-      <div class="nameRow">
-        <input class="nameInput" id="nameInput" type="text" inputmode="text" autocomplete="name"
-               placeholder="Masalan: Ali" maxlength="18" />
-      </div>
-      <button class="gateBtn" id="startBtn" type="button">Boshlaymiz! 🚀</button>
-      <div class="gateHint">Maslahat: 2 ta harf yetadi 🙂</div>
-    </div>
-  </div>
+</div>
 
 <script>
-  const TOTAL = 23;
-  const LESSON_COUNTS = { "1": 5, "2": 10, "3": 8 };
-  const DAILY_GOAL = 3;
+/* ===== Name Logic ===== */
+const gate = document.getElementById("gate");
+const input = document.getElementById("nameInput");
+const startBtn = document.getElementById("startBtn");
+const hello = document.getElementById("hello");
 
-  function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
-
-  function getLearnedSet(){
-    try { return new Set(JSON.parse(localStorage.getItem("learned") || "[]")); }
-    catch { return new Set(); }
+function openGate(){
+  gate.style.display="flex";
+}
+function closeGate(){
+  gate.style.display="none";
+}
+function applyName(){
+  const name = localStorage.getItem("childName");
+  if(name){
+    hello.innerText = `Salom, ${name}! 🌟`;
+    closeGate();
+  }else{
+    openGate();
   }
-  function lessonLearnedCount(learnedSet, lesson){
-    let c = 0;
-    for (const key of learnedSet){
-      if (key.startsWith("L"+lesson+"_")) c++;
-    }
-    return c;
+}
+startBtn.onclick = ()=>{
+  if(input.value.trim().length>=2){
+    localStorage.setItem("childName", input.value.trim());
+    applyName();
   }
-  function cheerFor(pct){
-    if (pct === 0) return "✨ Keling, boshlaymiz!";
-    if (pct < 25) return "🌈 Juda yaxshi!";
-    if (pct < 50) return "⭐ Zo'r! Yana o'yna!";
-    if (pct < 80) return "🚀 Ajoyib! Davom et!";
-    return "🏆 A'lo! Sen zo'rsan!";
-  }
-
-  /* 🔊 Click Sound */
-  let audioCtx = null;
-  function ensureAudio(){
-    if (audioCtx) return;
-    const AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) return;
-    audioCtx = new AC();
-  }
-  function pling(type="tile"){
-    ensureAudio();
-    if (!audioCtx) return;
-    if (audioCtx.state === "suspended") audioCtx.resume().catch(()=>{});
-
-    const now = audioCtx.currentTime;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-
-    const freq = (type === "reset") ? 440 : (type === "btn" ? 660 : 740);
-    osc.type = "triangle";
-    osc.frequency.setValueAtTime(freq, now);
-
-    gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.exponentialRampToValueAtTime(0.10, now + 0.01);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
-
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    osc.start(now);
-    osc.stop(now + 0.20);
-  }
-
-  /* ⭐ Stars */
-  function starBurst(count = 10){
-    const layer = document.getElementById("starsLayer");
-    if (!layer) return;
-    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return;
-
-    layer.innerHTML = "";
-    for (let i=0;i<count;i++){
-      const s = document.createElement("div");
-      s.className = "star";
-      const dx = (Math.random()*140 - 70).toFixed(0) + "px";
-      const dy = (Math.random()*140 - 70).toFixed(0) + "px";
-      s.style.setProperty("--dx", dx);
-      s.style.setProperty("--dy", dy);
-      s.style.animationDelay = (Math.random()*0.18).toFixed(2) + "s";
-      layer.appendChild(s);
-    }
-    setTimeout(()=>{ layer.innerHTML = ""; }, 1100);
-  }
-
-  /* ✨ Shine */
-  function playShine(el){
-    el.classList.add("shine-anim");
-    setTimeout(() => el.classList.remove("shine-anim"), 1300);
-  }
-
-  /* 🎉 Confetti */
-  function celebrate(title, text){
-    const overlay = document.getElementById("celebrate");
-    document.getElementById("celebrateTitle").innerText = title;
-    document.getElementById("celebrateText").innerText = text;
-
-    const conf = document.getElementById("confetti");
-    conf.innerHTML = "";
-    const colors = ["#F59E0B","#EF4444","#10B981","#3B82F6","#A855F7","#F97316"];
-    for(let i=0;i<70;i++){
-      const d = document.createElement("div");
-      d.className = "dot";
-      d.style.left = (Math.random()*100) + "%";
-      d.style.background = colors[Math.floor(Math.random()*colors.length)];
-      d.style.animationDelay = (Math.random()*0.25) + "s";
-      d.style.width = (8 + Math.random()*8) + "px";
-      d.style.height = d.style.width;
-      conf.appendChild(d);
-    }
-    overlay.classList.add("show");
-  }
-  function hideCelebrate(){
-    document.getElementById("celebrate").classList.remove("show");
-    document.getElementById("confetti").innerHTML = "";
-  }
-
-  function checkLessonCompletion(c1, c2, c3){
-    const prev = JSON.parse(localStorage.getItem("completedLessons") || "{}");
-    const now = { "1": c1 >= LESSON_COUNTS["1"], "2": c2 >= LESSON_COUNTS["2"], "3": c3 >= LESSON_COUNTS["3"] };
-    for (const k of ["1","2","3"]){
-      if (now[k] && !prev[k]){
-        localStorage.setItem("completedLessons", JSON.stringify(now));
-        celebrate("🎉 A'lo!", `Sen ${k}-darsni tugatding! ⭐`);
-        return;
-      }
-    }
-    localStorage.setItem("completedLessons", JSON.stringify(now));
-  }
-
-  /* 🏝️ Locks */
-  function lockClickHandler(e){
-    e.preventDefault();
-    pling("reset");
-    starBurst(10);
-    const msg = e.currentTarget.id === "tile2" ? "Avval 1-darsni tugat! 👋" : "Avval 2-darsni tugat! 🔢";
-    document.getElementById("cheerText").innerText = "🔒 " + msg;
-  }
-  function applyLocks(c1, c2){
-    const tile2 = document.getElementById("tile2");
-    const tile3 = document.getElementById("tile3");
-
-    const l1Done = c1 >= LESSON_COUNTS["1"];
-    const l2Done = c2 >= LESSON_COUNTS["2"];
-
-    if (!l1Done){
-      tile2.classList.add("locked");
-      tile2.dataset.locked = "1";
-      tile2.setAttribute("aria-disabled", "true");
-      tile2.addEventListener("click", lockClickHandler);
-    } else {
-      tile2.classList.remove("locked");
-      tile2.dataset.locked = "";
-      tile2.removeAttribute("aria-disabled");
-      tile2.removeEventListener("click", lockClickHandler);
-    }
-
-    if (!l2Done){
-      tile3.classList.add("locked");
-      tile3.dataset.locked = "1";
-      tile3.setAttribute("aria-disabled", "true");
-      tile3.addEventListener("click", lockClickHandler);
-    } else {
-      tile3.classList.remove("locked");
-      tile3.dataset.locked = "";
-      tile3.removeAttribute("aria-disabled");
-      tile3.removeEventListener("click", lockClickHandler);
-    }
-  }
-
-  /* 🐣 Daily goal */
-  function updateDailyGoal(learnedCount){
-    const today = new Date().toISOString().slice(0,10);
-    const savedDay = localStorage.getItem("dailyGoalDay");
-    if (savedDay !== today){
-      localStorage.setItem("dailyGoalDay", today);
-      localStorage.setItem("dailyGoalStart", String(learnedCount));
-    }
-    const start = parseInt(localStorage.getItem("dailyGoalStart") || String(learnedCount), 10);
-    const gained = clamp(learnedCount - start, 0, 999);
-
-    document.getElementById("goalBadge").innerText = `${clamp(gained,0,DAILY_GOAL)} / ${DAILY_GOAL}`;
-
-    const card = document.getElementById("goalCard");
-    if (gained >= DAILY_GOAL){
-      card.classList.add("done");
-      document.getElementById("goalText").innerText = "Bajarildi! ✅";
-    } else {
-      card.classList.remove("done");
-      document.getElementById("goalText").innerText = `${DAILY_GOAL} ta so'z`;
-    }
-  }
-
-  /* 🗣️ Voice */
-  function speak(text){
-    const status = document.getElementById("voiceStatus");
-    const synth = window.speechSynthesis;
-    if (!synth){
-      status.innerText = "🔇 Ovoz yo'q (brauzer qo'llamaydi)";
-      return;
-    }
-    synth.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = "uz-UZ";
-    u.rate = 0.95;
-    u.pitch = 1.08;
-    u.onstart = () => status.innerText = "🗣️ O'qiyapman…";
-    u.onend   = () => status.innerText = "🗣️ Ovoz: tayyor";
-    u.onerror = () => status.innerText = "🔇 Ovoz xatolik";
-    synth.speak(u);
-  }
-
-  /* ✅ NAME GATE */
-  function normalizeName(s){
-    return (s || "")
-      .trim()
-      .replace(/\s+/g, " ")
-      .slice(0, 18);
-  }
-
-  function showNameGate(){
-    const gate = document.getElementById("nameGate");
-    gate.classList.add("show");
-
-    const input = document.getElementById("nameInput");
-    const btn = document.getElementById("startBtn");
-
-    // reset state
-    btn.classList.remove("enabled");
-    btn.disabled = true;
-    input.value = "";
-
-    // focus
-    setTimeout(() => input.focus(), 50);
-
-    const validate = () => {
-      const name = normalizeName(input.value);
-      const ok = name.length >= 2;
-      btn.disabled = !ok;
-      btn.classList.toggle("enabled", ok);
-    };
-
-    input.addEventListener("input", validate);
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && !btn.disabled) btn.click();
-    });
-
-    btn.onclick = () => {
-      const name = normalizeName(input.value);
-      if (name.length < 2) return;
-      localStorage.setItem("childName", name);
-      hideNameGate();
-      applyGreeting();
-      // little happy effects
-      pling("btn");
-      starBurst(14);
-    };
-  }
-
-  function hideNameGate(){
-    document.getElementById("nameGate").classList.remove("show");
-  }
-
-  function applyGreeting(){
-    const name = localStorage.getItem("childName") || "";
-    const helloLine = document.getElementById("helloLine");
-
-    if (name){
-      helloLine.innerText = `Salom, ${name}! ✨ Tanla 👉 Eshit 🎧 Takrorla 🗣️ O'yna 🎲`;
-    } else {
-      helloLine.innerText = "Tanla 👉 Eshit 🎧 Takrorla 🗣️ O'yna 🎲";
-    }
-  }
-
-  function updateUI(){
-    const learned = getLearnedSet();
-    const learnedCount = learned.size;
-
-    const pctRaw = Math.round((learnedCount / TOTAL) * 100);
-    const pct = clamp(pctRaw, 0, 100);
-
-    // ⭐ stars when progress increases
-    const prevPct = parseInt(localStorage.getItem("lastPct") || "0", 10);
-    if (pct > prevPct){
-      const jump = pct - prevPct;
-      const stars = clamp(8 + jump, 10, 18);
-      starBurst(stars);
-      pling("btn");
-    }
-    localStorage.setItem("lastPct", String(pct));
-
-    document.getElementById("mainPct").innerText = pct + "%";
-    document.getElementById("cheerText").innerText = cheerFor(pct);
-
-    document.getElementById("progressText").innerText = `${learnedCount} / ${TOTAL} so'z`;
-    document.getElementById("progressFill").style.width = pct + "%";
-
-    const c1 = lessonLearnedCount(learned, "1");
-    const c2 = lessonLearnedCount(learned, "2");
-    const c3 = lessonLearnedCount(learned, "3");
-
-    document.getElementById("p1").innerText = `${c1} / ${LESSON_COUNTS["1"]}`;
-    document.getElementById("p2").innerText = `${c2} / ${LESSON_COUNTS["2"]}`;
-    document.getElementById("p3").innerText = `${c3} / ${LESSON_COUNTS["3"]}`;
-
-    applyLocks(c1, c2);
-    updateDailyGoal(learnedCount);
-
-    playShine(document.getElementById("tile1"));
-    setTimeout(()=>playShine(document.getElementById("tile2")), 220);
-    setTimeout(()=>playShine(document.getElementById("tile3")), 440);
-
-    checkLessonCompletion(c1, c2, c3);
-  }
-
-  function resetProgress(){
-    pling("reset");
-    const ok = confirm("Hammasini qaytadan boshlaymizmi? (Natija o'chadi)");
-    if(!ok) return;
-    localStorage.removeItem("learned");
-    localStorage.removeItem("stars");
-    localStorage.removeItem("quiz");
-    localStorage.removeItem("completedLessons");
-    localStorage.setItem("lastPct", "0");
-    updateUI();
-  }
-
-  function wireUI(){
-    // audio on first gesture
-    const firstGesture = () => { ensureAudio(); document.removeEventListener("pointerdown", firstGesture); };
-    document.addEventListener("pointerdown", firstGesture, { once: true });
-
-    ["tile1","tile2","tile3"].forEach(id => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.addEventListener("click", (e) => {
-        if (el.dataset.locked === "1") return;
-        pling("tile");
-      });
-    });
-
-    document.getElementById("parentsBtn").addEventListener("click", () => pling("btn"));
-    document.getElementById("resetBtn").addEventListener("click", resetProgress);
-
-    document.getElementById("closeCelebrate").addEventListener("click", () => { pling("btn"); hideCelebrate(); });
-    document.getElementById("celebrate").addEventListener("click", (e) => { if (e.target.id === "celebrate") hideCelebrate(); });
-
-    document.getElementById("speakBtn").addEventListener("click", () => {
-      pling("btn");
-      const name = localStorage.getItem("childName") || "";
-      const learned = getLearnedSet().size;
-      const msg = (learned === 0)
-        ? `Salom${name ? ", " + name : ""}! Keling, boshlaymiz! Birinchi darsni tanlang.`
-        : `Ajoyib${name ? ", " + name : ""}! Davom etamiz. Darsni tanlang: eshit, takrorla va o'yna!`;
-      speak(msg);
-    });
-
-    // change name
-    document.getElementById("changeNameBtn").addEventListener("click", () => {
-      pling("btn");
-      localStorage.removeItem("childName");
-      showNameGate();
-    });
-  }
-
-  window.addEventListener("load", () => {
-    wireUI();
-
-    // ✅ block page until name exists
-    const name = localStorage.getItem("childName");
-    if (!name){
-      showNameGate();         // smoky overlay stays until name entered
-    } else {
-      applyGreeting();
-    }
-
-    updateUI();
-  });
+};
+applyName();
 </script>
 </body>
 </html>
