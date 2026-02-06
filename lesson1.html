@@ -60,6 +60,8 @@
       display: flex;
       gap: 10px;
       margin-bottom: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .mode-btn {
@@ -114,41 +116,48 @@
     .option-btn:active { transform: translateY(2px); box-shadow: none; }
 
     /* --- MEMORY SECTION --- */
+    /* iPad + Handy: automatisch passende Spalten */
     .memory-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
       gap: 12px;
-      max-width: 400px;
+      width: 100%;
+      max-width: 420px;
+      justify-items: center;
     }
 
     .memory-card {
-      width: 100px;
-      height: 100px;
+      width: clamp(95px, 26vw, 120px);
+      height: clamp(95px, 26vw, 120px);
       background: var(--primary);
       border-radius: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 24px;
+      font-size: 22px;
       color: white;
       cursor: pointer;
       box-shadow: 0 6px 0 #074b81;
-      transition: 0.3s;
+      transition: 0.25s;
       text-align: center;
-      padding: 5px;
+      padding: 6px;
+      user-select: none;
     }
+
+    .memory-card:active { transform: translateY(2px); box-shadow: 0 3px 0 #074b81; }
 
     .memory-card.flipped {
       background: white;
       color: #2d3436;
       box-shadow: 0 6px 0 #ccc;
-      transform: rotateY(180deg);
     }
 
     .memory-card.matched {
       background: var(--success);
-      visibility: hidden;
-      opacity: 0;
+      box-shadow: 0 6px 0 #09725b;
+      color: white;
+      cursor: default;
+      transform: none;
     }
 
     /* --- STICKER ALBUM --- */
@@ -176,6 +185,7 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 15px;
       margin-top: 20px;
+      justify-items: center;
     }
 
     .sticker-slot {
@@ -201,6 +211,43 @@
     }
 
     @keyframes pop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+
+    /* --- WIN OVERLAY (für Memory-Sieg) --- */
+    .win-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,0.65);
+      z-index: 2000;
+      justify-content:center;
+      align-items:center;
+      padding: 16px;
+    }
+    .win-card{
+      width: 92%;
+      max-width: 360px;
+      background: white;
+      border-radius: 30px;
+      padding: 22px;
+      text-align: center;
+      box-shadow: 0 14px 0 rgba(0,0,0,0.12);
+      border: 4px solid white;
+    }
+    .win-title{ font-size: 26px; font-weight: bold; margin: 6px 0; }
+    .win-text{ font-size: 16px; font-weight: bold; color:#2d3436; margin: 6px 0 14px; }
+    .win-sticker{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background:#fff9e6;
+      border: 4px solid var(--sun);
+      font-size: 44px;
+      margin: 10px 0 6px;
+      animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
 
     /* --- FOOTER --- */
     .nav-footer {
@@ -265,6 +312,7 @@
     <button class="nav-btn" style="background:var(--success); color:white; box-shadow: 0 6px 0 #09725b;" onclick="nextStep()">Keyingisi ➡️</button>
   </div>
 
+  <!-- Sticker Album -->
   <div id="albumOverlay" class="album-overlay" onclick="toggleAlbum()">
     <div class="album-card" onclick="event.stopPropagation()">
       <h3>Mening Stikerlarim 🏆</h3>
@@ -280,24 +328,58 @@
     </div>
   </div>
 
+  <!-- Memory Win Overlay -->
+  <div id="winOverlay" class="win-overlay" onclick="closeWinOverlay()">
+    <div class="win-card" onclick="event.stopPropagation()">
+      <div style="font-size:52px">🎉</div>
+      <div class="win-title">Zo‘r! Barakalla!</div>
+      <div class="win-text" id="winText">Siz Memory o‘yinini yutdingiz!</div>
+      <div class="win-sticker" aria-hidden="true">👋</div>
+      <div style="font-weight:bold; margin-top:6px;">Stiker olding! 🏷️</div>
+      <button class="nav-btn" style="margin-top: 16px; width: 100%; background: var(--primary); color:white; box-shadow: 0 6px 0 #074b81;" onclick="openAlbumFromWin()">📖 Albumni ochish</button>
+      <button class="nav-btn" style="margin-top: 12px; width: 100%;" onclick="restartMemory()">🔁 Yana o‘ynash</button>
+    </div>
+  </div>
+
   <script>
     const data = [
-      { key: "1", emoji: "👋", uz: "Salom", en: "Hello" },
-      { key: "6", emoji: "🙏", uz: "Rahmat", en: "Thank you" },
-      { key: "9", emoji: "🌸", uz: "Iltimos", en: "Please" },
-      { key: "4", emoji: "🙂", uz: "Yaxshimisiz?", en: "How are you?" },
-      { key: "11", emoji: "🌙", uz: "Xayr", en: "Bye" }
+      { key: "1",  emoji: "👋", uz: "Salom",        en: "Hello" },
+      { key: "6",  emoji: "🙏", uz: "Rahmat",       en: "Thank you" },
+      { key: "9",  emoji: "🌸", uz: "Iltimos",      en: "Please" },
+      { key: "4",  emoji: "🙂", uz: "Yaxshimisiz?", en: "How are you?" },
+      { key: "11", emoji: "🌙", uz: "Xayr",         en: "Bye" }
     ];
 
     let currentIdx = 0;
     let quizScore = 0;
+
     let memoryMoves = 0;
     let matchesFound = 0;
     let flippedCards = [];
+    let lockBoard = false;
 
-    // Sounds
-    const sndWin = new Audio('https://www.myinstants.com/media/sounds/level-up-191.mp3');
-    const sndSuccess = new Audio('https://www.myinstants.com/media/sounds/success-fanfare-trumpets.mp3');
+    // ========== SOUND (ohne externe URLs, zuverlässig) ==========
+    let audioCtx = null;
+    function beep(freq=740, dur=0.14){
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if(!AC) return;
+      if(!audioCtx) audioCtx = new AC();
+      if(audioCtx.state === "suspended") audioCtx.resume().catch(()=>{});
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = "triangle";
+      o.frequency.value = freq;
+      g.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.12, audioCtx.currentTime + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
+      o.connect(g); g.connect(audioCtx.destination);
+      o.start(); o.stop(audioCtx.currentTime + dur);
+    }
+    const sfx = {
+      correct(){ beep(880, 0.16); },
+      wrong(){ beep(220, 0.18); },
+      win(){ beep(660, 0.12); setTimeout(()=>beep(880,0.14),140); setTimeout(()=>beep(990,0.16),290); }
+    };
 
     // --- MODES ---
     function showMode(mode) {
@@ -313,10 +395,10 @@
       const item = data[currentIdx];
       document.getElementById('qEmoji').innerText = item.emoji;
       document.getElementById('qWordUz').innerText = item.uz;
-      
+
       const optionsBox = document.getElementById('optionsBox');
       optionsBox.innerHTML = '';
-      
+
       let choices = [item.en];
       while(choices.length < 3) {
         let r = data[Math.floor(Math.random()*data.length)].en;
@@ -334,11 +416,12 @@
             btn.style.color = 'white';
             quizScore++;
             updateProgress();
-            sndWin.play();
-            setTimeout(nextStep, 800);
+            sfx.correct();
+            setTimeout(nextStep, 700);
           } else {
             btn.style.background = 'var(--error)';
             btn.style.color = 'white';
+            sfx.wrong();
             setTimeout(() => { btn.style.background = 'white'; btn.style.color = '#2d3436'; }, 600);
           }
         };
@@ -353,9 +436,10 @@
     function nextStep() {
       currentIdx = (currentIdx + 1) % data.length;
       if(quizScore >= data.length) {
-          unlockSticker(1);
+          unlockSticker(1);   // 👋 Sticker
           confetti();
-          quizScore = 0; 
+          sfx.win();
+          quizScore = 0;
       }
       loadQuiz();
     }
@@ -370,61 +454,142 @@
     function initMemory() {
       const grid = document.getElementById('memorySection');
       grid.innerHTML = '';
-      matchesFound = 0; memoryMoves = 0;
+      matchesFound = 0;
+      memoryMoves = 0;
+      flippedCards = [];
+      lockBoard = false;
+
       let cards = [];
       data.forEach(item => {
-        cards.push({ id: item.key, val: item.emoji });
-        cards.push({ id: item.key, val: item.uz });
+        // Pair: emoji + uz word (same id)
+        cards.push({ id: item.key, val: item.emoji, type:"emoji" });
+        cards.push({ id: item.key, val: item.uz,    type:"word"  });
       });
       cards.sort(() => Math.random() - 0.5);
 
       cards.forEach(c => {
         const div = document.createElement('div');
         div.className = 'memory-card';
-        div.innerText = "?";
+        div.innerText = "❓";
+        div.dataset.id = c.id;
+        div.dataset.val = c.val;
+        div.dataset.open = "0";
+        div.dataset.matched = "0";
+
         div.onclick = () => {
-          if(flippedCards.length < 2 && !div.classList.contains('flipped')) {
-            div.classList.add('flipped');
-            div.innerText = c.val;
-            flippedCards.push({ div, id: c.id });
-            if(flippedCards.length === 2) {
-              memoryMoves++;
-              setTimeout(checkMatch, 700);
-            }
+          if(lockBoard) return;
+          if(div.dataset.matched === "1") return;
+          if(div.dataset.open === "1") return;
+          if(flippedCards.length >= 2) return;
+
+          flipOpen(div);
+
+          flippedCards.push(div);
+          if(flippedCards.length === 2) {
+            lockBoard = true;
+            memoryMoves++;
+            setTimeout(checkMatch, 650);
           }
         };
         grid.appendChild(div);
       });
+
+      // Best anzeigen
+      document.getElementById('memoryBest').innerText = "Best: " + (localStorage.getItem("best1") || "--");
+    }
+
+    function flipOpen(div){
+      div.classList.add('flipped');
+      div.innerText = div.dataset.val;
+      div.dataset.open = "1";
+      sfx.correct(); // kleines positives “click”
+    }
+    function flipClose(div){
+      div.classList.remove('flipped');
+      div.innerText = "❓";
+      div.dataset.open = "0";
     }
 
     function checkMatch() {
       const [a, b] = flippedCards;
-      if(a.id === b.id) {
-        a.div.classList.add('matched'); b.div.classList.add('matched');
+
+      if(!a || !b){
+        flippedCards = [];
+        lockBoard = false;
+        return;
+      }
+
+      const same = (a.dataset.id === b.dataset.id);
+
+      if(same) {
+        a.classList.add('matched'); b.classList.add('matched');
+        a.dataset.matched = "1"; b.dataset.matched = "1";
         matchesFound++;
-        if(matchesFound === data.length) { 
-            sndSuccess.play(); confetti(); 
-            let best = localStorage.getItem("best1") || 999;
-            if(memoryMoves < best) localStorage.setItem("best1", memoryMoves);
-            alert(`Zo'r! ${memoryMoves} urinishda tugatdingiz!`);
-            showMode('quiz');
+
+        if(matchesFound === data.length) {
+          // ✅ WIN: Best speichern + Sticker geben
+          const best = parseInt(localStorage.getItem("best1") || "999", 10);
+          if(memoryMoves < best) localStorage.setItem("best1", String(memoryMoves));
+
+          unlockSticker(1); // 👋 Sticker als Belohnung
+          confetti();
+          sfx.win();
+
+          document.getElementById('memoryBest').innerText =
+            "Best: " + (localStorage.getItem("best1") || "--");
+
+          openWinOverlay();
+          flippedCards = [];
+          lockBoard = false;
+          return;
         }
       } else {
-        a.div.classList.remove('flipped'); b.div.classList.remove('flipped');
-        a.div.innerText = "?"; b.div.innerText = "?";
+        sfx.wrong();
+        setTimeout(() => {
+          flipClose(a);
+          flipClose(b);
+        }, 120);
       }
+
       flippedCards = [];
-      document.getElementById('memoryBest').innerText = "Best: " + (localStorage.getItem("best1") || "--");
+      lockBoard = false;
+
+      document.getElementById('memoryBest').innerText =
+        "Best: " + (localStorage.getItem("best1") || "--");
+    }
+
+    function restartMemory(){
+      closeWinOverlay();
+      initMemory();
+      showMode('memory');
+    }
+
+    // --- WIN OVERLAY ---
+    function openWinOverlay(){
+      const text = document.getElementById("winText");
+      text.innerText = `Zo‘r! ${memoryMoves} urinishda tugatdingiz!`;
+      document.getElementById("winOverlay").style.display = "flex";
+    }
+    function closeWinOverlay(){
+      document.getElementById("winOverlay").style.display = "none";
+    }
+    function openAlbumFromWin(){
+      closeWinOverlay();
+      toggleAlbum(true);
     }
 
     // --- STICKERS & ALBUM ---
-    function toggleAlbum() {
+    function toggleAlbum(forceOpen=false) {
       const album = document.getElementById('albumOverlay');
       const isVisible = album.style.display === 'flex';
-      album.style.display = isVisible ? 'none' : 'flex';
-      if(!isVisible) {
+      album.style.display = (forceOpen || !isVisible) ? 'flex' : 'none';
+
+      if(album.style.display === 'flex') {
         let earned = JSON.parse(localStorage.getItem("stickers") || "[]");
-        earned.forEach(id => document.getElementById('stk_'+id).classList.add('unlocked'));
+        earned.forEach(id => {
+          const el = document.getElementById('stk_'+id);
+          if(el) el.classList.add('unlocked');
+        });
       }
     }
 
@@ -436,6 +601,7 @@
       }
     }
 
+    // --- CONFETTI ---
     function confetti() {
       for(let i=0; i<30; i++) {
         const c = document.createElement('div');
@@ -447,7 +613,10 @@
         c.style.borderRadius = '50%';
         c.style.zIndex = 2000;
         document.body.appendChild(c);
-        c.animate([{ transform: 'translateY(0)' }, { transform: `translateY(100vh) translateX(${Math.random()*100-50}px)` }], { duration: 2000 });
+        c.animate(
+          [{ transform: 'translateY(0)' }, { transform: `translateY(100vh) translateX(${Math.random()*100-50}px)` }],
+          { duration: 2000 }
+        );
         setTimeout(() => c.remove(), 2000);
       }
     }
