@@ -29,16 +29,31 @@
 
     /* --- HEADER --- */
     .header-box {
-      background: white; width: 100%; max-width: 520px;
-      border-radius: var(--radius); padding: 15px; text-align: center;
-      box-shadow: 0 8px 0 rgba(0,0,0,0.05); margin-bottom: 12px; border: 4px solid white;
+      background: white;
+      width: 100%;
+      max-width: 520px;
+      border-radius: var(--radius);
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 8px 0 rgba(0,0,0,0.05);
+      margin-bottom: 12px;
+      border: 4px solid white;
     }
 
     .progress-container { background: #dfe6e9; height: 15px; border-radius: 10px; margin: 10px 0; overflow: hidden; }
     .progress-fill { background: var(--success); height: 100%; width: 0%; transition: width 0.5s; }
 
     .top-row { display:flex; justify-content: space-between; align-items:center; gap:10px; }
-    .icon-btn { background:none; border:none; font-size:22px; cursor:pointer; }
+
+    /* ✅ Bigger home & book icons */
+    .topIcon {
+      font-size: 36px;
+      line-height: 1;
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
 
     /* --- Language switch --- */
     .lang-switch{
@@ -53,21 +68,36 @@
     }
     .lang-btn.active{ background: var(--primary); color:#fff; box-shadow: 0 4px 0 #074b81; }
 
-    /* --- MODUS NAVIGATION (bigger) --- */
+    /* --- MODUS NAVIGATION (bigger icons) --- */
     .mode-nav {
-      display: flex; gap: 10px; margin-bottom: 14px;
-      width: 100%; max-width: 520px; flex-wrap: wrap;
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+      width: 100%;
+      max-width: 520px;
+      flex-wrap: wrap;
     }
     .mode-btn {
-      flex: 1; padding: 14px 12px;
-      border-radius: 18px; border: none; background: white;
-      font-weight: 900; cursor: pointer;
+      flex: 1;
+      padding: 14px 12px;
+      border-radius: 18px;
+      border: none;
+      background: white;
+      font-weight: 900;
+      cursor: pointer;
       box-shadow: 0 5px 0 #ccc;
-      font-size: 16px;
-      min-width: 140px;
+      font-size: 18px;               /* bigger text */
+      min-width: 160px;
       white-space: nowrap;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
     }
     .mode-btn.active { background: var(--primary); color: white; box-shadow: 0 5px 0 #074b81; }
+
+    /* ✅ Bigger icons inside mode buttons */
+    .mode-ico{ font-size: 26px; line-height: 1; }
 
     /* --- SECTIONS --- */
     #learnSection, #quizSection, #memorySection, #echoSection, #bubbleSection {
@@ -122,11 +152,17 @@
       display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8);
       z-index: 1000; justify-content: center; align-items: center;
     }
-    .album-content { background: white; padding: 26px; border-radius: 30px; text-align: center; width: 85%; max-width: 380px; }
+    .album-content { background: white; padding: 26px; border-radius: 30px; text-align: center; width: 85%; max-width: 420px; }
+    .sticker-grid{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
     .sticker-slot {
-      width: 70px; height: 70px; background: #eee; border-radius: 50%;
+      width: 78px; height: 78px; background: #eee; border-radius: 50%;
       display: inline-flex; justify-content: center; align-items: center;
-      font-size: 34px; opacity: 0.2; filter: grayscale(1); margin: 6px;
+      font-size: 38px; opacity: 0.2; filter: grayscale(1);
       border: 2px dashed #bbb;
     }
     .sticker-slot.unlocked { opacity: 1; filter: none; background: #fff9e6; border: 3px solid var(--sun); }
@@ -253,9 +289,9 @@
 
   <div class="header-box">
     <div class="top-row">
-      <a href="index.html" style="text-decoration:none; font-size:22px;">🏠</a>
+      <a href="index.html" class="topIcon" aria-label="Home">🏠</a>
       <h3 style="margin:0;" id="titleText">1-dars: Salomlashuv</h3>
-      <button onclick="toggleAlbum()" class="icon-btn" aria-label="Album">📖</button>
+      <button onclick="toggleAlbum()" class="topIcon" aria-label="Album">📖</button>
     </div>
 
     <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
@@ -268,11 +304,11 @@
   </div>
 
   <div class="mode-nav">
-    <button class="mode-btn active" id="btnLearn"   onclick="changeMode('learn')">📖 O'rganish</button>
-    <button class="mode-btn"        id="btnQuiz"    onclick="changeMode('quiz')">🎯 Test</button>
-    <button class="mode-btn"        id="btnMemory"  onclick="changeMode('memory')">🧠 O'yin</button>
-    <button class="mode-btn"        id="btnEcho"    onclick="changeMode('echo')">🗣️ Aks-sado</button>
-    <button class="mode-btn"        id="btnBubble"  onclick="changeMode('bubble')">🫧 Pufakchalar</button>
+    <button class="mode-btn active" id="btnLearn"  onclick="changeMode('learn')"><span class="mode-ico">📖</span><span id="tLearn">O'rganish</span></button>
+    <button class="mode-btn"        id="btnQuiz"   onclick="changeMode('quiz')"><span class="mode-ico">🎯</span><span id="tQuiz">Test</span></button>
+    <button class="mode-btn"        id="btnMemory" onclick="changeMode('memory')"><span class="mode-ico">🧠</span><span id="tMemory">O'yin</span></button>
+    <button class="mode-btn"        id="btnEcho"   onclick="changeMode('echo')"><span class="mode-ico">🗣️</span><span id="tEcho">Aks-sado</span></button>
+    <button class="mode-btn"        id="btnBubble" onclick="changeMode('bubble')"><span class="mode-ico">🫧</span><span id="tBubble">Pufakchalar</span></button>
   </div>
 
   <!-- Learn -->
@@ -317,6 +353,7 @@
     <div class="small-note" id="echoHint">🔁 Eshit → ayt → tekshir!</div>
     <div class="speech-line" id="speechLine">🎙️ ...</div>
     <div class="small-note" id="echoProgress">⭐ 0 / 5</div>
+    <div class="small-note" id="echoTryLine">🔁 Urinish: 0 / 3</div>
   </div>
 
   <!-- Bubbles -->
@@ -331,10 +368,13 @@
   <div id="albumOverlay" class="album-overlay" onclick="toggleAlbum()">
     <div class="album-content" onclick="event.stopPropagation()">
       <h3 id="albumTitle" style="margin-top:0;">Mening Stikerlarim</h3>
-      <div id="stk_1" class="sticker-slot">👋</div>
-      <div id="stk_2" class="sticker-slot">🔢</div>
-      <div id="stk_3" class="sticker-slot">🦁</div>
-      <br><br>
+      <div class="sticker-grid">
+        <div id="stk_1" class="sticker-slot">🐰</div> <!-- Quiz -->
+        <div id="stk_2" class="sticker-slot">🐻</div> <!-- Memory -->
+        <div id="stk_3" class="sticker-slot">🦁</div> <!-- Echo -->
+        <div id="stk_4" class="sticker-slot">🐠</div> <!-- Bubbles -->
+      </div>
+      <br>
       <button class="mode-btn" onclick="toggleAlbum()" id="closeAlbumBtn">Yopish</button>
     </div>
   </div>
@@ -357,11 +397,11 @@
   const UI = {
     uz: {
       title: "1-dars: Salomlashuv",
-      learn: "📖 O'rganish",
-      quiz: "🎯 Test",
-      memory: "🧠 O'yin",
-      echo: "🗣️ Aks-sado",
-      bubble: "🫧 Pufakchalar",
+      learn: "O'rganish",
+      quiz: "Test",
+      memory: "O'yin",
+      echo: "Aks-sado",
+      bubble: "Pufakchalar",
       listen: "Eshitish",
       moves: "Urinishlar",
       album: "Mening Stikerlarim",
@@ -369,24 +409,24 @@
       echoHint: "🔁 Eshit → ayt → tekshir!",
       bubbleHint: "To‘g‘ri emojini top! ⭐",
       bubbleTask: "Top: ",
-      doneQuizTitle: "Barakalla! 🎉",
-      doneQuizText: "Siz testni tugatdingiz! Stiker oldingiz! 👋",
-      winMemoryTitle: "Zo‘r! 🦁",
-      winMemoryText: "Memory o‘yinini yutdingiz! Stiker oldingiz!",
-      winBubbleTitle: "Ajoyib! 🫧",
-      winBubbleText: "Pufakchalar o‘yinini tugatdingiz! Stiker oldingiz! 🔢",
-      echoWinTitle: "Zo‘r! 🗣️",
-      echoWinText: "Aks-sado o‘yinini tugatdingiz! ⭐",
+      doneQuizTitle: "Barakalla! 🐰",
+      doneQuizText: "Test tugadi! Siz quyon stikerini oldingiz!",
+      winMemoryTitle: "Zo‘r! 🐻",
+      winMemoryText: "Memory tugadi! Siz ayiq stikerini oldingiz!",
+      echoWinTitle: "Ajoyib! 🦁",
+      echoWinText: "Aks-sado tugadi! Siz sher stikerini oldingiz!",
+      winBubbleTitle: "Super! 🐠",
+      winBubbleText: "Pufakchalar tugadi! Siz baliq stikerini oldingiz!",
       sayAgain: "❌ Xato. Yana urinib ko‘r!",
-      micNoSupport: "⚠️ Brauzer mic-ni qo‘llamaydi. Chrome ishlating."
+      micNoSupport: "⚠️ Mikrofon yo‘q. Chrome ishlating."
     },
     en: {
       title: "Lesson 1: Greetings",
-      learn: "📖 Learn",
-      quiz: "🎯 Quiz",
-      memory: "🧠 Game",
-      echo: "🗣️ Echo",
-      bubble: "🫧 Bubbles",
+      learn: "Learn",
+      quiz: "Quiz",
+      memory: "Game",
+      echo: "Echo",
+      bubble: "Bubbles",
       listen: "Listen",
       moves: "Moves",
       album: "My Stickers",
@@ -394,14 +434,14 @@
       echoHint: "🔁 Listen → say it → check!",
       bubbleHint: "Find the correct emoji! ⭐",
       bubbleTask: "Tap: ",
-      doneQuizTitle: "Well done! 🎉",
-      doneQuizText: "You finished the quiz! You earned a sticker! 👋",
-      winMemoryTitle: "You won! 🦁",
-      winMemoryText: "You beat the memory game! Sticker unlocked!",
-      winBubbleTitle: "Amazing! 🫧",
-      winBubbleText: "You finished the bubbles game! Sticker unlocked! 🔢",
-      echoWinTitle: "Great! 🗣️",
-      echoWinText: "You finished Echo! ⭐",
+      doneQuizTitle: "Well done! 🐰",
+      doneQuizText: "Quiz complete! You earned the bunny sticker!",
+      winMemoryTitle: "You won! 🐻",
+      winMemoryText: "Memory complete! You earned the bear sticker!",
+      echoWinTitle: "Great! 🦁",
+      echoWinText: "Echo complete! You earned the lion sticker!",
+      winBubbleTitle: "Amazing! 🐠",
+      winBubbleText: "Bubbles complete! You earned the fish sticker!",
       sayAgain: "❌ Not quite. Try again!",
       micNoSupport: "⚠️ Mic not supported. Use Chrome."
     }
@@ -480,11 +520,13 @@
 
     const T = UI[lang];
     document.getElementById("titleText").innerText = T.title;
-    document.getElementById("btnLearn").innerText = T.learn;
-    document.getElementById("btnQuiz").innerText = T.quiz;
-    document.getElementById("btnMemory").innerText = T.memory;
-    document.getElementById("btnEcho").innerText = T.echo;
-    document.getElementById("btnBubble").innerText = T.bubble;
+
+    document.getElementById("tLearn").innerText = T.learn;
+    document.getElementById("tQuiz").innerText = T.quiz;
+    document.getElementById("tMemory").innerText = T.memory;
+    document.getElementById("tEcho").innerText = T.echo;
+    document.getElementById("tBubble").innerText = T.bubble;
+
     document.getElementById("listenBtnText").innerText = T.listen;
     document.getElementById("movesLabel").innerText = T.moves;
     document.getElementById("albumTitle").innerText = T.album;
@@ -495,7 +537,6 @@
     renderLearn();
     loadQuiz();
 
-    // refresh game banners if open
     if(document.getElementById("echoSection").style.display === "block") playEchoAudio();
     if(document.getElementById("bubbleSection").style.display === "block") startBubbles();
   }
@@ -636,7 +677,6 @@
             saveQuizDone(doneList);
           }
 
-          // reward: set stars to 3
           const st = loadStars();
           st[item.key] = 3;
           saveStars(st);
@@ -645,9 +685,9 @@
             currentQuizIdx = (currentQuizIdx + 1) % data.length;
 
             if(loadQuizDone().length === data.length){
-              unlockSticker(1);
+              unlockSticker(1); // 🐰 quiz
               const T = UI[currentLang];
-              celebrate(T.doneQuizTitle, T.doneQuizText, "👋");
+              celebrate(T.doneQuizTitle, T.doneQuizText, "🐰");
             }
 
             updateProgress();
@@ -712,9 +752,9 @@
                 flippedCards.forEach(f => f.div.classList.add('matched'));
                 matches++;
                 if(matches === data.length) {
-                  unlockSticker(3);
+                  unlockSticker(2); // 🐻 memory
                   const T = UI[currentLang];
-                  celebrate(T.winMemoryTitle, T.winMemoryText, "🦁");
+                  celebrate(T.winMemoryTitle, T.winMemoryText, "🐻");
                 }
               } else {
                 flippedCards.forEach(f => {
@@ -756,10 +796,11 @@
   function sfxFail(){ beep(220,0.15); setTimeout(()=>beep(180,0.18),120); }
 
   // =========================
-  // ECHO (finite: each word once) + SPEECH RECOGNITION
+  // ECHO (finite + 3 tries rule)
   // =========================
   let echoOrder = [];
   let echoIdx = 0;
+  let echoTries = 0;           // ✅ tries per word
   let recognition = null;
   let isRecognizing = false;
 
@@ -775,7 +816,9 @@
   function startEchoGame(){
     echoOrder = shuffle(data.map(x=>x.key)); // each word once
     echoIdx = 0;
+    echoTries = 0;
     updateEchoProgress();
+    updateEchoTries();
     setSpeechLine("🎙️ ...", "");
     playEchoAudio();
   }
@@ -788,6 +831,10 @@
   function updateEchoProgress(){
     const el = document.getElementById("echoProgress");
     if(el) el.innerText = `⭐ ${echoIdx} / ${data.length}`;
+  }
+  function updateEchoTries(){
+    const el = document.getElementById("echoTryLine");
+    if(el) el.innerText = `🔁 Urinish: ${echoTries} / 3`;
   }
 
   function playEchoAudio() {
@@ -818,20 +865,45 @@
     el.innerText = text;
   }
 
+  function goNextEchoWord(reasonText){
+    // move next word
+    echoIdx++;
+    echoTries = 0;
+    updateEchoProgress();
+    updateEchoTries();
+
+    if(echoIdx >= data.length){
+      unlockSticker(3); // 🦁 echo
+      const T = UI[currentLang];
+      celebrate(T.echoWinTitle, T.echoWinText, "🦁");
+      stopMic();
+      return;
+    }
+
+    if(reasonText) setSpeechLine(reasonText, "bad");
+    setTimeout(() => {
+      setSpeechLine("🎙️ ...", "");
+      playEchoAudio();
+    }, 650);
+  }
+
   function startMic() {
     const T = UI[currentLang];
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if(!SpeechRecognition){
+      // even without mic: count as a try and auto-skip after 3
+      echoTries++;
+      updateEchoTries();
       setSpeechLine(T.micNoSupport, "bad");
       sfxFail();
+      if(echoTries >= 3) goNextEchoWord((currentLang==="en") ? "Next word ✅" : "Keyingi so‘z ✅");
       return;
     }
 
-    // prepare
     if(isRecognizing) return;
 
     recognition = new SpeechRecognition();
-    recognition.lang = (currentLang === "en") ? "en-US" : "uz-UZ"; // uz-UZ may fallback internally
+    recognition.lang = (currentLang === "en") ? "en-US" : "uz-UZ";
     recognition.interimResults = false;
     recognition.maxAlternatives = 3;
 
@@ -847,7 +919,6 @@
       const transcript = normalizeText(event.results[0][0].transcript);
       setSpeechLine("🗣️ " + transcript, "");
 
-      // tolerant matching: allow includes / small variations
       const ok =
         transcript === target ||
         transcript.includes(target) ||
@@ -856,34 +927,30 @@
       if(ok){
         setSpeechLine("✅ " + transcript, "ok");
         sfxWin();
-
-        echoIdx++;
-        updateEchoProgress();
-
-        if(echoIdx >= data.length){
-          const TT = UI[currentLang];
-          celebrate(TT.echoWinTitle, TT.echoWinText, "🗣️");
-          // restart next time entering echo
-          stopMic();
-          return;
-        }
-
-        setTimeout(() => {
-          playEchoAudio();
-        }, 650);
-
+        goNextEchoWord();
       } else {
+        echoTries++;
+        updateEchoTries();
         const TT = UI[currentLang];
         setSpeechLine(TT.sayAgain + " (" + transcript + ")", "bad");
         sfxFail();
-        // keep same word, do not advance
+
+        // ✅ after 3 tries -> next word automatically
+        if(echoTries >= 3){
+          goNextEchoWord((currentLang==="en") ? "3 tries used → next word ✅" : "3 urinish bo‘ldi → keyingi so‘z ✅");
+        }
       }
     };
 
     recognition.onerror = () => {
+      echoTries++;
+      updateEchoTries();
       const TT = UI[currentLang];
       setSpeechLine(TT.sayAgain, "bad");
       sfxFail();
+      if(echoTries >= 3){
+        goNextEchoWord((currentLang==="en") ? "Next word ✅" : "Keyingi so‘z ✅");
+      }
     };
 
     recognition.onend = () => {
@@ -938,10 +1005,9 @@
     }
 
     if(bubbleIdx >= data.length){
-      // finished
-      unlockSticker(2);
+      unlockSticker(4); // 🐠 bubbles
       const T = UI[currentLang];
-      celebrate(T.winBubbleTitle, T.winBubbleText, "🫧");
+      celebrate(T.winBubbleTitle, T.winBubbleText, "🐠");
       bubbleIdx = 0;
       bubbleOrder = [];
       updateBubbleScoreLine();
@@ -977,7 +1043,6 @@
           b.style.background = '#2ed573';
           b.style.borderColor = '#fff';
 
-          // next word
           bubbleIdx++;
           stopBubbles();
           setTimeout(startBubbles, 500);
@@ -993,7 +1058,7 @@
   }
 
   // =========================
-  // ALBUM / STICKERS
+  // STICKERS / ALBUM
   // =========================
   function toggleAlbum() {
     const album = document.getElementById('albumOverlay');
@@ -1023,6 +1088,7 @@
     updateProgress();
     updateBubbleScoreLine();
     updateEchoProgress();
+    updateEchoTries();
   })();
 </script>
 
