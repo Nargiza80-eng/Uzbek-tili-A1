@@ -3,877 +3,732 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>1-dars – Salomlashuv (Kids)</title>
+  <title>Dono Bola - 1. Dars</title>
 
   <style>
-    :root{
-      --bg:#F7F3EE;
-      --card:#FFFFFF;
-      --ink:#1F2937;
-      --muted:#6B7280;
-      --line:#E7E0D8;
-      --accent:#6FA8A1;
-      --accent2:#F2C98A;
-      --good:#16a34a;
-      --bad:#dc2626;
-      --shadow:0 10px 26px rgba(31,41,55,0.10);
-      --radius:18px;
-
-      --primary:#0984e3;
-      --success:#00b894;
-      --sun:#fdcb6e;
+    :root {
+      --bg: #f0f9ff;
+      --primary: #0984e3;
+      --success: #00b894;
+      --error: #d63031;
+      --sun: #fdcb6e;
+      --radius: 25px;
     }
 
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive;
       background: var(--bg);
-      color: var(--ink);
-      padding: 18px;
-    }
-
-    .app{max-width:980px;margin:0 auto;}
-    .top{
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 18px;
-      position: relative;
-      overflow:hidden;
-    }
-
-    /* ---------- Header ---------- */
-    .headBar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-bottom:12px;
-    }
-    .headLeft{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:240px;
-    }
-    .homeBtn{
-      text-decoration:none;
-      font-size:22px;
-      background:#fff;
-      border:1px solid var(--line);
-      padding:8px 10px;
-      border-radius:14px;
-      box-shadow: var(--shadow);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-    }
-    h1{margin:0;font-size:22px;}
-    .sub{margin-top:6px;color:var(--muted);font-weight:800}
-
-    .albumBtn{
-      border:none;
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:10px 12px;
-      box-shadow: var(--shadow);
-      cursor:pointer;
-      font-weight:1000;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-    }
-
-    /* ---------- Progress ---------- */
-    .bar{
-      margin-top:12px;
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:10px;
-      box-shadow: var(--shadow);
-    }
-    .barRow{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
-    .track{
-      height:12px;
-      background:#F3F4F6;
-      border-radius:999px;
-      overflow:hidden;
-      border:1px solid #E5E7EB;
-      margin-top:10px;
-    }
-    .fill{height:100%;width:0%;background:var(--accent);transition:width .25s ease;}
-
-    /* ---------- Cards (5 Kästchen) ---------- */
-    .grid{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-      gap:12px;
-    }
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow: var(--shadow);
-      padding:14px;
-      text-align:center;
-      position:relative;
-    }
-    .emoji{font-size:50px; line-height:1;}
-    .uz{font-size:30px;font-weight:1000;margin-top:8px}
-    .en{font-size:18px;font-weight:1000;margin-top:8px;display:none}
-    .pr{color:var(--muted);font-style:italic;margin-top:6px;font-size:13px}
-
-    .audioBtn{
-      width:100%;
-      margin-top:10px;
-      padding:12px;
-      font-size:16px;
-      border:none;
-      border-radius:14px;
-      background:var(--accent2);
-      color:#3b2a10;
-      font-weight:1000;
-      cursor:pointer;
-    }
-    .stars{
-      margin-top:8px;
-      font-size:18px;
-      color:#F59E0B;
-      font-weight:1000;
-    }
-
-    /* Gentle feedback */
-    .card.correct{ box-shadow: 0 0 0 3px rgba(111,168,161,.35); }
-    .card.wrong{   box-shadow: 0 0 0 3px rgba(242,201,138,.45); }
-
-    /* ---------- Quiz Block (unter den Karten) ---------- */
-    .quizBlock{
-      margin-top:14px;
-      background:#F9FAFB;
-      border:1px dashed #E5E7EB;
-      border-radius:14px;
-      padding:12px;
-    }
-    .qTitle{
-      font-weight:1000;
-      margin:0 0 8px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .qText{margin:0 0 10px;color:var(--muted);font-weight:900}
-    .opts{display:grid;gap:8px;}
-    .opt{
-      width:100%;
-      padding:12px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background:#fff;
-      font-weight:1000;
-      cursor:pointer;
-      text-align:left;
-      font-size:16px;
-    }
-    .opt[disabled]{opacity:.65; cursor:not-allowed;}
-    .result{
-      margin-top:10px;
-      font-weight:1000;
-      display:none;
-      padding:10px;
-      border-radius:14px;
-      border:1px solid transparent;
-    }
-    .result.good{display:block;color:var(--good);background:#ECFDF5;border-color:#BBF7D0;}
-    .result.bad{display:block;color:var(--bad);background:#FEF2F2;border-color:#FECACA;}
-
-    /* ---------- Memory Block ---------- */
-    .memoryBlock{
-      margin-top:14px;
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px;
-      box-shadow: var(--shadow);
-    }
-    .memoryGrid{
-      margin-top:10px;
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
-      gap:12px;
-      justify-items:center;
-    }
-    .mCard{
-      width: clamp(95px, 26vw, 120px);
-      height: clamp(95px, 26vw, 120px);
-      background: var(--primary);
-      border-radius: 18px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      color:#fff;
-      font-weight:1000;
-      font-size:22px;
-      cursor:pointer;
-      user-select:none;
-      box-shadow: 0 6px 0 #074b81;
-      padding:6px;
-      transition:.2s;
-    }
-    .mCard:active{transform:translateY(2px); box-shadow:0 3px 0 #074b81;}
-    .mCard.open{background:#fff;color:#2d3436; box-shadow:0 6px 0 #ccc;}
-    .mCard.matched{background:var(--success); box-shadow:0 6px 0 #09725b; cursor:default;}
-
-    .rowBtns{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
-    .btn{
-      flex:1; min-width:200px;
-      padding:12px;
-      border-radius:14px;
-      border:none;
-      cursor:pointer;
-      font-weight:1000;
-    }
-    .btnPrimary{background:var(--accent);color:#fff;}
-    .btnLight{background:#fff;border:1px solid var(--line);color:var(--ink);}
-
-    /* ---------- Celebration overlay (Quiz fertig) ---------- */
-    .celebrate{
-      position:absolute;
-      inset:0;
-      background:rgba(247,243,238,0.92);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:16px;
-      z-index:20;
-    }
-    .celebrate.show{display:flex;}
-    .celebrateCard{
-      max-width:560px;
-      width:100%;
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:20px;
-      box-shadow: var(--shadow);
-      padding:18px;
-      text-align:center;
-      position:relative;
-      overflow:hidden;
-    }
-    .big{font-size:44px; font-weight:1000; margin:6px 0;}
-    .small{color:var(--muted); font-weight:900; margin:0 0 12px;}
-
-    /* Confetti */
-    .confetti{position:absolute; inset:0; pointer-events:none; overflow:hidden;}
-    .dot{
-      position:absolute;
-      width:10px;height:10px;border-radius:50%;
-      opacity:0.9;
-      animation: fall 2.2s linear forwards;
-    }
-    @keyframes fall{
-      0%{transform:translateY(-20px) rotate(0deg);opacity:1}
-      100%{transform:translateY(520px) rotate(360deg);opacity:0.9}
-    }
-
-    /* ---------- Sticker Album ---------- */
-    .album-overlay {
-      display:none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      padding: 16px;
-    }
-    .album-card {
-      background: white;
-      width: 85%;
-      max-width: 360px;
-      border-radius: 24px;
-      padding: 18px;
-      text-align: center;
-    }
-    .sticker-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 16px;
-      justify-items:center;
-    }
-    .sticker-slot {
-      width: 70px;
-      height: 70px;
-      background: #f1f2f6;
-      border-radius: 50%;
+      color: #2d3436;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      font-size: 35px;
-      filter: grayscale(1);
-      opacity: 0.2;
-      border: 2px dashed #ccc;
+      padding: 15px;
+      min-height: 100vh;
     }
-    .sticker-slot.unlocked {
-      filter: none;
-      opacity: 1;
-      border: 3px solid var(--sun);
-      background: #fff9e6;
-      animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    @keyframes pop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
 
-    /* ---------- Nav ---------- */
-    .navRow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:14px;
+    /* --- HEADER --- */
+    .header-box {
+      background: white; width: 100%; max-width: 500px;
+      border-radius: var(--radius); padding: 15px; text-align: center;
+      box-shadow: 0 8px 0 rgba(0,0,0,0.05); margin-bottom: 12px; border: 4px solid white;
     }
-    a.nav,a.next{
-      flex:1;
-      min-width:200px;
+
+    .progress-container { background: #dfe6e9; height: 15px; border-radius: 10px; margin: 10px 0; overflow: hidden; }
+    .progress-fill { background: var(--success); height: 100%; width: 0%; transition: width 0.5s; }
+
+    /* --- Top row buttons --- */
+    .top-row { display:flex; justify-content: space-between; align-items:center; gap:10px; }
+    .icon-btn { background:none; border:none; font-size:20px; cursor:pointer; }
+
+    /* --- Language switch --- */
+    .lang-switch{
+      display:flex; gap:6px; justify-content:center;
+      margin-top: 10px;
+    }
+    .lang-btn{
+      padding:8px 12px; border-radius: 999px;
+      border:none; background:#fff; cursor:pointer;
+      box-shadow: 0 4px 0 #ccc; font-weight:bold; font-size:13px;
+    }
+    .lang-btn.active{ background: var(--primary); color:#fff; box-shadow: 0 4px 0 #074b81; }
+
+    /* --- MODUS NAVIGATION --- */
+    .mode-nav {
+      display: flex; gap: 8px; margin-bottom: 14px;
+      width: 100%; max-width: 500px; flex-wrap: wrap;
+    }
+    .mode-btn {
+      flex: 1; padding: 12px; border-radius: 15px; border: none; background: white;
+      font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #ccc; font-size: 14px;
+      min-width: 110px;
+    }
+    .mode-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 0 #074b81; }
+
+    /* --- LERN-KARTEN --- */
+    .learn-grid { display: grid; grid-template-columns: 1fr; gap: 15px; width: 100%; max-width: 500px; }
+    .learn-card {
+      background: white; border-radius: var(--radius); padding: 20px;
+      display: flex; align-items: center; gap: 16px; box-shadow: 0 6px 0 #dfe6e9; border: 3px solid white;
+    }
+    .learn-emoji { font-size: 50px; width: 70px; text-align:center; }
+    .learn-info { text-align: left; flex: 1; }
+    .btn-audio {
+      background: var(--sun); border: none; width: 50px; height: 50px;
+      border-radius: 50%; font-size: 20px; cursor: pointer; box-shadow: 0 4px 0 #e67e22;
+    }
+    .stars { margin-top: 6px; font-weight: bold; color: #f39c12; font-size: 16px; }
+
+    /* --- SECTIONS (versteckt) --- */
+    #learnSection, #quizSection, #memorySection, #echoSection, #bubbleSection {
+      display: none; width: 100%; max-width: 500px; text-align: center;
+    }
+    #learnSection { display: grid; } /* default */
+
+    /* --- QUIZ --- */
+    .quiz-card { background: white; border-radius: 30px; padding: 30px; box-shadow: 0 10px 0 #dfe6e9; }
+    .option-btn {
+      width: 100%; padding: 15px; margin: 8px 0; border-radius: 20px;
+      border: 3px solid #f1f2f6; background: white; font-size: 18px; font-weight: bold; cursor: pointer;
+      box-shadow: 0 4px 0 #f1f2f6;
+    }
+    .option-btn:active { transform: translateY(2px); box-shadow: none; }
+
+    /* --- MEMORY --- */
+    .memory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .memory-card {
+      height: 100px; background: var(--primary); border-radius: 15px;
+      display: flex; justify-content: center; align-items: center; font-size: 20px;
+      color: white; cursor: pointer; box-shadow: 0 5px 0 #074b81;
+      user-select:none;
+      padding:6px;
       text-align:center;
-      text-decoration:none;
-      padding:12px;
-      border-radius:14px;
-      font-weight:1000;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
     }
-    a.nav{background:#fff;border:1px solid var(--line);color:var(--ink);}
-    a.next{background:var(--accent);color:#fff;}
+    .memory-card.flipped { background: white; color: #2d3436; box-shadow: 0 5px 0 #ccc; }
+    .memory-card.matched { visibility: hidden; }
 
-    @media (min-width: 768px){
-      .uz{font-size:34px}
-      .audioBtn{font-size:18px}
-      .opt{font-size:18px}
+    /* --- ALBUM --- */
+    .album-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+      z-index: 1000; justify-content: center; align-items: center;
     }
+    .album-content { background: white; padding: 30px; border-radius: 30px; text-align: center; width: 80%; max-width: 360px; }
+    .sticker-slot {
+      width: 60px; height: 60px; background: #eee; border-radius: 50%;
+      display: inline-flex; justify-content: center; align-items: center;
+      font-size: 30px; opacity: 0.2; filter: grayscale(1); margin: 5px;
+    }
+    .sticker-slot.unlocked { opacity: 1; filter: none; background: #fff9e6; border: 2px solid var(--sun); }
+
+    /* ==========================
+       ECHO + BUBBLES CSS
+       ========================== */
+    .lion-big { font-size: 120px; margin: 20px; transition: 0.3s; display: inline-block; }
+    .talking { animation: mouthMove 0.3s infinite; }
+    @keyframes mouthMove { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.1); } }
+
+    .mic-btn-huge{
+      width: 120px; height: 120px; border-radius: 50%; border: none;
+      background: #ff4757; color: white; font-size: 50px; cursor: pointer;
+      box-shadow: 0 10px 0 #b33939; margin: 14px;
+      touch-action: manipulation;
+    }
+    .mic-btn-huge:active { transform: translateY(6px); box-shadow: 0 4px 0 #b33939; }
+    .mic-btn-huge.active { background: #2ed573; box-shadow: 0 4px 0 #1c9e54; transform: translateY(6px); }
+
+    #bubbleArea{
+      position: relative; width: 100%; height: 60vh;
+      background: linear-gradient(#70a1ff, #1e90ff); border-radius: 30px;
+      border: 8px solid white; overflow: hidden; margin-top: 10px;
+    }
+    .bubble{
+      position: absolute; width: 100px; height: 100px; background: rgba(255,255,255,0.5);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 50px; border: 3px solid white; animation: floatUp 4s linear forwards;
+      cursor: pointer; user-select:none;
+    }
+    @keyframes floatUp { 0% { transform: translateY(65vh); } 100% { transform: translateY(-15vh); } }
   </style>
 </head>
 
 <body>
-  <div class="app">
-    <div class="top" id="top">
 
-      <!-- Celebration overlay (Quiz fertig) -->
-      <div class="celebrate" id="celebrate">
-        <div class="celebrateCard">
-          <div class="confetti" id="confetti"></div>
-          <div style="font-size:54px">🎉</div>
-          <div class="big" id="celebrateTitle">Barakalla! 🎉</div>
-          <p class="small" id="celebrateText">Siz testni tugatdingiz! Juda zo‘r! 🌟</p>
-          <p class="small" id="stickerLine" style="font-weight:1000;">🏷️ Stiker: —</p>
+  <div class="header-box">
+    <div class="top-row">
+      <a href="index.html" style="text-decoration:none;">🏠</a>
+      <h3 style="margin:0;" id="titleText">1-dars: Salomlashuv</h3>
+      <button onclick="toggleAlbum()" class="icon-btn" aria-label="Album">📖</button>
+    </div>
 
-          <div class="rowBtns">
-            <button class="btn btnPrimary" type="button" onclick="goNext()">➡️ Keyingi dars</button>
-            <button class="btn btnLight" type="button" onclick="closeCelebrate()">✅ Davom et</button>
-          </div>
-        </div>
-      </div>
+    <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
+    <small id="progressText">0 / 5</small>
 
-      <!-- Header -->
-      <div class="headBar">
-        <div class="headLeft">
-          <a class="homeBtn" href="index.html">🏠</a>
-          <div>
-            <h1>👋 1-dars: Salom!</h1>
-            <div class="sub">Avval eshit 🎧 keyin test ✅ va o‘yin 🧠</div>
-          </div>
-        </div>
-
-        <button class="albumBtn" type="button" onclick="toggleAlbum(true)">
-          📖 Stickerlar
-        </button>
-      </div>
-
-      <!-- Progress (Quiz Fortschritt) -->
-      <div class="bar">
-        <div class="barRow">
-          <div style="font-weight:1000">⭐ Test natija</div>
-          <div style="color:var(--muted);font-weight:1000" id="progressText">0 / 5</div>
-        </div>
-        <div class="track"><div class="fill" id="progressFill"></div></div>
-      </div>
-
-      <!-- 5 Audio-Karten (behalten!) -->
-      <div class="grid" id="grid"></div>
-
-      <!-- Quiz (folgt nach Karten) -->
-      <div class="quizBlock" id="quizBlock">
-        <div class="qTitle">
-          <span>🎯 Mini-test (Hammasini top!)</span>
-          <span style="color:var(--muted);font-weight:1000" id="quizMiniInfo">0 / 5</span>
-        </div>
-        <p class="qText" id="qText">Savol yuklanmoqda…</p>
-        <div class="opts" id="qOpts"></div>
-        <div class="result" id="qRes"></div>
-
-        <div class="rowBtns">
-          <button class="btn btnPrimary" type="button" onclick="nextQuizQuestion()">➡️ Keyingi savol</button>
-          <button class="btn btnLight" type="button" onclick="restartQuiz()">🔁 Qaytadan</button>
-        </div>
-      </div>
-
-      <!-- Memory (folgt nach Quiz) -->
-      <div class="memoryBlock">
-        <div class="barRow">
-          <div style="font-weight:1000">🧠 Memory o‘yin (Emoji ↔ So‘z)</div>
-          <div style="color:var(--muted);font-weight:1000" id="memoryBest">Best: --</div>
-        </div>
-
-        <div class="rowBtns">
-          <button class="btn btnPrimary" type="button" onclick="startMemory()">▶ Boshlash</button>
-          <button class="btn btnLight" type="button" onclick="startMemory()">🔁 Qayta aralashtir</button>
-        </div>
-
-        <div class="memoryGrid" id="memoryGrid"></div>
-        <div class="result" id="mRes"></div>
-      </div>
-
-      <!-- Nav -->
-      <div class="navRow">
-        <a class="nav" href="index.html">⬅️ Bosh sahifa</a>
-        <a class="next" href="lesson2.html">Keyingi ➡️</a>
-      </div>
-
+    <div class="lang-switch">
+      <button class="lang-btn active" id="langUZ" onclick="setLang('uz')">UZ</button>
+      <button class="lang-btn" id="langEN" onclick="setLang('en')">EN</button>
     </div>
   </div>
 
-  <!-- Sticker Album -->
-  <div id="albumOverlay" class="album-overlay" onclick="toggleAlbum(false)">
-    <div class="album-card" onclick="event.stopPropagation()">
-      <h3>Mening Stikerlarim 🏆</h3>
-      <div class="sticker-grid" id="stickerGrid">
-        <div class="sticker-slot" id="stk_1">👋</div>
-        <div class="sticker-slot" id="stk_2">🔢</div>
-        <div class="sticker-slot" id="stk_3">🦁</div>
-        <div class="sticker-slot" id="stk_4">🍎</div>
-        <div class="sticker-slot" id="stk_5">🎨</div>
-        <div class="sticker-slot" id="stk_6">🏠</div>
-      </div>
-      <button class="btn btnLight" style="margin-top:14px;width:100%;" type="button" onclick="toggleAlbum(false)">Yopish</button>
+  <div class="mode-nav">
+    <button class="mode-btn active" id="btnLearn"   onclick="changeMode('learn')">📖 O'rganish</button>
+    <button class="mode-btn"        id="btnQuiz"    onclick="changeMode('quiz')">🎯 Test</button>
+    <button class="mode-btn"        id="btnMemory"  onclick="changeMode('memory')">🧠 O'yin</button>
+    <button class="mode-btn"        id="btnEcho"    onclick="changeMode('echo')">🗣️ Echo</button>
+    <button class="mode-btn"        id="btnBubble"  onclick="changeMode('bubble')">🫧 Bubbles</button>
+  </div>
+
+  <!-- Learn -->
+  <div id="learnSection" class="learn-grid"></div>
+
+  <!-- Quiz -->
+  <div id="quizSection">
+    <div class="quiz-card">
+      <div id="qEmoji" style="font-size:80px">👋</div>
+      <h2 id="qWordMain">Salom</h2>
+
+      <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="playCurrentQuizAudio()">
+        🔊 <span id="listenBtnText">Eshitish</span>
+      </button>
+
+      <div id="optionsBox"></div>
+    </div>
+  </div>
+
+  <!-- Memory -->
+  <div id="memorySection">
+    <div id="memStats" style="margin-bottom:10px; font-weight:bold;">
+      <span id="movesLabel">Urinishlar</span>: <span id="moves">0</span>
+    </div>
+    <div class="memory-grid" id="memoryGrid"></div>
+  </div>
+
+  <!-- Echo -->
+  <div id="echoSection">
+    <div id="lionChar" class="lion-big">🦁</div>
+    <div id="echoText" style="background:white; padding:15px; border-radius:30px; border:4px solid #70a1ff; font-size:24px; font-weight:bold; margin-bottom:10px;">
+      Eshiting...
+    </div>
+    <div style="display:flex; justify-content:center; flex-wrap:wrap;">
+      <button class="mic-btn-huge" style="background:#f1c40f; box-shadow: 0 10px 0 #c49f0a;" onclick="playEchoAudio()">🔊</button>
+      <button class="mic-btn-huge" id="micBtn"
+        onpointerdown="startMic()" onpointerup="stopMic()" onpointercancel="stopMic()">
+        🎤
+      </button>
+    </div>
+    <div style="font-weight:bold; color:#2d3436;" id="echoHint">🔁 Eshit → ayt → Barakalla!</div>
+  </div>
+
+  <!-- Bubbles -->
+  <div id="bubbleSection">
+    <div id="bubbleTask" style="background:white; padding:15px; border-radius:30px; border:4px solid #70a1ff; font-size:24px; font-weight:bold; margin-bottom:10px;">
+      Top: ...
+    </div>
+    <div id="bubbleArea"></div>
+    <div style="margin-top:10px; font-weight:bold;" id="bubbleHint">Emoji top! ⭐</div>
+  </div>
+
+  <!-- Album -->
+  <div id="albumOverlay" class="album-overlay" onclick="toggleAlbum()">
+    <div class="album-content" onclick="event.stopPropagation()">
+      <h3 id="albumTitle">Mening Stikerlarim</h3>
+      <div id="stk_1" class="sticker-slot">👋</div>
+      <div id="stk_2" class="sticker-slot">🔢</div>
+      <div id="stk_3" class="sticker-slot">🦁</div>
+      <br><br>
+      <button class="mode-btn" onclick="toggleAlbum()" id="closeAlbumBtn">Yopish</button>
     </div>
   </div>
 
 <script>
-  // =============================
-  // DATA (5 Wörter)
-  // =============================
-  const items = [
-    { key:"1",  emoji:"👋", uz:"Salom",        en:"Hello",        pr:"sa-LOM" },
-    { key:"6",  emoji:"🙏", uz:"Rahmat",       en:"Thank you",    pr:"rakh-MAT" },
-    { key:"9",  emoji:"🌸", uz:"Iltimos",      en:"Please",       pr:"il-ti-MOS" },
-    { key:"4",  emoji:"🙂", uz:"Yaxshimisiz?", en:"How are you?", pr:"yakh-shi-MI-siz" },
-    { key:"11", emoji:"🌙", uz:"Xayr",         en:"Bye",          pr:"khayr" },
+  // =========================
+  // DATA
+  // =========================
+  const data = [
+    { key: "1",  emoji: "👋", uz: "Salom",        en: "Hello" },
+    { key: "6",  emoji: "🙏", uz: "Rahmat",       en: "Thank you" },
+    { key: "9",  emoji: "🌸", uz: "Iltimos",      en: "Please" },
+    { key: "4",  emoji: "🙂", uz: "Yaxshimisiz?", en: "How are you?" },
+    { key: "11", emoji: "🌙", uz: "Xayr",         en: "Bye" }
   ];
 
-  // =============================
+  // =========================
+  // UI TEXTS
+  // =========================
+  const UI = {
+    uz: {
+      title: "1-dars: Salomlashuv",
+      learn: "📖 O'rganish",
+      quiz: "🎯 Test",
+      memory: "🧠 O'yin",
+      echo: "🗣️ Echo",
+      bubble: "🫧 Bubbles",
+      listen: "Eshitish",
+      moves: "Urinishlar",
+      album: "Mening Stikerlarim",
+      close: "Yopish",
+      echoHint: "🔁 Eshit → ayt → Barakalla!",
+      bubbleHint: "Emoji top! ⭐",
+      bubbleTask: "Top: ",
+      doneQuiz: "Barakalla! Test tugadi.",
+      winMemory: "Siz yutdingiz!",
+    },
+    en: {
+      title: "Lesson 1: Greetings",
+      learn: "📖 Learn",
+      quiz: "🎯 Quiz",
+      memory: "🧠 Game",
+      echo: "🗣️ Echo",
+      bubble: "🫧 Bubbles",
+      listen: "Listen",
+      moves: "Moves",
+      album: "My Stickers",
+      close: "Close",
+      echoHint: "🔁 Listen → say it → Great job!",
+      bubbleHint: "Find the emoji! ⭐",
+      bubbleTask: "Tap: ",
+      doneQuiz: "Great! Quiz finished.",
+      winMemory: "You won!",
+    }
+  };
+
+  let currentLang = "uz";
+
+  // =========================
   // STORAGE
-  // =============================
-  const STATE_KEY   = "lesson1_combo_state_v1";
-  const STICKER_KEY = "stickers";           // wie dein Album-Code
-  const BEST_KEY    = "best1_memory_moves"; // Memory best
+  // =========================
+  const STARS_KEY = "lesson1_stars_v2";
+  const QUIZ_DONE_KEY = "lesson1_quiz_done_v2"; // array of keys
+  const STICKERS_KEY = "stickers";
 
-  function defaultState(){
-    return {
-      stars: {},      // {key:0..3}
-      quizDone: {},   // {key:true}
-      quizIndex: 0,   // which question now
-      celebrated: false
-    };
+  function loadStars(){
+    try { return JSON.parse(localStorage.getItem(STARS_KEY) || "{}"); }
+    catch { return {}; }
   }
-  function loadState(){
-    try { return JSON.parse(localStorage.getItem(STATE_KEY) || ""); }
-    catch { return null; }
-  }
-  function saveState(s){ localStorage.setItem(STATE_KEY, JSON.stringify(s)); }
-  function getState(){
-    const s = loadState();
-    if(!s){ const d = defaultState(); saveState(d); return d; }
-    return {
-      stars: s.stars || {},
-      quizDone: s.quizDone || {},
-      quizIndex: Number.isFinite(s.quizIndex) ? s.quizIndex : 0,
-      celebrated: !!s.celebrated
-    };
-  }
-
-  // =============================
-  // STICKERS
-  // =============================
-  function getStickers(){
-    try { return JSON.parse(localStorage.getItem(STICKER_KEY) || "[]"); }
-    catch { return []; }
-  }
-  function unlockSticker(id){
-    const list = getStickers();
-    if(!list.includes(id)){
-      list.push(id);
-      localStorage.setItem(STICKER_KEY, JSON.stringify(list));
-    }
-  }
-  function toggleAlbum(forceOpen){
-    const album = document.getElementById("albumOverlay");
-    const open = forceOpen ? true : (album.style.display !== "flex");
-    album.style.display = open ? "flex" : "none";
-    if(open){
-      const earned = getStickers();
-      earned.forEach(id => {
-        const el = document.getElementById("stk_" + id);
-        if(el) el.classList.add("unlocked");
-      });
-    }
-  }
-
-  // =============================
-  // RENDER 5 AUDIO CARDS
-  // =============================
+  function saveStars(st){ localStorage.setItem(STARS_KEY, JSON.stringify(st)); }
   function starText(n){
     n = Math.max(0, Math.min(3, n));
     return "★".repeat(n) + "☆".repeat(3-n);
   }
 
-  function renderCards(){
-    const state = getState();
-    const grid = document.getElementById("grid");
-    grid.innerHTML = "";
+  function loadQuizDone(){
+    try { return JSON.parse(localStorage.getItem(QUIZ_DONE_KEY) || "[]"); }
+    catch { return []; }
+  }
+  function saveQuizDone(arr){ localStorage.setItem(QUIZ_DONE_KEY, JSON.stringify(arr)); }
+  function quizDoneCount(){ return loadQuizDone().length; }
 
-    items.forEach(it=>{
-      const stars = state.stars[it.key] || 0;
+  function updateProgress(){
+    const done = quizDoneCount();
+    const pct = (done / data.length) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').innerText = `${done} / ${data.length}`;
+  }
 
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <div class="emoji">${it.emoji}</div>
-        <div class="uz">${it.uz}</div>
-        <div class="pr">${it.pr}</div>
+  // =========================
+  // MODE + LANG
+  // =========================
+  function setLang(lang){
+    currentLang = lang;
+    document.getElementById("langUZ").classList.toggle("active", lang==="uz");
+    document.getElementById("langEN").classList.toggle("active", lang==="en");
 
-        <button class="audioBtn" data-key="${it.key}">▶ Tinglash</button>
-        <div class="stars" id="star-${it.key}">${starText(stars)}</div>
+    // top texts
+    const T = UI[lang];
+    document.getElementById("titleText").innerText = T.title;
+    document.getElementById("btnLearn").innerText = T.learn;
+    document.getElementById("btnQuiz").innerText = T.quiz;
+    document.getElementById("btnMemory").innerText = T.memory;
+    document.getElementById("btnEcho").innerText = T.echo;
+    document.getElementById("btnBubble").innerText = T.bubble;
+    document.getElementById("listenBtnText").innerText = T.listen;
+    document.getElementById("movesLabel").innerText = T.moves;
+    document.getElementById("albumTitle").innerText = T.album;
+    document.getElementById("closeAlbumBtn").innerText = T.close;
+    document.getElementById("echoHint").innerText = T.echoHint;
+    document.getElementById("bubbleHint").innerText = T.bubbleHint;
 
-        <audio id="uz_${it.key}" src="a/${it.key}.mp3" preload="none" playsinline></audio>
+    // re-render current visible section
+    renderLearn();
+    loadQuiz();
+    // echo/bubble refresh word display if open
+    if(document.getElementById("echoSection").style.display === "block") playEchoAudio();
+    if(document.getElementById("bubbleSection").style.display === "block") startBubbles();
+  }
+
+  function changeMode(mode) {
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('btn' + mode.charAt(0).toUpperCase() + mode.slice(1)).classList.add('active');
+
+    // hide all sections
+    document.getElementById('learnSection').style.display = 'none';
+    document.getElementById('quizSection').style.display = 'none';
+    document.getElementById('memorySection').style.display = 'none';
+    document.getElementById('echoSection').style.display = 'none';
+    document.getElementById('bubbleSection').style.display = 'none';
+
+    stopBubbles();
+
+    if(mode === 'learn'){ document.getElementById('learnSection').style.display='grid'; renderLearn(); }
+    if(mode === 'quiz'){  document.getElementById('quizSection').style.display='block'; loadQuiz(); }
+    if(mode === 'memory'){document.getElementById('memorySection').style.display='block'; initMemory(); }
+    if(mode === 'echo'){  document.getElementById('echoSection').style.display='block'; playEchoAudio(); }
+    if(mode === 'bubble'){document.getElementById('bubbleSection').style.display='block'; startBubbles(); }
+  }
+
+  // =========================
+  // AUDIO
+  // =========================
+  function audioPath(key){
+    return currentLang === "en" ? `en/${key}.mp3` : `a/${key}.mp3`;
+  }
+  function playAudio(key){
+    const a = new Audio(audioPath(key));
+    a.play().catch(()=>{});
+    return a;
+  }
+
+  // =========================
+  // LEARN (cards + stars)
+  // =========================
+  function renderLearn() {
+    const stars = loadStars();
+    const container = document.getElementById('learnSection');
+    container.innerHTML = '';
+
+    data.forEach(item => {
+      const s = stars[item.key] || 0;
+      const main = (currentLang === "en") ? item.en : item.uz;
+      const sub  = (currentLang === "en") ? item.uz : item.en;
+
+      const div = document.createElement('div');
+      div.className = 'learn-card';
+      div.innerHTML = `
+        <div class="learn-emoji">${item.emoji}</div>
+        <div class="learn-info">
+          <div style="font-weight:bold; font-size:20px;">${main}</div>
+          <div style="color:#636e72;">${sub}</div>
+          <div class="stars" id="star_${item.key}">${starText(s)}</div>
+        </div>
+        <button class="btn-audio" data-key="${item.key}">🔊</button>
       `;
-      grid.appendChild(card);
+      container.appendChild(div);
     });
 
-    grid.querySelectorAll(".audioBtn").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        const key = btn.getAttribute("data-key");
-        playWordAudio(key);
+    container.querySelectorAll('.btn-audio').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const key = btn.getAttribute('data-key');
+        playAudio(key);
+
+        const st = loadStars();
+        st[key] = Math.min(3, (st[key] || 0) + 1);
+        saveStars(st);
+
+        const starEl = document.getElementById('star_' + key);
+        if(starEl) starEl.innerText = starText(st[key]);
       });
     });
   }
 
-  function playWordAudio(key){
-    const a = document.getElementById("uz_" + key);
-    if(!a) return;
-    a.currentTime = 0;
-    a.play().catch(()=>{});
+  // =========================
+  // QUIZ (bilingual)
+  // =========================
+  let currentQuizIdx = 0;
 
-    const state = getState();
-    state.stars[key] = Math.min(3, (state.stars[key] || 0) + 1);
-    saveState(state);
-
-    const starEl = document.getElementById("star-" + key);
-    if(starEl) starEl.innerText = starText(state.stars[key]);
+  function playCurrentQuizAudio(){
+    const item = data[currentQuizIdx];
+    playAudio(item.key);
   }
 
-  // =============================
-  // QUIZ (nach Karten)
-  // =============================
-  function shuffle(arr){
-    const a = [...arr];
-    for(let i=a.length-1;i>0;i--){
-      const j = Math.floor(Math.random()*(i+1));
-      [a[i],a[j]] = [a[j],a[i]];
-    }
-    return a;
-  }
+  function loadQuiz() {
+    updateProgress();
 
-  // feste Reihenfolge = items
-  function quizDoneCount(state){
-    return Object.values(state.quizDone).filter(Boolean).length;
-  }
-
-  function updateProgressUI(){
-    const state = getState();
-    const done = quizDoneCount(state);
-    document.getElementById("progressText").innerText = `${done} / ${items.length}`;
-    document.getElementById("quizMiniInfo").innerText = `${done} / ${items.length}`;
-
-    const pct = Math.round((done / items.length) * 100);
-    document.getElementById("progressFill").style.width = pct + "%";
-  }
-
-  function renderQuizQuestion(){
-    const state = getState();
-    updateProgressUI();
-
-    // finde nächste offene Frage
-    let idx = state.quizIndex || 0;
+    // skip done questions
+    const done = loadQuizDone();
     let safety = 0;
-    while(state.quizDone[items[idx]?.key] && safety < 20){
-      idx = (idx + 1) % items.length;
+    while(done.includes(data[currentQuizIdx].key) && safety < 20){
+      currentQuizIdx = (currentQuizIdx + 1) % data.length;
       safety++;
     }
-    state.quizIndex = idx;
-    saveState(state);
 
-    const item = items[idx];
-    const qText = document.getElementById("qText");
-    const qOpts = document.getElementById("qOpts");
-    const qRes  = document.getElementById("qRes");
-
-    qRes.className = "result";
-    qRes.innerText = "";
-
-    if(quizDoneCount(state) === items.length){
-      qText.innerText = "✅ Hammasi bajarildi! Endi Memory o‘yin o‘yna 🧠";
-      qOpts.innerHTML = "";
+    // finished
+    if(done.length === data.length){
+      document.getElementById('qEmoji').innerText = "🎉";
+      document.getElementById('qWordMain').innerText = UI[currentLang].doneQuiz;
+      document.getElementById('optionsBox').innerHTML =
+        `<button class="option-btn" onclick="restartQuiz()">🔁 Restart</button>`;
       return;
     }
 
-    qText.innerText = `“${item.uz}” nimani anglatadi?`;
-    const wrong = shuffle(items.filter(x=>x.key!==item.key).map(x=>x.en)).slice(0,2);
-    const options = shuffle([item.en, ...wrong]);
+    const item = data[currentQuizIdx];
+    document.getElementById('qEmoji').innerText = item.emoji;
 
-    qOpts.innerHTML = "";
-    options.forEach(opt=>{
-      const b = document.createElement("button");
-      b.className = "opt";
-      b.innerText = opt;
-      b.disabled = !!state.quizDone[item.key];
-      b.onclick = ()=> checkQuizAnswer(item.key, opt);
-      qOpts.appendChild(b);
-    });
-  }
+    // Question shown in current language
+    const qWord = (currentLang === "en") ? item.en : item.uz;
+    document.getElementById('qWordMain').innerText = qWord;
 
-  function checkQuizAnswer(key, chosen){
-    const state = getState();
-    if(state.quizDone[key]) return;
+    // Options shown in opposite language
+    const correct = (currentLang === "en") ? item.uz : item.en;
+    const pool = data.map(x => (currentLang === "en") ? x.uz : x.en);
 
-    const item = items.find(x=>x.key===key);
-    const res  = document.getElementById("qRes");
-
-    const correct = (chosen === item.en);
-
-    if(correct){
-      res.className = "result good";
-      res.innerText = "✅ To‘g‘ri! Barakalla!";
-      state.quizDone[key] = true;
-      state.stars[key] = 3; // belohne: 3 Sterne
-      saveState(state);
-
-      updateProgressUI();
-      renderCards();
-
-      if(quizDoneCount(state) === items.length && !state.celebrated){
-        state.celebrated = true;
-        saveState(state);
-        // Sticker #1 für Quiz Sieg
-        unlockSticker(1);
-        showCelebrate("Barakalla! 🎉", "Siz testni tugatdingiz! Juda zo‘r! 🌟", "👋");
-        confetti();
-      } else {
-        // weiter zur nächsten Frage
-        state.quizIndex = (state.quizIndex + 1) % items.length;
-        saveState(state);
-        setTimeout(renderQuizQuestion, 450);
-      }
-    } else {
-      res.className = "result bad";
-      res.innerText = "❌ Xato. Yana urinib ko‘r!";
+    let choices = [correct];
+    while(choices.length < 3) {
+      const r = pool[Math.floor(Math.random()*pool.length)];
+      if(!choices.includes(r)) choices.push(r);
     }
-  }
+    choices.sort(() => Math.random() - 0.5);
 
-  function nextQuizQuestion(){
-    const state = getState();
-    state.quizIndex = (state.quizIndex + 1) % items.length;
-    saveState(state);
-    renderQuizQuestion();
+    const box = document.getElementById('optionsBox');
+    box.innerHTML = '';
+
+    choices.forEach(c => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.innerText = c;
+
+      btn.onclick = () => {
+        if(c === correct) {
+          btn.style.background = 'var(--success)'; btn.style.color = 'white';
+
+          const doneList = loadQuizDone();
+          if(!doneList.includes(item.key)){
+            doneList.push(item.key);
+            saveQuizDone(doneList);
+          }
+
+          // reward: set stars to 3
+          const st = loadStars();
+          st[item.key] = 3;
+          saveStars(st);
+
+          setTimeout(() => {
+            currentQuizIdx = (currentQuizIdx + 1) % data.length;
+
+            if(loadQuizDone().length === data.length){
+              unlockSticker(1);
+              alert(UI[currentLang].doneQuiz + " 👋");
+            }
+
+            updateProgress();
+            loadQuiz();
+          }, 450);
+        } else {
+          btn.style.background = 'var(--error)'; btn.style.color = 'white';
+          setTimeout(() => { btn.style.background = 'white'; btn.style.color = '#2d3436'; }, 600);
+        }
+      };
+
+      box.appendChild(btn);
+    });
   }
 
   function restartQuiz(){
-    const s = getState();
-    s.quizDone = {};
-    s.quizIndex = 0;
-    s.celebrated = false;
-    saveState(s);
-    renderCards();
-    renderQuizQuestion();
-    updateProgressUI();
+    saveQuizDone([]);
+    currentQuizIdx = 0;
+    updateProgress();
+    loadQuiz();
   }
 
-  // =============================
-  // CELEBRATE Overlay
-  // =============================
-  function showCelebrate(title, text, stickerEmoji){
-    document.getElementById("celebrateTitle").innerText = title;
-    document.getElementById("celebrateText").innerText  = text;
-    document.getElementById("stickerLine").innerText    = "🏷️ Stiker: " + stickerEmoji;
-    document.getElementById("celebrate").classList.add("show");
-  }
-  function closeCelebrate(){
-    document.getElementById("celebrate").classList.remove("show");
-  }
-  function goNext(){
-    window.location.href = "lesson2.html";
-  }
+  // =========================
+  // MEMORY
+  // =========================
+  let flippedCards = [];
+  let moves = 0;
+  let matches = 0;
 
-  // confetti (im overlay)
-  function confetti(){
-    const conf = document.getElementById("confetti");
-    if(!conf) return;
-    conf.innerHTML = "";
-    const colors = ["#F59E0B","#EF4444","#10B981","#3B82F6","#A855F7","#F97316"];
-    for(let i=0;i<60;i++){
-      const d = document.createElement("div");
-      d.className = "dot";
-      d.style.left = Math.random()*100 + "%";
-      d.style.top  = (-20 - Math.random()*200) + "px";
-      d.style.background = colors[Math.floor(Math.random()*colors.length)];
-      d.style.animationDelay = (Math.random()*0.25) + "s";
-      d.style.animationDuration = (1.6 + Math.random()*1.0) + "s";
-      conf.appendChild(d);
-    }
-  }
+  function initMemory() {
+    const grid = document.getElementById('memoryGrid');
+    grid.innerHTML = '';
+    moves = 0; matches = 0;
+    flippedCards = [];
+    document.getElementById('moves').innerText = moves;
 
-  // =============================
-  // MEMORY (nach Quiz)
-  // =============================
-  let mOpen = [];
-  let mLock = false;
-  let mMoves = 0;
-  let mFound = 0;
-
-  function updateMemoryBest(){
-    const best = localStorage.getItem(BEST_KEY) || "--";
-    document.getElementById("memoryBest").innerText = "Best: " + best;
-  }
-
-  function startMemory(){
-    const grid = document.getElementById("memoryGrid");
-    const res  = document.getElementById("mRes");
-    res.className = "result";
-    res.innerText = "";
-
-    mOpen = [];
-    mLock = false;
-    mMoves = 0;
-    mFound = 0;
-
-    // cards: emoji + uz as pair
     let cards = [];
-    items.forEach(it=>{
-      cards.push({ id: it.key, text: it.emoji });
-      cards.push({ id: it.key, text: it.uz });
+    data.forEach(item => {
+      // keep matching by id, show emoji + word (current language)
+      const word = (currentLang === "en") ? item.en : item.uz;
+      cards.push({ id: item.key, val: item.emoji });
+      cards.push({ id: item.key, val: word });
     });
-    cards = shuffle(cards);
+    cards.sort(() => Math.random() - 0.5);
 
-    grid.innerHTML = "";
-    cards.forEach(c=>{
-      const div = document.createElement("div");
-      div.className = "mCard";
+    cards.forEach(c => {
+      const div = document.createElement('div');
+      div.className = 'memory-card';
       div.innerText = "❓";
-      div.dataset.id = c.id;
-      div.dataset.text = c.text;
-      div.dataset.open = "0";
-      div.dataset.matched = "0";
-      div.onclick = ()=> onMemoryClick(div);
+
+      div.onclick = () => {
+        if(flippedCards.length < 2 && !div.classList.contains('flipped') && !div.classList.contains('matched')) {
+          div.classList.add('flipped');
+          div.innerText = c.val;
+          flippedCards.push({ div, id: c.id });
+
+          if(flippedCards.length === 2) {
+            moves++;
+            document.getElementById('moves').innerText = moves;
+
+            setTimeout(() => {
+              if(flippedCards[0].id === flippedCards[1].id) {
+                flippedCards.forEach(f => f.div.classList.add('matched'));
+                matches++;
+                if(matches === data.length) {
+                  unlockSticker(3);
+                  alert(UI[currentLang].winMemory + " 🦁");
+                }
+              } else {
+                flippedCards.forEach(f => {
+                  f.div.classList.remove('flipped');
+                  f.div.innerText = "❓";
+                });
+              }
+              flippedCards = [];
+            }, 800);
+          }
+        }
+      };
+
       grid.appendChild(div);
     });
-
-    updateMemoryBest();
   }
 
-  function onMemoryClick(div){
-    if(mLock) return;
-    if(div.dataset.matched === "1") return;
-    if(div.dataset.open === "1") return;
-    if(mOpen.length >= 2) return;
+  // =========================
+  // ECHO (simulated mic)
+  // =========================
+  function playEchoAudio() {
+    const item = data[currentQuizIdx];
+    const lion = document.getElementById('lionChar');
 
-    div.classList.add("open");
-    div.innerText = div.dataset.text;
-    div.dataset.open = "1";
-    mOpen.push(div);
+    const word = (currentLang === "en") ? item.en : item.uz;
+    document.getElementById('echoText').innerText = word;
 
-    if(mOpen.length === 2){
-      mLock = true;
-      mMoves++;
-      setTimeout(checkMemoryMatch, 650);
+    lion.classList.add('talking');
+    const a = playAudio(item.key);
+    a.onended = () => lion.classList.remove('talking');
+  }
+
+  function startMic() {
+    document.getElementById('micBtn').classList.add('active');
+    document.getElementById('lionChar').innerText = "👂";
+  }
+
+  // small offline “win” beep
+  let audioCtx = null;
+  function beep(freq=700, dur=0.12){
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if(!AC) return;
+    if(!audioCtx) audioCtx = new AC();
+    if(audioCtx.state === "suspended") audioCtx.resume().catch(()=>{});
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type = "triangle";
+    o.frequency.value = freq;
+    g.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.12, audioCtx.currentTime + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(); o.stop(audioCtx.currentTime + dur);
+  }
+  function sfxWin(){ beep(660,0.12); setTimeout(()=>beep(880,0.14),140); setTimeout(()=>beep(990,0.16),300); }
+  function sfxPop(){ beep(520,0.08); }
+
+  function stopMic() {
+    document.getElementById('micBtn').classList.remove('active');
+    document.getElementById('lionChar').innerText = "🦁";
+    sfxWin();
+
+    document.getElementById('echoText').innerText = (currentLang==="en") ? "Great job! 🎉" : "Barakalla! 🎉";
+
+    setTimeout(() => {
+      currentQuizIdx = (currentQuizIdx + 1) % data.length;
+      playEchoAudio();
+    }, 900);
+  }
+
+  // =========================
+  // BUBBLES
+  // =========================
+  let bubbleInt = null;
+  let bubbleTarget = null;
+
+  function stopBubbles(){
+    if(bubbleInt){ clearInterval(bubbleInt); bubbleInt = null; }
+  }
+
+  function startBubbles() {
+    stopBubbles();
+
+    bubbleTarget = data[Math.floor(Math.random() * data.length)];
+    const taskWord = (currentLang === "en") ? bubbleTarget.en : bubbleTarget.uz;
+
+    document.getElementById('bubbleTask').innerText = UI[currentLang].bubbleTask + taskWord;
+
+    // play target audio
+    playAudio(bubbleTarget.key);
+
+    const area = document.getElementById('bubbleArea');
+    area.innerHTML = "";
+
+    bubbleInt = setInterval(() => {
+      const b = document.createElement('div');
+      const randomItem = data[Math.floor(Math.random() * data.length)];
+
+      b.className = 'bubble';
+      b.innerText = randomItem.emoji;
+      b.style.left = (Math.random() * 70 + 10) + '%';
+
+      b.onclick = () => {
+        sfxPop();
+
+        if(randomItem.key === bubbleTarget.key) {
+          b.innerText = '⭐';
+          b.style.background = '#2ed573';
+          b.style.borderColor = '#fff';
+
+          // optional: bubbles sticker (id 2)
+          unlockSticker(2);
+
+          setTimeout(startBubbles, 700);
+        } else {
+          b.innerText = '💨';
+          setTimeout(() => b.remove(), 150);
+        }
+      };
+
+      area.appendChild(b);
+      setTimeout(() => b.remove(), 4000);
+    }, 1300);
+  }
+
+  // =========================
+  // ALBUM / STICKERS
+  // =========================
+  function toggleAlbum() {
+    const album = document.getElementById('albumOverlay');
+    album.style.display = (album.style.display === 'flex') ? 'none' : 'flex';
+
+    const earned = JSON.parse(localStorage.getItem(STICKERS_KEY) || "[]");
+    earned.forEach(id => {
+      const el = document.getElementById('stk_'+id);
+      if(el) el.classList.add('unlocked');
+    });
+  }
+
+  function unlockSticker(id) {
+    let earned = JSON.parse(localStorage.getItem(STICKERS_KEY) || "[]");
+    if(!earned.includes(id)) {
+      earned.push(id);
+      localStorage.setItem(STICKERS_KEY, JSON.stringify(earned));
     }
   }
 
-  function checkMemoryMatch(){
-    const res  = document.getElementById("mRes");
-    const [a,b] = mOpen;
-    if(!a || !b){ mOpen=[]; mLock=false; return; }
-
-    if(a.dataset.id === b.dataset.id){
-      a.classList.remove("open"); b.classList.remove("open");
-      a.classList.add("matched"); b.classList.add("matched");
-      a.dataset.matched = "1"; b.dataset.matched = "1";
-      mFound++;
-
-      if(mFound === items.length){
-        // WIN: best speichern
-        const best = parseInt(localStorage.getItem(BEST_KEY) || "999", 10);
-        if(mMoves < best) localStorage.setItem(BEST_KEY, String(mMoves));
-        updateMemoryBest();
-
-        // Sticker #6 für Memory Sieg
-        unlockSticker(6);
-
-        res.className = "result good";
-        res.innerText = `🎉 Zo‘r! ${mMoves} urinishda tugatdingiz! Stiker olding! 🏷️`;
-        confetti();
-        // optional: Album direkt öffnen
-        // toggleAlbum(true);
-      } else {
-        res.className = "result good";
-        res.innerText = "✅ Topdingiz!";
-      }
-    } else {
-      res.className = "result bad";
-      res.innerText = "❌ Mos emas. Yana!";
-      a.classList.remove("open"); b.classList.remove("open");
-      a.innerText = "❓"; b.innerText = "❓";
-      a.dataset.open = "0"; b.dataset.open = "0";
-    }
-
-    mOpen = [];
-    mLock = false;
-  }
-
-  // =============================
+  // =========================
   // INIT
-  // =============================
-  function init(){
-    renderCards();
-    renderQuizQuestion();
-    updateProgressUI();
-    updateMemoryBest();
-    startMemory(); // direkt sichtbar (kannst du auch entfernen, wenn erst per Klick)
-  }
-
-  init();
+  // =========================
+  (function init(){
+    setLang("uz");      // default
+    renderLearn();      // show learn
+    updateProgress();   // quiz progress
+  })();
 </script>
+
 </body>
 </html>
