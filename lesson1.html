@@ -29,7 +29,7 @@
 
     /* --- HEADER --- */
     .header-box {
-      background: white; width: 100%; max-width: 500px;
+      background: white; width: 100%; max-width: 520px;
       border-radius: var(--radius); padding: 15px; text-align: center;
       box-shadow: 0 8px 0 rgba(0,0,0,0.05); margin-bottom: 12px; border: 4px solid white;
     }
@@ -37,74 +37,84 @@
     .progress-container { background: #dfe6e9; height: 15px; border-radius: 10px; margin: 10px 0; overflow: hidden; }
     .progress-fill { background: var(--success); height: 100%; width: 0%; transition: width 0.5s; }
 
-    /* --- Top row buttons --- */
     .top-row { display:flex; justify-content: space-between; align-items:center; gap:10px; }
-    .icon-btn { background:none; border:none; font-size:20px; cursor:pointer; }
+    .icon-btn { background:none; border:none; font-size:22px; cursor:pointer; }
 
     /* --- Language switch --- */
     .lang-switch{
-      display:flex; gap:6px; justify-content:center;
+      display:flex; gap:10px; justify-content:center;
       margin-top: 10px;
     }
     .lang-btn{
-      padding:8px 12px; border-radius: 999px;
+      padding:10px 14px; border-radius: 999px;
       border:none; background:#fff; cursor:pointer;
-      box-shadow: 0 4px 0 #ccc; font-weight:bold; font-size:13px;
+      box-shadow: 0 4px 0 #ccc; font-weight:bold; font-size:14px;
+      min-width:70px;
     }
     .lang-btn.active{ background: var(--primary); color:#fff; box-shadow: 0 4px 0 #074b81; }
 
-    /* --- MODUS NAVIGATION --- */
+    /* --- MODUS NAVIGATION (bigger) --- */
     .mode-nav {
-      display: flex; gap: 8px; margin-bottom: 14px;
-      width: 100%; max-width: 500px; flex-wrap: wrap;
+      display: flex; gap: 10px; margin-bottom: 14px;
+      width: 100%; max-width: 520px; flex-wrap: wrap;
     }
     .mode-btn {
-      flex: 1; padding: 12px; border-radius: 15px; border: none; background: white;
-      font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #ccc; font-size: 14px;
-      min-width: 110px;
+      flex: 1; padding: 14px 12px;
+      border-radius: 18px; border: none; background: white;
+      font-weight: 900; cursor: pointer;
+      box-shadow: 0 5px 0 #ccc;
+      font-size: 16px;
+      min-width: 140px;
+      white-space: nowrap;
     }
-    .mode-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 0 #074b81; }
+    .mode-btn.active { background: var(--primary); color: white; box-shadow: 0 5px 0 #074b81; }
 
-    /* --- LERN-KARTEN --- */
-    .learn-grid { display: grid; grid-template-columns: 1fr; gap: 15px; width: 100%; max-width: 500px; }
-    .learn-card {
-      background: white; border-radius: var(--radius); padding: 20px;
-      display: flex; align-items: center; gap: 16px; box-shadow: 0 6px 0 #dfe6e9; border: 3px solid white;
-    }
-    .learn-emoji { font-size: 50px; width: 70px; text-align:center; }
-    .learn-info { text-align: left; flex: 1; }
-    .btn-audio {
-      background: var(--sun); border: none; width: 50px; height: 50px;
-      border-radius: 50%; font-size: 20px; cursor: pointer; box-shadow: 0 4px 0 #e67e22;
-    }
-    .stars { margin-top: 6px; font-weight: bold; color: #f39c12; font-size: 16px; }
-
-    /* --- SECTIONS (versteckt) --- */
+    /* --- SECTIONS --- */
     #learnSection, #quizSection, #memorySection, #echoSection, #bubbleSection {
-      display: none; width: 100%; max-width: 500px; text-align: center;
+      display: none; width: 100%; max-width: 520px; text-align: center;
     }
     #learnSection { display: grid; } /* default */
 
+    /* --- LERN-KARTEN (bigger icons) --- */
+    .learn-grid { display: grid; grid-template-columns: 1fr; gap: 16px; width: 100%; max-width: 520px; }
+    .learn-card {
+      background: white; border-radius: var(--radius); padding: 22px;
+      display: flex; align-items: center; gap: 16px;
+      box-shadow: 0 8px 0 #dfe6e9; border: 3px solid white;
+    }
+    .learn-emoji { font-size: 64px; width: 78px; text-align:center; }
+    .learn-info { text-align: left; flex: 1; }
+    .learn-main { font-weight:900; font-size:22px; }
+    .learn-sub { color:#636e72; font-size:16px; margin-top:2px; }
+    .stars { margin-top: 8px; font-weight: 900; color: #f39c12; font-size: 18px; }
+
+    .btn-audio {
+      background: var(--sun); border: none; width: 62px; height: 62px;
+      border-radius: 50%; font-size: 26px; cursor: pointer;
+      box-shadow: 0 5px 0 #e67e22;
+    }
+    .btn-audio:active { transform: translateY(3px); box-shadow: 0 2px 0 #e67e22; }
+
     /* --- QUIZ --- */
-    .quiz-card { background: white; border-radius: 30px; padding: 30px; box-shadow: 0 10px 0 #dfe6e9; }
+    .quiz-card { background: white; border-radius: 30px; padding: 28px; box-shadow: 0 10px 0 #dfe6e9; }
+    .quiz-emoji { font-size: 96px; margin-top: 4px; }
     .option-btn {
-      width: 100%; padding: 15px; margin: 8px 0; border-radius: 20px;
-      border: 3px solid #f1f2f6; background: white; font-size: 18px; font-weight: bold; cursor: pointer;
-      box-shadow: 0 4px 0 #f1f2f6;
+      width: 100%; padding: 16px; margin: 10px 0; border-radius: 20px;
+      border: 3px solid #f1f2f6; background: white; font-size: 18px; font-weight: 900; cursor: pointer;
+      box-shadow: 0 5px 0 #f1f2f6;
     }
     .option-btn:active { transform: translateY(2px); box-shadow: none; }
 
     /* --- MEMORY --- */
-    .memory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .memory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .memory-card {
-      height: 100px; background: var(--primary); border-radius: 15px;
-      display: flex; justify-content: center; align-items: center; font-size: 20px;
-      color: white; cursor: pointer; box-shadow: 0 5px 0 #074b81;
-      user-select:none;
-      padding:6px;
-      text-align:center;
+      height: 112px; background: var(--primary); border-radius: 18px;
+      display: flex; justify-content: center; align-items: center;
+      font-size: 28px; color: white; cursor: pointer;
+      box-shadow: 0 6px 0 #074b81;
+      user-select:none; padding:8px; text-align:center;
     }
-    .memory-card.flipped { background: white; color: #2d3436; box-shadow: 0 5px 0 #ccc; }
+    .memory-card.flipped { background: white; color: #2d3436; box-shadow: 0 6px 0 #ccc; }
     .memory-card.matched { visibility: hidden; }
 
     /* --- ALBUM --- */
@@ -112,50 +122,138 @@
       display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8);
       z-index: 1000; justify-content: center; align-items: center;
     }
-    .album-content { background: white; padding: 30px; border-radius: 30px; text-align: center; width: 80%; max-width: 360px; }
+    .album-content { background: white; padding: 26px; border-radius: 30px; text-align: center; width: 85%; max-width: 380px; }
     .sticker-slot {
-      width: 60px; height: 60px; background: #eee; border-radius: 50%;
+      width: 70px; height: 70px; background: #eee; border-radius: 50%;
       display: inline-flex; justify-content: center; align-items: center;
-      font-size: 30px; opacity: 0.2; filter: grayscale(1); margin: 5px;
+      font-size: 34px; opacity: 0.2; filter: grayscale(1); margin: 6px;
+      border: 2px dashed #bbb;
     }
-    .sticker-slot.unlocked { opacity: 1; filter: none; background: #fff9e6; border: 2px solid var(--sun); }
+    .sticker-slot.unlocked { opacity: 1; filter: none; background: #fff9e6; border: 3px solid var(--sun); }
 
-    /* ==========================
-       ECHO + BUBBLES CSS
-       ========================== */
-    .lion-big { font-size: 120px; margin: 20px; transition: 0.3s; display: inline-block; }
+    /* --- ECHO --- */
+    .lion-big { font-size: 130px; margin: 14px; transition: 0.3s; display: inline-block; }
     .talking { animation: mouthMove 0.3s infinite; }
     @keyframes mouthMove { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.1); } }
 
     .mic-btn-huge{
-      width: 120px; height: 120px; border-radius: 50%; border: none;
-      background: #ff4757; color: white; font-size: 50px; cursor: pointer;
+      width: 130px; height: 130px; border-radius: 50%; border: none;
+      background: #ff4757; color: white; font-size: 54px; cursor: pointer;
       box-shadow: 0 10px 0 #b33939; margin: 14px;
       touch-action: manipulation;
     }
     .mic-btn-huge:active { transform: translateY(6px); box-shadow: 0 4px 0 #b33939; }
     .mic-btn-huge.active { background: #2ed573; box-shadow: 0 4px 0 #1c9e54; transform: translateY(6px); }
 
+    .banner{
+      background:white; padding:15px; border-radius:30px;
+      border:4px solid #70a1ff;
+      font-size:26px; font-weight:900;
+      margin-bottom:10px;
+    }
+    .small-note{ font-weight:900; color:#334155; font-size:16px; margin-top:6px; }
+    .speech-line{
+      margin-top:10px;
+      padding:12px;
+      border-radius:18px;
+      background:#fff;
+      border:3px dashed #d0d7de;
+      font-weight:900;
+      color:#111827;
+      min-height: 24px;
+    }
+    .speech-ok{ border-color:#86efac; background:#ecfdf5; }
+    .speech-bad{ border-color:#fecaca; background:#fef2f2; }
+
+    /* --- BUBBLES --- */
     #bubbleArea{
       position: relative; width: 100%; height: 60vh;
       background: linear-gradient(#70a1ff, #1e90ff); border-radius: 30px;
       border: 8px solid white; overflow: hidden; margin-top: 10px;
     }
     .bubble{
-      position: absolute; width: 100px; height: 100px; background: rgba(255,255,255,0.5);
+      position: absolute; width: 110px; height: 110px; background: rgba(255,255,255,0.55);
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 50px; border: 3px solid white; animation: floatUp 4s linear forwards;
+      font-size: 54px; border: 3px solid white; animation: floatUp 4s linear forwards;
       cursor: pointer; user-select:none;
     }
     @keyframes floatUp { 0% { transform: translateY(65vh); } 100% { transform: translateY(-15vh); } }
+
+    /* --- CELEBRATION OVERLAY --- */
+    .celebrate-overlay{
+      display:none;
+      position:fixed; inset:0;
+      background: rgba(0,0,0,0.75);
+      z-index: 2000;
+      align-items:center; justify-content:center;
+      padding: 16px;
+    }
+    .celebrate-overlay.show{ display:flex; }
+    .celebrate-card{
+      width: 100%;
+      max-width: 520px;
+      background: white;
+      border-radius: 30px;
+      padding: 22px;
+      text-align:center;
+      box-shadow: 0 14px 0 rgba(0,0,0,0.12);
+      position: relative;
+      overflow: hidden;
+      border: 6px solid #fff;
+    }
+    .celebrate-emoji{ font-size: 72px; }
+    .celebrate-title{ font-size: 28px; font-weight: 900; margin-top: 6px; }
+    .celebrate-text{ color:#374151; font-weight: 800; margin-top: 8px; font-size: 16px; }
+    .celebrate-btn{
+      margin-top: 14px;
+      width: 100%;
+      padding: 14px;
+      border-radius: 18px;
+      border: none;
+      background: var(--success);
+      color: white;
+      font-weight: 900;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 6px 0 #09725b;
+    }
+    .celebrate-btn:active{ transform: translateY(3px); box-shadow: 0 3px 0 #09725b; }
+
+    .confetti{
+      position:absolute; inset:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .dot{
+      position:absolute;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      opacity: 0.95;
+      animation: fall 2.2s linear forwards;
+    }
+    @keyframes fall{
+      0%{ transform: translateY(-20px) rotate(0deg); }
+      100%{ transform: translateY(560px) rotate(360deg); opacity: 0.9; }
+    }
   </style>
 </head>
 
 <body>
 
+  <!-- Celebration Overlay -->
+  <div class="celebrate-overlay" id="celebrateOverlay">
+    <div class="celebrate-card">
+      <div class="confetti" id="confetti"></div>
+      <div class="celebrate-emoji" id="celebrateEmoji">🎉</div>
+      <div class="celebrate-title" id="celebrateTitle">Barakalla!</div>
+      <div class="celebrate-text" id="celebrateText">Zo‘r!</div>
+      <button class="celebrate-btn" onclick="closeCelebrate()">OK ✅</button>
+    </div>
+  </div>
+
   <div class="header-box">
     <div class="top-row">
-      <a href="index.html" style="text-decoration:none;">🏠</a>
+      <a href="index.html" style="text-decoration:none; font-size:22px;">🏠</a>
       <h3 style="margin:0;" id="titleText">1-dars: Salomlashuv</h3>
       <button onclick="toggleAlbum()" class="icon-btn" aria-label="Album">📖</button>
     </div>
@@ -173,8 +271,8 @@
     <button class="mode-btn active" id="btnLearn"   onclick="changeMode('learn')">📖 O'rganish</button>
     <button class="mode-btn"        id="btnQuiz"    onclick="changeMode('quiz')">🎯 Test</button>
     <button class="mode-btn"        id="btnMemory"  onclick="changeMode('memory')">🧠 O'yin</button>
-    <button class="mode-btn"        id="btnEcho"    onclick="changeMode('echo')">🗣️ Echo</button>
-    <button class="mode-btn"        id="btnBubble"  onclick="changeMode('bubble')">🫧 Bubbles</button>
+    <button class="mode-btn"        id="btnEcho"    onclick="changeMode('echo')">🗣️ Aks-sado</button>
+    <button class="mode-btn"        id="btnBubble"  onclick="changeMode('bubble')">🫧 Pufakchalar</button>
   </div>
 
   <!-- Learn -->
@@ -183,8 +281,8 @@
   <!-- Quiz -->
   <div id="quizSection">
     <div class="quiz-card">
-      <div id="qEmoji" style="font-size:80px">👋</div>
-      <h2 id="qWordMain">Salom</h2>
+      <div id="qEmoji" class="quiz-emoji">👋</div>
+      <h2 id="qWordMain" style="margin: 8px 0 10px; font-size: 34px;">Salom</h2>
 
       <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="playCurrentQuizAudio()">
         🔊 <span id="listenBtnText">Eshitish</span>
@@ -196,7 +294,7 @@
 
   <!-- Memory -->
   <div id="memorySection">
-    <div id="memStats" style="margin-bottom:10px; font-weight:bold;">
+    <div id="memStats" style="margin-bottom:10px; font-weight:900; font-size:16px;">
       <span id="movesLabel">Urinishlar</span>: <span id="moves">0</span>
     </div>
     <div class="memory-grid" id="memoryGrid"></div>
@@ -205,9 +303,9 @@
   <!-- Echo -->
   <div id="echoSection">
     <div id="lionChar" class="lion-big">🦁</div>
-    <div id="echoText" style="background:white; padding:15px; border-radius:30px; border:4px solid #70a1ff; font-size:24px; font-weight:bold; margin-bottom:10px;">
-      Eshiting...
-    </div>
+
+    <div id="echoText" class="banner">Eshiting...</div>
+
     <div style="display:flex; justify-content:center; flex-wrap:wrap;">
       <button class="mic-btn-huge" style="background:#f1c40f; box-shadow: 0 10px 0 #c49f0a;" onclick="playEchoAudio()">🔊</button>
       <button class="mic-btn-huge" id="micBtn"
@@ -215,22 +313,24 @@
         🎤
       </button>
     </div>
-    <div style="font-weight:bold; color:#2d3436;" id="echoHint">🔁 Eshit → ayt → Barakalla!</div>
+
+    <div class="small-note" id="echoHint">🔁 Eshit → ayt → tekshir!</div>
+    <div class="speech-line" id="speechLine">🎙️ ...</div>
+    <div class="small-note" id="echoProgress">⭐ 0 / 5</div>
   </div>
 
   <!-- Bubbles -->
   <div id="bubbleSection">
-    <div id="bubbleTask" style="background:white; padding:15px; border-radius:30px; border:4px solid #70a1ff; font-size:24px; font-weight:bold; margin-bottom:10px;">
-      Top: ...
-    </div>
+    <div id="bubbleTask" class="banner">Top: ...</div>
     <div id="bubbleArea"></div>
-    <div style="margin-top:10px; font-weight:bold;" id="bubbleHint">Emoji top! ⭐</div>
+    <div class="small-note" id="bubbleHint">Emoji top! ⭐</div>
+    <div class="small-note" id="bubbleScoreLine">⭐ 0 / 5</div>
   </div>
 
   <!-- Album -->
   <div id="albumOverlay" class="album-overlay" onclick="toggleAlbum()">
     <div class="album-content" onclick="event.stopPropagation()">
-      <h3 id="albumTitle">Mening Stikerlarim</h3>
+      <h3 id="albumTitle" style="margin-top:0;">Mening Stikerlarim</h3>
       <div id="stk_1" class="sticker-slot">👋</div>
       <div id="stk_2" class="sticker-slot">🔢</div>
       <div id="stk_3" class="sticker-slot">🦁</div>
@@ -260,17 +360,25 @@
       learn: "📖 O'rganish",
       quiz: "🎯 Test",
       memory: "🧠 O'yin",
-      echo: "🗣️ Echo",
-      bubble: "🫧 Bubbles",
+      echo: "🗣️ Aks-sado",
+      bubble: "🫧 Pufakchalar",
       listen: "Eshitish",
       moves: "Urinishlar",
       album: "Mening Stikerlarim",
       close: "Yopish",
-      echoHint: "🔁 Eshit → ayt → Barakalla!",
-      bubbleHint: "Emoji top! ⭐",
+      echoHint: "🔁 Eshit → ayt → tekshir!",
+      bubbleHint: "To‘g‘ri emojini top! ⭐",
       bubbleTask: "Top: ",
-      doneQuiz: "Barakalla! Test tugadi.",
-      winMemory: "Siz yutdingiz!",
+      doneQuizTitle: "Barakalla! 🎉",
+      doneQuizText: "Siz testni tugatdingiz! Stiker oldingiz! 👋",
+      winMemoryTitle: "Zo‘r! 🦁",
+      winMemoryText: "Memory o‘yinini yutdingiz! Stiker oldingiz!",
+      winBubbleTitle: "Ajoyib! 🫧",
+      winBubbleText: "Pufakchalar o‘yinini tugatdingiz! Stiker oldingiz! 🔢",
+      echoWinTitle: "Zo‘r! 🗣️",
+      echoWinText: "Aks-sado o‘yinini tugatdingiz! ⭐",
+      sayAgain: "❌ Xato. Yana urinib ko‘r!",
+      micNoSupport: "⚠️ Brauzer mic-ni qo‘llamaydi. Chrome ishlating."
     },
     en: {
       title: "Lesson 1: Greetings",
@@ -283,11 +391,19 @@
       moves: "Moves",
       album: "My Stickers",
       close: "Close",
-      echoHint: "🔁 Listen → say it → Great job!",
-      bubbleHint: "Find the emoji! ⭐",
+      echoHint: "🔁 Listen → say it → check!",
+      bubbleHint: "Find the correct emoji! ⭐",
       bubbleTask: "Tap: ",
-      doneQuiz: "Great! Quiz finished.",
-      winMemory: "You won!",
+      doneQuizTitle: "Well done! 🎉",
+      doneQuizText: "You finished the quiz! You earned a sticker! 👋",
+      winMemoryTitle: "You won! 🦁",
+      winMemoryText: "You beat the memory game! Sticker unlocked!",
+      winBubbleTitle: "Amazing! 🫧",
+      winBubbleText: "You finished the bubbles game! Sticker unlocked! 🔢",
+      echoWinTitle: "Great! 🗣️",
+      echoWinText: "You finished Echo! ⭐",
+      sayAgain: "❌ Not quite. Try again!",
+      micNoSupport: "⚠️ Mic not supported. Use Chrome."
     }
   };
 
@@ -297,7 +413,7 @@
   // STORAGE
   // =========================
   const STARS_KEY = "lesson1_stars_v2";
-  const QUIZ_DONE_KEY = "lesson1_quiz_done_v2"; // array of keys
+  const QUIZ_DONE_KEY = "lesson1_quiz_done_v2";
   const STICKERS_KEY = "stickers";
 
   function loadStars(){
@@ -325,6 +441,36 @@
   }
 
   // =========================
+  // CELEBRATION
+  // =========================
+  function celebrate(title, text, emoji="🎉"){
+    document.getElementById("celebrateEmoji").innerText = emoji;
+    document.getElementById("celebrateTitle").innerText = title;
+    document.getElementById("celebrateText").innerText = text;
+
+    const conf = document.getElementById("confetti");
+    conf.innerHTML = "";
+    const colors = ["#F59E0B","#EF4444","#10B981","#3B82F6","#A855F7","#F97316"];
+    for(let i=0;i<70;i++){
+      const d = document.createElement("div");
+      d.className = "dot";
+      d.style.left = (Math.random()*100) + "%";
+      d.style.top = (-30 - Math.random()*220) + "px";
+      d.style.background = colors[Math.floor(Math.random()*colors.length)];
+      d.style.animationDelay = (Math.random()*0.25) + "s";
+      d.style.animationDuration = (1.6 + Math.random()*1.1) + "s";
+      conf.appendChild(d);
+    }
+
+    document.getElementById("celebrateOverlay").classList.add("show");
+    sfxWin();
+  }
+
+  function closeCelebrate(){
+    document.getElementById("celebrateOverlay").classList.remove("show");
+  }
+
+  // =========================
   // MODE + LANG
   // =========================
   function setLang(lang){
@@ -332,7 +478,6 @@
     document.getElementById("langUZ").classList.toggle("active", lang==="uz");
     document.getElementById("langEN").classList.toggle("active", lang==="en");
 
-    // top texts
     const T = UI[lang];
     document.getElementById("titleText").innerText = T.title;
     document.getElementById("btnLearn").innerText = T.learn;
@@ -347,10 +492,10 @@
     document.getElementById("echoHint").innerText = T.echoHint;
     document.getElementById("bubbleHint").innerText = T.bubbleHint;
 
-    // re-render current visible section
     renderLearn();
     loadQuiz();
-    // echo/bubble refresh word display if open
+
+    // refresh game banners if open
     if(document.getElementById("echoSection").style.display === "block") playEchoAudio();
     if(document.getElementById("bubbleSection").style.display === "block") startBubbles();
   }
@@ -359,7 +504,6 @@
     document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('btn' + mode.charAt(0).toUpperCase() + mode.slice(1)).classList.add('active');
 
-    // hide all sections
     document.getElementById('learnSection').style.display = 'none';
     document.getElementById('quizSection').style.display = 'none';
     document.getElementById('memorySection').style.display = 'none';
@@ -367,11 +511,12 @@
     document.getElementById('bubbleSection').style.display = 'none';
 
     stopBubbles();
+    stopRecognition();
 
     if(mode === 'learn'){ document.getElementById('learnSection').style.display='grid'; renderLearn(); }
     if(mode === 'quiz'){  document.getElementById('quizSection').style.display='block'; loadQuiz(); }
     if(mode === 'memory'){document.getElementById('memorySection').style.display='block'; initMemory(); }
-    if(mode === 'echo'){  document.getElementById('echoSection').style.display='block'; playEchoAudio(); }
+    if(mode === 'echo'){  document.getElementById('echoSection').style.display='block'; startEchoGame(); }
     if(mode === 'bubble'){document.getElementById('bubbleSection').style.display='block'; startBubbles(); }
   }
 
@@ -388,7 +533,7 @@
   }
 
   // =========================
-  // LEARN (cards + stars)
+  // LEARN
   // =========================
   function renderLearn() {
     const stars = loadStars();
@@ -405,8 +550,8 @@
       div.innerHTML = `
         <div class="learn-emoji">${item.emoji}</div>
         <div class="learn-info">
-          <div style="font-weight:bold; font-size:20px;">${main}</div>
-          <div style="color:#636e72;">${sub}</div>
+          <div class="learn-main">${main}</div>
+          <div class="learn-sub">${sub}</div>
           <div class="stars" id="star_${item.key}">${starText(s)}</div>
         </div>
         <button class="btn-audio" data-key="${item.key}">🔊</button>
@@ -442,7 +587,6 @@
   function loadQuiz() {
     updateProgress();
 
-    // skip done questions
     const done = loadQuizDone();
     let safety = 0;
     while(done.includes(data[currentQuizIdx].key) && safety < 20){
@@ -450,10 +594,9 @@
       safety++;
     }
 
-    // finished
     if(done.length === data.length){
       document.getElementById('qEmoji').innerText = "🎉";
-      document.getElementById('qWordMain').innerText = UI[currentLang].doneQuiz;
+      document.getElementById('qWordMain').innerText = (currentLang==="en") ? "Quiz completed!" : "Test tugadi!";
       document.getElementById('optionsBox').innerHTML =
         `<button class="option-btn" onclick="restartQuiz()">🔁 Restart</button>`;
       return;
@@ -462,11 +605,9 @@
     const item = data[currentQuizIdx];
     document.getElementById('qEmoji').innerText = item.emoji;
 
-    // Question shown in current language
     const qWord = (currentLang === "en") ? item.en : item.uz;
     document.getElementById('qWordMain').innerText = qWord;
 
-    // Options shown in opposite language
     const correct = (currentLang === "en") ? item.uz : item.en;
     const pool = data.map(x => (currentLang === "en") ? x.uz : x.en);
 
@@ -505,12 +646,13 @@
 
             if(loadQuizDone().length === data.length){
               unlockSticker(1);
-              alert(UI[currentLang].doneQuiz + " 👋");
+              const T = UI[currentLang];
+              celebrate(T.doneQuizTitle, T.doneQuizText, "👋");
             }
 
             updateProgress();
             loadQuiz();
-          }, 450);
+          }, 420);
         } else {
           btn.style.background = 'var(--error)'; btn.style.color = 'white';
           setTimeout(() => { btn.style.background = 'white'; btn.style.color = '#2d3436'; }, 600);
@@ -544,7 +686,6 @@
 
     let cards = [];
     data.forEach(item => {
-      // keep matching by id, show emoji + word (current language)
       const word = (currentLang === "en") ? item.en : item.uz;
       cards.push({ id: item.key, val: item.emoji });
       cards.push({ id: item.key, val: word });
@@ -572,7 +713,8 @@
                 matches++;
                 if(matches === data.length) {
                   unlockSticker(3);
-                  alert(UI[currentLang].winMemory + " 🦁");
+                  const T = UI[currentLang];
+                  celebrate(T.winMemoryTitle, T.winMemoryText, "🦁");
                 }
               } else {
                 flippedCards.forEach(f => {
@@ -591,26 +733,8 @@
   }
 
   // =========================
-  // ECHO (simulated mic)
+  // SFX (offline beeps)
   // =========================
-  function playEchoAudio() {
-    const item = data[currentQuizIdx];
-    const lion = document.getElementById('lionChar');
-
-    const word = (currentLang === "en") ? item.en : item.uz;
-    document.getElementById('echoText').innerText = word;
-
-    lion.classList.add('talking');
-    const a = playAudio(item.key);
-    a.onended = () => lion.classList.remove('talking');
-  }
-
-  function startMic() {
-    document.getElementById('micBtn').classList.add('active');
-    document.getElementById('lionChar').innerText = "👂";
-  }
-
-  // small offline “win” beep
   let audioCtx = null;
   function beep(freq=700, dur=0.12){
     const AC = window.AudioContext || window.webkitAudioContext;
@@ -629,43 +753,213 @@
   }
   function sfxWin(){ beep(660,0.12); setTimeout(()=>beep(880,0.14),140); setTimeout(()=>beep(990,0.16),300); }
   function sfxPop(){ beep(520,0.08); }
+  function sfxFail(){ beep(220,0.15); setTimeout(()=>beep(180,0.18),120); }
 
-  function stopMic() {
+  // =========================
+  // ECHO (finite: each word once) + SPEECH RECOGNITION
+  // =========================
+  let echoOrder = [];
+  let echoIdx = 0;
+  let recognition = null;
+  let isRecognizing = false;
+
+  function shuffle(arr){
+    const a = [...arr];
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  function startEchoGame(){
+    echoOrder = shuffle(data.map(x=>x.key)); // each word once
+    echoIdx = 0;
+    updateEchoProgress();
+    setSpeechLine("🎙️ ...", "");
+    playEchoAudio();
+  }
+
+  function currentEchoItem(){
+    const key = echoOrder[echoIdx];
+    return data.find(x=>x.key===key);
+  }
+
+  function updateEchoProgress(){
+    const el = document.getElementById("echoProgress");
+    if(el) el.innerText = `⭐ ${echoIdx} / ${data.length}`;
+  }
+
+  function playEchoAudio() {
+    const item = currentEchoItem();
+    if(!item) return;
+
+    const word = (currentLang === "en") ? item.en : item.uz;
+    document.getElementById('echoText').innerText = word;
+
+    const lion = document.getElementById('lionChar');
+    lion.classList.add('talking');
+    const a = playAudio(item.key);
+    a.onended = () => lion.classList.remove('talking');
+  }
+
+  function normalizeText(s){
+    return (s || "")
+      .toLowerCase()
+      .replace(/[‘’`]/g, "'")
+      .replace(/[^a-zа-яёқғҳўьъ'\s?-]/gi, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function setSpeechLine(text, state){ // state: "ok" | "bad" | ""
+    const el = document.getElementById("speechLine");
+    el.className = "speech-line" + (state==="ok" ? " speech-ok" : state==="bad" ? " speech-bad" : "");
+    el.innerText = text;
+  }
+
+  function startMic() {
+    const T = UI[currentLang];
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!SpeechRecognition){
+      setSpeechLine(T.micNoSupport, "bad");
+      sfxFail();
+      return;
+    }
+
+    // prepare
+    if(isRecognizing) return;
+
+    recognition = new SpeechRecognition();
+    recognition.lang = (currentLang === "en") ? "en-US" : "uz-UZ"; // uz-UZ may fallback internally
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 3;
+
+    isRecognizing = true;
+    document.getElementById('micBtn').classList.add('active');
+    document.getElementById('lionChar').innerText = "👂";
+    setSpeechLine("🎙️ ...", "");
+
+    recognition.onresult = (event) => {
+      const item = currentEchoItem();
+      const target = normalizeText((currentLang==="en") ? item.en : item.uz);
+
+      const transcript = normalizeText(event.results[0][0].transcript);
+      setSpeechLine("🗣️ " + transcript, "");
+
+      // tolerant matching: allow includes / small variations
+      const ok =
+        transcript === target ||
+        transcript.includes(target) ||
+        target.includes(transcript);
+
+      if(ok){
+        setSpeechLine("✅ " + transcript, "ok");
+        sfxWin();
+
+        echoIdx++;
+        updateEchoProgress();
+
+        if(echoIdx >= data.length){
+          const TT = UI[currentLang];
+          celebrate(TT.echoWinTitle, TT.echoWinText, "🗣️");
+          // restart next time entering echo
+          stopMic();
+          return;
+        }
+
+        setTimeout(() => {
+          playEchoAudio();
+        }, 650);
+
+      } else {
+        const TT = UI[currentLang];
+        setSpeechLine(TT.sayAgain + " (" + transcript + ")", "bad");
+        sfxFail();
+        // keep same word, do not advance
+      }
+    };
+
+    recognition.onerror = () => {
+      const TT = UI[currentLang];
+      setSpeechLine(TT.sayAgain, "bad");
+      sfxFail();
+    };
+
+    recognition.onend = () => {
+      isRecognizing = false;
+      document.getElementById('micBtn').classList.remove('active');
+      document.getElementById('lionChar').innerText = "🦁";
+    };
+
+    recognition.start();
+  }
+
+  function stopRecognition(){
+    try{
+      if(recognition){
+        recognition.stop();
+      }
+    }catch(e){}
+    recognition = null;
+    isRecognizing = false;
     document.getElementById('micBtn').classList.remove('active');
     document.getElementById('lionChar').innerText = "🦁";
-    sfxWin();
+  }
 
-    document.getElementById('echoText').innerText = (currentLang==="en") ? "Great job! 🎉" : "Barakalla! 🎉";
-
-    setTimeout(() => {
-      currentQuizIdx = (currentQuizIdx + 1) % data.length;
-      playEchoAudio();
-    }, 900);
+  function stopMic(){
+    stopRecognition();
   }
 
   // =========================
-  // BUBBLES
+  // BUBBLES (finite: each word once)
   // =========================
   let bubbleInt = null;
+  let bubbleOrder = [];
+  let bubbleIdx = 0;
   let bubbleTarget = null;
 
   function stopBubbles(){
     if(bubbleInt){ clearInterval(bubbleInt); bubbleInt = null; }
   }
 
+  function updateBubbleScoreLine(){
+    const el = document.getElementById("bubbleScoreLine");
+    if(el) el.innerText = `⭐ ${bubbleIdx} / ${data.length}`;
+  }
+
   function startBubbles() {
     stopBubbles();
 
-    bubbleTarget = data[Math.floor(Math.random() * data.length)];
+    // start a full finite round
+    if(bubbleOrder.length === 0 || bubbleIdx === 0){
+      bubbleOrder = shuffle(data.map(x=>x.key)); // each once
+      bubbleIdx = 0;
+    }
+
+    if(bubbleIdx >= data.length){
+      // finished
+      unlockSticker(2);
+      const T = UI[currentLang];
+      celebrate(T.winBubbleTitle, T.winBubbleText, "🫧");
+      bubbleIdx = 0;
+      bubbleOrder = [];
+      updateBubbleScoreLine();
+      return;
+    }
+
+    const key = bubbleOrder[bubbleIdx];
+    bubbleTarget = data.find(x=>x.key===key);
+
     const taskWord = (currentLang === "en") ? bubbleTarget.en : bubbleTarget.uz;
+    const T = UI[currentLang];
+    document.getElementById('bubbleTask').innerText = T.bubbleTask + taskWord;
 
-    document.getElementById('bubbleTask').innerText = UI[currentLang].bubbleTask + taskWord;
-
-    // play target audio
     playAudio(bubbleTarget.key);
 
     const area = document.getElementById('bubbleArea');
     area.innerHTML = "";
+    updateBubbleScoreLine();
 
     bubbleInt = setInterval(() => {
       const b = document.createElement('div');
@@ -683,10 +977,10 @@
           b.style.background = '#2ed573';
           b.style.borderColor = '#fff';
 
-          // optional: bubbles sticker (id 2)
-          unlockSticker(2);
-
-          setTimeout(startBubbles, 700);
+          // next word
+          bubbleIdx++;
+          stopBubbles();
+          setTimeout(startBubbles, 500);
         } else {
           b.innerText = '💨';
           setTimeout(() => b.remove(), 150);
@@ -695,7 +989,7 @@
 
       area.appendChild(b);
       setTimeout(() => b.remove(), 4000);
-    }, 1300);
+    }, 1200);
   }
 
   // =========================
@@ -724,9 +1018,11 @@
   // INIT
   // =========================
   (function init(){
-    setLang("uz");      // default
-    renderLearn();      // show learn
-    updateProgress();   // quiz progress
+    setLang("uz");
+    renderLearn();
+    updateProgress();
+    updateBubbleScoreLine();
+    updateEchoProgress();
   })();
 </script>
 
