@@ -127,10 +127,7 @@
       font-weight:1000;
       font-size:12px;
     }
-    .goal.done{
-      background: rgba(34,197,94,.14);
-      border-color: rgba(34,197,94,.25);
-    }
+    .goal.done{background: rgba(34,197,94,.14);border-color: rgba(34,197,94,.25);}
 
     /* Progress */
     .barWrap{
@@ -180,7 +177,7 @@
       align-items:center;
       transition: transform .10s ease, box-shadow .10s ease, filter .10s ease;
       position:relative;
-      overflow:hidden; /* shine */
+      overflow:hidden;
       min-height:92px;
     }
     .tile:active{transform: translateY(2px) scale(.995)}
@@ -210,9 +207,7 @@
     }
 
     /* Lock overlay */
-    .locked{
-      filter: grayscale(.35) opacity(.88);
-    }
+    .locked{filter: grayscale(.35) opacity(.88);}
     .lockTag{
       position:absolute;
       left:12px; top:12px;
@@ -228,7 +223,7 @@
     .locked .lockTag{display:inline-block}
     .locked .icon{background: rgba(148,163,184,.22); border-color: rgba(148,163,184,.25)}
 
-    /* Shine Effekt */
+    /* Shine */
     .tile::after{
       content:"";
       position:absolute;
@@ -262,10 +257,15 @@
       text-decoration:none;
       display:block;
     }
-    .btn.secondary{
-      background: rgba(255,255,255,.95);
-      color: var(--ink);
-      border-color: var(--line);
+    .btn.secondary{background: rgba(255,255,255,.95); color: var(--ink); border-color: var(--line);}
+    .btn.ghost{
+      background: transparent;
+      border:1px dashed rgba(15,23,42,.20);
+      color: rgba(15,23,42,.85);
+      padding:10px 12px;
+      border-radius:16px;
+      min-width:200px;
+      flex:0 0 auto;
     }
 
     .small{font-size:12.5px;color: rgba(15,23,42,.70);margin-top:10px;font-weight:800;}
@@ -294,26 +294,99 @@
     .celebrateText{color:var(--muted);font-weight:900;margin:0 0 10px}
     .confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
     .dot{
-      position:absolute;
-      width:10px;height:10px;border-radius:50%;
-      top:-20px;
-      animation: fall 1.3s ease-in forwards;
-      opacity:.95;
+      position:absolute;width:10px;height:10px;border-radius:50%;
+      top:-20px; animation: fall 1.3s ease-in forwards; opacity:.95;
     }
     @keyframes fall{ to{ transform: translateY(120vh) rotate(240deg); opacity:1; } }
     .closeBtn{
-      margin-top:10px;
-      width:100%;
-      padding:12px;
-      border-radius:16px;
-      border:1px solid rgba(15,23,42,.10);
-      background:#fff;
-      font-weight:1000;
-      cursor:pointer;
+      margin-top:10px;width:100%;padding:12px;
+      border-radius:16px;border:1px solid rgba(15,23,42,.10);
+      background:#fff;font-weight:1000;cursor:pointer;
     }
 
-    /* Focus + Motion */
-    .tile:focus-visible, .btn:focus-visible, .closeBtn:focus-visible, .voiceBtn:focus-visible{
+    /* ✅ NAME GATE (smoky style) */
+    .nameGate{
+      position:fixed;
+      inset:0;
+      z-index:10000;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      background:
+        radial-gradient(circle at 25% 15%, rgba(255,255,255,.18), transparent 35%),
+        radial-gradient(circle at 80% 25%, rgba(255,255,255,.14), transparent 40%),
+        rgba(2,6,23,.55);
+      backdrop-filter: blur(10px) saturate(1.1);
+    }
+    .nameGate.show{display:flex}
+
+    .gateCard{
+      width:min(520px, 92vw);
+      background: rgba(255,255,255,.92);
+      border:1px solid rgba(255,255,255,.35);
+      border-radius:26px;
+      box-shadow: 0 22px 70px rgba(2,6,23,.35);
+      padding:16px;
+      position:relative;
+      overflow:hidden;
+      text-align:center;
+    }
+    .gateTitle{
+      font-size:22px;
+      font-weight:1000;
+      margin:6px 0 6px;
+    }
+    .gateText{
+      margin:0 0 12px;
+      color: rgba(15,23,42,.78);
+      font-weight:900;
+    }
+    .nameRow{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:6px;
+    }
+    .nameInput{
+      width:min(360px, 86vw);
+      padding:14px 14px;
+      border-radius:18px;
+      border:1px solid rgba(15,23,42,.18);
+      font-weight:1000;
+      font-size:18px;
+      outline:none;
+      background: rgba(255,255,255,.95);
+    }
+    .nameInput:focus{
+      border-color: rgba(59,130,246,.55);
+      box-shadow: 0 0 0 6px rgba(59,130,246,.18);
+    }
+    .gateBtn{
+      width:min(360px, 86vw);
+      margin-top:10px;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(5,46,27,.10);
+      background: linear-gradient(180deg, #34d399, #22c55e);
+      color:#052e1b;
+      font-weight:1000;
+      cursor:pointer;
+      opacity:.55;
+    }
+    .gateBtn.enabled{opacity:1}
+    .gateHint{
+      margin-top:10px;
+      font-size:12.5px;
+      font-weight:900;
+      color: rgba(15,23,42,.62);
+    }
+
+    /* Focus */
+    .tile:focus-visible, .btn:focus-visible, .closeBtn:focus-visible, .voiceBtn:focus-visible,
+    .gateBtn:focus-visible, .nameInput:focus-visible{
       outline:4px solid rgba(59,130,246,.45);
       outline-offset:3px;
     }
@@ -337,15 +410,18 @@
 
           <div>
             <h1>🌿 Dono Bola! Uzbek – A1</h1>
-            <div class="sub">Tanla 👉 Eshit 🎧 Takrorla 🗣️ O'yna 🎲</div>
+            <div class="sub" id="helloLine">Tanla 👉 Eshit 🎧 Takrorla 🗣️ O'yna 🎲</div>
             <div class="voiceStatus" id="voiceStatus">🗣️ Ovoz: tayyor</div>
           </div>
         </div>
 
-        <button class="voiceBtn" type="button" id="speakBtn" aria-label="Eshit (ovoz)">
-          🔊 Eshit!
-          <small>Matnni o'qiydi</small>
-        </button>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+          <button class="voiceBtn" type="button" id="speakBtn" aria-label="Eshit (ovoz)">
+            🔊 Eshit!
+            <small>Matnni o'qiydi</small>
+          </button>
+          <button class="btn ghost" type="button" id="changeNameBtn">✏️ Ismni o'zgartir</button>
+        </div>
       </div>
 
       <div class="cheer" id="cheerText">✨ Keling, boshlaymiz!</div>
@@ -409,6 +485,7 @@
     </div>
   </div>
 
+  <!-- 🎉 Celebrate -->
   <div class="celebrate" id="celebrate">
     <div class="celebrateCard" role="dialog" aria-modal="true" aria-labelledby="celebrateTitle">
       <div class="confetti" id="confetti"></div>
@@ -418,10 +495,26 @@
     </div>
   </div>
 
+  <!-- ✅ Name Gate (smoky) -->
+  <div class="nameGate" id="nameGate">
+    <div class="gateCard" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+      <div style="font-size:44px; line-height:1;">🧒✨</div>
+      <div class="gateTitle" id="gateTitle">Isming nima?</div>
+      <p class="gateText">Avval ismingni yoz ✍️ <br/> Keyin o'ynaymiz 🎲</p>
+
+      <div class="nameRow">
+        <input class="nameInput" id="nameInput" type="text" inputmode="text" autocomplete="name"
+               placeholder="Masalan: Ali" maxlength="18" />
+      </div>
+      <button class="gateBtn" id="startBtn" type="button">Boshlaymiz! 🚀</button>
+      <div class="gateHint">Maslahat: 2 ta harf yetadi 🙂</div>
+    </div>
+  </div>
+
 <script>
   const TOTAL = 23;
   const LESSON_COUNTS = { "1": 5, "2": 10, "3": 8 };
-  const DAILY_GOAL = 3; // 🐣 Tagesziel
+  const DAILY_GOAL = 3;
 
   function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
 
@@ -480,7 +573,6 @@
   function starBurst(count = 10){
     const layer = document.getElementById("starsLayer");
     if (!layer) return;
-
     const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
 
@@ -544,6 +636,13 @@
   }
 
   /* 🏝️ Locks */
+  function lockClickHandler(e){
+    e.preventDefault();
+    pling("reset");
+    starBurst(10);
+    const msg = e.currentTarget.id === "tile2" ? "Avval 1-darsni tugat! 👋" : "Avval 2-darsni tugat! 🔢";
+    document.getElementById("cheerText").innerText = "🔒 " + msg;
+  }
   function applyLocks(c1, c2){
     const tile2 = document.getElementById("tile2");
     const tile3 = document.getElementById("tile3");
@@ -551,7 +650,6 @@
     const l1Done = c1 >= LESSON_COUNTS["1"];
     const l2Done = c2 >= LESSON_COUNTS["2"];
 
-    // Lesson 2 locked until Lesson 1 done
     if (!l1Done){
       tile2.classList.add("locked");
       tile2.dataset.locked = "1";
@@ -564,7 +662,6 @@
       tile2.removeEventListener("click", lockClickHandler);
     }
 
-    // Lesson 3 locked until Lesson 2 done
     if (!l2Done){
       tile3.classList.add("locked");
       tile3.dataset.locked = "1";
@@ -578,18 +675,8 @@
     }
   }
 
-  function lockClickHandler(e){
-    // prevent navigation
-    e.preventDefault();
-    pling("reset");
-    starBurst(10);
-    const msg = e.currentTarget.id === "tile2" ? "Avval 1-darsni tugat! 👋" : "Avval 2-darsni tugat! 🔢";
-    document.getElementById("cheerText").innerText = "🔒 " + msg;
-  }
-
   /* 🐣 Daily goal */
   function updateDailyGoal(learnedCount){
-    // reset per day
     const today = new Date().toISOString().slice(0,10);
     const savedDay = localStorage.getItem("dailyGoalDay");
     if (savedDay !== today){
@@ -611,7 +698,7 @@
     }
   }
 
-  /* 🗣️ Voice (Web Speech API) */
+  /* 🗣️ Voice */
   function speak(text){
     const status = document.getElementById("voiceStatus");
     const synth = window.speechSynthesis;
@@ -619,22 +706,77 @@
       status.innerText = "🔇 Ovoz yo'q (brauzer qo'llamaydi)";
       return;
     }
-
-    // stop previous
     synth.cancel();
-
     const u = new SpeechSynthesisUtterance(text);
-
-    // language hint (may vary by device)
-    u.lang = "uz-UZ"; // fallback ok even if voice not exact
-    u.rate = 0.95;    // slower for kids
+    u.lang = "uz-UZ";
+    u.rate = 0.95;
     u.pitch = 1.08;
-
     u.onstart = () => status.innerText = "🗣️ O'qiyapman…";
     u.onend   = () => status.innerText = "🗣️ Ovoz: tayyor";
     u.onerror = () => status.innerText = "🔇 Ovoz xatolik";
-
     synth.speak(u);
+  }
+
+  /* ✅ NAME GATE */
+  function normalizeName(s){
+    return (s || "")
+      .trim()
+      .replace(/\s+/g, " ")
+      .slice(0, 18);
+  }
+
+  function showNameGate(){
+    const gate = document.getElementById("nameGate");
+    gate.classList.add("show");
+
+    const input = document.getElementById("nameInput");
+    const btn = document.getElementById("startBtn");
+
+    // reset state
+    btn.classList.remove("enabled");
+    btn.disabled = true;
+    input.value = "";
+
+    // focus
+    setTimeout(() => input.focus(), 50);
+
+    const validate = () => {
+      const name = normalizeName(input.value);
+      const ok = name.length >= 2;
+      btn.disabled = !ok;
+      btn.classList.toggle("enabled", ok);
+    };
+
+    input.addEventListener("input", validate);
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !btn.disabled) btn.click();
+    });
+
+    btn.onclick = () => {
+      const name = normalizeName(input.value);
+      if (name.length < 2) return;
+      localStorage.setItem("childName", name);
+      hideNameGate();
+      applyGreeting();
+      // little happy effects
+      pling("btn");
+      starBurst(14);
+    };
+  }
+
+  function hideNameGate(){
+    document.getElementById("nameGate").classList.remove("show");
+  }
+
+  function applyGreeting(){
+    const name = localStorage.getItem("childName") || "";
+    const helloLine = document.getElementById("helloLine");
+
+    if (name){
+      helloLine.innerText = `Salom, ${name}! ✨ Tanla 👉 Eshit 🎧 Takrorla 🗣️ O'yna 🎲`;
+    } else {
+      helloLine.innerText = "Tanla 👉 Eshit 🎧 Takrorla 🗣️ O'yna 🎲";
+    }
   }
 
   function updateUI(){
@@ -671,7 +813,6 @@
     applyLocks(c1, c2);
     updateDailyGoal(learnedCount);
 
-    // Shine on load
     playShine(document.getElementById("tile1"));
     setTimeout(()=>playShine(document.getElementById("tile2")), 220);
     setTimeout(()=>playShine(document.getElementById("tile3")), 440);
@@ -692,16 +833,15 @@
   }
 
   function wireUI(){
-    // create audio context on first gesture
+    // audio on first gesture
     const firstGesture = () => { ensureAudio(); document.removeEventListener("pointerdown", firstGesture); };
     document.addEventListener("pointerdown", firstGesture, { once: true });
 
-    // sound on tiles (if not locked)
     ["tile1","tile2","tile3"].forEach(id => {
       const el = document.getElementById(id);
       if (!el) return;
       el.addEventListener("click", (e) => {
-        if (el.dataset.locked === "1") return; // lock handler does own effects
+        if (el.dataset.locked === "1") return;
         pling("tile");
       });
     });
@@ -712,19 +852,35 @@
     document.getElementById("closeCelebrate").addEventListener("click", () => { pling("btn"); hideCelebrate(); });
     document.getElementById("celebrate").addEventListener("click", (e) => { if (e.target.id === "celebrate") hideCelebrate(); });
 
-    // Voice button speaks short child-friendly line
     document.getElementById("speakBtn").addEventListener("click", () => {
       pling("btn");
+      const name = localStorage.getItem("childName") || "";
       const learned = getLearnedSet().size;
       const msg = (learned === 0)
-        ? "Salom! Keling, boshlaymiz! Birinchi darsni tanlang."
-        : "Ajoyib! Davom etamiz. Darsni tanlang: eshit, takrorla va o'yna!";
+        ? `Salom${name ? ", " + name : ""}! Keling, boshlaymiz! Birinchi darsni tanlang.`
+        : `Ajoyib${name ? ", " + name : ""}! Davom etamiz. Darsni tanlang: eshit, takrorla va o'yna!`;
       speak(msg);
+    });
+
+    // change name
+    document.getElementById("changeNameBtn").addEventListener("click", () => {
+      pling("btn");
+      localStorage.removeItem("childName");
+      showNameGate();
     });
   }
 
   window.addEventListener("load", () => {
     wireUI();
+
+    // ✅ block page until name exists
+    const name = localStorage.getItem("childName");
+    if (!name){
+      showNameGate();         // smoky overlay stays until name entered
+    } else {
+      applyGreeting();
+    }
+
     updateUI();
   });
 </script>
