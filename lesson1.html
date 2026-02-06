@@ -45,15 +45,18 @@
 
     .top-row { display:flex; justify-content: space-between; align-items:center; gap:10px; }
 
-    /* ✅ Bigger home & book icons */
+    /* ✅ BIGGER home & book */
     .topIcon {
-      font-size: 36px;
+      font-size: 56px;
       line-height: 1;
       text-decoration: none;
       background: none;
       border: none;
       cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 18px;
     }
+    .topIcon:active { transform: translateY(2px); }
 
     /* --- Language switch --- */
     .lang-switch{
@@ -68,7 +71,7 @@
     }
     .lang-btn.active{ background: var(--primary); color:#fff; box-shadow: 0 4px 0 #074b81; }
 
-    /* --- MODUS NAVIGATION (bigger icons) --- */
+    /* --- MODUS NAVIGATION --- */
     .mode-nav {
       display: flex;
       gap: 10px;
@@ -79,25 +82,25 @@
     }
     .mode-btn {
       flex: 1;
-      padding: 14px 12px;
+      padding: 16px 12px;
       border-radius: 18px;
       border: none;
       background: white;
       font-weight: 900;
       cursor: pointer;
       box-shadow: 0 5px 0 #ccc;
-      font-size: 18px;               /* bigger text */
+      font-size: 19px;
       min-width: 160px;
       white-space: nowrap;
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:10px;
+      gap:12px;
     }
     .mode-btn.active { background: var(--primary); color: white; box-shadow: 0 5px 0 #074b81; }
 
-    /* ✅ Bigger icons inside mode buttons */
-    .mode-ico{ font-size: 26px; line-height: 1; }
+    /* ✅ BIGGER icons in buttons */
+    .mode-ico{ font-size: 34px; line-height: 1; }
 
     /* --- SECTIONS --- */
     #learnSection, #quizSection, #memorySection, #echoSection, #bubbleSection {
@@ -105,29 +108,29 @@
     }
     #learnSection { display: grid; } /* default */
 
-    /* --- LERN-KARTEN (bigger icons) --- */
+    /* --- LERN-KARTEN --- */
     .learn-grid { display: grid; grid-template-columns: 1fr; gap: 16px; width: 100%; max-width: 520px; }
     .learn-card {
       background: white; border-radius: var(--radius); padding: 22px;
       display: flex; align-items: center; gap: 16px;
       box-shadow: 0 8px 0 #dfe6e9; border: 3px solid white;
     }
-    .learn-emoji { font-size: 64px; width: 78px; text-align:center; }
+    .learn-emoji { font-size: 68px; width: 86px; text-align:center; }
     .learn-info { text-align: left; flex: 1; }
-    .learn-main { font-weight:900; font-size:22px; }
+    .learn-main { font-weight:900; font-size:24px; }
     .learn-sub { color:#636e72; font-size:16px; margin-top:2px; }
-    .stars { margin-top: 8px; font-weight: 900; color: #f39c12; font-size: 18px; }
+    .stars { margin-top: 8px; font-weight: 900; color: #f39c12; font-size: 20px; }
 
     .btn-audio {
-      background: var(--sun); border: none; width: 62px; height: 62px;
-      border-radius: 50%; font-size: 26px; cursor: pointer;
-      box-shadow: 0 5px 0 #e67e22;
+      background: var(--sun); border: none; width: 70px; height: 70px;
+      border-radius: 50%; font-size: 28px; cursor: pointer;
+      box-shadow: 0 6px 0 #e67e22;
     }
-    .btn-audio:active { transform: translateY(3px); box-shadow: 0 2px 0 #e67e22; }
+    .btn-audio:active { transform: translateY(3px); box-shadow: 0 3px 0 #e67e22; }
 
     /* --- QUIZ --- */
     .quiz-card { background: white; border-radius: 30px; padding: 28px; box-shadow: 0 10px 0 #dfe6e9; }
-    .quiz-emoji { font-size: 96px; margin-top: 4px; }
+    .quiz-emoji { font-size: 104px; margin-top: 4px; }
     .option-btn {
       width: 100%; padding: 16px; margin: 10px 0; border-radius: 20px;
       border: 3px solid #f1f2f6; background: white; font-size: 18px; font-weight: 900; cursor: pointer;
@@ -138,9 +141,9 @@
     /* --- MEMORY --- */
     .memory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .memory-card {
-      height: 112px; background: var(--primary); border-radius: 18px;
+      height: 118px; background: var(--primary); border-radius: 18px;
       display: flex; justify-content: center; align-items: center;
-      font-size: 28px; color: white; cursor: pointer;
+      font-size: 30px; color: white; cursor: pointer;
       box-shadow: 0 6px 0 #074b81;
       user-select:none; padding:8px; text-align:center;
     }
@@ -160,21 +163,21 @@
       margin-top: 14px;
     }
     .sticker-slot {
-      width: 78px; height: 78px; background: #eee; border-radius: 50%;
+      width: 84px; height: 84px; background: #eee; border-radius: 50%;
       display: inline-flex; justify-content: center; align-items: center;
-      font-size: 38px; opacity: 0.2; filter: grayscale(1);
+      font-size: 42px; opacity: 0.2; filter: grayscale(1);
       border: 2px dashed #bbb;
     }
     .sticker-slot.unlocked { opacity: 1; filter: none; background: #fff9e6; border: 3px solid var(--sun); }
 
     /* --- ECHO --- */
-    .lion-big { font-size: 130px; margin: 14px; transition: 0.3s; display: inline-block; }
+    .lion-big { font-size: 138px; margin: 14px; transition: 0.3s; display: inline-block; }
     .talking { animation: mouthMove 0.3s infinite; }
     @keyframes mouthMove { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.1); } }
 
     .mic-btn-huge{
-      width: 130px; height: 130px; border-radius: 50%; border: none;
-      background: #ff4757; color: white; font-size: 54px; cursor: pointer;
+      width: 136px; height: 136px; border-radius: 50%; border: none;
+      background: #ff4757; color: white; font-size: 56px; cursor: pointer;
       box-shadow: 0 10px 0 #b33939; margin: 14px;
       touch-action: manipulation;
     }
@@ -208,9 +211,9 @@
       border: 8px solid white; overflow: hidden; margin-top: 10px;
     }
     .bubble{
-      position: absolute; width: 110px; height: 110px; background: rgba(255,255,255,0.55);
+      position: absolute; width: 118px; height: 118px; background: rgba(255,255,255,0.55);
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 54px; border: 3px solid white; animation: floatUp 4s linear forwards;
+      font-size: 58px; border: 3px solid white; animation: floatUp 4s linear forwards;
       cursor: pointer; user-select:none;
     }
     @keyframes floatUp { 0% { transform: translateY(65vh); } 100% { transform: translateY(-15vh); } }
@@ -237,7 +240,7 @@
       overflow: hidden;
       border: 6px solid #fff;
     }
-    .celebrate-emoji{ font-size: 72px; }
+    .celebrate-emoji{ font-size: 78px; }
     .celebrate-title{ font-size: 28px; font-weight: 900; margin-top: 6px; }
     .celebrate-text{ color:#374151; font-weight: 800; margin-top: 8px; font-size: 16px; }
     .celebrate-btn{
@@ -275,6 +278,9 @@
 </head>
 
 <body>
+
+  <!-- Sounds from your repo -->
+  <audio id="cheerAudio" src="sounds/cheer.mp3" preload="auto"></audio>
 
   <!-- Celebration Overlay -->
   <div class="celebrate-overlay" id="celebrateOverlay">
@@ -369,10 +375,10 @@
     <div class="album-content" onclick="event.stopPropagation()">
       <h3 id="albumTitle" style="margin-top:0;">Mening Stikerlarim</h3>
       <div class="sticker-grid">
-        <div id="stk_1" class="sticker-slot">🐰</div> <!-- Quiz -->
-        <div id="stk_2" class="sticker-slot">🐻</div> <!-- Memory -->
-        <div id="stk_3" class="sticker-slot">🦁</div> <!-- Echo -->
-        <div id="stk_4" class="sticker-slot">🐠</div> <!-- Bubbles -->
+        <div id="stk_1" class="sticker-slot">🐰</div>
+        <div id="stk_2" class="sticker-slot">🐻</div>
+        <div id="stk_3" class="sticker-slot">🦁</div>
+        <div id="stk_4" class="sticker-slot">🐠</div>
       </div>
       <br>
       <button class="mode-btn" onclick="toggleAlbum()" id="closeAlbumBtn">Yopish</button>
@@ -380,9 +386,6 @@
   </div>
 
 <script>
-  // =========================
-  // DATA
-  // =========================
   const data = [
     { key: "1",  emoji: "👋", uz: "Salom",        en: "Hello" },
     { key: "6",  emoji: "🙏", uz: "Rahmat",       en: "Thank you" },
@@ -391,9 +394,6 @@
     { key: "11", emoji: "🌙", uz: "Xayr",         en: "Bye" }
   ];
 
-  // =========================
-  // UI TEXTS
-  // =========================
   const UI = {
     uz: {
       title: "1-dars: Salomlashuv",
@@ -417,6 +417,8 @@
       echoWinText: "Aks-sado tugadi! Siz sher stikerini oldingiz!",
       winBubbleTitle: "Super! 🐠",
       winBubbleText: "Pufakchalar tugadi! Siz baliq stikerini oldingiz!",
+      allDoneTitle: "HAMMASI TUGADI! 🎉👏",
+      allDoneText: "Siz 1-dars va hamma o‘yinlarni tugatdingiz! YAY! 🎊",
       sayAgain: "❌ Xato. Yana urinib ko‘r!",
       micNoSupport: "⚠️ Mikrofon yo‘q. Chrome ishlating."
     },
@@ -442,6 +444,8 @@
       echoWinText: "Echo complete! You earned the lion sticker!",
       winBubbleTitle: "Amazing! 🐠",
       winBubbleText: "Bubbles complete! You earned the fish sticker!",
+      allDoneTitle: "ALL DONE! 🎉👏",
+      allDoneText: "You finished Lesson 1 and all games! YAY! 🎊",
       sayAgain: "❌ Not quite. Try again!",
       micNoSupport: "⚠️ Mic not supported. Use Chrome."
     }
@@ -449,27 +453,33 @@
 
   let currentLang = "uz";
 
-  // =========================
-  // STORAGE
-  // =========================
-  const STARS_KEY = "lesson1_stars_v2";
-  const QUIZ_DONE_KEY = "lesson1_quiz_done_v2";
+  const STARS_KEY = "lesson1_stars_v3";
+  const QUIZ_DONE_KEY = "lesson1_quiz_done_v3";
   const STICKERS_KEY = "stickers";
+  const DONE_MEMORY_KEY = "lesson1_done_memory_v1";
+  const DONE_ECHO_KEY   = "lesson1_done_echo_v1";
+  const DONE_BUBBLE_KEY = "lesson1_done_bubble_v1";
+  const DONE_ALL_KEY    = "lesson1_done_all_v1";
 
-  function loadStars(){
-    try { return JSON.parse(localStorage.getItem(STARS_KEY) || "{}"); }
-    catch { return {}; }
+  // --- SOUND HELPERS (your mp3) ---
+  function playSound(file){
+    const a = new Audio("sounds/" + file);
+    a.play().catch(()=>{});
   }
+  function sfxWin(){ playSound("success.mp3"); }
+  function sfxFail(){ playSound("fail.mp3"); }
+  function sfxPop(){ playSound("pop.mp3"); }
+  function playCheerYay(){
+    const a = document.getElementById("cheerAudio");
+    if(a){ a.currentTime = 0; a.play().catch(()=>{}); }
+    else { playSound("cheer.mp3"); }
+  }
+
+  function loadStars(){ try { return JSON.parse(localStorage.getItem(STARS_KEY) || "{}"); } catch { return {}; } }
   function saveStars(st){ localStorage.setItem(STARS_KEY, JSON.stringify(st)); }
-  function starText(n){
-    n = Math.max(0, Math.min(3, n));
-    return "★".repeat(n) + "☆".repeat(3-n);
-  }
+  function starText(n){ n=Math.max(0,Math.min(3,n)); return "★".repeat(n)+"☆".repeat(3-n); }
 
-  function loadQuizDone(){
-    try { return JSON.parse(localStorage.getItem(QUIZ_DONE_KEY) || "[]"); }
-    catch { return []; }
-  }
+  function loadQuizDone(){ try { return JSON.parse(localStorage.getItem(QUIZ_DONE_KEY) || "[]"); } catch { return []; } }
   function saveQuizDone(arr){ localStorage.setItem(QUIZ_DONE_KEY, JSON.stringify(arr)); }
   function quizDoneCount(){ return loadQuizDone().length; }
 
@@ -480,9 +490,6 @@
     document.getElementById('progressText').innerText = `${done} / ${data.length}`;
   }
 
-  // =========================
-  // CELEBRATION
-  // =========================
   function celebrate(title, text, emoji="🎉"){
     document.getElementById("celebrateEmoji").innerText = emoji;
     document.getElementById("celebrateTitle").innerText = title;
@@ -491,11 +498,11 @@
     const conf = document.getElementById("confetti");
     conf.innerHTML = "";
     const colors = ["#F59E0B","#EF4444","#10B981","#3B82F6","#A855F7","#F97316"];
-    for(let i=0;i<70;i++){
+    for(let i=0;i<75;i++){
       const d = document.createElement("div");
       d.className = "dot";
       d.style.left = (Math.random()*100) + "%";
-      d.style.top = (-30 - Math.random()*220) + "px";
+      d.style.top  = (-30 - Math.random()*220) + "px";
       d.style.background = colors[Math.floor(Math.random()*colors.length)];
       d.style.animationDelay = (Math.random()*0.25) + "s";
       d.style.animationDuration = (1.6 + Math.random()*1.1) + "s";
@@ -505,14 +512,26 @@
     document.getElementById("celebrateOverlay").classList.add("show");
     sfxWin();
   }
+  function closeCelebrate(){ document.getElementById("celebrateOverlay").classList.remove("show"); }
 
-  function closeCelebrate(){
-    document.getElementById("celebrateOverlay").classList.remove("show");
+  function checkAllCompleted(){
+    const quizDone = (quizDoneCount() === data.length);
+    const memDone  = (localStorage.getItem(DONE_MEMORY_KEY) === "1");
+    const echoDone = (localStorage.getItem(DONE_ECHO_KEY) === "1");
+    const bubDone  = (localStorage.getItem(DONE_BUBBLE_KEY) === "1");
+
+    if(quizDone && memDone && echoDone && bubDone){
+      if(localStorage.getItem(DONE_ALL_KEY) !== "1"){
+        localStorage.setItem(DONE_ALL_KEY, "1");
+        const T = UI[currentLang];
+        celebrate(T.allDoneTitle, T.allDoneText, "🏆");
+        playCheerYay();
+      }
+      return true;
+    }
+    return false;
   }
 
-  // =========================
-  // MODE + LANG
-  // =========================
   function setLang(lang){
     currentLang = lang;
     document.getElementById("langUZ").classList.toggle("active", lang==="uz");
@@ -520,13 +539,11 @@
 
     const T = UI[lang];
     document.getElementById("titleText").innerText = T.title;
-
     document.getElementById("tLearn").innerText = T.learn;
     document.getElementById("tQuiz").innerText = T.quiz;
     document.getElementById("tMemory").innerText = T.memory;
     document.getElementById("tEcho").innerText = T.echo;
     document.getElementById("tBubble").innerText = T.bubble;
-
     document.getElementById("listenBtnText").innerText = T.listen;
     document.getElementById("movesLabel").innerText = T.moves;
     document.getElementById("albumTitle").innerText = T.album;
@@ -534,9 +551,8 @@
     document.getElementById("echoHint").innerText = T.echoHint;
     document.getElementById("bubbleHint").innerText = T.bubbleHint;
 
-    renderLearn();
+    renderLearn(true);
     loadQuiz();
-
     if(document.getElementById("echoSection").style.display === "block") playEchoAudio();
     if(document.getElementById("bubbleSection").style.display === "block") startBubbles();
   }
@@ -553,36 +569,37 @@
 
     stopBubbles();
     stopRecognition();
+    clearTimeout(echoNextTimer);
 
-    if(mode === 'learn'){ document.getElementById('learnSection').style.display='grid'; renderLearn(); }
+    if(mode === 'learn'){ document.getElementById('learnSection').style.display='grid'; renderLearn(true); }
     if(mode === 'quiz'){  document.getElementById('quizSection').style.display='block'; loadQuiz(); }
     if(mode === 'memory'){document.getElementById('memorySection').style.display='block'; initMemory(); }
     if(mode === 'echo'){  document.getElementById('echoSection').style.display='block'; startEchoGame(); }
     if(mode === 'bubble'){document.getElementById('bubbleSection').style.display='block'; startBubbles(); }
   }
 
-  // =========================
-  // AUDIO
-  // =========================
-  function audioPath(key){
-    return currentLang === "en" ? `en/${key}.mp3` : `a/${key}.mp3`;
-  }
+  function audioPath(key){ return currentLang === "en" ? `en/${key}.mp3` : `a/${key}.mp3`; }
   function playAudio(key){
     const a = new Audio(audioPath(key));
     a.play().catch(()=>{});
     return a;
   }
 
-  // =========================
-  // LEARN
-  // =========================
-  function renderLearn() {
-    const stars = loadStars();
+  function setStarForKey(key, value){
+    const st = loadStars();
+    st[key] = Math.max(0, Math.min(3, value));
+    saveStars(st);
+    const el = document.getElementById("star_" + key);
+    if(el) el.innerText = starText(st[key]);
+  }
+
+  function renderLearn(bindEvents){
+    const st = loadStars();
     const container = document.getElementById('learnSection');
     container.innerHTML = '';
 
     data.forEach(item => {
-      const s = stars[item.key] || 0;
+      const s = st[item.key] || 0;
       const main = (currentLang === "en") ? item.en : item.uz;
       const sub  = (currentLang === "en") ? item.uz : item.en;
 
@@ -600,24 +617,19 @@
       container.appendChild(div);
     });
 
-    container.querySelectorAll('.btn-audio').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const key = btn.getAttribute('data-key');
-        playAudio(key);
-
-        const st = loadStars();
-        st[key] = Math.min(3, (st[key] || 0) + 1);
-        saveStars(st);
-
-        const starEl = document.getElementById('star_' + key);
-        if(starEl) starEl.innerText = starText(st[key]);
+    if(bindEvents){
+      container.querySelectorAll('.btn-audio').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const key = btn.getAttribute('data-key');
+          playAudio(key);
+          const current = (loadStars()[key] || 0);
+          setStarForKey(key, current + 1);
+        });
       });
-    });
+    }
   }
 
-  // =========================
-  // QUIZ (bilingual)
-  // =========================
+  // QUIZ
   let currentQuizIdx = 0;
 
   function playCurrentQuizAudio(){
@@ -625,10 +637,10 @@
     playAudio(item.key);
   }
 
-  function loadQuiz() {
+  function loadQuiz(){
     updateProgress();
-
     const done = loadQuizDone();
+
     let safety = 0;
     while(done.includes(data[currentQuizIdx].key) && safety < 20){
       currentQuizIdx = (currentQuizIdx + 1) % data.length;
@@ -636,7 +648,7 @@
     }
 
     if(done.length === data.length){
-      document.getElementById('qEmoji').innerText = "🎉";
+      document.getElementById('qEmoji').innerText = "🏆";
       document.getElementById('qWordMain').innerText = (currentLang==="en") ? "Quiz completed!" : "Test tugadi!";
       document.getElementById('optionsBox').innerHTML =
         `<button class="option-btn" onclick="restartQuiz()">🔁 Restart</button>`;
@@ -677,17 +689,16 @@
             saveQuizDone(doneList);
           }
 
-          const st = loadStars();
-          st[item.key] = 3;
-          saveStars(st);
+          setStarForKey(item.key, 3);
 
           setTimeout(() => {
             currentQuizIdx = (currentQuizIdx + 1) % data.length;
 
             if(loadQuizDone().length === data.length){
-              unlockSticker(1); // 🐰 quiz
+              unlockSticker(1);
               const T = UI[currentLang];
               celebrate(T.doneQuizTitle, T.doneQuizText, "🐰");
+              checkAllCompleted();
             }
 
             updateProgress();
@@ -695,6 +706,7 @@
           }, 420);
         } else {
           btn.style.background = 'var(--error)'; btn.style.color = 'white';
+          sfxFail();
           setTimeout(() => { btn.style.background = 'white'; btn.style.color = '#2d3436'; }, 600);
         }
       };
@@ -710,9 +722,7 @@
     loadQuiz();
   }
 
-  // =========================
   // MEMORY
-  // =========================
   let flippedCards = [];
   let moves = 0;
   let matches = 0;
@@ -751,12 +761,16 @@
               if(flippedCards[0].id === flippedCards[1].id) {
                 flippedCards.forEach(f => f.div.classList.add('matched'));
                 matches++;
+                sfxWin();
                 if(matches === data.length) {
-                  unlockSticker(2); // 🐻 memory
+                  localStorage.setItem(DONE_MEMORY_KEY, "1");
+                  unlockSticker(2);
                   const T = UI[currentLang];
                   celebrate(T.winMemoryTitle, T.winMemoryText, "🐻");
+                  checkAllCompleted();
                 }
               } else {
+                sfxFail();
                 flippedCards.forEach(f => {
                   f.div.classList.remove('flipped');
                   f.div.innerText = "❓";
@@ -772,37 +786,13 @@
     });
   }
 
-  // =========================
-  // SFX (offline beeps)
-  // =========================
-  let audioCtx = null;
-  function beep(freq=700, dur=0.12){
-    const AC = window.AudioContext || window.webkitAudioContext;
-    if(!AC) return;
-    if(!audioCtx) audioCtx = new AC();
-    if(audioCtx.state === "suspended") audioCtx.resume().catch(()=>{});
-    const o = audioCtx.createOscillator();
-    const g = audioCtx.createGain();
-    o.type = "triangle";
-    o.frequency.value = freq;
-    g.gain.setValueAtTime(0.0001, audioCtx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.12, audioCtx.currentTime + 0.01);
-    g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
-    o.connect(g); g.connect(audioCtx.destination);
-    o.start(); o.stop(audioCtx.currentTime + dur);
-  }
-  function sfxWin(){ beep(660,0.12); setTimeout(()=>beep(880,0.14),140); setTimeout(()=>beep(990,0.16),300); }
-  function sfxPop(){ beep(520,0.08); }
-  function sfxFail(){ beep(220,0.15); setTimeout(()=>beep(180,0.18),120); }
-
-  // =========================
-  // ECHO (finite + 3 tries rule)
-  // =========================
+  // ECHO (3 tries)
   let echoOrder = [];
   let echoIdx = 0;
-  let echoTries = 0;           // ✅ tries per word
+  let echoTries = 0;
   let recognition = null;
   let isRecognizing = false;
+  let echoNextTimer = null;
 
   function shuffle(arr){
     const a = [...arr];
@@ -814,9 +804,10 @@
   }
 
   function startEchoGame(){
-    echoOrder = shuffle(data.map(x=>x.key)); // each word once
+    echoOrder = shuffle(data.map(x=>x.key));
     echoIdx = 0;
     echoTries = 0;
+    clearTimeout(echoNextTimer);
     updateEchoProgress();
     updateEchoTries();
     setSpeechLine("🎙️ ...", "");
@@ -824,8 +815,9 @@
   }
 
   function currentEchoItem(){
+    if(echoIdx < 0 || echoIdx >= echoOrder.length) return null;
     const key = echoOrder[echoIdx];
-    return data.find(x=>x.key===key);
+    return data.find(x=>x.key===key) || null;
   }
 
   function updateEchoProgress(){
@@ -835,6 +827,12 @@
   function updateEchoTries(){
     const el = document.getElementById("echoTryLine");
     if(el) el.innerText = `🔁 Urinish: ${echoTries} / 3`;
+  }
+
+  function setSpeechLine(text, state){
+    const el = document.getElementById("speechLine");
+    el.className = "speech-line" + (state==="ok" ? " speech-ok" : state==="bad" ? " speech-bad" : "");
+    el.innerText = text;
   }
 
   function playEchoAudio() {
@@ -854,34 +852,35 @@
     return (s || "")
       .toLowerCase()
       .replace(/[‘’`]/g, "'")
-      .replace(/[^a-zа-яёқғҳўьъ'\s?-]/gi, " ")
       .replace(/\s+/g, " ")
       .trim();
   }
 
-  function setSpeechLine(text, state){ // state: "ok" | "bad" | ""
-    const el = document.getElementById("speechLine");
-    el.className = "speech-line" + (state==="ok" ? " speech-ok" : state==="bad" ? " speech-bad" : "");
-    el.innerText = text;
+  function finishEchoGame(){
+    localStorage.setItem(DONE_ECHO_KEY, "1");
+    unlockSticker(3);
+    const T = UI[currentLang];
+    celebrate(T.echoWinTitle, T.echoWinText, "🦁");
+    checkAllCompleted();
   }
 
   function goNextEchoWord(reasonText){
-    // move next word
+    clearTimeout(echoNextTimer);
+
     echoIdx++;
     echoTries = 0;
     updateEchoProgress();
     updateEchoTries();
 
     if(echoIdx >= data.length){
-      unlockSticker(3); // 🦁 echo
-      const T = UI[currentLang];
-      celebrate(T.echoWinTitle, T.echoWinText, "🦁");
       stopMic();
+      finishEchoGame();
       return;
     }
 
     if(reasonText) setSpeechLine(reasonText, "bad");
-    setTimeout(() => {
+
+    echoNextTimer = setTimeout(() => {
       setSpeechLine("🎙️ ...", "");
       playEchoAudio();
     }, 650);
@@ -890,13 +889,13 @@
   function startMic() {
     const T = UI[currentLang];
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
     if(!SpeechRecognition){
-      // even without mic: count as a try and auto-skip after 3
       echoTries++;
       updateEchoTries();
       setSpeechLine(T.micNoSupport, "bad");
       sfxFail();
-      if(echoTries >= 3) goNextEchoWord((currentLang==="en") ? "Next word ✅" : "Keyingi so‘z ✅");
+      if(echoTries >= 3) goNextEchoWord((currentLang==="en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
       return;
     }
 
@@ -913,11 +912,11 @@
     setSpeechLine("🎙️ ...", "");
 
     recognition.onresult = (event) => {
-      const item = currentEchoItem();
-      const target = normalizeText((currentLang==="en") ? item.en : item.uz);
+      const fresh = currentEchoItem();
+      if(!fresh) return;
 
+      const target = normalizeText((currentLang === "en") ? fresh.en : fresh.uz);
       const transcript = normalizeText(event.results[0][0].transcript);
-      setSpeechLine("🗣️ " + transcript, "");
 
       const ok =
         transcript === target ||
@@ -931,13 +930,10 @@
       } else {
         echoTries++;
         updateEchoTries();
-        const TT = UI[currentLang];
-        setSpeechLine(TT.sayAgain + " (" + transcript + ")", "bad");
+        setSpeechLine(UI[currentLang].sayAgain + " (" + transcript + ")", "bad");
         sfxFail();
-
-        // ✅ after 3 tries -> next word automatically
         if(echoTries >= 3){
-          goNextEchoWord((currentLang==="en") ? "3 tries used → next word ✅" : "3 urinish bo‘ldi → keyingi so‘z ✅");
+          goNextEchoWord((currentLang==="en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
         }
       }
     };
@@ -945,11 +941,10 @@
     recognition.onerror = () => {
       echoTries++;
       updateEchoTries();
-      const TT = UI[currentLang];
-      setSpeechLine(TT.sayAgain, "bad");
+      setSpeechLine(UI[currentLang].sayAgain, "bad");
       sfxFail();
       if(echoTries >= 3){
-        goNextEchoWord((currentLang==="en") ? "Next word ✅" : "Keyingi so‘z ✅");
+        goNextEchoWord((currentLang==="en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
       }
     };
 
@@ -963,24 +958,15 @@
   }
 
   function stopRecognition(){
-    try{
-      if(recognition){
-        recognition.stop();
-      }
-    }catch(e){}
+    try{ if(recognition) recognition.stop(); }catch(e){}
     recognition = null;
     isRecognizing = false;
     document.getElementById('micBtn').classList.remove('active');
     document.getElementById('lionChar').innerText = "🦁";
   }
+  function stopMic(){ stopRecognition(); }
 
-  function stopMic(){
-    stopRecognition();
-  }
-
-  // =========================
-  // BUBBLES (finite: each word once)
-  // =========================
+  // BUBBLES (each word once)
   let bubbleInt = null;
   let bubbleOrder = [];
   let bubbleIdx = 0;
@@ -995,21 +981,26 @@
     if(el) el.innerText = `⭐ ${bubbleIdx} / ${data.length}`;
   }
 
-  function startBubbles() {
+  function finishBubbleGame(){
+    localStorage.setItem(DONE_BUBBLE_KEY, "1");
+    unlockSticker(4);
+    const T = UI[currentLang];
+    celebrate(T.winBubbleTitle, T.winBubbleText, "🐠");
+    checkAllCompleted();
+  }
+
+  function startBubbles(){
     stopBubbles();
 
-    // start a full finite round
-    if(bubbleOrder.length === 0 || bubbleIdx === 0){
-      bubbleOrder = shuffle(data.map(x=>x.key)); // each once
+    if(bubbleOrder.length === 0){
+      bubbleOrder = shuffle(data.map(x=>x.key));
       bubbleIdx = 0;
     }
 
     if(bubbleIdx >= data.length){
-      unlockSticker(4); // 🐠 bubbles
-      const T = UI[currentLang];
-      celebrate(T.winBubbleTitle, T.winBubbleText, "🐠");
-      bubbleIdx = 0;
+      finishBubbleGame();
       bubbleOrder = [];
+      bubbleIdx = 0;
       updateBubbleScoreLine();
       return;
     }
@@ -1042,7 +1033,6 @@
           b.innerText = '⭐';
           b.style.background = '#2ed573';
           b.style.borderColor = '#fff';
-
           bubbleIdx++;
           stopBubbles();
           setTimeout(startBubbles, 500);
@@ -1057,9 +1047,7 @@
     }, 1200);
   }
 
-  // =========================
-  // STICKERS / ALBUM
-  // =========================
+  // STICKERS
   function toggleAlbum() {
     const album = document.getElementById('albumOverlay');
     album.style.display = (album.style.display === 'flex') ? 'none' : 'flex';
@@ -1079,16 +1067,15 @@
     }
   }
 
-  // =========================
   // INIT
-  // =========================
   (function init(){
     setLang("uz");
-    renderLearn();
+    renderLearn(true);
     updateProgress();
     updateBubbleScoreLine();
     updateEchoProgress();
     updateEchoTries();
+    checkAllCompleted();
   })();
 </script>
 
