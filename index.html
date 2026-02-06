@@ -75,22 +75,6 @@
 
     h1{margin:0;font-size:22px;font-weight:1000;letter-spacing:.2px}
     .sub{margin-top:4px;color:var(--muted);font-weight:800}
-    .voiceStatus{margin-top:4px;font-size:12px;color:var(--muted);font-weight:900}
-
-    /* Voice Button */
-    .voiceBtn{
-      display:flex; align-items:center; gap:8px;
-      border-radius:18px;
-      padding:12px 14px;
-      font-weight:1000;
-      border:1px solid rgba(15,23,42,.10);
-      background: rgba(255,255,255,.95);
-      cursor:pointer;
-      user-select:none;
-      min-width:200px;
-      justify-content:center;
-    }
-    .voiceBtn small{display:block;color:var(--muted);font-weight:900;font-size:12px}
 
     .cheer{
       margin-top:10px;
@@ -157,10 +141,7 @@
       transition: width .45s ease;
     }
 
-    /* ====== LESSON GRID (ORIGINAL) ======
-       Wir lassen deine Styles, aber:
-       ✅ NUR Änderung: 1 Spalte + größere Kacheln (unten als Override)
-    */
+    /* Lessons */
     .grid{
       margin-top:14px;
       display:grid;
@@ -360,7 +341,7 @@
     .gateHint{margin-top:10px;font-size:12.5px;font-weight:900;color: rgba(15,23,42,.62);}
 
     /* Focus + Motion */
-    .tile:focus-visible, .btn:focus-visible, .closeBtn:focus-visible, .voiceBtn:focus-visible,
+    .tile:focus-visible, .btn:focus-visible, .closeBtn:focus-visible,
     .gateBtn:focus-visible, .nameInput:focus-visible{
       outline:4px solid rgba(59,130,246,.45);
       outline-offset:3px;
@@ -370,10 +351,7 @@
       .celebrate{display:none !important}
     }
 
-    /* ======================================================
-       ✅ ONLY REQUESTED CHANGE:
-       Tiles GROSS + UNTEREINANDER (Handy + iPad)
-       ====================================================== */
+    /* ✅ Tiles groß + untereinander (Handy + iPad) */
     .grid{
       grid-template-columns: 1fr !important;
       gap: 16px !important;
@@ -419,15 +397,10 @@
           <div>
             <h1>🌿 Dono Bola! Uzbek – A1</h1>
             <div class="sub" id="helloLine">Tanla 👉 Eshit 🎧 Takrorla 🗣️ O'yna 🎲</div>
-            <div class="voiceStatus" id="voiceStatus">🗣️ Ovoz: tayyor</div>
           </div>
         </div>
 
         <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
-          <button class="voiceBtn" type="button" id="speakBtn" aria-label="Eshit (ovoz)">
-            🔊 Eshit!
-            <small>Matnni o'qiydi</small>
-          </button>
           <button class="btn ghost" type="button" id="changeNameBtn">✏️ Ismni o'zgartir</button>
         </div>
       </div>
@@ -696,25 +669,6 @@
     }
   }
 
-  /* Voice */
-  function speak(text){
-    const status = document.getElementById("voiceStatus");
-    const synth = window.speechSynthesis;
-    if (!synth){
-      status.innerText = "🔇 Ovoz yo'q (brauzer qo'llamaydi)";
-      return;
-    }
-    synth.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = "uz-UZ";
-    u.rate = 0.95;
-    u.pitch = 1.08;
-    u.onstart = () => status.innerText = "🗣️ O'qiyapman…";
-    u.onend   = () => status.innerText = "🗣️ Ovoz: tayyor";
-    u.onerror = () => status.innerText = "🔇 Ovoz xatolik";
-    synth.speak(u);
-  }
-
   /* Name Gate */
   function normalizeName(s){
     return (s || "").trim().replace(/\s+/g, " ").slice(0, 18);
@@ -833,16 +787,6 @@
     document.getElementById("closeCelebrate").addEventListener("click", () => { pling("btn"); hideCelebrate(); });
     document.getElementById("celebrate").addEventListener("click", (e) => { if (e.target.id === "celebrate") hideCelebrate(); });
 
-    document.getElementById("speakBtn").addEventListener("click", () => {
-      pling("btn");
-      const name = localStorage.getItem("childName") || "";
-      const learned = getLearnedSet().size;
-      const msg = (learned === 0)
-        ? `Salom${name ? ", " + name : ""}! Keling, boshlaymiz! Birinchi darsni tanlang.`
-        : `Ajoyib${name ? ", " + name : ""}! Davom etamiz. Darsni tanlang: eshit, takrorla va o'yna!`;
-      speak(msg);
-    });
-
     document.getElementById("changeNameBtn").addEventListener("click", () => {
       pling("btn");
       localStorage.removeItem("childName");
@@ -865,4 +809,3 @@
 </script>
 </body>
 </html>
-
