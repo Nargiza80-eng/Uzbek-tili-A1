@@ -786,185 +786,207 @@
     });
   }
 
-  // ECHO (3 tries)
-  let echoOrder = [];
-  let echoIdx = 0;
-  let echoTries = 0;
-  let recognition = null;
-  let isRecognizing = false;
-  let echoNextTimer = null;
+  // ECHO (3 tries) - FIXED
+let echoOrder = [];
+let echoIdx = 0;
+let echoTries = 0;
+let recognition = null;
+let isRecognizing = false;
+let echoNextTimer = null;
 
-  function shuffle(arr){
-    const a = [...arr];
-    for(let i=a.length-1;i>0;i--){
-      const j = Math.floor(Math.random()*(i+1));
-      [a[i],a[j]] = [a[j],a[i]];
-    }
-    return a;
+function shuffle(arr){
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function startEchoGame(){
+  echoOrder = shuffle(data.map(x=>x.key));
+  echoIdx = 0;
+  echoTries = 0;
+  clearTimeout(echoNextTimer);
+  updateEchoProgress();
+  updateEchoTries();
+  setSpeechLine("🎙️ ...", "");
+  playEchoAudio();
+}
+
+function currentEchoItem(){
+  // safety: if order not ready
+  if(!echoOrder || echoOrder.length === 0) return null;
+
+  if(echoIdx < 0 || echoIdx >= echoOrder.length) return null;
+  const key = echoOrder[echoIdx];
+  return data.find(x=>x.key===key) || null;
+}
+
+function updateEchoProgress(){
+  const el = document.getElementById("echoProgress");
+  if(!el) return;
+
+  const total = echoOrder.length || data.length;
+  const current = Math.min(echoIdx + 1, total);   // ✅ 1..5
+  el.innerText = `⭐ ${current} / ${total}`;
+}
+
+function updateEchoTries(){
+  const el = document.getElementById("echoTryLine");
+  if(el) el.innerText = `🔁 Urinish: ${echoTries} / 3`;
+}
+
+function setSpeechLine(text, state){
+  const el = document.getElementById("speechLine");
+  el.className =
+    "speech-line" +
+    (state==="ok" ? " speech-ok" : state==="bad" ? " speech-bad" : "");
+  el.innerText = text;
+}
+
+function playEchoAudio() {
+  const item = currentEchoItem();
+
+  // if somehow null (order empty), restart cleanly
+  if(!item){
+    startEchoGame();
+    return;
   }
 
-  function startEchoGame(){
-    echoOrder = shuffle(data.map(x=>x.key));
-    echoIdx = 0;
-    echoTries = 0;
-    clearTimeout(echoNextTimer);
-    updateEchoProgress();
-    updateEchoTries();
+  const word = (currentLang === "en") ? item.en : item.uz;
+  document.getElementById('echoText').innerText = word;
+
+  const lion = document.getElementById('lionChar');
+  lion.classList.add('talking');
+  const a = playAudio(item.key);
+  a.onended = () => lion.classList.remove('talking');
+}
+
+function normalizeText(s){
+  return (s || "")
+    .toLowerCase()
+    .replace(/[‘’`]/g, "'")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function finishEchoGame(){
+  localStorage.setItem(DONE_ECHO_KEY, "1");
+  unlockSticker(3);
+  const T = UI[currentLang];
+  celebrate(T.echoWinTitle, T.echoWinText, "🦁");
+  checkAllCompleted();
+}
+
+function goNextEchoWord(reasonText){
+  clearTimeout(echoNextTimer);
+
+  echoIdx++;
+  echoTries = 0;
+
+  updateEchoProgress();
+  updateEchoTries();
+
+  // ✅ IMPORTANT: use echoOrder.length, not data.length
+  if(echoIdx >= (echoOrder.length || data.length)){
+    // ✅ finish first, then stop mic (avoid timing issue)
+    finishEchoGame();
+    stopMic();
+    return;
+  }
+
+  if(reasonText) setSpeechLine(reasonText, "bad");
+
+  // ✅ let the child read the message longer
+  echoNextTimer = setTimeout(() => {
     setSpeechLine("🎙️ ...", "");
     playEchoAudio();
-  }
+  }, reasonText ? 1200 : 650);
+}
 
-  function currentEchoItem(){
-    if(echoIdx < 0 || echoIdx >= echoOrder.length) return null;
-    const key = echoOrder[echoIdx];
-    return data.find(x=>x.key===key) || null;
-  }
+function startMic() {
+  const T = UI[currentLang];
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-  function updateEchoProgress(){
-    const el = document.getElementById("echoProgress");
-    if(el) el.innerText = `⭐ ${echoIdx} / ${data.length}`;
-  }
-  function updateEchoTries(){
-    const el = document.getElementById("echoTryLine");
-    if(el) el.innerText = `🔁 Urinish: ${echoTries} / 3`;
-  }
-
-  function setSpeechLine(text, state){
-    const el = document.getElementById("speechLine");
-    el.className = "speech-line" + (state==="ok" ? " speech-ok" : state==="bad" ? " speech-bad" : "");
-    el.innerText = text;
-  }
-
-  function playEchoAudio() {
-    const item = currentEchoItem();
-    if(!item) return;
-
-    const word = (currentLang === "en") ? item.en : item.uz;
-    document.getElementById('echoText').innerText = word;
-
-    const lion = document.getElementById('lionChar');
-    lion.classList.add('talking');
-    const a = playAudio(item.key);
-    a.onended = () => lion.classList.remove('talking');
-  }
-
-  function normalizeText(s){
-    return (s || "")
-      .toLowerCase()
-      .replace(/[‘’`]/g, "'")
-      .replace(/\s+/g, " ")
-      .trim();
-  }
-
-  function finishEchoGame(){
-    localStorage.setItem(DONE_ECHO_KEY, "1");
-    unlockSticker(3);
-    const T = UI[currentLang];
-    celebrate(T.echoWinTitle, T.echoWinText, "🦁");
-    checkAllCompleted();
-  }
-
-  function goNextEchoWord(reasonText){
-    clearTimeout(echoNextTimer);
-
-    echoIdx++;
-    echoTries = 0;
-    updateEchoProgress();
+  if(!SpeechRecognition){
+    echoTries++;
     updateEchoTries();
-
-    if(echoIdx >= data.length){
-      stopMic();
-      finishEchoGame();
-      return;
-    }
-
-    if(reasonText) setSpeechLine(reasonText, "bad");
-
-    echoNextTimer = setTimeout(() => {
-      setSpeechLine("🎙️ ...", "");
-      playEchoAudio();
-    }, 650);
+    setSpeechLine(T.micNoSupport, "bad");
+    sfxFail();
+    if(echoTries >= 3) goNextEchoWord((currentLang==="en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
+    return;
   }
 
-  function startMic() {
-    const T = UI[currentLang];
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(isRecognizing) return;
 
-    if(!SpeechRecognition){
+  recognition = new SpeechRecognition();
+
+  // ⚠️ uz-UZ is not stable everywhere, but keep it as you had:
+  recognition.lang = (currentLang === "en") ? "en-US" : "uz-UZ";
+
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 3;
+
+  isRecognizing = true;
+  document.getElementById('micBtn').classList.add('active');
+  document.getElementById('lionChar').innerText = "👂";
+  setSpeechLine("🎙️ ...", "");
+
+  recognition.onresult = (event) => {
+    const fresh = currentEchoItem();
+    if(!fresh) return;
+
+    const target = normalizeText((currentLang === "en") ? fresh.en : fresh.uz);
+    const transcript = normalizeText(event.results[0][0].transcript);
+
+    const ok =
+      transcript === target ||
+      transcript.includes(target) ||
+      target.includes(transcript);
+
+    if(ok){
+      setSpeechLine("✅ " + transcript, "ok");
+      sfxWin();
+      goNextEchoWord();
+    } else {
       echoTries++;
       updateEchoTries();
-      setSpeechLine(T.micNoSupport, "bad");
-      sfxFail();
-      if(echoTries >= 3) goNextEchoWord((currentLang==="en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
-      return;
-    }
-
-    if(isRecognizing) return;
-
-    recognition = new SpeechRecognition();
-    recognition.lang = (currentLang === "en") ? "en-US" : "uz-UZ";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 3;
-
-    isRecognizing = true;
-    document.getElementById('micBtn').classList.add('active');
-    document.getElementById('lionChar').innerText = "👂";
-    setSpeechLine("🎙️ ...", "");
-
-    recognition.onresult = (event) => {
-      const fresh = currentEchoItem();
-      if(!fresh) return;
-
-      const target = normalizeText((currentLang === "en") ? fresh.en : fresh.uz);
-      const transcript = normalizeText(event.results[0][0].transcript);
-
-      const ok =
-        transcript === target ||
-        transcript.includes(target) ||
-        target.includes(transcript);
-
-      if(ok){
-        setSpeechLine("✅ " + transcript, "ok");
-        sfxWin();
-        goNextEchoWord();
-      } else {
-        echoTries++;
-        updateEchoTries();
-        setSpeechLine(UI[currentLang].sayAgain + " (" + transcript + ")", "bad");
-        sfxFail();
-        if(echoTries >= 3){
-          goNextEchoWord((currentLang==="en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
-        }
-      }
-    };
-
-    recognition.onerror = () => {
-      echoTries++;
-      updateEchoTries();
-      setSpeechLine(UI[currentLang].sayAgain, "bad");
+      setSpeechLine(UI[currentLang].sayAgain + " (" + transcript + ")", "bad");
       sfxFail();
       if(echoTries >= 3){
         goNextEchoWord((currentLang==="en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
       }
-    };
+    }
+  };
 
-    recognition.onend = () => {
-      isRecognizing = false;
-      document.getElementById('micBtn').classList.remove('active');
-      document.getElementById('lionChar').innerText = "🦁";
-    };
+  recognition.onerror = () => {
+    echoTries++;
+    updateEchoTries();
+    setSpeechLine(UI[currentLang].sayAgain, "bad");
+    sfxFail();
+    if(echoTries >= 3){
+      goNextEchoWord((currentLang==="en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
+    }
+  };
 
-    recognition.start();
-  }
-
-  function stopRecognition(){
-    try{ if(recognition) recognition.stop(); }catch(e){}
-    recognition = null;
+  recognition.onend = () => {
     isRecognizing = false;
     document.getElementById('micBtn').classList.remove('active');
     document.getElementById('lionChar').innerText = "🦁";
-  }
-  function stopMic(){ stopRecognition(); }
+  };
+
+  recognition.start();
+}
+
+function stopRecognition(){
+  try{ if(recognition) recognition.stop(); }catch(e){}
+  recognition = null;
+  isRecognizing = false;
+  document.getElementById('micBtn').classList.remove('active');
+  document.getElementById('lionChar').innerText = "🦁";
+}
+function stopMic(){ stopRecognition(); }
 
   // BUBBLES (each word once)
   let bubbleInt = null;
