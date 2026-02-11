@@ -400,7 +400,8 @@
           </div>
         </div>
 
-        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; align-items:center;">
+          <div class="pill" id="premiumBadge" style="position:static;">FREE</div>
           <button class="btn ghost" type="button" id="changeNameBtn">✏️ Ismni o'zgartir</button>
         </div>
       </div>
@@ -489,10 +490,33 @@
     </div>
   </div>
 
+  <!-- Paywall Gate (Demo) -->
+  <div class="nameGate" id="paywallGate">
+    <div class="gateCard" role="dialog" aria-modal="true">
+      <div style="font-size:44px; line-height:1;">🔓✨</div>
+      <div class="gateTitle">Vollversion</div>
+      <p class="gateText">
+        Bir marta to’lov ✅ <br/>
+        Barcha darslar umrbod ochiladi 🔓
+      </p>
+
+      <button class="gateBtn enabled" id="buyBtn" type="button">🔓 Ochish (Demo)</button>
+      <button class="btn secondary" id="restoreBtn" type="button" style="margin-top:10px;">♻️ Restore (Demo)</button>
+      <button class="btn ghost" id="closePaywallBtn" type="button" style="margin-top:10px;">Yopish</button>
+
+      <div class="gateHint">Hozir GitHub demo. Keyin Play Store’da haqiqiy to’lov bo’ladi.</div>
+    </div>
+  </div>
+
 <script>
   const TOTAL = 23;
   const LESSON_COUNTS = { "1": 5, "2": 10, "3": 8 };
   const DAILY_GOAL = 3;
+
+  // ✅ Premium Unlock (Einmalkauf – Demo für GitHub)
+  const PREMIUM_KEY = "premium_unlocked";
+  function isPremium(){ return localStorage.getItem(PREMIUM_KEY) === "true"; }
+  function setPremium(v){ localStorage.setItem(PREMIUM_KEY, v ? "true" : "false"); }
 
   function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
 
@@ -564,6 +588,7 @@
 
   /* ✨ Shine */
   function playShine(el){
+    if(!el) return;
     el.classList.add("shine-anim");
     setTimeout(() => el.classList.remove("shine-anim"), 1300);
   }
@@ -607,18 +632,36 @@
     localStorage.setItem("completedLessons", JSON.stringify(now));
   }
 
+  // ✅ Paywall helpers
+  function openPaywall(){ document.getElementById("paywallGate").classList.add("show"); }
+  function closePaywall(){ document.getElementById("paywallGate").classList.remove("show"); }
+
   /* Locks */
   function lockClickHandler(e){
     e.preventDefault();
     pling("reset");
     starBurst(10);
-    const msg = e.currentTarget.id === "tile2" ? "Avval 1-darsni tugat! 👋" : "Avval 2-darsni tugat! 🔢";
-    document.getElementById("cheerText").innerText = "🔒 " + msg;
+    openPaywall();
   }
+
   function applyLocks(c1, c2){
     const tile2 = document.getElementById("tile2");
     const tile3 = document.getElementById("tile3");
 
+    // ✅ Premium: alles frei
+    if (isPremium()){
+      [tile2, tile3].forEach(t => {
+        t.classList.remove("locked");
+        t.dataset.locked = "";
+        t.removeAttribute("aria-disabled");
+        t.removeEventListener("click", lockClickHandler);
+      });
+      document.getElementById("lock2").innerText = "🔓 Premium";
+      document.getElementById("lock3").innerText = "🔓 Premium";
+      return;
+    }
+
+    // Normal-Flow (kostenlos)
     const l1Done = c1 >= LESSON_COUNTS["1"];
     const l2Done = c2 >= LESSON_COUNTS["2"];
 
@@ -645,6 +688,9 @@
       tile3.removeAttribute("aria-disabled");
       tile3.removeEventListener("click", lockClickHandler);
     }
+
+    document.getElementById("lock2").innerText = "🔒 Avval 1-dars";
+    document.getElementById("lock3").innerText = "🔒 Avval 2-dars";
   }
 
   /* Daily goal */
@@ -715,6 +761,23 @@
       : "Tanla 👉 Eshit 🎧 Takrorla 🗣️ O'yna 🎲";
   }
 
+  // ✅ Premium Badge
+  function updatePremiumBadge(){
+    const b = document.getElementById("premiumBadge");
+    if(!b) return;
+    if(isPremium()){
+      b.innerText = "PREMIUM ✅";
+      b.style.background = "rgba(34,197,94,.14)";
+      b.style.border = "1px solid rgba(34,197,94,.24)";
+      b.style.color = "#065f46";
+    } else {
+      b.innerText = "FREE";
+      b.style.background = "rgba(245,158,11,.14)";
+      b.style.border = "1px solid rgba(245,158,11,.24)";
+      b.style.color = "#7c2d12";
+    }
+  }
+
   function updateUI(){
     const learned = getLearnedSet();
     const learnedCount = learned.size;
@@ -747,6 +810,7 @@
 
     applyLocks(c1, c2);
     updateDailyGoal(learnedCount);
+    updatePremiumBadge();
 
     playShine(document.getElementById("tile1"));
     setTimeout(()=>playShine(document.getElementById("tile2")), 220);
@@ -791,6 +855,39 @@
       pling("btn");
       localStorage.removeItem("childName");
       showNameGate();
+    });
+
+    // Paywall Buttons (Demo)
+    document.getElementById("buyBtn").addEventListener("click", () => {
+      pling("btn");
+      setPremium(true);
+      closePaywall();
+      celebrate("🎉 Premium!", "Barcha darslar ochildi! 🔓✨");
+      updateUI();
+    });
+
+    document.getElementById("restoreBtn").addEventListener("click", () => {
+      pling("btn");
+      updateUI();
+      alert(isPremium() ? "✅ Premium topildi!" : "❌ Premium yo'q (demo).");
+    });
+
+    document.getElementById("closePaywallBtn").addEventListener("click", () => {
+      pling("btn");
+      closePaywall();
+    });
+
+    document.getElementById("paywallGate").addEventListener("click", (e) => {
+      if (e.target.id === "paywallGate") closePaywall();
+    });
+
+    // 🧪 Test: Shift+P löscht Premium (nur für dich)
+    document.addEventListener("keydown", (e) => {
+      if(e.shiftKey && (e.key === "P" || e.key === "p")){
+        localStorage.removeItem(PREMIUM_KEY);
+        alert("🧪 Test: Premium gelöscht");
+        updateUI();
+      }
     });
   }
 
