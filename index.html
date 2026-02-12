@@ -30,7 +30,7 @@
       background-attachment: fixed, fixed;
     }
 
-    .app{max-width:900px;margin:0 auto}
+    .app{max-width:860px;margin:0 auto}
     .top{
       background:rgba(255,255,255,.92);
       border:1px solid var(--line);
@@ -42,14 +42,11 @@
       overflow:hidden;
     }
 
-    /* Header */
-    .hero{
-      display:flex; gap:14px; align-items:flex-start;
-      flex-wrap:wrap; justify-content:space-between;
-    }
-    .heroLeft{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
+    /* Hero */
+    .hero{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;justify-content:space-between}
+    .heroLeft{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
 
-    .sunWrap{width:104px;height:104px;flex:0 0 auto}
+    .sunWrap{position:relative; width:104px; height:104px; flex:0 0 auto;}
     .sun{
       width:104px;height:104px;border-radius:999px;
       display:grid;place-items:center;
@@ -62,13 +59,29 @@
     h1{margin:0;font-size:24px;font-weight:1000;letter-spacing:.2px}
 
     .helloBig{
-      margin-top:6px; font-weight:1000;
-      font-size:40px; line-height:1.05;
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+      margin-top:6px;
+      font-weight:1000;
+      font-size:40px;
+      line-height:1.05;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
     }
-    .helloBig .name{color:#065f46;text-shadow:0 2px 0 rgba(255,255,255,.45)}
+    .helloBig .name{
+      color:#065f46;
+      text-shadow: 0 2px 0 rgba(255,255,255,.45);
+    }
 
-    .topActions{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; align-items:center; position:relative}
+    /* Header right (language + name only) */
+    .topActions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
+      position:relative;
+    }
     .langBtn,.profileBtn{
       border-radius:18px;
       font-weight:1000;
@@ -80,10 +93,16 @@
       font-size:16px;
       white-space:nowrap;
     }
-    .profileBtn{display:flex; align-items:center; gap:10px}
+    .profileBtn{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
     .profileMenu{
       position:absolute;
-      right:0; top:52px;
+      right:0;
+      top:52px;
       width:240px;
       background: rgba(255,255,255,.97);
       border:1px solid rgba(15,23,42,.12);
@@ -98,7 +117,7 @@
       width:100%;
       text-align:left;
       border-radius:14px;
-      padding:12px;
+      padding:12px 12px;
       border:1px solid transparent;
       background:transparent;
       font-weight:900;
@@ -106,6 +125,7 @@
       font-size:16px;
     }
     .menuItem:hover{background: rgba(15,23,42,.06)}
+    .menuItem:active{transform: translateY(1px)}
 
     /* Progress */
     .barWrap{
@@ -116,16 +136,45 @@
       padding:14px;
       box-shadow: 0 12px 28px rgba(2,6,23,.07);
     }
-    .barRow{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+    .barRow{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap
+    }
     .barLabel{font-weight:1000;font-size:18px}
     .barText{color:var(--muted);font-weight:1000;font-size:16px}
-    .bar{margin-top:12px;height:18px;background: rgba(15,23,42,.10);border-radius:999px;overflow:hidden;border:1px solid rgba(15,23,42,.10)}
-    .fill{height:100%;width:0%;background: linear-gradient(90deg, #22c55e, #16a34a);border-radius:999px;transition: width .45s ease}
+    .bar{
+      margin-top:12px;
+      height:18px;
+      background: rgba(15,23,42,.10);
+      border-radius:999px;
+      overflow:hidden;
+      border:1px solid rgba(15,23,42,.10);
+    }
+    .fill{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      border-radius:999px;
+      transition: width .45s ease;
+    }
 
-    .achRow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    /* Progress icons (only when completed) */
+    .achRow{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
     .achIcon{
-      width:46px;height:46px;border-radius:999px;
-      display:grid;place-items:center;font-size:24px;
+      width:46px;height:46px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      font-size:24px;
       background: rgba(34,197,94,.18);
       border:2px solid rgba(34,197,94,.35);
       box-shadow: 0 14px 28px rgba(2,6,23,.10);
@@ -148,114 +197,130 @@
       bottom:10px;
       width:12px;
       border-radius:999px;
-      background: linear-gradient(180deg, rgba(34,197,94,.55), rgba(59,130,246,.45), rgba(245,158,11,.45));
+      background: linear-gradient(180deg,
+        rgba(34,197,94,.55),
+        rgba(59,130,246,.45),
+        rgba(245,158,11,.45)
+      );
       border:2px solid rgba(15,23,42,.10);
       box-shadow: 0 18px 40px rgba(2,6,23,.12);
     }
 
-    /* ✅ MOBILE-SAFE TILE (no overlap) */
+    /* CARD LAYOUT: stable */
     .tile{
       border:2px solid rgba(15,23,42,.10);
       border-radius:28px;
       box-shadow: 0 18px 38px rgba(2,6,23,.14);
+      padding:16px;
       text-decoration:none;
       color:inherit;
       position:relative;
       overflow:hidden;
+      touch-action: manipulation;
       cursor:pointer;
-      touch-action:manipulation;
 
       display:grid;
       grid-template-columns: 120px 1fr;
       grid-template-areas:
         "icon tag"
-        "icon title"
-        "icon under";
-      gap:14px;
-      padding:16px;
+        "icon title";
       align-items:center;
-
-      background: rgba(255,255,255,.97);
+      gap:14px;
       min-height:150px;
+      background: rgba(255,255,255,.97);
     }
     .tile:active{transform: translateY(1px)}
 
+    /* Big step dot */
     .stepDot{
       position:absolute;
       left:-28px;
       top:50%;
       transform: translateY(-50%);
-      width:38px;height:38px;border-radius:999px;
+      width:38px;height:38px;
+      border-radius:999px;
       background: rgba(255,255,255,.98);
       border:3px solid rgba(15,23,42,.22);
       box-shadow: 0 16px 34px rgba(2,6,23,.12);
     }
-    .tile.done .stepDot{border-color: rgba(34,197,94,.70); background: rgba(34,197,94,.25);}
-    .tile.current .stepDot{border-color: rgba(245,158,11,.80); background: rgba(245,158,11,.25);}
+    .tile.done .stepDot{
+      border-color: rgba(34,197,94,.70);
+      background: rgba(34,197,94,.25);
+    }
+    .tile.current .stepDot{
+      border-color: rgba(245,158,11,.80);
+      background: rgba(245,158,11,.25);
+    }
 
+    /* Icon */
     .icon{
-      grid-area:icon;
-      width:120px;height:120px;border-radius:28px;
+      grid-area: icon;
+      width:130px;height:130px;border-radius:30px;
       display:grid;place-items:center;
-      font-size:70px;
+      font-size:74px;
       border:2px solid rgba(15,23,42,.10);
       box-shadow: 0 18px 44px rgba(2,6,23,.16);
       background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.58));
       z-index:2;
     }
 
-    .tagRight{
-      grid-area:tag;
-      justify-self:end;
-      align-self:start;
-      font-size:22px;
-      font-weight:1100;
-      padding:12px 16px;
-      border-radius:999px;
-      border:2px solid rgba(15,23,42,.10);
-      background: rgba(255,255,255,.92);
-      color: rgba(15,23,42,.90);
-      letter-spacing:1px;
-      text-transform: uppercase;
-      z-index:3;
-    }
-    .tagRight.open{
-      border-color: rgba(34,197,94,.40);
-      background: rgba(34,197,94,.18);
-      color:#065f46;
-    }
-    .tagRight.lock{
-      border-color: rgba(15,23,42,.14);
-      background: rgba(15,23,42,.06);
-      color: rgba(15,23,42,.75);
-    }
-
+    /* Title */
     .title{
-      grid-area:title;
+      grid-area: title;
       font-size:32px;
       font-weight:1000;
       line-height:1.05;
       letter-spacing:.2px;
-      min-width:0;
-      word-break:break-word;
       z-index:2;
+      min-width:0;
+      word-break: break-word;
     }
 
-    .underTag{
-      grid-area:under;
+    /* Combined badge: OPEN big + Lesson small */
+    .tagRight{
+      grid-area: tag;
+      position:static;
       justify-self:end;
-      align-self:end;
-      font-size:14px;
-      font-weight:1000;
-      color: rgba(15,23,42,.80);
-      padding:6px 10px;
-      border-radius:999px;
-      background: rgba(255,255,255,.78);
-      border:1px solid rgba(15,23,42,.10);
+      align-self:start;
+
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:2px;
+
+      min-width:96px;
+      padding:10px 14px;
+
+      border-radius:18px;
+      border:2px solid rgba(15,23,42,.10);
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 10px 24px rgba(2,6,23,.12);
       z-index:3;
     }
+    .tagRight .main{
+      font-size:20px;
+      font-weight:1100;
+      letter-spacing:1px;
+    }
+    .tagRight .sub{
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.3px;
+      color: rgba(15,23,42,.65);
+    }
+    .tagRight.open{
+      border-color: rgba(34,197,94,.45);
+      background: rgba(34,197,94,.18);
+      color:#065f46;
+    }
+    .tagRight.lock{
+      border-color: rgba(15,23,42,.18);
+      background: rgba(15,23,42,.06);
+      color: rgba(15,23,42,.70);
+    }
 
-    /* Same-color soft strip under each tile */
+    /* Faded color strip */
     .tile::after{
       content:"";
       position:absolute;
@@ -313,6 +378,8 @@
       backdrop-filter: blur(10px) saturate(1.1);
     }
     .gate.show{display:flex}
+
+    /* Paywall/Name card: pop-in animation */
     .gateCard{
       width:min(520px, 92vw);
       background: rgba(255,255,255,.92);
@@ -321,9 +388,26 @@
       box-shadow: 0 22px 70px rgba(2,6,23,.35);
       padding:16px;
       text-align:center;
+
+      transform: translateY(16px) scale(.98);
+      opacity:0;
+      transition: transform .22s ease, opacity .22s ease;
     }
+    .gate.show .gateCard{
+      transform: translateY(0) scale(1);
+      opacity:1;
+    }
+
     .gateTitle{font-size:24px;font-weight:1000;margin:6px 0 6px}
-    .gateText{margin:0 0 12px;color: rgba(15,23,42,.78);font-weight:900;}
+    .gateText{
+      margin:0 0 12px;
+      font-weight:900;
+      font-size:17px;
+      color: rgba(15,23,42,.82);
+      line-height:1.35;
+    }
+    #paywallMain{display:block;font-size:18px;margin-bottom:6px;}
+    #paywallSub{display:block;font-size:14px;color: rgba(15,23,42,.62);}
 
     .nameInput{
       width:min(360px, 86vw);
@@ -335,6 +419,7 @@
       outline:none;
       background: rgba(255,255,255,.95);
     }
+    .nameInput:focus{border-color: rgba(59,130,246,.55);box-shadow: 0 0 0 6px rgba(59,130,246,.18);}
 
     .gateBtn{
       width:min(360px, 86vw);
@@ -348,6 +433,17 @@
       cursor:pointer;
       font-size:18px;
     }
+
+    /* Buy button pulse */
+    @keyframes pulseSoft{
+      0%,100%{ transform: translateY(0); filter: saturate(1); }
+      50%{ transform: translateY(-1px); filter: saturate(1.15); }
+    }
+    .gateBtn.pulse{
+      animation: pulseSoft 1.2s ease-in-out infinite;
+      box-shadow: 0 16px 38px rgba(34,197,94,.25);
+    }
+
     .btnGhost{
       width:min(360px, 86vw);
       margin-top:10px;
@@ -362,51 +458,95 @@
     }
     .gateHint{margin-top:10px;font-size:12.5px;font-weight:900;color: rgba(15,23,42,.62);}
 
-    /* ✅ Responsive: phone */
+    /* Toast */
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform:translateX(-50%) translateY(10px);
+      background: rgba(255,255,255,.94);
+      border:1px solid rgba(15,23,42,.12);
+      box-shadow: 0 18px 40px rgba(2,6,23,.18);
+      border-radius:999px;
+      padding:12px 16px;
+      font-weight:1000;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .22s ease, transform .22s ease;
+      z-index:20000;
+      max-width: 92vw;
+      text-align:center;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    /* Header mobile: text next to sun */
     @media (max-width: 420px){
-      .sunWrap{width:78px;height:78px}
-      .sun{width:78px;height:78px}
-      .sunPct{font-size:18px}
+      .hero{ gap:12px; }
+      .heroLeft{
+        flex-wrap: nowrap;
+        align-items: center;
+        gap:12px;
+        width: 100%;
+      }
 
-      h1{font-size:20px}
-      .helloBig{font-size:30px}
+      .sunWrap{ width:78px; height:78px; }
+      .sun{ width:78px; height:78px; }
+      .sunPct{ font-size:18px; }
 
-      .grid{padding-left:22px}
-      .grid::before{left:8px;width:10px}
-      .stepDot{left:-22px;width:30px;height:30px}
+      .heroLeft > div:last-child{ flex:1; min-width:0; }
+
+      h1{ font-size:18px; line-height:1.1; margin:0; }
+      .helloBig{ font-size:28px; margin-top:4px; line-height:1.05; }
+
+      .topActions{ gap:8px; }
+      .langBtn,.profileBtn{ padding:10px 12px; font-size:15px; }
+
+      .grid{ padding-left:22px; }
+      .grid::before{ left:8px; width:10px; }
+      .stepDot{ left:-22px; width:30px; height:30px; }
 
       .tile{
         grid-template-columns: 96px 1fr;
         gap:12px;
         min-height:120px;
       }
-      .icon{width:96px;height:96px;font-size:52px;border-radius:22px}
-      .title{font-size:24px}
-      .tagRight{font-size:16px;padding:10px 12px}
-      .underTag{font-size:12px;padding:6px 10px}
+
+      .icon{ width:96px; height:96px; font-size:52px; border-radius:22px; }
+      .title{ font-size:24px; }
+
+      .tagRight{ min-width:82px; padding:8px 10px; border-radius:16px; }
+      .tagRight .main{ font-size:16px; }
+      .tagRight .sub{ font-size:10px; }
     }
 
-    /* ✅ Responsive: tablet */
-    @media (min-width: 700px){
-      .tile{grid-template-columns: 140px 1fr; min-height:170px}
-      .icon{width:140px;height:140px;font-size:82px}
-      .title{font-size:38px}
-      .tagRight{font-size:24px}
+    @media (min-width: 768px){
+      .app{max-width:760px;}
+      .helloBig{font-size:46px;}
+      .title{font-size:36px;}
+      .icon{width:140px;height:140px;font-size:80px;}
+      .tile{min-height:160px;}
+      .tagRight{min-width:110px;}
+      .tagRight .main{font-size:22px;}
+      .tagRight .sub{font-size:12px;}
     }
 
-    /* ✅ Responsive: desktop */
-    @media (min-width: 980px){
-      .app{max-width:980px}
-      .top{padding:18px}
-      .tile{grid-template-columns: 160px 1fr; min-height:180px}
-      .icon{width:160px;height:160px;font-size:90px}
+    /* Premium activated glow */
+    .top.premiumGlow{
+      box-shadow: 0 0 0 8px rgba(34,197,94,.15), var(--shadow);
+      transition: box-shadow .35s ease;
     }
   </style>
 </head>
 
 <body>
   <div class="app">
-    <div class="top">
+    <div class="top" id="topCard">
 
       <div class="hero">
         <div class="heroLeft">
@@ -416,6 +556,7 @@
 
           <div>
             <h1>🌿 Dono Bola!</h1>
+
             <div class="helloBig">
               <span>🦁</span>
               <span id="helloWord">Hello,</span>
@@ -450,7 +591,7 @@
         </div>
       </div>
 
-      <!-- Lessons -->
+      <!-- Lesson cards -->
       <div class="grid" id="lessonGrid"></div>
 
       <div class="btnRow">
@@ -460,6 +601,9 @@
 
     </div>
   </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
 
   <!-- Name Gate -->
   <div class="gate" id="nameGate">
@@ -479,9 +623,13 @@
     <div class="gateCard" role="dialog" aria-modal="true">
       <div style="font-size:44px; line-height:1;">🔓✨</div>
       <div class="gateTitle" id="paywallTitle">Premium</div>
-      <p class="gateText" id="paywallText">Unlock all lessons 🔓</p>
 
-      <button class="gateBtn" id="buyBtn" type="button">Buy Premium — $9.99</button>
+      <p class="gateText">
+        <span id="paywallMain">Unlock all lessons 🔓</span>
+        <span id="paywallSub">One-time payment: $9.99. Then everything is unlocked forever ✅</span>
+      </p>
+
+      <button class="gateBtn pulse" id="buyBtn" type="button">Buy Premium — $9.99</button>
       <button class="btnGhost" id="closePaywallBtn" type="button">Close</button>
 
       <div class="gateHint" id="paywallHint">GitHub demo now. Real payment later in the app stores.</div>
@@ -489,9 +637,13 @@
   </div>
 
 <script>
+  /***************
+   * CONFIG
+   ***************/
   const PREMIUM_KEY = "premium_unlocked";
   const CHILD_KEY   = "childName";
   const LANG_KEY    = "ui_lang";
+
   const PRICE_LABEL = "$9.99";
 
   const UI = {
@@ -499,13 +651,14 @@
       langBtn: "UZ",
       helloWord: "Hello,",
       friendFallback: "Friend!",
-      changeName: "✏️ Change name",
+      profileChangeName: "✏️ Change name",
       progressLabel: "⭐ Progress",
       openLabel: "OPEN",
       freeLabel: "FREE",
       lessonLabel: (id)=> `Lesson ${id}`,
       paywallTitle: "Premium",
       paywallText: (id)=> `Premium is required for Lesson ${id}.`,
+      paywallOneTime: (price)=> `One-time payment: ${price}. Then everything is unlocked forever ✅`,
       buyBtn: (price)=> `Buy Premium — ${price}`,
       close: "Close",
       hint: "GitHub demo now. Real payment later in the app stores.",
@@ -521,13 +674,15 @@
       langBtn: "ENG",
       helloWord: "Salom,",
       friendFallback: "Do‘st!",
-      changeName: "✏️ Ismni o‘zgartirish",
+      profileChangeName: "✏️ Ismni o‘zgartirish",
       progressLabel: "⭐ Yutuq",
-      openLabel: "OCHMOQ",
+      openLockedLabel: "OCHMOQ",   // before purchase
+      openUnlockedLabel: "OCHIQ",  // after purchase
       freeLabel: "BEPUL",
       lessonLabel: (id)=> `${id}-dars`,
       paywallTitle: "Premium",
       paywallText: (id)=> `${id}-dars uchun Premium kerak 🔒`,
+      paywallOneTime: (price)=> `Bir marta to‘lov: ${price}. Keyin hammasi umrbod ochiq ✅`,
       buyBtn: (price)=> `Premium sotib olish — ${price}`,
       close: "Yopish",
       hint: "Hozir GitHub demo. Keyin haqiqiy to‘lov bo‘ladi.",
@@ -545,10 +700,12 @@
     const v = localStorage.getItem(LANG_KEY);
     return (v === "uz" || v === "en") ? v : "en";
   }
-  function setLang(v){ localStorage.setItem(LANG_KEY, v); }
+  function setLang(v){
+    localStorage.setItem(LANG_KEY, v);
+  }
   function T(){ return UI[getLang()]; }
 
-  // completion rule for progress icons
+  // completion rule (for showing icons in Progress only when a lesson is completed)
   const MIN_WORDS_PER_LESSON = { 1:5,2:5,3:5,4:5,5:5,6:5,7:5,8:5,9:5,10:5 };
 
   function getLearnedSet(){
@@ -556,31 +713,32 @@
     catch { return new Set(); }
   }
 
+  // bilingual lesson names
   const LESSONS = [
-    { id: 1, file:"lesson1.html", icon:"👋", en:"Greetings",     uz:"Salomlashuv", free:true  },
-    { id: 2, file:"lesson2.html", icon:"🔢", en:"Numbers",       uz:"Sonlar",      free:false },
-    { id: 3, file:"lesson3.html", icon:"🐾", en:"Animals",       uz:"Hayvonlar",   free:false },
-    { id: 4, file:"lesson4.html", icon:"🎨", en:"Colors",        uz:"Ranglar",     free:false },
-    { id: 5, file:"lesson5.html", icon:"🍎", en:"Fruits",        uz:"Mevalar",     free:false },
-    { id: 6, file:"lesson6.html", icon:"🥕", en:"Vegetables",    uz:"Sabzavot",    free:false },
-    { id: 7, file:"lesson7.html", icon:"🏠", en:"Home",          uz:"Uy",          free:false },
-    { id: 8, file:"lesson8.html", icon:"👕", en:"Clothes",       uz:"Kiyim",       free:false },
-    { id: 9, file:"lesson9.html", icon:"🚗", en:"Transport",     uz:"Transport",   free:false },
-    { id:10, file:"lesson10.html",icon:"🌙", en:"Daily routine", uz:"Kun tartibi", free:false }
+    { id: 1, file:"lesson1.html", icon:"👋", en:"Greetings",      uz:"Salomlashuv",  free:true  },
+    { id: 2, file:"lesson2.html", icon:"🔢", en:"Numbers",        uz:"Sonlar",       free:false },
+    { id: 3, file:"lesson3.html", icon:"🐾", en:"Animals",        uz:"Hayvonlar",    free:false },
+    { id: 4, file:"lesson4.html", icon:"🎨", en:"Colors",         uz:"Ranglar",      free:false },
+    { id: 5, file:"lesson5.html", icon:"🍎", en:"Fruits",         uz:"Mevalar",      free:false },
+    { id: 6, file:"lesson6.html", icon:"🥕", en:"Vegetables",     uz:"Sabzavot",     free:false },
+    { id: 7, file:"lesson7.html", icon:"🏠", en:"Home",           uz:"Uy",           free:false },
+    { id: 8, file:"lesson8.html", icon:"👕", en:"Clothes",        uz:"Kiyim",        free:false },
+    { id: 9, file:"lesson9.html", icon:"🚗", en:"Transport",      uz:"Transport",    free:false },
+    { id:10, file:"lesson10.html",icon:"🌙", en:"Daily routine",  uz:"Kun tartibi",  free:false }
   ];
 
-  // Stronger pastels + soft bar (same color)
+  // pastel colors + soft strip
   const COLORS = [
-    { bg:"rgba(251, 113, 133, .42)", soft:"rgba(251, 113, 133, .18)" },
-    { bg:"rgba(251, 146,  60, .45)", soft:"rgba(251, 146,  60, .18)" },
-    { bg:"rgba(250, 204,  21, .45)", soft:"rgba(250, 204,  21, .18)" },
-    { bg:"rgba( 34, 197,  94, .38)", soft:"rgba( 34, 197,  94, .16)" },
-    { bg:"rgba( 20, 184, 166, .40)", soft:"rgba( 20, 184, 166, .16)" },
-    { bg:"rgba( 59, 130, 246, .40)", soft:"rgba( 59, 130, 246, .16)" },
-    { bg:"rgba( 99, 102, 241, .42)", soft:"rgba( 99, 102, 241, .16)" },
-    { bg:"rgba(168,  85, 247, .40)", soft:"rgba(168,  85, 247, .16)" },
-    { bg:"rgba(236,  72, 153, .38)", soft:"rgba(236,  72, 153, .16)" },
-    { bg:"rgba(100, 116, 139, .34)", soft:"rgba(100, 116, 139, .14)" }
+    { bg:"rgba(251, 113, 133, .42)", soft:"rgba(251, 113, 133, .18)" }, // rose
+    { bg:"rgba(251, 146,  60, .45)", soft:"rgba(251, 146,  60, .18)" }, // orange
+    { bg:"rgba(250, 204,  21, .45)", soft:"rgba(250, 204,  21, .18)" }, // yellow
+    { bg:"rgba( 34, 197,  94, .38)", soft:"rgba( 34, 197,  94, .16)" }, // green
+    { bg:"rgba( 20, 184, 166, .40)", soft:"rgba( 20, 184, 166, .16)" }, // teal
+    { bg:"rgba( 59, 130, 246, .40)", soft:"rgba( 59, 130, 246, .16)" }, // blue
+    { bg:"rgba( 99, 102, 241, .42)", soft:"rgba( 99, 102, 241, .16)" }, // indigo
+    { bg:"rgba(168,  85, 247, .40)", soft:"rgba(168,  85, 247, .16)" }, // purple
+    { bg:"rgba(236,  72, 153, .38)", soft:"rgba(236,  72, 153, .16)" }, // pink
+    { bg:"rgba(100, 116, 139, .34)", soft:"rgba(100, 116, 139, .14)" }  // slate
   ];
 
   const TOTAL_WORDS = 93;
@@ -598,50 +756,68 @@
     }
     return c;
   }
+
   function isLessonCompleted(learnedSet, lessonId){
     const need = MIN_WORDS_PER_LESSON[lessonId] ?? 1;
     return lessonLearnedCount(learnedSet, lessonId) >= need;
   }
 
-  // Only lesson 1 is open without premium
+  // Without premium only lesson 1 is open
   function canOpenLesson(lessonId){
     if(lessonId === 1) return true;
     return isPremium();
   }
 
+  function showToast(msg){
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(showToast._tm);
+    showToast._tm = setTimeout(()=> t.classList.remove("show"), 1900);
+  }
+
   function openPaywall(lessonId){
-    const tt = T();
     const gate = document.getElementById("paywallGate");
-    const text = document.getElementById("paywallText");
+    const main = document.getElementById("paywallMain");
+    const sub  = document.getElementById("paywallSub");
     const buy  = document.getElementById("buyBtn");
+    const title= document.getElementById("paywallTitle");
+
+    const tt = T();
+    title.innerText = tt.paywallTitle;
 
     if(String(lessonId).toLowerCase() === "premium"){
-      text.innerText = (getLang()==="uz") ? "Barcha darslar ochiladi 🔓" : "Unlock all lessons 🔓";
+      main.innerText = (getLang()==="uz") ? "Barcha darslar ochiladi 🔓" : "Unlock all lessons 🔓";
+      sub.innerText  = tt.paywallOneTime(PRICE_LABEL);
     } else {
-      text.innerText = tt.paywallText(lessonId);
+      main.innerText = tt.paywallText(lessonId);
+      sub.innerText  = tt.paywallOneTime(PRICE_LABEL);
     }
 
-    buy.innerText = tt.buyBtn(PRICE_LABEL);
+    buy.innerText  = tt.buyBtn(PRICE_LABEL);
     buy.dataset.lessonId = String(lessonId);
+    buy.classList.add("pulse");
+
     gate.classList.add("show");
   }
   function closePaywall(){ document.getElementById("paywallGate").classList.remove("show"); }
 
   function applyTexts(){
     const tt = T();
+
     document.getElementById("langBtn").innerText = tt.langBtn;
     document.getElementById("helloWord").innerText = tt.helloWord;
-    document.getElementById("changeNameBtn").innerText = tt.changeName;
+    document.getElementById("changeNameBtn").innerText = tt.profileChangeName;
     document.getElementById("progressLabel").innerText = tt.progressLabel;
 
+    // Name gate
     document.getElementById("nameGateTitle").innerText = tt.nameGateTitle;
     document.getElementById("nameGateText").innerText  = tt.nameGateText;
     document.getElementById("nameInput").placeholder   = tt.namePlaceholder;
     document.getElementById("startBtn").innerText      = tt.startBtn;
     document.getElementById("nameGateHint").innerText  = tt.nameGateHint;
 
-    document.getElementById("paywallTitle").innerText = tt.paywallTitle;
-    document.getElementById("buyBtn").innerText       = tt.buyBtn(PRICE_LABEL);
+    // Paywall fixed labels
     document.getElementById("closePaywallBtn").innerText = tt.close;
     document.getElementById("paywallHint").innerText  = tt.hint;
   }
@@ -652,7 +828,8 @@
     const child = name ? name : tt.friendFallback;
 
     document.getElementById("childNameBig").innerText = child;
-    document.getElementById("profileName").innerText  = child.replace("!", "");
+    const pn = document.getElementById("profileName");
+    if(pn) pn.innerText = child.replace("!", "");
   }
 
   function showNameGate(){
@@ -678,10 +855,12 @@
     };
   }
 
+  // Progress icons: show only for completed lessons
   function renderProgressIcons(){
     const learned = getLearnedSet();
     const row = document.getElementById("achRow");
     row.innerHTML = "";
+
     LESSONS.forEach(L=>{
       if(isLessonCompleted(learned, L.id)){
         const d = document.createElement("div");
@@ -696,7 +875,9 @@
   function renderLessons(){
     const tt = T();
     const learned = getLearnedSet();
+    const premium = isPremium();
 
+    // Progress
     const learnedCount = learned.size;
     const pct = Math.max(0, Math.min(100, Math.round((learnedCount / TOTAL_WORDS) * 100)));
     document.getElementById("mainPct").innerText = pct + "%";
@@ -706,6 +887,7 @@
     const grid = document.getElementById("lessonGrid");
     grid.innerHTML = "";
 
+    // current: first incomplete lesson
     let current = 1;
     for(let i=1;i<=LESSONS.length;i++){
       if(!isLessonCompleted(learned, i)){ current = i; break; }
@@ -724,30 +906,47 @@
       a.style.background = `linear-gradient(180deg, ${c.bg}, rgba(255,255,255,.92))`;
       a.style.setProperty("--soft", c.soft);
 
-      const dot = document.createElement("div");
-      dot.className = "stepDot";
-      a.appendChild(dot);
+      // dot
+      const step = document.createElement("div");
+      step.className = "stepDot";
+      a.appendChild(step);
 
-      const ic = document.createElement("div");
-      ic.className = "icon";
-      ic.textContent = L.icon;
-      a.appendChild(ic);
+      // icon
+      const icon = document.createElement("div");
+      icon.className = "icon";
+      icon.textContent = L.icon;
+      a.appendChild(icon);
 
+      // title (name only)
       const title = document.createElement("div");
       title.className = "title";
       title.textContent = (getLang()==="uz") ? L.uz : L.en;
       a.appendChild(title);
 
+      // Badge label logic
+      const isFree = (L.id === 1 && !premium);
+
+      let mainLabel = "OPEN";
+      if(getLang() === "uz"){
+        if(isFree){
+          mainLabel = tt.freeLabel; // BEPUL
+        } else {
+          mainLabel = premium ? tt.openUnlockedLabel : tt.openLockedLabel; // OCHIQ / OCHMOQ
+        }
+      } else {
+        mainLabel = isFree ? tt.freeLabel : tt.openLabel; // FREE / OPEN
+      }
+
+      // OPEN badge: main + lesson
       const tag = document.createElement("div");
       tag.className = "tagRight " + (open ? "open" : "lock");
-      tag.textContent = (L.id === 1 && !isPremium()) ? tt.freeLabel : tt.openLabel;
+      tag.innerHTML = `
+        <span class="main">${mainLabel}</span>
+        <span class="sub">${tt.lessonLabel(L.id)}</span>
+      `;
       a.appendChild(tag);
 
-      const under = document.createElement("div");
-      under.className = "underTag";
-      under.textContent = tt.lessonLabel(L.id);
-      a.appendChild(under);
-
+      // click
       a.addEventListener("click", (e)=>{
         if(!open){
           e.preventDefault();
@@ -767,14 +966,14 @@
   }
 
   function wireUI(){
-    // language
+    // language toggle
     document.getElementById("langBtn").addEventListener("click", ()=>{
       const next = (getLang()==="en") ? "uz" : "en";
       setLang(next);
       updateAll();
     });
 
-    // profile
+    // profile menu
     const profileBtn = document.getElementById("profileBtn");
     const profileMenu = document.getElementById("profileMenu");
 
@@ -791,26 +990,37 @@
       }
     });
 
+    // change name
     document.getElementById("changeNameBtn").addEventListener("click", ()=>{
       profileMenu.classList.remove("show");
       localStorage.removeItem(CHILD_KEY);
       showNameGate();
     });
 
+    // bottom premium button -> open paywall
     document.getElementById("premiumBtn").addEventListener("click", ()=> openPaywall("Premium"));
 
+    // buy (demo unlock)
     document.getElementById("buyBtn").addEventListener("click", ()=>{
-      setPremium(true); // demo unlock
+      setPremium(true);
       closePaywall();
       updateAll();
-      alert(T().premiumActivated);
+
+      // premium glow + toast
+      const top = document.getElementById("topCard");
+      top.classList.add("premiumGlow");
+      setTimeout(()=> top.classList.remove("premiumGlow"), 1200);
+
+      showToast(T().premiumActivated);
     });
 
+    // close paywall
     document.getElementById("closePaywallBtn").addEventListener("click", ()=> closePaywall());
     document.getElementById("paywallGate").addEventListener("click", (e)=>{
       if(e.target.id === "paywallGate") closePaywall();
     });
 
+    // reset
     document.getElementById("resetBtn").addEventListener("click", ()=>{
       const ok = confirm(T().resetConfirm);
       if(!ok) return;
@@ -819,6 +1029,7 @@
       updateAll();
     });
 
+    // refresh
     window.addEventListener("focus", updateAll);
     document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) updateAll(); });
     window.addEventListener("pageshow", updateAll);
@@ -827,7 +1038,8 @@
   window.addEventListener("load", ()=>{
     wireUI();
     if(!localStorage.getItem(LANG_KEY)) setLang("en");
-    if(!localStorage.getItem(CHILD_KEY)) showNameGate();
+    const nm = localStorage.getItem(CHILD_KEY);
+    if(!nm) showNameGate();
     updateAll();
   });
 </script>
