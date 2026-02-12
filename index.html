@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dono Bola! Uzbek – A1 (4–6)</title>
+  <title>Dono Bola! (4–6)</title>
 
   <style>
     :root{
@@ -31,7 +31,7 @@
       min-height:100vh;
       overflow-x:hidden;
 
-      /* ✅ Atlas Ikat-style background (SVG pattern) */
+      /* Atlas Ikat-style background (SVG pattern) */
       background:
         linear-gradient(180deg, rgba(223,247,240,.92), rgba(234,246,255,.92)),
         url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27720%27%20height%3D%27720%27%20viewBox%3D%270%200%20720%20720%27%3E%3Crect%20width%3D%27720%27%20height%3D%27720%27%20fill%3D%27%23f7fbff%27/%3E%3Cg%20opacity%3D%270.22%27%3E%3Cg%20transform%3D%27translate(40%2C40)%27%3E%3Cpath%20d%3D%27M120%200%20L160%2040%20L120%2080%20L80%2040%20Z%27%20fill%3D%27%230ea5a4%27/%3E%3Cpath%20d%3D%27M120%20110%20L170%20160%20L120%20210%20L70%20160%20Z%27%20fill%3D%27%2322c55e%27/%3E%3Cpath%20d%3D%27M120%20240%20L160%20280%20L120%20320%20L80%20280%20Z%27%20fill%3D%27%23f59e0b%27/%3E%3Cpath%20d%3D%27M0%20120%20L40%20160%20L0%20200%20L-40%20160%20Z%27%20fill%3D%27%2314b8a6%27/%3E%3Cpath%20d%3D%27M240%20120%20L280%20160%20L240%20200%20L200%20160%20Z%27%20fill%3D%27%2310b981%27/%3E%3C/g%3E%3Cg%20transform%3D%27translate(360%2C100)%27%3E%3Cpath%20d%3D%27M120%200%20L170%2050%20L120%20100%20L70%2050%20Z%27%20fill%3D%27%230ea5a4%27/%3E%3Cpath%20d%3D%27M120%20130%20L170%20180%20L120%20230%20L70%20180%20Z%27%20fill%3D%27%2322c55e%27/%3E%3Cpath%20d%3D%27M0%2065%20L55%20120%20L0%20175%20L-55%20120%20Z%27%20fill%3D%27%2314b8a6%27/%3E%3Cpath%20d%3D%27M240%2065%20L295%20120%20L240%20175%20L185%20120%20Z%27%20fill%3D%27%2310b981%27/%3E%3C/g%3E%3Cg%20transform%3D%27translate(120%2C380)%27%3E%3Cpath%20d%3D%27M120%200%20L160%2040%20L120%2080%20L80%2040%20Z%27%20fill%3D%27%230ea5a4%27/%3E%3Cpath%20d%3D%27M0%2040%20L40%2080%20L0%20120%20L-40%2080%20Z%27%20fill%3D%27%2314b8a6%27/%3E%3Cpath%20d%3D%27M240%2040%20L280%2080%20L240%20120%20L200%2080%20Z%27%20fill%3D%27%2310b981%27/%3E%3Cpath%20d%3D%27M120%20110%20L170%20160%20L120%20210%20L70%20160%20Z%27%20fill%3D%27%2322c55e%27/%3E%3Cpath%20d%3D%27M120%20240%20L160%20280%20L120%20320%20L80%20280%20Z%27%20fill%3D%27%23f59e0b%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
@@ -69,7 +69,7 @@
     h1{margin:0;font-size:22px;font-weight:1000;letter-spacing:.2px}
     .sub{margin-top:4px;color:var(--muted);font-weight:800}
 
-    /* ✅ BIG child name */
+    /* Big child name */
     .helloBig{
       margin-top:6px;
       font-weight:1000;
@@ -123,7 +123,56 @@
       border-radius:16px;
     }
 
-    /* Progress only (keep it clean) */
+    /* Profile menu (Ism integriert) */
+    .topActions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
+      position:relative;
+    }
+    .profileBtn{
+      border-radius:16px;
+      font-weight:1000;
+      border:1px solid rgba(15,23,42,.14);
+      cursor:pointer;
+      user-select:none;
+      padding:10px 12px;
+      background: rgba(255,255,255,.94);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+    }
+    .profileMenu{
+      position:absolute;
+      right:0;
+      top:46px;
+      width:240px;
+      background: rgba(255,255,255,.96);
+      border:1px solid rgba(15,23,42,.12);
+      border-radius:16px;
+      box-shadow: 0 18px 36px rgba(2,6,23,.16);
+      padding:8px;
+      display:none;
+      z-index:50;
+    }
+    .profileMenu.show{display:block}
+    .menuItem{
+      width:100%;
+      text-align:left;
+      border-radius:12px;
+      padding:10px 10px;
+      border:1px solid transparent;
+      background:transparent;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .menuItem:hover{background: rgba(15,23,42,.06)}
+    .menuItem:active{transform: translateY(1px)}
+
+    /* Progress (Yutuq) */
     .barWrap{
       margin-top:12px;
       background:rgba(255,255,255,.95);
@@ -151,80 +200,24 @@
       transition: width .45s ease;
     }
 
-    /* ✅ Learning path */
-    .pathBox{
-      margin-top:12px;
-      background:rgba(255,255,255,.95);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:12px;
-    }
-    .pathHead{
+    /* Yutuq icons (nur wenn fertig) */
+    .achRow{
       display:flex;
-      justify-content:space-between;
+      gap:8px;
       align-items:center;
-      gap:10px;
       flex-wrap:wrap;
-      margin-bottom:10px;
+      justify-content:flex-end;
     }
-    .pathTitle{font-weight:1000}
-    .pathHint{color:var(--muted);font-weight:900;font-size:12px}
-    .pathRow{
-      position:relative;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-      padding:10px 6px 2px;
-      overflow-x:auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    .pathLine{
-      position:absolute;
-      left:16px; right:16px;
-      top:28px;
-      height:6px;
-      border-radius:999px;
-      background: rgba(15,23,42,.10);
-    }
-    .pathLineFill{
-      height:100%;
-      width:0%;
-      border-radius:999px;
-      background: linear-gradient(90deg, #16a34a, #22c55e);
-    }
-    .node{
-      position:relative;
-      z-index:2;
-      width:44px;height:44px;
+    .achIcon{
+      width:34px;height:34px;
       border-radius:999px;
       display:grid;
       place-items:center;
-      font-size:22px;
-      border:2px solid rgba(15,23,42,.18);
-      background: rgba(255,255,255,.96);
-      flex:0 0 auto;
-      cursor:pointer;
-      user-select:none;
+      font-size:18px;
+      background: rgba(34,197,94,.14);
+      border:1px solid rgba(34,197,94,.25);
+      box-shadow: 0 10px 20px rgba(2,6,23,.06);
     }
-    .node.locked{opacity:.55; filter: grayscale(.2); cursor:default;}
-    .node.done{
-      border-color: rgba(34,197,94,.45);
-      box-shadow: 0 8px 18px rgba(34,197,94,.18);
-    }
-    .node.current{
-      border-color: rgba(245,158,11,.55);
-      box-shadow: 0 10px 20px rgba(245,158,11,.20);
-      transform: translateY(-1px);
-    }
-    .nodeLabel{
-      font-size:11px;
-      margin-top:4px;
-      color: rgba(15,23,42,.70);
-      font-weight:900;
-      text-align:center;
-    }
-    .nodeWrap{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:54px}
 
     /* Lesson tiles */
     .grid{
@@ -232,7 +225,22 @@
       display:grid;
       grid-template-columns: 1fr;
       gap:16px;
+      position:relative;
+      padding-left:12px; /* Platz für Linie */
     }
+    /* Linie verbindet die Kästchen wie Pfad */
+    .grid::before{
+      content:"";
+      position:absolute;
+      left:6px;
+      top:8px;
+      bottom:8px;
+      width:6px;
+      border-radius:999px;
+      background: rgba(15,23,42,.08);
+      border:1px solid rgba(15,23,42,.08);
+    }
+
     .tile{
       background:rgba(255,255,255,.96);
       border:1px solid var(--line);
@@ -263,6 +271,27 @@
     .tcol{flex:1;min-width:160px}
     .title{font-size:22px;font-weight:1000}
     .desc{margin-top:3px;color:var(--muted);font-weight:900;font-size:16px}
+
+    /* Schrittpunkt (Pfad-Optik) */
+    .stepDot{
+      position:absolute;
+      left:-18px;
+      top:50%;
+      transform: translateY(-50%);
+      width:22px;height:22px;
+      border-radius:999px;
+      background: rgba(255,255,255,.95);
+      border:2px solid rgba(15,23,42,.20);
+      box-shadow: 0 10px 20px rgba(2,6,23,.08);
+    }
+    .tile.done .stepDot{
+      border-color: rgba(34,197,94,.55);
+      background: rgba(34,197,94,.18);
+    }
+    .tile.current .stepDot{
+      border-color: rgba(245,158,11,.60);
+      background: rgba(245,158,11,.18);
+    }
 
     .tagRight{
       position:absolute;
@@ -351,8 +380,6 @@
       opacity:.55;
     }
     .gateBtn.enabled{opacity:1}
-
-    /* Paywall Gate */
     .gateHint{margin-top:10px;font-size:12.5px;font-weight:900;color: rgba(15,23,42,.62);}
 
     @media (min-width: 768px){
@@ -376,9 +403,8 @@
           </div>
 
           <div>
-            <h1>🌿 Dono Bola! Uzbek – A1</h1>
+            <h1>🌿 Dono Bola!</h1>
 
-            <!-- ✅ Lion greeting + big name -->
             <div class="helloBig" id="helloBig">
               <span>🦁</span>
               <span id="helloWord">Salom,</span>
@@ -390,43 +416,35 @@
           </div>
         </div>
 
-        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; align-items:center;">
+        <div class="topActions">
+          <button class="profileBtn" id="profileBtn" type="button" aria-haspopup="menu" aria-expanded="false">
+            🧒 <span id="profileName">Do‘st</span> ▾
+          </button>
+
+          <div class="profileMenu" id="profileMenu" role="menu">
+            <button class="menuItem" id="changeNameBtn" type="button">✏️ Ismni o‘zgartirish</button>
+            <button class="menuItem" id="premiumBtnSmall" type="button">🔓 Premium</button>
+          </div>
+
           <div class="pill free" id="premiumBadge">FREE</div>
-          <button class="btn ghost" type="button" id="changeNameBtn">✏️ Ism</button>
         </div>
       </div>
 
-      <!-- ✅ Removed: cheer line (Zo'r davom et) -->
-      <!-- ✅ Removed: daily goal (Bugun bajarildi) -->
-
-      <!-- Progress only -->
+      <!-- Yutuq bleibt -->
       <div class="barWrap">
         <div class="barRow">
           <div class="barLabel">⭐ Yutuq</div>
           <div class="barText" id="progressText">0 / 93 so‘z</div>
+          <div class="achRow" id="achRow" aria-label="Lesson achievements"></div>
         </div>
+
         <div class="bar" aria-label="Progress">
           <div class="fill" id="progressFill"></div>
         </div>
       </div>
 
-      <!-- ✅ Learning path with lesson icons -->
-      <div class="pathBox">
-        <div class="pathHead">
-          <div class="pathTitle">🧭 O‘quv yo‘li (10 dars)</div>
-          <div class="pathHint" id="pathHint">1-dars bepul ✅</div>
-        </div>
-
-        <div class="pathRow" id="pathRow">
-          <div class="pathLine"><div class="pathLineFill" id="pathLineFill"></div></div>
-          <!-- nodes inserted by JS -->
-        </div>
-      </div>
-
-      <!-- Lesson tiles -->
-      <div class="grid" id="lessonGrid">
-        <!-- tiles inserted by JS -->
-      </div>
+      <!-- Lesson tiles (unten), jetzt als Pfad verbunden -->
+      <div class="grid" id="lessonGrid"></div>
 
       <div class="btnRow">
         <button class="btnWide primary" id="premiumBtn" type="button">🔓 Premium</button>
@@ -474,14 +492,32 @@
   const PREMIUM_KEY = "premium_unlocked";
   const CHILD_KEY   = "childName";
 
-  // ✅ Learned keys expected like: "L1_xxx", "L2_xxx" ... (your lesson pages should save like this)
-  // Example in lesson1: learned.add("L1_1"); etc
+  // Label für "OPEN"
+  // Du wolltest: "ochmoq" (Verb). UI-mäßig ist "ochiq" üblicher.
+  // Wenn du "ochiq" willst, ändere nur diese Zeile:
+  const OPEN_LABEL = "ochmoq";
+
+  // Wie viele gelernte Items braucht es, damit eine Lektion als "fertig" gilt?
+  // Passe das später pro Lektion an (z.B. 10 Wörter pro Lektion).
+  const MIN_WORDS_PER_LESSON = {
+    1: 5,
+    2: 5,
+    3: 5,
+    4: 5,
+    5: 5,
+    6: 5,
+    7: 5,
+    8: 5,
+    9: 5,
+    10: 5
+  };
+
   function getLearnedSet(){
     try { return new Set(JSON.parse(localStorage.getItem("learned") || "[]")); }
     catch { return new Set(); }
   }
 
-  // ✅ 10 lessons – you can change titles/desc anytime
+  // 10 lessons
   const LESSONS = [
     { id: 1, file:"lesson1.html", icon:"👋", title:"1-dars: Salomlashuv", desc:"Salom, rahmat, iltimos", free:true },
     { id: 2, file:"lesson2.html", icon:"🔢", title:"2-dars: Sonlar", desc:"1–10 sanash", free:false },
@@ -495,8 +531,7 @@
     { id:10, file:"lesson10.html",icon:"🌙", title:"10-dars: Kun tartibi", desc:"Ertalab, kechqurun", free:false }
   ];
 
-  // ✅ total words for progress – change later when you know exact numbers
-  // For now: 93 (example). You can set each lesson word count here if you want.
+  // total words progress (global)
   const TOTAL_WORDS = 93;
 
   function isPremium(){ return localStorage.getItem(PREMIUM_KEY) === "true"; }
@@ -517,6 +552,27 @@
   function closePaywall(){ document.getElementById("paywallGate").classList.remove("show"); }
 
   /***************
+   * Completion logic
+   * (fertig = genug Items gelernt)
+   ***************/
+  function isLessonCompleted(learnedSet, lessonId){
+    const need = MIN_WORDS_PER_LESSON[lessonId] ?? 1;
+    return lessonLearnedCount(learnedSet, lessonId) >= need;
+  }
+
+  function canOpenLesson(learnedSet, lessonId){
+    if(lessonId === 1) return true;
+    if(isPremium()) return true;
+    return isLessonCompleted(learnedSet, lessonId-1);
+  }
+
+  function lockReason(lessonId){
+    if(isPremium()) return null;
+    if(lessonId === 1) return null;
+    return `🔒 Avval ${lessonId-1}-dars`;
+  }
+
+  /***************
    * UI
    ***************/
   function updatePremiumBadge(){
@@ -535,6 +591,8 @@
     const name = localStorage.getItem(CHILD_KEY) || "";
     const child = name ? name : "Do‘st!";
     document.getElementById("childNameBig").innerText = child;
+    const pn = document.getElementById("profileName");
+    if(pn) pn.innerText = child.replace("!", "");
   }
 
   function showNameGate(){
@@ -568,48 +626,59 @@
     };
   }
 
-  function lockReason(lessonId){
-    if(isPremium()) return null;
-    if(lessonId === 1) return null; // free
-    // Path unlock: lesson N opens if lesson N-1 is complete (or premium)
-    return `🔒 Avval ${lessonId-1}-dars`;
-  }
+  // ✅ Yutuq: zeige Symbole NUR für fertige Lektionen
+  function renderYutuqIcons(){
+    const learned = getLearnedSet();
+    const row = document.getElementById("achRow");
+    if(!row) return;
+    row.innerHTML = "";
 
-  function isLessonDone(learnedSet, lessonId){
-    // Done rule: if lesson has at least 1 learned item, mark as done visually (simple + robust)
-    // You can change to exact word count later.
-    return lessonLearnedCount(learnedSet, lessonId) > 0;
-  }
-
-  function canOpenLesson(learnedSet, lessonId){
-    if(lessonId === 1) return true;                 // free
-    if(isPremium()) return true;                    // premium
-    // sequential unlock: previous lesson must be done
-    return isLessonDone(learnedSet, lessonId-1);
+    LESSONS.forEach(L=>{
+      if(isLessonCompleted(learned, L.id)){
+        const d = document.createElement("div");
+        d.className = "achIcon";
+        d.title = `${L.id}-dars tayyor ✅`;
+        d.textContent = L.icon;
+        row.appendChild(d);
+      }
+    });
   }
 
   function renderLessons(){
     const learned = getLearnedSet();
 
-    // Progress
+    // Progress global
     const learnedCount = learned.size;
     const pct = Math.max(0, Math.min(100, Math.round((learnedCount / TOTAL_WORDS) * 100)));
     document.getElementById("mainPct").innerText = pct + "%";
     document.getElementById("progressText").innerText = `${learnedCount} / ${TOTAL_WORDS} so‘z`;
     document.getElementById("progressFill").style.width = pct + "%";
 
-    // Tiles
     const grid = document.getElementById("lessonGrid");
     grid.innerHTML = "";
 
+    // current = erste Lektion, die offen ist aber noch nicht fertig
+    let current = 1;
+    for(let i=1;i<=LESSONS.length;i++){
+      if(canOpenLesson(learned, i) && !isLessonCompleted(learned, i)){
+        current = i; break;
+      }
+      if(isLessonCompleted(learned, i)) current = Math.min(LESSONS.length, i+1);
+    }
+
     LESSONS.forEach(L => {
       const open = canOpenLesson(learned, L.id);
-      const done = isLessonDone(learned, L.id);
+      const done = isLessonCompleted(learned, L.id);
+      const isCurrent = (L.id === current);
 
       const a = document.createElement("a");
-      a.className = "tile" + (open ? "" : " locked");
+      a.className = "tile" + (open ? "" : " locked") + (done ? " done" : "") + (isCurrent ? " current" : "");
       a.href = open ? L.file : "#";
       a.setAttribute("aria-label", L.title);
+
+      const step = document.createElement("div");
+      step.className = "stepDot";
+      a.appendChild(step);
 
       const tag = document.createElement("div");
       tag.className = "tagRight " + (open ? "open" : "lock");
@@ -617,12 +686,12 @@
       if(L.id === 1 && !isPremium()){
         tag.textContent = "FREE";
       } else if(isPremium()){
-        tag.textContent = done ? "OPEN ✅" : "OPEN";
+        tag.textContent = done ? `${OPEN_LABEL} ✅` : OPEN_LABEL;
       } else {
-        tag.textContent = lockReason(L.id);
+        tag.textContent = open ? (done ? `${OPEN_LABEL} ✅` : OPEN_LABEL) : lockReason(L.id);
       }
 
-      a.innerHTML = `
+      a.innerHTML += `
         <div class="icon">${L.icon}</div>
         <div class="tcol">
           <div class="title">${L.title}</div>
@@ -631,7 +700,6 @@
       `;
       a.appendChild(tag);
 
-      // locked click -> paywall
       a.addEventListener("click", (e)=>{
         if(!open){
           e.preventDefault();
@@ -643,64 +711,10 @@
     });
   }
 
-  function renderPath(){
-    const learned = getLearnedSet();
-
-    // Find current step: first lesson that is not done but can open (or next after last done)
-    let current = 1;
-    for(let i=1;i<=10;i++){
-      if(canOpenLesson(learned, i) && !isLessonDone(learned, i)){
-        current = i; break;
-      }
-      if(isLessonDone(learned, i)) current = Math.min(10, i+1);
-    }
-    current = Math.max(1, Math.min(10, current));
-
-    // Fill line: percent based on last done
-    let lastDone = 0;
-    for(let i=1;i<=10;i++){
-      if(isLessonDone(learned, i)) lastDone = i;
-    }
-    const fillPct = Math.round((lastDone / 10) * 100);
-    document.getElementById("pathLineFill").style.width = fillPct + "%";
-
-    const row = document.getElementById("pathRow");
-    // keep the line elements (first child is pathLine)
-    const keepLine = row.querySelector(".pathLine");
-    row.innerHTML = "";
-    row.appendChild(keepLine);
-
-    LESSONS.forEach(L=>{
-      const wrap = document.createElement("div");
-      wrap.className = "nodeWrap";
-
-      const open = canOpenLesson(learned, L.id);
-      const done = isLessonDone(learned, L.id);
-
-      const node = document.createElement("div");
-      node.className = "node" + (open ? "" : " locked") + (done ? " done" : "") + (L.id===current ? " current" : "");
-      node.title = L.title;
-      node.textContent = L.icon;
-
-      node.addEventListener("click", ()=>{
-        if(open) window.location.href = L.file;
-        else openPaywall();
-      });
-
-      const lbl = document.createElement("div");
-      lbl.className = "nodeLabel";
-      lbl.textContent = `${L.id}-dars`;
-
-      wrap.appendChild(node);
-      wrap.appendChild(lbl);
-      row.appendChild(wrap);
-    });
-  }
-
   function updateAll(){
     updatePremiumBadge();
     applyGreeting();
-    renderPath();
+    renderYutuqIcons();
     renderLessons();
   }
 
@@ -708,12 +722,35 @@
    * Events
    ***************/
   function wireUI(){
+    // Profile menu toggle
+    const profileBtn = document.getElementById("profileBtn");
+    const profileMenu = document.getElementById("profileMenu");
+
+    profileBtn?.addEventListener("click", ()=>{
+      const isOpen = profileMenu.classList.toggle("show");
+      profileBtn.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", (e)=>{
+      if(!profileMenu || !profileBtn) return;
+      const inside = profileMenu.contains(e.target) || profileBtn.contains(e.target);
+      if(!inside){
+        profileMenu.classList.remove("show");
+        profileBtn.setAttribute("aria-expanded","false");
+      }
+    });
+
+    // Change name
     document.getElementById("changeNameBtn").addEventListener("click", ()=>{
+      profileMenu?.classList.remove("show");
       localStorage.removeItem(CHILD_KEY);
       showNameGate();
     });
 
-    document.getElementById("premiumBtn").addEventListener("click", ()=>{
+    // Premium
+    document.getElementById("premiumBtn").addEventListener("click", ()=> openPaywall());
+    document.getElementById("premiumBtnSmall").addEventListener("click", ()=>{
+      profileMenu?.classList.remove("show");
       openPaywall();
     });
 
@@ -729,29 +766,26 @@
       alert(isPremium() ? "✅ Premium topildi!" : "❌ Premium yo‘q (demo).");
     });
 
-    document.getElementById("closePaywallBtn").addEventListener("click", ()=>{
-      closePaywall();
-    });
-
+    document.getElementById("closePaywallBtn").addEventListener("click", ()=> closePaywall());
     document.getElementById("paywallGate").addEventListener("click", (e)=>{
       if(e.target.id === "paywallGate") closePaywall();
     });
 
+    // Reset
     document.getElementById("resetBtn").addEventListener("click", ()=>{
       const ok = confirm("Hammasini qaytadan boshlaymizmi? (Natija o‘chadi)");
       if(!ok) return;
       localStorage.removeItem("learned");
-      localStorage.removeItem("completedLessons");
       localStorage.removeItem(PREMIUM_KEY);
       updateAll();
     });
 
-    // ✅ Always refresh when returning from lesson pages
+    // refresh when returning from lesson pages
     window.addEventListener("focus", updateAll);
     document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) updateAll(); });
     window.addEventListener("pageshow", updateAll);
 
-    // 🧪 Dev: Shift+P to clear premium
+    // Dev: Shift+P to clear premium
     document.addEventListener("keydown", (e)=>{
       if(e.shiftKey && (e.key==="P" || e.key==="p")){
         localStorage.removeItem(PREMIUM_KEY);
@@ -763,12 +797,11 @@
 
   window.addEventListener("load", ()=>{
     wireUI();
-
     const nm = localStorage.getItem(CHILD_KEY);
     if(!nm) showNameGate();
-
     updateAll();
   });
 </script>
 </body>
 </html>
+
