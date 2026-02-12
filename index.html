@@ -3,344 +3,309 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dono Bola! Uzbek – A1 (4–6)</title>
+  <title>Dono Bola!</title>
 
   <style>
     :root{
-      --bg1:#dff7f0;
-      --bg2:#eaf6ff;
-
       --card:#ffffff;
       --ink:#0f172a;
       --muted:#475569;
-      --line:rgba(15,23,42,.12);
-
-      --accent:#22c55e;
-      --accent2:#f59e0b;
-
+      --line:rgba(15,23,42,.10);
+      --accent:#16a34a;
+      --gold:#f59e0b;
       --shadow:0 14px 30px rgba(2,6,23,.12);
       --radius:22px;
     }
-
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       color:var(--ink);
-      padding:16px;
+      padding:14px 14px 88px; /* Platz für Bottom-Bar */
       min-height:100vh;
       overflow-x:hidden;
 
-      /* ✅ Atlas Ikat-style background (SVG pattern) */
+      /* ✅ Ikat/Atlas Pattern (rot/gelb/weiß) */
       background:
-        linear-gradient(180deg, rgba(223,247,240,.92), rgba(234,246,255,.92)),
-        url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27720%27%20height%3D%27720%27%20viewBox%3D%270%200%20720%20720%27%3E%3Crect%20width%3D%27720%27%20height%3D%27720%27%20fill%3D%27%23f7fbff%27/%3E%3Cg%20opacity%3D%270.22%27%3E%3Cg%20transform%3D%27translate(40%2C40)%27%3E%3Cpath%20d%3D%27M120%200%20L160%2040%20L120%2080%20L80%2040%20Z%27%20fill%3D%27%230ea5a4%27/%3E%3Cpath%20d%3D%27M120%20110%20L170%20160%20L120%20210%20L70%20160%20Z%27%20fill%3D%27%2322c55e%27/%3E%3Cpath%20d%3D%27M120%20240%20L160%20280%20L120%20320%20L80%20280%20Z%27%20fill%3D%27%23f59e0b%27/%3E%3Cpath%20d%3D%27M0%20120%20L40%20160%20L0%20200%20L-40%20160%20Z%27%20fill%3D%27%2314b8a6%27/%3E%3Cpath%20d%3D%27M240%20120%20L280%20160%20L240%20200%20L200%20160%20Z%27%20fill%3D%27%2310b981%27/%3E%3C/g%3E%3Cg%20transform%3D%27translate(360%2C100)%27%3E%3Cpath%20d%3D%27M120%200%20L170%2050%20L120%20100%20L70%2050%20Z%27%20fill%3D%27%230ea5a4%27/%3E%3Cpath%20d%3D%27M120%20130%20L170%20180%20L120%20230%20L70%20180%20Z%27%20fill%3D%27%2322c55e%27/%3E%3Cpath%20d%3D%27M0%2065%20L55%20120%20L0%20175%20L-55%20120%20Z%27%20fill%3D%27%2314b8a6%27/%3E%3Cpath%20d%3D%27M240%2065%20L295%20120%20L240%20175%20L185%20120%20Z%27%20fill%3D%27%2310b981%27/%3E%3C/g%3E%3Cg%20transform%3D%27translate(120%2C380)%27%3E%3Cpath%20d%3D%27M120%200%20L160%2040%20L120%2080%20L80%2040%20Z%27%20fill%3D%27%230ea5a4%27/%3E%3Cpath%20d%3D%27M0%2040%20L40%2080%20L0%20120%20L-40%2080%20Z%27%20fill%3D%27%2314b8a6%27/%3E%3Cpath%20d%3D%27M240%2040%20L280%2080%20L240%20120%20L200%2080%20Z%27%20fill%3D%27%2310b981%27/%3E%3Cpath%20d%3D%27M120%20110%20L170%20160%20L120%20210%20L70%20160%20Z%27%20fill%3D%27%2322c55e%27/%3E%3Cpath%20d%3D%27M120%20240%20L160%20280%20L120%20320%20L80%20280%20Z%27%20fill%3D%27%23f59e0b%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      background-size: cover, 720px 720px;
-      background-attachment: fixed, fixed;
+        radial-gradient(circle at 20% 10%, rgba(255,255,255,.65), transparent 40%),
+        radial-gradient(circle at 85% 20%, rgba(255,255,255,.55), transparent 35%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Crect width='240' height='240' fill='%23fff'/%3E%3Cg opacity='0.22'%3E%3Cpath d='M120 14 L150 44 L120 74 L90 44 Z' fill='%23d62828'/%3E%3Cpath d='M120 74 L150 104 L120 134 L90 104 Z' fill='%23fcbf49'/%3E%3Cpath d='M120 134 L150 164 L120 194 L90 164 Z' fill='%23d62828'/%3E%3Cpath d='M14 120 L44 90 L74 120 L44 150 Z' fill='%23fcbf49'/%3E%3Cpath d='M74 120 L104 90 L134 120 L104 150 Z' fill='%23d62828'/%3E%3Cpath d='M134 120 L164 90 L194 120 L164 150 Z' fill='%23fcbf49'/%3E%3Cpath d='M194 120 L224 90 L254 120 L224 150 Z' fill='%23d62828'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: auto, auto, 240px 240px;
     }
 
-    .app{max-width:860px;margin:0 auto}
+    .app{max-width:820px;margin:0 auto}
 
-    .top{
-      background:rgba(255,255,255,.92);
+    /* Card shell */
+    .panel{
+      background:rgba(255,255,255,.90);
       border:1px solid var(--line);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
-      padding:16px;
       backdrop-filter: blur(6px);
-      position:relative;
       overflow:hidden;
     }
 
-    /* Hero */
-    .hero{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;justify-content:space-between}
-    .heroLeft{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-
-    .sunWrap{position:relative; width:96px; height:96px; flex:0 0 auto;}
+    /* ✅ Compact header (mobile friendly) */
+    .header{
+      padding:14px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .hLeft{display:flex; gap:12px; align-items:center; min-width:0;}
+    .sunWrap{position:relative; width:64px; height:64px; flex:0 0 auto;}
     .sun{
-      width:96px;height:96px;border-radius:999px;
+      width:64px;height:64px;border-radius:999px;
       display:grid;place-items:center;
       background: radial-gradient(circle at 30% 30%, #fff6cc, #fbbf24 55%, #f59e0b 100%);
       box-shadow: 0 10px 24px rgba(245,158,11,.30);
-      border: 4px solid rgba(255,255,255,.7);
+      border: 4px solid rgba(255,255,255,.75);
     }
-    .sunPct{font-weight:1000;font-size:20px;color:#7c2d12;text-shadow: 0 2px 0 rgba(255,255,255,.35)}
+    .sunPct{font-weight:1000;font-size:16px;color:#7c2d12}
 
-    h1{margin:0;font-size:22px;font-weight:1000;letter-spacing:.2px}
-    .sub{margin-top:4px;color:var(--muted);font-weight:800}
-
-    /* ✅ BIG child name */
-    .helloBig{
-      margin-top:6px;
+    .titleBlock{min-width:0}
+    .appTitle{
       font-weight:1000;
+      font-size:18px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    /* ✅ BIG child name line */
+    .hello{
+      margin-top:4px;
+      font-weight:1100;
       font-size:34px;
       line-height:1.05;
       display:flex;
-      gap:10px;
-      align-items:center;
+      gap:8px;
+      align-items:baseline;
       flex-wrap:wrap;
     }
-    .helloBig .name{
-      color:#065f46;
-      text-shadow: 0 2px 0 rgba(255,255,255,.45);
-    }
+    .hello .name{color:#166534}
+    .hello .spark{opacity:.9}
 
-    /* Badge / Buttons */
-    .pill{
-      background: rgba(34,197,94,.14);
-      border:1px solid rgba(34,197,94,.24);
-      color:#065f46;
+    /* ✅ very small helper row */
+    .microRow{
+      margin-top:6px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      color:rgba(15,23,42,.70);
+      font-weight:900;
+      font-size:12px;
+    }
+    .chip{
+      background:rgba(255,255,255,.86);
+      border:1px solid rgba(15,23,42,.10);
       padding:6px 10px;
       border-radius:999px;
       font-weight:1000;
       font-size:12px;
       display:inline-flex;
-      gap:6px;
       align-items:center;
-      white-space:nowrap;
+      gap:8px;
     }
-    .pill.free{
-      background: rgba(245,158,11,.14);
-      border-color: rgba(245,158,11,.24);
-      color:#7c2d12;
-    }
+    .chip.hidden{display:none}
 
-    .btn{
-      border-radius:16px;
-      font-weight:1000;
-      border:1px solid rgba(15,23,42,.14);
-      cursor:pointer;
-      user-select:none;
-      padding:10px 12px;
-      background: rgba(255,255,255,.94);
-    }
-    .btn:active{transform: translateY(1px)}
-    .btn.ghost{
-      background: transparent;
-      border:1px dashed rgba(15,23,42,.22);
-      color: rgba(15,23,42,.85);
-      padding:10px 12px;
-      border-radius:16px;
-    }
-
-    /* Progress only (keep it clean) */
-    .barWrap{
-      margin-top:12px;
-      background:rgba(255,255,255,.95);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:12px;
-      box-shadow: 0 10px 24px rgba(2,6,23,.06);
-    }
-    .barRow{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
-    .barLabel{font-weight:1000}
-    .barText{color:var(--muted);font-weight:900}
-    .bar{
+    /* PATH AREA */
+    .content{padding:0 14px 14px;}
+    .pathCard{
       margin-top:10px;
-      height:16px;
-      background: rgba(15,23,42,.08);
-      border-radius:999px;
-      overflow:hidden;
+      background:rgba(255,255,255,.88);
       border:1px solid rgba(15,23,42,.10);
-    }
-    .fill{
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg, var(--accent), #16a34a);
-      border-radius:999px;
-      transition: width .45s ease;
-    }
-
-    /* ✅ Learning path */
-    .pathBox{
-      margin-top:12px;
-      background:rgba(255,255,255,.95);
-      border:1px solid var(--line);
       border-radius:18px;
       padding:12px;
+      overflow:hidden;
     }
-    .pathHead{
+
+    .pathTitleRow{
       display:flex;
       justify-content:space-between;
       align-items:center;
       gap:10px;
-      flex-wrap:wrap;
       margin-bottom:10px;
     }
-    .pathTitle{font-weight:1000}
-    .pathHint{color:var(--muted);font-weight:900;font-size:12px}
-    .pathRow{
-      position:relative;
+    .pathTitle{
+      font-weight:1000;
       display:flex;
       gap:10px;
       align-items:center;
-      justify-content:space-between;
-      padding:10px 6px 2px;
-      overflow-x:auto;
-      -webkit-overflow-scrolling: touch;
     }
-    .pathLine{
-      position:absolute;
-      left:16px; right:16px;
-      top:28px;
-      height:6px;
-      border-radius:999px;
-      background: rgba(15,23,42,.10);
-    }
-    .pathLineFill{
-      height:100%;
-      width:0%;
-      border-radius:999px;
-      background: linear-gradient(90deg, #16a34a, #22c55e);
-    }
-    .node{
-      position:relative;
-      z-index:2;
-      width:44px;height:44px;
-      border-radius:999px;
-      display:grid;
-      place-items:center;
-      font-size:22px;
-      border:2px solid rgba(15,23,42,.18);
-      background: rgba(255,255,255,.96);
-      flex:0 0 auto;
-      cursor:pointer;
-      user-select:none;
-    }
-    .node.locked{opacity:.55; filter: grayscale(.2); cursor:default;}
-    .node.done{
-      border-color: rgba(34,197,94,.45);
-      box-shadow: 0 8px 18px rgba(34,197,94,.18);
-    }
-    .node.current{
-      border-color: rgba(245,158,11,.55);
-      box-shadow: 0 10px 20px rgba(245,158,11,.20);
-      transform: translateY(-1px);
-    }
-    .nodeLabel{
-      font-size:11px;
-      margin-top:4px;
-      color: rgba(15,23,42,.70);
-      font-weight:900;
-      text-align:center;
-    }
-    .nodeWrap{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:54px}
-
-    /* Lesson tiles */
-    .grid{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:16px;
-    }
-    .tile{
-      background:rgba(255,255,255,.96);
-      border:1px solid var(--line);
-      border-radius:22px;
-      box-shadow: var(--shadow);
-      padding:18px;
-      text-decoration:none;
-      color:inherit;
-      display:flex;
-      gap:16px;
-      align-items:center;
-      position:relative;
-      overflow:hidden;
-      min-height:120px;
-      touch-action: manipulation;
-      cursor:pointer;
-    }
-    .tile:hover{box-shadow: 0 18px 36px rgba(2,6,23,.14)}
-    .tile:active{transform: translateY(1px)}
-    .icon{
-      width:92px;height:92px;border-radius:22px;
-      display:grid;place-items:center;
-      background: rgba(245,158,11,.14);
-      border:1px solid rgba(245,158,11,.22);
-      font-size:46px;
-      flex:0 0 auto;
-    }
-    .tcol{flex:1;min-width:160px}
-    .title{font-size:22px;font-weight:1000}
-    .desc{margin-top:3px;color:var(--muted);font-weight:900;font-size:16px}
-
-    .tagRight{
-      position:absolute;
-      top:14px; right:14px;
-      font-size:12px;
-      font-weight:1000;
+    .pathTitle span{opacity:.85; font-size:13px; font-weight:900; color:rgba(15,23,42,.70)}
+    .badge{
       padding:6px 10px;
       border-radius:999px;
       border:1px solid rgba(15,23,42,.10);
-      background: rgba(255,255,255,.85);
-      color: rgba(15,23,42,.85);
-    }
-    .tagRight.open{border-color: rgba(34,197,94,.25); background: rgba(34,197,94,.12); color:#065f46;}
-    .tagRight.lock{border-color: rgba(15,23,42,.14); background: rgba(15,23,42,.06); color: rgba(15,23,42,.70);}
-
-    .tile.locked{opacity:.70; filter: grayscale(.25);}
-    .tile.locked .icon{background: rgba(148,163,184,.18); border-color: rgba(148,163,184,.25);}
-
-    /* Bottom buttons */
-    .btnRow{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
-    .btnWide{
-      flex:1;min-width:240px;
-      text-align:center;
-      padding:14px;
-      border-radius:18px;
+      background:rgba(255,255,255,.85);
       font-weight:1000;
-      border:1px solid transparent;
+      font-size:12px;
+      white-space:nowrap;
+    }
+
+    /* Horizontal path */
+    .path{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      overflow-x:auto;
+      padding-bottom:8px;
+      scrollbar-width: thin;
+    }
+    .node{
+      flex:0 0 auto;
+      width:78px;
+      text-align:center;
       cursor:pointer;
       user-select:none;
     }
-    .btnWide.primary{
-      background: linear-gradient(180deg, #34d399, #22c55e);
-      color:#052e1b;
-      border-color: rgba(5,46,27,.10);
+    .nodeCircle{
+      width:58px;height:58px;
+      border-radius:999px;
+      margin:0 auto 6px;
+      display:grid;
+      place-items:center;
+      font-size:28px;
+      background:rgba(255,255,255,.92);
+      border:2px solid rgba(15,23,42,.10);
+      box-shadow: 0 10px 18px rgba(2,6,23,.08);
+      position:relative;
     }
-    .btnWide.secondary{background: rgba(255,255,255,.95); color: var(--ink); border-color: var(--line);}
-
-    /* Name Gate */
-    .gate{
-      position:fixed;
-      inset:0;
-      z-index:10000;
-      display:none;
+    .nodeLabel{
+      font-weight:1000;
+      font-size:12px;
+      color:rgba(15,23,42,.82);
+      line-height:1.1;
+      min-height:28px;
+      display:flex;
       align-items:center;
       justify-content:center;
-      padding:16px;
-      background:
-        radial-gradient(circle at 25% 15%, rgba(255,255,255,.18), transparent 35%),
-        radial-gradient(circle at 80% 25%, rgba(255,255,255,.14), transparent 40%),
-        rgba(2,6,23,.55);
-      backdrop-filter: blur(10px) saturate(1.1);
+      padding:0 2px;
     }
-    .gate.show{display:flex}
-    .gateCard{
-      width:min(520px, 92vw);
+
+    .node.locked{opacity:.50; filter: grayscale(.25);}
+    .node.locked .nodeCircle{background:rgba(255,255,255,.75);}
+    .nodeDoneDot{
+      position:absolute;
+      right:-2px; bottom:-2px;
+      width:18px;height:18px;border-radius:999px;
+      background:rgba(22,163,74,.95);
+      border:2px solid #fff;
+      display:none;
+      place-items:center;
+      color:#fff;
+      font-size:12px;
+      font-weight:1000;
+    }
+    .node.done .nodeDoneDot{display:grid;}
+
+    /* Lesson minimal list (optional) – we keep only ONE item: current/next */
+    .miniList{
+      margin-top:12px;
+      display:grid;
+      gap:10px;
+    }
+    .miniLesson{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(15,23,42,.10);
+      border-radius:18px;
+      padding:12px;
+    }
+    .miniIcon{
+      width:64px;height:64px;border-radius:16px;
+      display:grid;place-items:center;
+      font-size:34px;
+      background:rgba(245,158,11,.14);
+      border:1px solid rgba(245,158,11,.22);
+      flex:0 0 auto;
+    }
+    .miniText{min-width:0; flex:1}
+    .miniMain{font-weight:1100; font-size:18px; line-height:1.1}
+    .miniSub{margin-top:4px; color:rgba(15,23,42,.70); font-weight:900; font-size:13px}
+    .miniTag{
+      background:rgba(22,163,74,.12);
+      border:1px solid rgba(22,163,74,.24);
+      color:#065f46;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:1000;
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .miniTag.lock{background:rgba(15,23,42,.08); border-color:rgba(15,23,42,.12); color:rgba(15,23,42,.75)}
+
+    /* Bottom bar (Premium + Name + Reset) */
+    .bottomBar{
+      position:fixed;
+      left:0; right:0; bottom:0;
+      padding:10px 14px;
       background: rgba(255,255,255,.92);
+      border-top:1px solid rgba(15,23,42,.12);
+      backdrop-filter: blur(10px);
+      z-index:9999;
+    }
+    .bottomInner{
+      max-width:820px;
+      margin:0 auto;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .bBtn{
+      border:none;
+      cursor:pointer;
+      border-radius:16px;
+      padding:12px 14px;
+      font-weight:1000;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      white-space:nowrap;
+    }
+    .bPrimary{
+      background: linear-gradient(180deg, #34d399, #22c55e);
+      color:#052e1b;
+      flex:1;
+      justify-content:center;
+    }
+    .bGhost{
+      background: rgba(255,255,255,.92);
+      border:1px solid rgba(15,23,42,.12);
+      color:rgba(15,23,42,.90);
+    }
+
+    /* Paywall modal (demo) */
+    .modal{
+      position:fixed; inset:0;
+      display:none;
+      align-items:center; justify-content:center;
+      padding:16px;
+      background: rgba(2,6,23,.55);
+      backdrop-filter: blur(10px);
+      z-index:10000;
+    }
+    .modal.show{display:flex}
+    .modalCard{
+      width:min(520px, 92vw);
+      background: rgba(255,255,255,.95);
       border:1px solid rgba(255,255,255,.35);
       border-radius:26px;
       box-shadow: 0 22px 70px rgba(2,6,23,.35);
       padding:16px;
       text-align:center;
     }
-    .gateTitle{font-size:22px;font-weight:1000;margin:6px 0 6px}
-    .gateText{margin:0 0 12px;color: rgba(15,23,42,.78);font-weight:900;}
-    .nameInput{
-      width:min(360px, 86vw);
-      padding:14px 14px;
-      border-radius:18px;
-      border:1px solid rgba(15,23,42,.18);
-      font-weight:1000;
-      font-size:18px;
-      outline:none;
-      background: rgba(255,255,255,.95);
-    }
-    .nameInput:focus{border-color: rgba(59,130,246,.55);box-shadow: 0 0 0 6px rgba(59,130,246,.18);}
-    .gateBtn{
-      width:min(360px, 86vw);
-      margin-top:10px;
+    .modalTitle{font-size:20px;font-weight:1100;margin:6px 0 6px}
+    .modalText{margin:0 0 12px;color: rgba(15,23,42,.78);font-weight:900;}
+    .modalRow{display:grid; gap:10px; margin-top:10px}
+    .modalBtn{
+      width:100%;
       padding:14px;
       border-radius:18px;
       border:1px solid rgba(5,46,27,.10);
@@ -348,426 +313,314 @@
       color:#052e1b;
       font-weight:1000;
       cursor:pointer;
-      opacity:.55;
     }
-    .gateBtn.enabled{opacity:1}
+    .modalBtn.secondary{
+      background:#fff;
+      border:1px solid rgba(15,23,42,.12);
+      color:rgba(15,23,42,.90);
+    }
 
-    /* Paywall Gate */
-    .gateHint{margin-top:10px;font-size:12.5px;font-weight:900;color: rgba(15,23,42,.62);}
-
-    @media (min-width: 768px){
-      .app{max-width:760px;}
-      .icon{width:110px;height:110px;font-size:56px;}
-      .title{font-size:24px;}
-      .desc{font-size:17px;}
-      .helloBig{font-size:38px;}
+    @media (max-width:420px){
+      .hello{font-size:30px}
+      .appTitle{font-size:16px}
+      .sunWrap{width:58px;height:58px}
+      .sun{width:58px;height:58px}
     }
   </style>
 </head>
 
 <body>
   <div class="app">
-    <div class="top">
+    <div class="panel">
 
-      <div class="hero">
-        <div class="heroLeft">
+      <!-- HEADER -->
+      <div class="header">
+        <div class="hLeft">
           <div class="sunWrap" aria-hidden="true">
             <div class="sun"><div class="sunPct" id="mainPct">0%</div></div>
           </div>
 
-          <div>
-            <h1>🌿 Dono Bola! </h1>
+          <div class="titleBlock">
+            <!-- ✅ only Dono Bola! here (no Uzbek-A1) -->
+            <div class="appTitle">🌿 Dono Bola!</div>
 
-            <!-- ✅ Lion greeting + big name -->
-            <div class="helloBig" id="helloBig">
-              <span>🦁</span>
-              <span id="helloWord">Salom,</span>
-              <span class="name" id="childNameBig">Do‘st!</span>
-              <span>✨</span>
+            <!-- ✅ BIG greeting with lion -->
+            <div class="hello" id="bigHello">
+              🦁 <span>Salom,</span> <span class="name" id="nameBig">Do‘st</span><span>!</span>
+              <span class="spark">✨</span>
             </div>
 
-            <div class="sub" id="helloLine">Tanla 👉 Eshit 🎧 Takrorla 🗣️ O‘yna 🎲</div>
+            <!-- ✅ minimal micro info -->
+            <div class="microRow">
+              <div class="chip hidden" id="yutuqChip">🏅 Yutuq</div>
+              <div class="chip" id="modeChip">🎧🗣️🎲</div>
+            </div>
           </div>
         </div>
-
-        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; align-items:center;">
-          <div class="pill free" id="premiumBadge">FREE</div>
-          <button class="btn ghost" type="button" id="changeNameBtn">✏️ Ism</button>
-        </div>
       </div>
 
-      <!-- ✅ Removed: cheer line (Zo'r davom et) -->
-      <!-- ✅ Removed: daily goal (Bugun bajarildi) -->
+      <!-- CONTENT -->
+      <div class="content">
+        <!-- ✅ ONE combined path area -->
+        <div class="pathCard">
+          <div class="pathTitleRow">
+            <div class="pathTitle">🧭 O‘quv yo‘li <span>(10 dars)</span></div>
+            <div class="badge" id="premiumBadge">BEPUL</div>
+          </div>
 
-      <!-- Progress only -->
-      <div class="barWrap">
-        <div class="barRow">
-          <div class="barLabel">⭐ Yutuq</div>
-          <div class="barText" id="progressText">0 / 93 so‘z</div>
-        </div>
-        <div class="bar" aria-label="Progress">
-          <div class="fill" id="progressFill"></div>
-        </div>
-      </div>
+          <div class="path" id="path"></div>
 
-      <!-- ✅ Learning path with lesson icons -->
-      <div class="pathBox">
-        <div class="pathHead">
-          <div class="pathTitle">🧭 O‘quv yo‘li (10 dars)</div>
-          <div class="pathHint" id="pathHint">1-dars bepul ✅</div>
-        </div>
-
-        <div class="pathRow" id="pathRow">
-          <div class="pathLine"><div class="pathLineFill" id="pathLineFill"></div></div>
-          <!-- nodes inserted by JS -->
+          <!-- Optional: only show current/next lesson minimal card -->
+          <div class="miniList" id="miniList"></div>
         </div>
       </div>
-
-      <!-- Lesson tiles -->
-      <div class="grid" id="lessonGrid">
-        <!-- tiles inserted by JS -->
-      </div>
-
-      <div class="btnRow">
-        <button class="btnWide primary" id="premiumBtn" type="button">🔓 Premium</button>
-        <button class="btnWide secondary" id="resetBtn" type="button">♻️ Reset</button>
-      </div>
-
     </div>
   </div>
 
-  <!-- Name Gate -->
-  <div class="gate" id="nameGate">
-    <div class="gateCard" role="dialog" aria-modal="true">
-      <div style="font-size:44px; line-height:1;">🧒✨</div>
-      <div class="gateTitle">Isming nima?</div>
-      <p class="gateText">Avval ismingni yoz ✍️ <br/> Keyin o‘ynaymiz 🎲</p>
-      <input class="nameInput" id="nameInput" type="text" autocomplete="name"
-             placeholder="Masalan: Ali" maxlength="18" />
-      <button class="gateBtn" id="startBtn" type="button">Boshlaymiz! 🚀</button>
-      <div class="gateHint">Maslahat: 2 ta harf yetadi 🙂</div>
+  <!-- Bottom bar -->
+  <div class="bottomBar">
+    <div class="bottomInner">
+      <button class="bBtn bPrimary" id="premiumBtn">🔓 Premium</button>
+      <button class="bBtn bGhost" id="nameBtn">✏️ Ism</button>
+      <button class="bBtn bGhost" id="resetBtn">♻️ Reset</button>
     </div>
   </div>
 
-  <!-- Paywall Gate (Demo) -->
-  <div class="gate" id="paywallGate">
-    <div class="gateCard" role="dialog" aria-modal="true">
+  <!-- Paywall (demo) -->
+  <div class="modal" id="paywall">
+    <div class="modalCard" role="dialog" aria-modal="true">
       <div style="font-size:44px; line-height:1;">🔓✨</div>
-      <div class="gateTitle">Vollversion</div>
-      <p class="gateText">
-        Bir marta to‘lov ✅ <br/>
+      <div class="modalTitle">To‘liq versiya</div>
+      <p class="modalText">
+        Bir marta to‘lov ✅<br>
         Barcha darslar umrbod ochiladi 🔓
       </p>
 
-      <button class="gateBtn enabled" id="buyBtn" type="button">🔓 Ochish (Demo)</button>
-      <button class="btnWide secondary" id="restoreBtn" type="button" style="margin-top:10px;">♻️ Restore (Demo)</button>
-      <button class="btn ghost" id="closePaywallBtn" type="button" style="margin-top:10px;">Yopish</button>
-
-      <div class="gateHint">Hozir GitHub demo. Keyin Play Store’da haqiqiy to‘lov bo‘ladi.</div>
+      <div class="modalRow">
+        <button class="modalBtn" id="buyBtn">🔓 OCHISH (Demo)</button>
+        <button class="modalBtn secondary" id="closePaywallBtn">Yopish</button>
+      </div>
+      <p class="modalText" style="margin-top:12px;font-size:12px;opacity:.75">
+        Hozir GitHub demo. Keyin Play Store’da haqiqiy to‘lov bo‘ladi.
+      </p>
     </div>
   </div>
 
 <script>
-  /***************
-   * CONFIG
-   ***************/
+  /* ========= SETTINGS ========= */
   const PREMIUM_KEY = "premium_unlocked";
-  const CHILD_KEY   = "childName";
-
-  // ✅ Learned keys expected like: "L1_xxx", "L2_xxx" ... (your lesson pages should save like this)
-  // Example in lesson1: learned.add("L1_1"); etc
-  function getLearnedSet(){
-    try { return new Set(JSON.parse(localStorage.getItem("learned") || "[]")); }
-    catch { return new Set(); }
-  }
-
-  // ✅ 10 lessons – you can change titles/desc anytime
-  const LESSONS = [
-    { id: 1, file:"lesson1.html", icon:"👋", title:"1-dars: Salomlashuv", desc:"Salom, rahmat, iltimos", free:true },
-    { id: 2, file:"lesson2.html", icon:"🔢", title:"2-dars: Sonlar", desc:"1–10 sanash", free:false },
-    { id: 3, file:"lesson3.html", icon:"🐾", title:"3-dars: Hayvonlar", desc:"Mushuk, it, qush", free:false },
-    { id: 4, file:"lesson4.html", icon:"🎨", title:"4-dars: Ranglar", desc:"Qizil, ko‘k, yashil", free:false },
-    { id: 5, file:"lesson5.html", icon:"🍎", title:"5-dars: Mevalar", desc:"Olma, banan, uzum", free:false },
-    { id: 6, file:"lesson6.html", icon:"🥕", title:"6-dars: Sabzavot", desc:"Sabzi, kartoshka", free:false },
-    { id: 7, file:"lesson7.html", icon:"🏠", title:"7-dars: Uy", desc:"Uyda narsalar", free:false },
-    { id: 8, file:"lesson8.html", icon:"👕", title:"8-dars: Kiyim", desc:"Ko‘ylak, oyoq kiyim", free:false },
-    { id: 9, file:"lesson9.html", icon:"🚗", title:"9-dars: Transport", desc:"Mashina, avtobus", free:false },
-    { id:10, file:"lesson10.html",icon:"🌙", title:"10-dars: Kun tartibi", desc:"Ertalab, kechqurun", free:false }
-  ];
-
-  // ✅ total words for progress – change later when you know exact numbers
-  // For now: 93 (example). You can set each lesson word count here if you want.
-  const TOTAL_WORDS = 93;
+  const NAME_KEY = "childName";
+  const COMPLETED_KEY = "completedLessons"; // {"1":true,"2":false...}
 
   function isPremium(){ return localStorage.getItem(PREMIUM_KEY) === "true"; }
   function setPremium(v){ localStorage.setItem(PREMIUM_KEY, v ? "true" : "false"); }
 
-  function normalizeName(s){ return (s || "").trim().replace(/\s+/g, " ").slice(0, 18); }
-
-  function lessonLearnedCount(learnedSet, lessonId){
-    let c = 0;
-    const prefix = "L" + lessonId + "_";
-    for (const key of learnedSet){
-      if (key.startsWith(prefix)) c++;
-    }
-    return c;
+  function getCompleted(){
+    try { return JSON.parse(localStorage.getItem(COMPLETED_KEY) || "{}"); }
+    catch { return {}; }
   }
 
-  function openPaywall(){ document.getElementById("paywallGate").classList.add("show"); }
-  function closePaywall(){ document.getElementById("paywallGate").classList.remove("show"); }
+  // ✅ 10 lessons (du kannst Titel später ändern)
+  const LESSONS = [
+    { id:1, emoji:"👋", title:"Salomlashuv", href:"lesson1.html", free:true },
+    { id:2, emoji:"🔢", title:"Sonlar",      href:"lesson2.html", free:false },
+    { id:3, emoji:"🐾", title:"Hayvonlar",   href:"lesson3.html", free:false },
+    { id:4, emoji:"🎨", title:"Ranglar",     href:"lesson4.html", free:false },
+    { id:5, emoji:"🍎", title:"Mevalar",     href:"lesson5.html", free:false },
+    { id:6, emoji:"👕", title:"Kiyimlar",    href:"lesson6.html", free:false },
+    { id:7, emoji:"🏠", title:"Uy",          href:"lesson7.html", free:false },
+    { id:8, emoji:"🚗", title:"Transport",   href:"lesson8.html", free:false },
+    { id:9, emoji:"🍽️", title:"Ovqat",      href:"lesson9.html", free:false },
+    { id:10,emoji:"🌦️", title:"Ob-havo",    href:"lesson10.html",free:false },
+  ];
 
-  /***************
-   * UI
-   ***************/
+  /* ========= NAME ========= */
+  function normalizeName(s){
+    return (s || "").trim().replace(/\s+/g, " ").slice(0, 18);
+  }
+  function askName(){
+    const current = localStorage.getItem(NAME_KEY) || "";
+    const n = prompt("Ism kiriting:", current);
+    if(n === null) return;
+    const clean = normalizeName(n);
+    if(clean.length >= 2){
+      localStorage.setItem(NAME_KEY, clean);
+      applyGreeting();
+    }
+  }
+  function applyGreeting(){
+    const name = localStorage.getItem(NAME_KEY) || "Do‘st";
+    document.getElementById("nameBig").innerText = name;
+
+    // Lion greets (always visible)
+    document.getElementById("bigHello").innerHTML =
+      `🦁 <span>Salom,</span> <span class="name" id="nameBig">${name}</span><span>!</span> <span class="spark">✨</span>`;
+  }
+
+  /* ========= UI ========= */
+  function openPaywall(){ document.getElementById("paywall").classList.add("show"); }
+  function closePaywall(){ document.getElementById("paywall").classList.remove("show"); }
+
   function updatePremiumBadge(){
     const b = document.getElementById("premiumBadge");
-    if(!b) return;
+    const btn = document.getElementById("premiumBtn");
     if(isPremium()){
-      b.classList.remove("free");
-      b.innerText = "PREMIUM ✅";
-    } else {
-      b.classList.add("free");
-      b.innerText = "FREE";
+      b.textContent = "OCHIQ ✅";
+      btn.textContent = "✅ Premium";
+    }else{
+      b.textContent = "BEPUL";
+      btn.textContent = "🔓 Premium";
     }
   }
 
-  function applyGreeting(){
-    const name = localStorage.getItem(CHILD_KEY) || "";
-    const child = name ? name : "Do‘st!";
-    document.getElementById("childNameBig").innerText = child;
+  // ✅ very minimal: show Yutuq only if any completed lesson
+  function updateYutuq(){
+    const completed = getCompleted();
+    const doneCount = Object.values(completed).filter(Boolean).length;
+    const chip = document.getElementById("yutuqChip");
+    chip.classList.toggle("hidden", doneCount === 0);
   }
 
-  function showNameGate(){
-    const gate = document.getElementById("nameGate");
-    gate.classList.add("show");
-    const input = document.getElementById("nameInput");
-    const btn = document.getElementById("startBtn");
-
-    btn.classList.remove("enabled");
-    btn.disabled = true;
-    input.value = "";
-
-    setTimeout(() => input.focus(), 50);
-
-    const validate = () => {
-      const nm = normalizeName(input.value);
-      const ok = nm.length >= 2;
-      btn.disabled = !ok;
-      btn.classList.toggle("enabled", ok);
-    };
-
-    input.oninput = validate;
-    input.onkeydown = (e)=>{ if(e.key==="Enter" && !btn.disabled) btn.click(); };
-
-    btn.onclick = () => {
-      const nm = normalizeName(input.value);
-      if(nm.length < 2) return;
-      localStorage.setItem(CHILD_KEY, nm);
-      gate.classList.remove("show");
-      applyGreeting();
-    };
-  }
-
-  function lockReason(lessonId){
-    if(isPremium()) return null;
-    if(lessonId === 1) return null; // free
-    // Path unlock: lesson N opens if lesson N-1 is complete (or premium)
-    return `🔒 Avval ${lessonId-1}-dars`;
-  }
-
-  function isLessonDone(learnedSet, lessonId){
-    // Done rule: if lesson has at least 1 learned item, mark as done visually (simple + robust)
-    // You can change to exact word count later.
-    return lessonLearnedCount(learnedSet, lessonId) > 0;
-  }
-
-  function canOpenLesson(learnedSet, lessonId){
-    if(lessonId === 1) return true;                 // free
-    if(isPremium()) return true;                    // premium
-    // sequential unlock: previous lesson must be done
-    return isLessonDone(learnedSet, lessonId-1);
-  }
-
-  function renderLessons(){
-    const learned = getLearnedSet();
-
-    // Progress
-    const learnedCount = learned.size;
-    const pct = Math.max(0, Math.min(100, Math.round((learnedCount / TOTAL_WORDS) * 100)));
+  // ✅ Progress percent based on completed lessons (not words)
+  function updateSunPct(){
+    const completed = getCompleted();
+    const doneCount = Object.values(completed).filter(Boolean).length;
+    const pct = Math.round((doneCount / LESSONS.length) * 100);
     document.getElementById("mainPct").innerText = pct + "%";
-    document.getElementById("progressText").innerText = `${learnedCount} / ${TOTAL_WORDS} so‘z`;
-    document.getElementById("progressFill").style.width = pct + "%";
+  }
 
-    // Tiles
-    const grid = document.getElementById("lessonGrid");
-    grid.innerHTML = "";
+  // Access rule:
+  // - Lesson 1 always free
+  // - If premium => all open
+  // - Else: only next lesson after previous completed (classic path)
+  function isLessonOpen(lessonId){
+    if(lessonId === 1) return true;
+    if(isPremium()) return true;
 
-    LESSONS.forEach(L => {
-      const open = canOpenLesson(learned, L.id);
-      const done = isLessonDone(learned, L.id);
+    const completed = getCompleted();
+    // open if previous lesson completed
+    return !!completed[String(lessonId - 1)];
+  }
 
-      const a = document.createElement("a");
-      a.className = "tile" + (open ? "" : " locked");
-      a.href = open ? L.file : "#";
-      a.setAttribute("aria-label", L.title);
+  function renderPath(){
+    const wrap = document.getElementById("path");
+    wrap.innerHTML = "";
 
-      const tag = document.createElement("div");
-      tag.className = "tagRight " + (open ? "open" : "lock");
+    const completed = getCompleted();
 
-      if(L.id === 1 && !isPremium()){
-        tag.textContent = "FREE";
-      } else if(isPremium()){
-        tag.textContent = done ? "OPEN ✅" : "OPEN";
-      } else {
-        tag.textContent = lockReason(L.id);
-      }
+    LESSONS.forEach(lsn => {
+      const open = isLessonOpen(lsn.id);
+      const done = !!completed[String(lsn.id)];
 
-      a.innerHTML = `
-        <div class="icon">${L.icon}</div>
-        <div class="tcol">
-          <div class="title">${L.title}</div>
-          <div class="desc">${L.desc}</div>
+      const node = document.createElement("div");
+      node.className = "node" + (open ? "" : " locked") + (done ? " done" : "");
+      node.innerHTML = `
+        <div class="nodeCircle">
+          <div class="nodeDoneDot">✓</div>
+          ${lsn.emoji}
         </div>
+        <div class="nodeLabel">${lsn.title}</div>
       `;
-      a.appendChild(tag);
 
-      // locked click -> paywall
-      a.addEventListener("click", (e)=>{
-        if(!open){
-          e.preventDefault();
+      node.addEventListener("click", () => {
+        if(open){
+          window.location.href = lsn.href;
+        } else {
           openPaywall();
         }
       });
 
-      grid.appendChild(a);
+      wrap.appendChild(node);
     });
   }
 
-  function renderPath(){
-    const learned = getLearnedSet();
+  // ✅ show only ONE minimal card: first locked or next open lesson
+  function renderMiniCard(){
+    const list = document.getElementById("miniList");
+    list.innerHTML = "";
 
-    // Find current step: first lesson that is not done but can open (or next after last done)
-    let current = 1;
-    for(let i=1;i<=10;i++){
-      if(canOpenLesson(learned, i) && !isLessonDone(learned, i)){
-        current = i; break;
-      }
-      if(isLessonDone(learned, i)) current = Math.min(10, i+1);
-    }
-    current = Math.max(1, Math.min(10, current));
+    const completed = getCompleted();
+    let target = LESSONS.find(lsn => !completed[String(lsn.id)]) || LESSONS[LESSONS.length-1];
 
-    // Fill line: percent based on last done
-    let lastDone = 0;
-    for(let i=1;i<=10;i++){
-      if(isLessonDone(learned, i)) lastDone = i;
-    }
-    const fillPct = Math.round((lastDone / 10) * 100);
-    document.getElementById("pathLineFill").style.width = fillPct + "%";
+    const open = isLessonOpen(target.id);
+    const tagText = open ? "OCHIQ" : "🔒";
+    const tagClass = open ? "miniTag" : "miniTag lock";
 
-    const row = document.getElementById("pathRow");
-    // keep the line elements (first child is pathLine)
-    const keepLine = row.querySelector(".pathLine");
-    row.innerHTML = "";
-    row.appendChild(keepLine);
+    const card = document.createElement("div");
+    card.className = "miniLesson";
+    card.innerHTML = `
+      <div class="miniIcon">${target.emoji}</div>
+      <div class="miniText">
+        <div class="miniMain">${target.title}</div>
+      </div>
+      <div class="${tagClass}">${tagText}</div>
+    `;
 
-    LESSONS.forEach(L=>{
-      const wrap = document.createElement("div");
-      wrap.className = "nodeWrap";
-
-      const open = canOpenLesson(learned, L.id);
-      const done = isLessonDone(learned, L.id);
-
-      const node = document.createElement("div");
-      node.className = "node" + (open ? "" : " locked") + (done ? " done" : "") + (L.id===current ? " current" : "");
-      node.title = L.title;
-      node.textContent = L.icon;
-
-      node.addEventListener("click", ()=>{
-        if(open) window.location.href = L.file;
-        else openPaywall();
-      });
-
-      const lbl = document.createElement("div");
-      lbl.className = "nodeLabel";
-      lbl.textContent = `${L.id}-dars`;
-
-      wrap.appendChild(node);
-      wrap.appendChild(lbl);
-      row.appendChild(wrap);
+    card.addEventListener("click", () => {
+      if(open) window.location.href = target.href;
+      else openPaywall();
     });
+
+    list.appendChild(card);
   }
 
   function updateAll(){
-    updatePremiumBadge();
     applyGreeting();
+    updatePremiumBadge();
+    updateYutuq();
+    updateSunPct();
     renderPath();
-    renderLessons();
+    renderMiniCard();
   }
 
-  /***************
-   * Events
-   ***************/
-  function wireUI(){
-    document.getElementById("changeNameBtn").addEventListener("click", ()=>{
-      localStorage.removeItem(CHILD_KEY);
-      showNameGate();
-    });
+  /* ========= EVENTS ========= */
+  document.getElementById("nameBtn").addEventListener("click", askName);
 
-    document.getElementById("premiumBtn").addEventListener("click", ()=>{
+  document.getElementById("premiumBtn").addEventListener("click", () => {
+    if(isPremium()){
+      alert("✅ Premium allaqachon ochiq!");
+    }else{
       openPaywall();
-    });
+    }
+  });
 
-    document.getElementById("buyBtn").addEventListener("click", ()=>{
-      setPremium(true);
-      closePaywall();
-      updateAll();
-      alert("✅ Premium (demo) aktiv!");
-    });
-
-    document.getElementById("restoreBtn").addEventListener("click", ()=>{
-      updateAll();
-      alert(isPremium() ? "✅ Premium topildi!" : "❌ Premium yo‘q (demo).");
-    });
-
-    document.getElementById("closePaywallBtn").addEventListener("click", ()=>{
-      closePaywall();
-    });
-
-    document.getElementById("paywallGate").addEventListener("click", (e)=>{
-      if(e.target.id === "paywallGate") closePaywall();
-    });
-
-    document.getElementById("resetBtn").addEventListener("click", ()=>{
-      const ok = confirm("Hammasini qaytadan boshlaymizmi? (Natija o‘chadi)");
-      if(!ok) return;
-      localStorage.removeItem("learned");
-      localStorage.removeItem("completedLessons");
-      localStorage.removeItem(PREMIUM_KEY);
-      updateAll();
-    });
-
-    // ✅ Always refresh when returning from lesson pages
-    window.addEventListener("focus", updateAll);
-    document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) updateAll(); });
-    window.addEventListener("pageshow", updateAll);
-
-    // 🧪 Dev: Shift+P to clear premium
-    document.addEventListener("keydown", (e)=>{
-      if(e.shiftKey && (e.key==="P" || e.key==="p")){
-        localStorage.removeItem(PREMIUM_KEY);
-        alert("🧪 Test: Premium gelöscht");
-        updateAll();
-      }
-    });
-  }
-
-  window.addEventListener("load", ()=>{
-    wireUI();
-
-    const nm = localStorage.getItem(CHILD_KEY);
-    if(!nm) showNameGate();
-
+  document.getElementById("buyBtn").addEventListener("click", () => {
+    setPremium(true);
+    closePaywall();
     updateAll();
+    alert("🎉 Premium ochildi!");
+  });
+
+  document.getElementById("closePaywallBtn").addEventListener("click", closePaywall);
+  document.getElementById("paywall").addEventListener("click", (e) => {
+    if(e.target.id === "paywall") closePaywall();
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", () => {
+    const ok = confirm("Hammasini qaytadan boshlaymizmi?");
+    if(!ok) return;
+    // keep name
+    const name = localStorage.getItem(NAME_KEY);
+    localStorage.clear();
+    if(name) localStorage.setItem(NAME_KEY, name);
+    updateAll();
+  });
+
+  window.addEventListener("load", () => {
+    if(!localStorage.getItem(NAME_KEY)){
+      // simple first-time name prompt
+      setTimeout(askName, 250);
+    }
+    updateAll();
+  });
+
+  // 🧪 Debug: Shift+P removes premium
+  document.addEventListener("keydown", (e) => {
+    if(e.shiftKey && (e.key === "P" || e.key === "p")){
+      localStorage.removeItem(PREMIUM_KEY);
+      alert("🧪 Premium o‘chirildi");
+      updateAll();
+    }
   });
 </script>
 </body>
