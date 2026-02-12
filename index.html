@@ -41,12 +41,16 @@
       position:relative;
       overflow:hidden;
     }
+    .top.premiumGlow{
+      box-shadow: 0 0 0 8px rgba(34,197,94,.15), var(--shadow);
+      transition: box-shadow .35s ease;
+    }
 
-    /* Hero */
+    /* Header */
     .hero{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;justify-content:space-between}
     .heroLeft{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
 
-    .sunWrap{position:relative; width:104px; height:104px; flex:0 0 auto;}
+    .sunWrap{width:104px;height:104px;flex:0 0 auto}
     .sun{
       width:104px;height:104px;border-radius:999px;
       display:grid;place-items:center;
@@ -54,10 +58,9 @@
       box-shadow: 0 12px 28px rgba(245,158,11,.36);
       border: 5px solid rgba(255,255,255,.72);
     }
-    .sunPct{font-weight:1000;font-size:22px;color:#7c2d12;text-shadow: 0 2px 0 rgba(255,255,255,.35)}
+    .sunPct{font-weight:1000;font-size:22px;color:#7c2d12;text-shadow:0 2px 0 rgba(255,255,255,.35)}
 
     h1{margin:0;font-size:24px;font-weight:1000;letter-spacing:.2px}
-
     .helloBig{
       margin-top:6px;
       font-weight:1000;
@@ -68,12 +71,8 @@
       align-items:center;
       flex-wrap:wrap;
     }
-    .helloBig .name{
-      color:#065f46;
-      text-shadow: 0 2px 0 rgba(255,255,255,.45);
-    }
+    .helloBig .name{color:#065f46;text-shadow:0 2px 0 rgba(255,255,255,.45)}
 
-    /* Header right (language + name only) */
     .topActions{
       display:flex;
       gap:10px;
@@ -93,11 +92,7 @@
       font-size:16px;
       white-space:nowrap;
     }
-    .profileBtn{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
+    .profileBtn{display:flex;align-items:center;gap:10px}
 
     .profileMenu{
       position:absolute;
@@ -136,13 +131,7 @@
       padding:14px;
       box-shadow: 0 12px 28px rgba(2,6,23,.07);
     }
-    .barRow{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:center;
-      flex-wrap:wrap
-    }
+    .barRow{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
     .barLabel{font-weight:1000;font-size:18px}
     .barText{color:var(--muted);font-weight:1000;font-size:16px}
     .bar{
@@ -161,26 +150,17 @@
       transition: width .45s ease;
     }
 
-    /* Progress icons (only when completed) */
-    .achRow{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
+    .achRow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
     .achIcon{
-      width:46px;height:46px;
-      border-radius:999px;
-      display:grid;
-      place-items:center;
+      width:46px;height:46px;border-radius:999px;
+      display:grid;place-items:center;
       font-size:24px;
       background: rgba(34,197,94,.18);
       border:2px solid rgba(34,197,94,.35);
       box-shadow: 0 14px 28px rgba(2,6,23,.10);
     }
 
-    /* Grid + visible path */
+    /* Lesson list + visible path */
     .grid{
       margin-top:16px;
       display:grid;
@@ -206,7 +186,22 @@
       box-shadow: 0 18px 40px rgba(2,6,23,.12);
     }
 
-    /* CARD LAYOUT: stable */
+    /* Step dot */
+    .stepDot{
+      position:absolute;
+      left:-28px;
+      top:50%;
+      transform: translateY(-50%);
+      width:38px;height:38px;border-radius:999px;
+      background: rgba(255,255,255,.98);
+      border:3px solid rgba(15,23,42,.22);
+      box-shadow: 0 16px 34px rgba(2,6,23,.12);
+      z-index:2;
+    }
+    .tile.done .stepDot{border-color: rgba(34,197,94,.70); background: rgba(34,197,94,.25);}
+    .tile.current .stepDot{border-color: rgba(245,158,11,.80); background: rgba(245,158,11,.25);}
+
+    /* ===== OPTION A (clean): NO icon box ===== */
     .tile{
       border:2px solid rgba(15,23,42,.10);
       border-radius:28px;
@@ -218,70 +213,55 @@
       overflow:hidden;
       touch-action: manipulation;
       cursor:pointer;
+      background: rgba(255,255,255,.97);
 
       display:grid;
-      grid-template-columns: 120px 1fr;
-      grid-template-areas:
-        "icon tag"
-        "icon title";
+      grid-template-columns: 86px 1fr auto;   /* icon | title | pill */
+      grid-template-areas: "icon title tag";
       align-items:center;
       gap:14px;
-      min-height:150px;
-      background: rgba(255,255,255,.97);
+      min-height:140px;
     }
     .tile:active{transform: translateY(1px)}
+    .tile.locked{opacity:.78; filter: grayscale(.16);}
 
-    /* Big step dot */
-    .stepDot{
-      position:absolute;
-      left:-28px;
-      top:50%;
-      transform: translateY(-50%);
-      width:38px;height:38px;
-      border-radius:999px;
-      background: rgba(255,255,255,.98);
-      border:3px solid rgba(15,23,42,.22);
-      box-shadow: 0 16px 34px rgba(2,6,23,.12);
-    }
-    .tile.done .stepDot{
-      border-color: rgba(34,197,94,.70);
-      background: rgba(34,197,94,.25);
-    }
-    .tile.current .stepDot{
-      border-color: rgba(245,158,11,.80);
-      background: rgba(245,158,11,.25);
-    }
-
-    /* Icon */
+    /* Emoji icon only */
     .icon{
       grid-area: icon;
-      width:130px;height:130px;border-radius:30px;
+      width:86px;height:86px;
       display:grid;place-items:center;
-      font-size:74px;
-      border:2px solid rgba(15,23,42,.10);
-      box-shadow: 0 18px 44px rgba(2,6,23,.16);
-      background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.58));
+      font-size:64px;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      border-radius:0 !important;
       z-index:2;
     }
 
-    /* Title */
+    /* Title stable */
     .title{
       grid-area: title;
       font-size:32px;
       font-weight:1000;
       line-height:1.05;
       letter-spacing:.2px;
-      z-index:2;
+
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      text-align:left;
+
       min-width:0;
       word-break: break-word;
+      padding: 0 8px;
+      z-index:2;
     }
 
-    /* Combined badge: OPEN big + Lesson small */
+    /* OPEN/FREE pill */
     .tagRight{
       grid-area: tag;
-      position:static;
       justify-self:end;
-      align-self:start;
+      align-self:center;
 
       display:flex;
       flex-direction:column;
@@ -291,24 +271,16 @@
 
       min-width:96px;
       padding:10px 14px;
-
       border-radius:18px;
+
       border:2px solid rgba(15,23,42,.10);
       background: rgba(255,255,255,.92);
       box-shadow: 0 10px 24px rgba(2,6,23,.12);
-      z-index:3;
+      z-index:2;
     }
-    .tagRight .main{
-      font-size:20px;
-      font-weight:1100;
-      letter-spacing:1px;
-    }
-    .tagRight .sub{
-      font-size:11px;
-      font-weight:900;
-      letter-spacing:.3px;
-      color: rgba(15,23,42,.65);
-    }
+    .tagRight .main{font-size:20px;font-weight:1100;letter-spacing:1px}
+    .tagRight .sub{font-size:11px;font-weight:900;letter-spacing:.3px;color: rgba(15,23,42,.65)}
+
     .tagRight.open{
       border-color: rgba(34,197,94,.45);
       background: rgba(34,197,94,.18);
@@ -320,7 +292,7 @@
       color: rgba(15,23,42,.70);
     }
 
-    /* Faded color strip */
+    /* Bottom line (kept) */
     .tile::after{
       content:"";
       position:absolute;
@@ -331,11 +303,9 @@
       border-radius:999px;
       background: var(--soft, rgba(0,0,0,.06));
       border:1px solid rgba(15,23,42,.06);
-      z-index:1;
       opacity:.95;
+      z-index:0;  /* ✅ behind everything */
     }
-
-    .tile.locked{opacity:.78; filter: grayscale(.16);}
 
     /* Bottom buttons */
     .btnRow{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
@@ -362,10 +332,33 @@
       border-color: var(--line);
     }
 
+    /* Toast */
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform:translateX(-50%) translateY(10px);
+      background: rgba(255,255,255,.94);
+      border:1px solid rgba(15,23,42,.12);
+      box-shadow: 0 18px 40px rgba(2,6,23,.18);
+      border-radius:999px;
+      padding:12px 16px;
+      font-weight:1000;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .22s ease, transform .22s ease;
+      z-index:20000;
+      max-width: 92vw;
+      text-align:center;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
     /* Gates */
     .gate{
-      position:fixed;
-      inset:0;
+      position:fixed; inset:0;
       z-index:10000;
       display:none;
       align-items:center;
@@ -379,7 +372,7 @@
     }
     .gate.show{display:flex}
 
-    /* Paywall/Name card: pop-in animation */
+    /* Pop-in animation */
     .gateCard{
       width:min(520px, 92vw);
       background: rgba(255,255,255,.92);
@@ -393,10 +386,7 @@
       opacity:0;
       transition: transform .22s ease, opacity .22s ease;
     }
-    .gate.show .gateCard{
-      transform: translateY(0) scale(1);
-      opacity:1;
-    }
+    .gate.show .gateCard{transform: translateY(0) scale(1);opacity:1}
 
     .gateTitle{font-size:24px;font-weight:1000;margin:6px 0 6px}
     .gateText{
@@ -406,8 +396,8 @@
       color: rgba(15,23,42,.82);
       line-height:1.35;
     }
-    #paywallMain{display:block;font-size:18px;margin-bottom:6px;}
-    #paywallSub{display:block;font-size:14px;color: rgba(15,23,42,.62);}
+    #paywallMain{display:block;font-size:18px;margin-bottom:6px}
+    #paywallSub{display:block;font-size:14px;color: rgba(15,23,42,.62)}
 
     .nameInput{
       width:min(360px, 86vw);
@@ -434,7 +424,6 @@
       font-size:18px;
     }
 
-    /* Buy button pulse */
     @keyframes pulseSoft{
       0%,100%{ transform: translateY(0); filter: saturate(1); }
       50%{ transform: translateY(-1px); filter: saturate(1.15); }
@@ -458,47 +447,13 @@
     }
     .gateHint{margin-top:10px;font-size:12.5px;font-weight:900;color: rgba(15,23,42,.62);}
 
-    /* Toast */
-    .toast{
-      position:fixed;
-      left:50%;
-      bottom:18px;
-      transform:translateX(-50%) translateY(10px);
-      background: rgba(255,255,255,.94);
-      border:1px solid rgba(15,23,42,.12);
-      box-shadow: 0 18px 40px rgba(2,6,23,.18);
-      border-radius:999px;
-      padding:12px 16px;
-      font-weight:1000;
-      opacity:0;
-      pointer-events:none;
-      transition: opacity .22s ease, transform .22s ease;
-      z-index:20000;
-      max-width: 92vw;
-      text-align:center;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .toast.show{
-      opacity:1;
-      transform:translateX(-50%) translateY(0);
-    }
-
-    /* Header mobile: text next to sun */
+    /* Mobile header: text next to sun */
     @media (max-width: 420px){
       .hero{ gap:12px; }
-      .heroLeft{
-        flex-wrap: nowrap;
-        align-items: center;
-        gap:12px;
-        width: 100%;
-      }
-
+      .heroLeft{ flex-wrap: nowrap; align-items: center; gap:12px; width: 100%; }
       .sunWrap{ width:78px; height:78px; }
       .sun{ width:78px; height:78px; }
       .sunPct{ font-size:18px; }
-
       .heroLeft > div:last-child{ flex:1; min-width:0; }
 
       h1{ font-size:18px; line-height:1.1; margin:0; }
@@ -512,15 +467,17 @@
       .stepDot{ left:-22px; width:30px; height:30px; }
 
       .tile{
-        grid-template-columns: 96px 1fr;
-        gap:12px;
+        grid-template-columns: 72px 1fr auto;
         min-height:120px;
+        gap:12px;
       }
-
-      .icon{ width:96px; height:96px; font-size:52px; border-radius:22px; }
+      .icon{ width:72px; height:72px; font-size:52px; }
       .title{ font-size:24px; }
-
-      .tagRight{ min-width:82px; padding:8px 10px; border-radius:16px; }
+      .tagRight{
+        min-width:82px;
+        padding:8px 10px;
+        border-radius:16px;
+      }
       .tagRight .main{ font-size:16px; }
       .tagRight .sub{ font-size:10px; }
     }
@@ -529,17 +486,11 @@
       .app{max-width:760px;}
       .helloBig{font-size:46px;}
       .title{font-size:36px;}
-      .icon{width:140px;height:140px;font-size:80px;}
-      .tile{min-height:160px;}
+      .icon{width:92px;height:92px;font-size:72px;}
+      .tile{min-height:150px;}
       .tagRight{min-width:110px;}
       .tagRight .main{font-size:22px;}
       .tagRight .sub{font-size:12px;}
-    }
-
-    /* Premium activated glow */
-    .top.premiumGlow{
-      box-shadow: 0 0 0 8px rgba(34,197,94,.15), var(--shadow);
-      transition: box-shadow .35s ease;
     }
   </style>
 </head>
@@ -556,7 +507,6 @@
 
           <div>
             <h1>🌿 Dono Bola!</h1>
-
             <div class="helloBig">
               <span>🦁</span>
               <span id="helloWord">Hello,</span>
@@ -579,7 +529,6 @@
         </div>
       </div>
 
-      <!-- Progress -->
       <div class="barWrap">
         <div class="barRow">
           <div class="barLabel" id="progressLabel">⭐ Progress</div>
@@ -591,7 +540,6 @@
         </div>
       </div>
 
-      <!-- Lesson cards -->
       <div class="grid" id="lessonGrid"></div>
 
       <div class="btnRow">
@@ -602,7 +550,6 @@
     </div>
   </div>
 
-  <!-- Toast -->
   <div class="toast" id="toast"></div>
 
   <!-- Name Gate -->
@@ -637,13 +584,9 @@
   </div>
 
 <script>
-  /***************
-   * CONFIG
-   ***************/
   const PREMIUM_KEY = "premium_unlocked";
   const CHILD_KEY   = "childName";
   const LANG_KEY    = "ui_lang";
-
   const PRICE_LABEL = "$9.99";
 
   const UI = {
@@ -676,8 +619,8 @@
       friendFallback: "Do‘st!",
       profileChangeName: "✏️ Ismni o‘zgartirish",
       progressLabel: "⭐ Yutuq",
-      openLockedLabel: "OCHMOQ",   // before purchase
-      openUnlockedLabel: "OCHIQ",  // after purchase
+      openLockedLabel: "OCHMOQ",
+      openUnlockedLabel: "OCHIQ",
       freeLabel: "BEPUL",
       lessonLabel: (id)=> `${id}-dars`,
       paywallTitle: "Premium",
@@ -700,12 +643,9 @@
     const v = localStorage.getItem(LANG_KEY);
     return (v === "uz" || v === "en") ? v : "en";
   }
-  function setLang(v){
-    localStorage.setItem(LANG_KEY, v);
-  }
+  function setLang(v){ localStorage.setItem(LANG_KEY, v); }
   function T(){ return UI[getLang()]; }
 
-  // completion rule (for showing icons in Progress only when a lesson is completed)
   const MIN_WORDS_PER_LESSON = { 1:5,2:5,3:5,4:5,5:5,6:5,7:5,8:5,9:5,10:5 };
 
   function getLearnedSet(){
@@ -713,32 +653,30 @@
     catch { return new Set(); }
   }
 
-  // bilingual lesson names
   const LESSONS = [
-    { id: 1, file:"lesson1.html", icon:"👋", en:"Greetings",      uz:"Salomlashuv",  free:true  },
-    { id: 2, file:"lesson2.html", icon:"🔢", en:"Numbers",        uz:"Sonlar",       free:false },
-    { id: 3, file:"lesson3.html", icon:"🐾", en:"Animals",        uz:"Hayvonlar",    free:false },
-    { id: 4, file:"lesson4.html", icon:"🎨", en:"Colors",         uz:"Ranglar",      free:false },
-    { id: 5, file:"lesson5.html", icon:"🍎", en:"Fruits",         uz:"Mevalar",      free:false },
-    { id: 6, file:"lesson6.html", icon:"🥕", en:"Vegetables",     uz:"Sabzavot",     free:false },
-    { id: 7, file:"lesson7.html", icon:"🏠", en:"Home",           uz:"Uy",           free:false },
-    { id: 8, file:"lesson8.html", icon:"👕", en:"Clothes",        uz:"Kiyim",        free:false },
-    { id: 9, file:"lesson9.html", icon:"🚗", en:"Transport",      uz:"Transport",    free:false },
-    { id:10, file:"lesson10.html",icon:"🌙", en:"Daily routine",  uz:"Kun tartibi",  free:false }
+    { id: 1, file:"lesson1.html", icon:"👋", en:"Greetings",      uz:"Salomlashuv" },
+    { id: 2, file:"lesson2.html", icon:"🔢", en:"Numbers",        uz:"Sonlar" },
+    { id: 3, file:"lesson3.html", icon:"🐾", en:"Animals",        uz:"Hayvonlar" },
+    { id: 4, file:"lesson4.html", icon:"🎨", en:"Colors",         uz:"Ranglar" },
+    { id: 5, file:"lesson5.html", icon:"🍎", en:"Fruits",         uz:"Mevalar" },
+    { id: 6, file:"lesson6.html", icon:"🥕", en:"Vegetables",     uz:"Sabzavot" },
+    { id: 7, file:"lesson7.html", icon:"🏠", en:"Home",           uz:"Uy" },
+    { id: 8, file:"lesson8.html", icon:"👕", en:"Clothes",        uz:"Kiyim" },
+    { id: 9, file:"lesson9.html", icon:"🚗", en:"Transport",      uz:"Transport" },
+    { id:10, file:"lesson10.html",icon:"🌙", en:"Daily routine",  uz:"Kun tartibi" }
   ];
 
-  // pastel colors + soft strip
   const COLORS = [
-    { bg:"rgba(251, 113, 133, .42)", soft:"rgba(251, 113, 133, .18)" }, // rose
-    { bg:"rgba(251, 146,  60, .45)", soft:"rgba(251, 146,  60, .18)" }, // orange
-    { bg:"rgba(250, 204,  21, .45)", soft:"rgba(250, 204,  21, .18)" }, // yellow
-    { bg:"rgba( 34, 197,  94, .38)", soft:"rgba( 34, 197,  94, .16)" }, // green
-    { bg:"rgba( 20, 184, 166, .40)", soft:"rgba( 20, 184, 166, .16)" }, // teal
-    { bg:"rgba( 59, 130, 246, .40)", soft:"rgba( 59, 130, 246, .16)" }, // blue
-    { bg:"rgba( 99, 102, 241, .42)", soft:"rgba( 99, 102, 241, .16)" }, // indigo
-    { bg:"rgba(168,  85, 247, .40)", soft:"rgba(168,  85, 247, .16)" }, // purple
-    { bg:"rgba(236,  72, 153, .38)", soft:"rgba(236,  72, 153, .16)" }, // pink
-    { bg:"rgba(100, 116, 139, .34)", soft:"rgba(100, 116, 139, .14)" }  // slate
+    { bg:"rgba(251, 113, 133, .42)", soft:"rgba(251, 113, 133, .18)" },
+    { bg:"rgba(251, 146,  60, .45)", soft:"rgba(251, 146,  60, .18)" },
+    { bg:"rgba(250, 204,  21, .45)", soft:"rgba(250, 204,  21, .18)" },
+    { bg:"rgba( 34, 197,  94, .38)", soft:"rgba( 34, 197,  94, .16)" },
+    { bg:"rgba( 20, 184, 166, .40)", soft:"rgba( 20, 184, 166, .16)" },
+    { bg:"rgba( 59, 130, 246, .40)", soft:"rgba( 59, 130, 246, .16)" },
+    { bg:"rgba( 99, 102, 241, .42)", soft:"rgba( 99, 102, 241, .16)" },
+    { bg:"rgba(168,  85, 247, .40)", soft:"rgba(168,  85, 247, .16)" },
+    { bg:"rgba(236,  72, 153, .38)", soft:"rgba(236,  72, 153, .16)" },
+    { bg:"rgba(100, 116, 139, .34)", soft:"rgba(100, 116, 139, .14)" }
   ];
 
   const TOTAL_WORDS = 93;
@@ -762,7 +700,6 @@
     return lessonLearnedCount(learnedSet, lessonId) >= need;
   }
 
-  // Without premium only lesson 1 is open
   function canOpenLesson(lessonId){
     if(lessonId === 1) return true;
     return isPremium();
@@ -782,8 +719,8 @@
     const sub  = document.getElementById("paywallSub");
     const buy  = document.getElementById("buyBtn");
     const title= document.getElementById("paywallTitle");
-
     const tt = T();
+
     title.innerText = tt.paywallTitle;
 
     if(String(lessonId).toLowerCase() === "premium"){
@@ -804,20 +741,17 @@
 
   function applyTexts(){
     const tt = T();
-
     document.getElementById("langBtn").innerText = tt.langBtn;
     document.getElementById("helloWord").innerText = tt.helloWord;
     document.getElementById("changeNameBtn").innerText = tt.profileChangeName;
     document.getElementById("progressLabel").innerText = tt.progressLabel;
 
-    // Name gate
     document.getElementById("nameGateTitle").innerText = tt.nameGateTitle;
     document.getElementById("nameGateText").innerText  = tt.nameGateText;
     document.getElementById("nameInput").placeholder   = tt.namePlaceholder;
     document.getElementById("startBtn").innerText      = tt.startBtn;
     document.getElementById("nameGateHint").innerText  = tt.nameGateHint;
 
-    // Paywall fixed labels
     document.getElementById("closePaywallBtn").innerText = tt.close;
     document.getElementById("paywallHint").innerText  = tt.hint;
   }
@@ -828,8 +762,7 @@
     const child = name ? name : tt.friendFallback;
 
     document.getElementById("childNameBig").innerText = child;
-    const pn = document.getElementById("profileName");
-    if(pn) pn.innerText = child.replace("!", "");
+    document.getElementById("profileName").innerText = child.replace("!", "");
   }
 
   function showNameGate(){
@@ -855,12 +788,10 @@
     };
   }
 
-  // Progress icons: show only for completed lessons
   function renderProgressIcons(){
     const learned = getLearnedSet();
     const row = document.getElementById("achRow");
     row.innerHTML = "";
-
     LESSONS.forEach(L=>{
       if(isLessonCompleted(learned, L.id)){
         const d = document.createElement("div");
@@ -877,7 +808,6 @@
     const learned = getLearnedSet();
     const premium = isPremium();
 
-    // Progress
     const learnedCount = learned.size;
     const pct = Math.max(0, Math.min(100, Math.round((learnedCount / TOTAL_WORDS) * 100)));
     document.getElementById("mainPct").innerText = pct + "%";
@@ -887,7 +817,6 @@
     const grid = document.getElementById("lessonGrid");
     grid.innerHTML = "";
 
-    // current: first incomplete lesson
     let current = 1;
     for(let i=1;i<=LESSONS.length;i++){
       if(!isLessonCompleted(learned, i)){ current = i; break; }
@@ -906,24 +835,20 @@
       a.style.background = `linear-gradient(180deg, ${c.bg}, rgba(255,255,255,.92))`;
       a.style.setProperty("--soft", c.soft);
 
-      // dot
       const step = document.createElement("div");
       step.className = "stepDot";
       a.appendChild(step);
 
-      // icon
       const icon = document.createElement("div");
       icon.className = "icon";
       icon.textContent = L.icon;
       a.appendChild(icon);
 
-      // title (name only)
       const title = document.createElement("div");
       title.className = "title";
       title.textContent = (getLang()==="uz") ? L.uz : L.en;
       a.appendChild(title);
 
-      // Badge label logic
       const isFree = (L.id === 1 && !premium);
 
       let mainLabel = "OPEN";
@@ -937,7 +862,6 @@
         mainLabel = isFree ? tt.freeLabel : tt.openLabel; // FREE / OPEN
       }
 
-      // OPEN badge: main + lesson
       const tag = document.createElement("div");
       tag.className = "tagRight " + (open ? "open" : "lock");
       tag.innerHTML = `
@@ -946,7 +870,6 @@
       `;
       a.appendChild(tag);
 
-      // click
       a.addEventListener("click", (e)=>{
         if(!open){
           e.preventDefault();
@@ -966,14 +889,12 @@
   }
 
   function wireUI(){
-    // language toggle
     document.getElementById("langBtn").addEventListener("click", ()=>{
       const next = (getLang()==="en") ? "uz" : "en";
       setLang(next);
       updateAll();
     });
 
-    // profile menu
     const profileBtn = document.getElementById("profileBtn");
     const profileMenu = document.getElementById("profileMenu");
 
@@ -990,23 +911,19 @@
       }
     });
 
-    // change name
     document.getElementById("changeNameBtn").addEventListener("click", ()=>{
       profileMenu.classList.remove("show");
       localStorage.removeItem(CHILD_KEY);
       showNameGate();
     });
 
-    // bottom premium button -> open paywall
     document.getElementById("premiumBtn").addEventListener("click", ()=> openPaywall("Premium"));
 
-    // buy (demo unlock)
     document.getElementById("buyBtn").addEventListener("click", ()=>{
       setPremium(true);
       closePaywall();
       updateAll();
 
-      // premium glow + toast
       const top = document.getElementById("topCard");
       top.classList.add("premiumGlow");
       setTimeout(()=> top.classList.remove("premiumGlow"), 1200);
@@ -1014,13 +931,11 @@
       showToast(T().premiumActivated);
     });
 
-    // close paywall
     document.getElementById("closePaywallBtn").addEventListener("click", ()=> closePaywall());
     document.getElementById("paywallGate").addEventListener("click", (e)=>{
       if(e.target.id === "paywallGate") closePaywall();
     });
 
-    // reset
     document.getElementById("resetBtn").addEventListener("click", ()=>{
       const ok = confirm(T().resetConfirm);
       if(!ok) return;
@@ -1029,7 +944,6 @@
       updateAll();
     });
 
-    // refresh
     window.addEventListener("focus", updateAll);
     document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) updateAll(); });
     window.addEventListener("pageshow", updateAll);
