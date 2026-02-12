@@ -16,8 +16,6 @@
       --line:rgba(15,23,42,.12);
 
       --accent:#22c55e;
-      --accent2:#f59e0b;
-
       --shadow:0 14px 30px rgba(2,6,23,.12);
       --radius:22px;
     }
@@ -31,10 +29,9 @@
       min-height:100vh;
       overflow-x:hidden;
 
-      /* Atlas Ikat-style background (SVG pattern) */
       background:
         linear-gradient(180deg, rgba(223,247,240,.92), rgba(234,246,255,.92)),
-        url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27720%27%20height%3D%27720%27%20viewBox%3D%270%200%20720%20720%27%3E%3Crect%20width%3D%27720%27%20height%3D%27720%27%20fill%3D%27%23f7fbff%27/%3E%3Cg%20opacity%3D%270.22%27%3E%3Cg%20transform%3D%27translate(40%2C40)%27%3E%3Cpath%20d%3D%27M120%200%20L160%2040%20L120%2080%20L80%2040%20Z%27%20fill%3D%27%230ea5a4%27/%3E%3Cpath%20d%3D%27M120%20110%20L170%20160%20L120%20210%20L70%20160%20Z%27%20fill%3D%27%2322c55e%27/%3E%3Cpath%20d%3D%27M120%20240%20L160%20280%20L120%20320%20L80%20280%20Z%27%20fill%3D%27%23f59e0b%27/%3E%3Cpath%20d%3D%27M0%20120%20L40%20160%20L0%20200%20L-40%20160%20Z%27%20fill%3D%27%2314b8a6%27/%3E%3Cpath%20d%3D%27M240%20120%20L280%20160%20L240%20200%20L200%20160%20Z%27%20fill%3D%27%2310b981%27/%3E%3C/g%3E%3Cg%20transform%3D%27translate(360%2C100)%27%3E%3Cpath%20d%3D%27M120%200%20L170%2050%20L120%20100%20L70%2050%20Z%27%20fill%3D%27%230ea5a4%27/%3E%3Cpath%20d%3D%27M120%20130%20L170%20180%20L120%20230%20L70%20180%20Z%27%20fill%3D%27%2322c55e%27/%3E%3Cpath%20d%3D%27M0%2065%20L55%20120%20L0%20175%20L-55%20120%20Z%27%20fill%3D%27%2314b8a6%27/%3E%3Cpath%20d%3D%27M240%2065%20L295%20120%20L240%20175%20L185%20120%20Z%27%20fill%3D%27%2310b981%27/%3E%3C/g%3E%3Cg%20transform%3D%27translate(120%2C380)%27%3E%3Cpath%20d%3D%27M120%200%20L160%2040%20L120%2080%20L80%2040%20Z%27%20fill%3D%27%230ea5a4%27/%3E%3Cpath%20d%3D%27M0%2040%20L40%2080%20L0%20120%20L-40%2080%20Z%27%20fill%3D%27%2314b8a6%27/%3E%3Cpath%20d%3D%27M240%2040%20L280%2080%20L240%20120%20L200%2080%20Z%27%20fill%3D%27%2310b981%27/%3E%3Cpath%20d%3D%27M120%20110%20L170%20160%20L120%20210%20L70%20160%20Z%27%20fill%3D%27%2322c55e%27/%3E%3Cpath%20d%3D%27M120%20240%20L160%20280%20L120%20320%20L80%20280%20Z%27%20fill%3D%27%23f59e0b%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27720%27%20height%3D%27720%27%20viewBox%3D%270%200%20720%20720%27%3E%3Crect%20width%3D%27720%27%20height%3D%27720%27%20fill%3D%27%23f7fbff%27/%3E%3Cg%20opacity%3D%270.22%27%3E%3Cg%20transform%3D%27translate(40%2C40)%27%3E%3Cpath%20d%3D%27M120%200%20L160%2040%20L120%2080%20L80%2040%20Z%27%20fill%3D%27%230ea5a4%27/%3E%3Cpath%20d%3D%27M120%20110%20L170%20160%20L120%20210%20L70%20160%20Z%27%20fill%3D%27%2322c55e%27/%3E%3Cpath%20d%3D%27M120%20240%20L160%20280%20L120%20320%20L80%20280%20Z%27%20fill%3D%27%23f59e0b%27/%3E%3Cpath%20d%3D%27M0%20120%20L40%20160%20L0%20200%20L-40%20160%20Z%27%20fill%3D%27%2314b8a6%27/%3E%3Cpath%20d%3D%27M240%20120%20L280%20160%20L240%20200%20L200%20160%20Z%27%20fill%3D%27%2310b981%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
       background-size: cover, 720px 720px;
       background-attachment: fixed, fixed;
     }
@@ -56,24 +53,22 @@
     .hero{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;justify-content:space-between}
     .heroLeft{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
 
-    .sunWrap{position:relative; width:96px; height:96px; flex:0 0 auto;}
+    .sunWrap{position:relative; width:100px; height:100px; flex:0 0 auto;}
     .sun{
-      width:96px;height:96px;border-radius:999px;
+      width:100px;height:100px;border-radius:999px;
       display:grid;place-items:center;
       background: radial-gradient(circle at 30% 30%, #fff6cc, #fbbf24 55%, #f59e0b 100%);
-      box-shadow: 0 10px 24px rgba(245,158,11,.30);
-      border: 4px solid rgba(255,255,255,.7);
+      box-shadow: 0 12px 28px rgba(245,158,11,.34);
+      border: 5px solid rgba(255,255,255,.72);
     }
-    .sunPct{font-weight:1000;font-size:20px;color:#7c2d12;text-shadow: 0 2px 0 rgba(255,255,255,.35)}
+    .sunPct{font-weight:1000;font-size:22px;color:#7c2d12;text-shadow: 0 2px 0 rgba(255,255,255,.35)}
 
-    h1{margin:0;font-size:22px;font-weight:1000;letter-spacing:.2px}
-    .sub{margin-top:4px;color:var(--muted);font-weight:800}
+    h1{margin:0;font-size:24px;font-weight:1000;letter-spacing:.2px}
 
-    /* Big child name */
     .helloBig{
       margin-top:6px;
       font-weight:1000;
-      font-size:34px;
+      font-size:38px;
       line-height:1.05;
       display:flex;
       gap:10px;
@@ -85,45 +80,7 @@
       text-shadow: 0 2px 0 rgba(255,255,255,.45);
     }
 
-    /* Badge / Buttons */
-    .pill{
-      background: rgba(34,197,94,.14);
-      border:1px solid rgba(34,197,94,.24);
-      color:#065f46;
-      padding:6px 10px;
-      border-radius:999px;
-      font-weight:1000;
-      font-size:12px;
-      display:inline-flex;
-      gap:6px;
-      align-items:center;
-      white-space:nowrap;
-    }
-    .pill.free{
-      background: rgba(245,158,11,.14);
-      border-color: rgba(245,158,11,.24);
-      color:#7c2d12;
-    }
-
-    .btn{
-      border-radius:16px;
-      font-weight:1000;
-      border:1px solid rgba(15,23,42,.14);
-      cursor:pointer;
-      user-select:none;
-      padding:10px 12px;
-      background: rgba(255,255,255,.94);
-    }
-    .btn:active{transform: translateY(1px)}
-    .btn.ghost{
-      background: transparent;
-      border:1px dashed rgba(15,23,42,.22);
-      color: rgba(15,23,42,.85);
-      padding:10px 12px;
-      border-radius:16px;
-    }
-
-    /* Profile menu (Ism integriert) */
+    /* Header right */
     .topActions{
       display:flex;
       gap:10px;
@@ -133,26 +90,27 @@
       position:relative;
     }
     .profileBtn{
-      border-radius:16px;
+      border-radius:18px;
       font-weight:1000;
       border:1px solid rgba(15,23,42,.14);
       cursor:pointer;
       user-select:none;
-      padding:10px 12px;
+      padding:12px 14px;
       background: rgba(255,255,255,.94);
       display:flex;
       align-items:center;
-      gap:8px;
+      gap:10px;
       white-space:nowrap;
+      font-size:16px;
     }
     .profileMenu{
       position:absolute;
       right:0;
-      top:46px;
-      width:240px;
-      background: rgba(255,255,255,.96);
+      top:52px;
+      width:220px;
+      background: rgba(255,255,255,.97);
       border:1px solid rgba(15,23,42,.12);
-      border-radius:16px;
+      border-radius:18px;
       box-shadow: 0 18px 36px rgba(2,6,23,.16);
       padding:8px;
       display:none;
@@ -162,32 +120,58 @@
     .menuItem{
       width:100%;
       text-align:left;
-      border-radius:12px;
-      padding:10px 10px;
+      border-radius:14px;
+      padding:12px 12px;
       border:1px solid transparent;
       background:transparent;
       font-weight:900;
       cursor:pointer;
+      font-size:16px;
     }
     .menuItem:hover{background: rgba(15,23,42,.06)}
     .menuItem:active{transform: translateY(1px)}
 
-    /* Progress (Yutuq) */
+    .pill{
+      background: rgba(34,197,94,.14);
+      border:1px solid rgba(34,197,94,.24);
+      color:#065f46;
+      padding:8px 12px;
+      border-radius:999px;
+      font-weight:1000;
+      font-size:13px;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      white-space:nowrap;
+    }
+    .pill.free{
+      background: rgba(245,158,11,.14);
+      border-color: rgba(245,158,11,.24);
+      color:#7c2d12;
+    }
+
+    /* Yutuq */
     .barWrap{
       margin-top:12px;
-      background:rgba(255,255,255,.95);
+      background:rgba(255,255,255,.96);
       border:1px solid var(--line);
-      border-radius:18px;
-      padding:12px;
-      box-shadow: 0 10px 24px rgba(2,6,23,.06);
+      border-radius:20px;
+      padding:14px;
+      box-shadow: 0 12px 28px rgba(2,6,23,.07);
     }
-    .barRow{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
-    .barLabel{font-weight:1000}
-    .barText{color:var(--muted);font-weight:900}
+    .barRow{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap
+    }
+    .barLabel{font-weight:1000;font-size:18px}
+    .barText{color:var(--muted);font-weight:1000;font-size:16px}
     .bar{
-      margin-top:10px;
-      height:16px;
-      background: rgba(15,23,42,.08);
+      margin-top:12px;
+      height:18px;
+      background: rgba(15,23,42,.10);
       border-radius:999px;
       overflow:hidden;
       border:1px solid rgba(15,23,42,.10);
@@ -195,7 +179,7 @@
     .fill{
       height:100%;
       width:0%;
-      background: linear-gradient(90deg, var(--accent), #16a34a);
+      background: linear-gradient(90deg, #22c55e, #16a34a);
       border-radius:999px;
       transition: width .45s ease;
     }
@@ -203,50 +187,50 @@
     /* Yutuq icons (nur wenn fertig) */
     .achRow{
       display:flex;
-      gap:8px;
+      gap:10px;
       align-items:center;
       flex-wrap:wrap;
       justify-content:flex-end;
     }
     .achIcon{
-      width:34px;height:34px;
+      width:44px;height:44px;
       border-radius:999px;
       display:grid;
       place-items:center;
-      font-size:18px;
-      background: rgba(34,197,94,.14);
-      border:1px solid rgba(34,197,94,.25);
-      box-shadow: 0 10px 20px rgba(2,6,23,.06);
+      font-size:22px;
+      background: rgba(34,197,94,.18);
+      border:2px solid rgba(34,197,94,.35);
+      box-shadow: 0 14px 28px rgba(2,6,23,.10);
     }
 
-    /* Lesson tiles */
+    /* Lesson grid -> deutlich sichtbarer Pfad */
     .grid{
-      margin-top:14px;
+      margin-top:16px;
       display:grid;
       grid-template-columns: 1fr;
-      gap:16px;
+      gap:18px;
       position:relative;
-      padding-left:12px; /* Platz für Linie */
+      padding-left:26px; /* Platz für dicken Pfad */
     }
-    /* Linie verbindet die Kästchen wie Pfad */
     .grid::before{
       content:"";
       position:absolute;
-      left:6px;
-      top:8px;
-      bottom:8px;
-      width:6px;
+      left:10px;
+      top:10px;
+      bottom:10px;
+      width:10px;
       border-radius:999px;
-      background: rgba(15,23,42,.08);
-      border:1px solid rgba(15,23,42,.08);
+      background: linear-gradient(180deg, rgba(34,197,94,.40), rgba(59,130,246,.35), rgba(245,158,11,.35));
+      border:2px solid rgba(15,23,42,.10);
+      box-shadow: 0 16px 34px rgba(2,6,23,.10);
     }
 
     .tile{
-      background:rgba(255,255,255,.96);
-      border:1px solid var(--line);
-      border-radius:22px;
-      box-shadow: var(--shadow);
-      padding:18px;
+      background:rgba(255,255,255,.97);
+      border:2px solid rgba(15,23,42,.10);
+      border-radius:26px;
+      box-shadow: 0 18px 38px rgba(2,6,23,.14);
+      padding:18px 18px 18px 18px;
       text-decoration:none;
       color:inherit;
       display:flex;
@@ -254,80 +238,103 @@
       align-items:center;
       position:relative;
       overflow:hidden;
-      min-height:120px;
+      min-height:140px;
       touch-action: manipulation;
       cursor:pointer;
     }
-    .tile:hover{box-shadow: 0 18px 36px rgba(2,6,23,.14)}
     .tile:active{transform: translateY(1px)}
-    .icon{
-      width:92px;height:92px;border-radius:22px;
-      display:grid;place-items:center;
-      background: rgba(245,158,11,.14);
-      border:1px solid rgba(245,158,11,.22);
-      font-size:46px;
-      flex:0 0 auto;
-    }
-    .tcol{flex:1;min-width:160px}
-    .title{font-size:22px;font-weight:1000}
-    .desc{margin-top:3px;color:var(--muted);font-weight:900;font-size:16px}
 
-    /* Schrittpunkt (Pfad-Optik) */
+    /* großer Pfad-Punkt */
     .stepDot{
       position:absolute;
-      left:-18px;
+      left:-26px;
       top:50%;
       transform: translateY(-50%);
-      width:22px;height:22px;
+      width:34px;height:34px;
       border-radius:999px;
-      background: rgba(255,255,255,.95);
-      border:2px solid rgba(15,23,42,.20);
-      box-shadow: 0 10px 20px rgba(2,6,23,.08);
+      background: rgba(255,255,255,.98);
+      border:3px solid rgba(15,23,42,.20);
+      box-shadow: 0 16px 34px rgba(2,6,23,.12);
     }
     .tile.done .stepDot{
-      border-color: rgba(34,197,94,.55);
-      background: rgba(34,197,94,.18);
+      border-color: rgba(34,197,94,.65);
+      background: rgba(34,197,94,.22);
     }
     .tile.current .stepDot{
-      border-color: rgba(245,158,11,.60);
-      background: rgba(245,158,11,.18);
+      border-color: rgba(245,158,11,.75);
+      background: rgba(245,158,11,.22);
     }
 
+    /* große, farbintensive Icons */
+    .icon{
+      width:120px;height:120px;border-radius:28px;
+      display:grid;place-items:center;
+      font-size:64px;
+      flex:0 0 auto;
+      border:2px solid rgba(15,23,42,.10);
+      box-shadow: 0 18px 40px rgba(2,6,23,.14);
+    }
+
+    /* NUR Lektionsname (keine anderen Wörter) */
+    .title{
+      font-size:28px;
+      font-weight:1000;
+      line-height:1.1;
+      letter-spacing:.2px;
+    }
+
+    /* OCHMOQ sehr groß */
     .tagRight{
       position:absolute;
       top:14px; right:14px;
-      font-size:12px;
-      font-weight:1000;
-      padding:6px 10px;
+      font-size:18px;
+      font-weight:1100;
+      padding:10px 14px;
       border-radius:999px;
-      border:1px solid rgba(15,23,42,.10);
-      background: rgba(255,255,255,.85);
-      color: rgba(15,23,42,.85);
+      border:2px solid rgba(15,23,42,.10);
+      background: rgba(255,255,255,.92);
+      color: rgba(15,23,42,.90);
+      letter-spacing:.8px;
+      text-transform: uppercase;
     }
-    .tagRight.open{border-color: rgba(34,197,94,.25); background: rgba(34,197,94,.12); color:#065f46;}
-    .tagRight.lock{border-color: rgba(15,23,42,.14); background: rgba(15,23,42,.06); color: rgba(15,23,42,.70);}
+    .tagRight.open{
+      border-color: rgba(34,197,94,.35);
+      background: rgba(34,197,94,.16);
+      color:#065f46;
+    }
+    .tagRight.lock{
+      border-color: rgba(15,23,42,.14);
+      background: rgba(15,23,42,.06);
+      color: rgba(15,23,42,.70);
+    }
 
-    .tile.locked{opacity:.70; filter: grayscale(.25);}
-    .tile.locked .icon{background: rgba(148,163,184,.18); border-color: rgba(148,163,184,.25);}
+    .tile.locked{opacity:.72; filter: grayscale(.18);}
+    .tile.locked .icon{filter: grayscale(.1); opacity:.9;}
 
     /* Bottom buttons */
-    .btnRow{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+    .btnRow{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
     .btnWide{
       flex:1;min-width:240px;
       text-align:center;
-      padding:14px;
-      border-radius:18px;
+      padding:16px;
+      border-radius:20px;
       font-weight:1000;
       border:1px solid transparent;
       cursor:pointer;
       user-select:none;
+      font-size:18px;
     }
     .btnWide.primary{
       background: linear-gradient(180deg, #34d399, #22c55e);
       color:#052e1b;
       border-color: rgba(5,46,27,.10);
+      box-shadow: 0 18px 40px rgba(34,197,94,.22);
     }
-    .btnWide.secondary{background: rgba(255,255,255,.95); color: var(--ink); border-color: var(--line);}
+    .btnWide.secondary{
+      background: rgba(255,255,255,.96);
+      color: var(--ink);
+      border-color: var(--line);
+    }
 
     /* Name Gate */
     .gate{
@@ -354,7 +361,7 @@
       padding:16px;
       text-align:center;
     }
-    .gateTitle{font-size:22px;font-weight:1000;margin:6px 0 6px}
+    .gateTitle{font-size:24px;font-weight:1000;margin:6px 0 6px}
     .gateText{margin:0 0 12px;color: rgba(15,23,42,.78);font-weight:900;}
     .nameInput{
       width:min(360px, 86vw);
@@ -378,16 +385,18 @@
       font-weight:1000;
       cursor:pointer;
       opacity:.55;
+      font-size:18px;
     }
     .gateBtn.enabled{opacity:1}
     .gateHint{margin-top:10px;font-size:12.5px;font-weight:900;color: rgba(15,23,42,.62);}
 
     @media (min-width: 768px){
       .app{max-width:760px;}
-      .icon{width:110px;height:110px;font-size:56px;}
-      .title{font-size:24px;}
-      .desc{font-size:17px;}
-      .helloBig{font-size:38px;}
+      .helloBig{font-size:44px;}
+      .title{font-size:32px;}
+      .icon{width:132px;height:132px;font-size:72px;}
+      .tile{min-height:150px;}
+      .tagRight{font-size:20px;padding:12px 16px;}
     }
   </style>
 </head>
@@ -411,8 +420,6 @@
               <span class="name" id="childNameBig">Do‘st!</span>
               <span>✨</span>
             </div>
-
-            <div class="sub" id="helloLine">Tanla 👉 Eshit 🎧 Takrorla 🗣️ O‘yna 🎲</div>
           </div>
         </div>
 
@@ -423,7 +430,6 @@
 
           <div class="profileMenu" id="profileMenu" role="menu">
             <button class="menuItem" id="changeNameBtn" type="button">✏️ Ismni o‘zgartirish</button>
-            <button class="menuItem" id="premiumBtnSmall" type="button">🔓 Premium</button>
           </div>
 
           <div class="pill free" id="premiumBadge">FREE</div>
@@ -434,16 +440,16 @@
       <div class="barWrap">
         <div class="barRow">
           <div class="barLabel">⭐ Yutuq</div>
-          <div class="barText" id="progressText">0 / 93 so‘z</div>
-          <div class="achRow" id="achRow" aria-label="Lesson achievements"></div>
+          <div class="barText" id="progressText">0 / 93</div>
+          <div class="achRow" id="achRow"></div>
         </div>
 
-        <div class="bar" aria-label="Progress">
+        <div class="bar">
           <div class="fill" id="progressFill"></div>
         </div>
       </div>
 
-      <!-- Lesson tiles (unten), jetzt als Pfad verbunden -->
+      <!-- NUR Kästchen (mit deutlichem Pfad) -->
       <div class="grid" id="lessonGrid"></div>
 
       <div class="btnRow">
@@ -459,7 +465,7 @@
     <div class="gateCard" role="dialog" aria-modal="true">
       <div style="font-size:44px; line-height:1;">🧒✨</div>
       <div class="gateTitle">Isming nima?</div>
-      <p class="gateText">Avval ismingni yoz ✍️ <br/> Keyin o‘ynaymiz 🎲</p>
+      <p class="gateText">Avval ismingni yoz ✍️</p>
       <input class="nameInput" id="nameInput" type="text" autocomplete="name"
              placeholder="Masalan: Ali" maxlength="18" />
       <button class="gateBtn" id="startBtn" type="button">Boshlaymiz! 🚀</button>
@@ -472,16 +478,11 @@
     <div class="gateCard" role="dialog" aria-modal="true">
       <div style="font-size:44px; line-height:1;">🔓✨</div>
       <div class="gateTitle">Vollversion</div>
-      <p class="gateText">
-        Bir marta to‘lov ✅ <br/>
-        Barcha darslar umrbod ochiladi 🔓
-      </p>
+      <p class="gateText">Bir marta to‘lov ✅</p>
 
       <button class="gateBtn enabled" id="buyBtn" type="button">🔓 Ochish (Demo)</button>
       <button class="btnWide secondary" id="restoreBtn" type="button" style="margin-top:10px;">♻️ Restore (Demo)</button>
-      <button class="btn ghost" id="closePaywallBtn" type="button" style="margin-top:10px;">Yopish</button>
-
-      <div class="gateHint">Hozir GitHub demo. Keyin Play Store’da haqiqiy to‘lov bo‘ladi.</div>
+      <button class="btnWide secondary" id="closePaywallBtn" type="button" style="margin-top:10px;">Yopish</button>
     </div>
   </div>
 
@@ -492,24 +493,13 @@
   const PREMIUM_KEY = "premium_unlocked";
   const CHILD_KEY   = "childName";
 
-  // Label für "OPEN"
-  // Du wolltest: "ochmoq" (Verb). UI-mäßig ist "ochiq" üblicher.
-  // Wenn du "ochiq" willst, ändere nur diese Zeile:
-  const OPEN_LABEL = "ochmoq";
+  // Du wolltest "ochmoq" groß und deutlich:
+  const OPEN_LABEL = "OCHMOQ";
 
-  // Wie viele gelernte Items braucht es, damit eine Lektion als "fertig" gilt?
-  // Passe das später pro Lektion an (z.B. 10 Wörter pro Lektion).
+  // "Fertig"-Regel (pro Lektion)
   const MIN_WORDS_PER_LESSON = {
-    1: 5,
-    2: 5,
-    3: 5,
-    4: 5,
-    5: 5,
-    6: 5,
-    7: 5,
-    8: 5,
-    9: 5,
-    10: 5
+    1: 5, 2: 5, 3: 5, 4: 5, 5: 5,
+    6: 5, 7: 5, 8: 5, 9: 5, 10: 5
   };
 
   function getLearnedSet(){
@@ -517,21 +507,33 @@
     catch { return new Set(); }
   }
 
-  // 10 lessons
   const LESSONS = [
-    { id: 1, file:"lesson1.html", icon:"👋", title:"1-dars: Salomlashuv", desc:"Salom, rahmat, iltimos", free:true },
-    { id: 2, file:"lesson2.html", icon:"🔢", title:"2-dars: Sonlar", desc:"1–10 sanash", free:false },
-    { id: 3, file:"lesson3.html", icon:"🐾", title:"3-dars: Hayvonlar", desc:"Mushuk, it, qush", free:false },
-    { id: 4, file:"lesson4.html", icon:"🎨", title:"4-dars: Ranglar", desc:"Qizil, ko‘k, yashil", free:false },
-    { id: 5, file:"lesson5.html", icon:"🍎", title:"5-dars: Mevalar", desc:"Olma, banan, uzum", free:false },
-    { id: 6, file:"lesson6.html", icon:"🥕", title:"6-dars: Sabzavot", desc:"Sabzi, kartoshka", free:false },
-    { id: 7, file:"lesson7.html", icon:"🏠", title:"7-dars: Uy", desc:"Uyda narsalar", free:false },
-    { id: 8, file:"lesson8.html", icon:"👕", title:"8-dars: Kiyim", desc:"Ko‘ylak, oyoq kiyim", free:false },
-    { id: 9, file:"lesson9.html", icon:"🚗", title:"9-dars: Transport", desc:"Mashina, avtobus", free:false },
-    { id:10, file:"lesson10.html",icon:"🌙", title:"10-dars: Kun tartibi", desc:"Ertalab, kechqurun", free:false }
+    { id: 1, file:"lesson1.html", icon:"👋", title:"1-dars: Salomlashuv", free:true  },
+    { id: 2, file:"lesson2.html", icon:"🔢", title:"2-dars: Sonlar",      free:false },
+    { id: 3, file:"lesson3.html", icon:"🐾", title:"3-dars: Hayvonlar",   free:false },
+    { id: 4, file:"lesson4.html", icon:"🎨", title:"4-dars: Ranglar",     free:false },
+    { id: 5, file:"lesson5.html", icon:"🍎", title:"5-dars: Mevalar",     free:false },
+    { id: 6, file:"lesson6.html", icon:"🥕", title:"6-dars: Sabzavot",    free:false },
+    { id: 7, file:"lesson7.html", icon:"🏠", title:"7-dars: Uy",          free:false },
+    { id: 8, file:"lesson8.html", icon:"👕", title:"8-dars: Kiyim",       free:false },
+    { id: 9, file:"lesson9.html", icon:"🚗", title:"9-dars: Transport",   free:false },
+    { id:10, file:"lesson10.html",icon:"🌙", title:"10-dars: Kun tartibi",free:false }
   ];
 
-  // total words progress (global)
+  // Pastell-Farben pro Lektion (intensiv, aber pastell)
+  const PASTELS = [
+    ["rgba(254, 202, 202, .75)", "rgba(248, 113, 113, .25)"], // rot
+    ["rgba(254, 215, 170, .80)", "rgba(251, 146, 60, .25)"],  // orange
+    ["rgba(253, 230, 138, .85)", "rgba(250, 204, 21, .25)"],  // gelb
+    ["rgba(187, 247, 208, .80)", "rgba(34, 197, 94, .22)"],   // grün
+    ["rgba(167, 243, 208, .80)", "rgba(20, 184, 166, .22)"],  // teal
+    ["rgba(191, 219, 254, .85)", "rgba(59, 130, 246, .22)"],  // blau
+    ["rgba(199, 210, 254, .85)", "rgba(99, 102, 241, .22)"],  // indigo
+    ["rgba(221, 214, 254, .85)", "rgba(168, 85, 247, .22)"],  // lila
+    ["rgba(251, 207, 232, .85)", "rgba(236, 72, 153, .22)"],  // pink
+    ["rgba(226, 232, 240, .90)", "rgba(100, 116, 139, .22)"]  // grau
+  ];
+
   const TOTAL_WORDS = 93;
 
   function isPremium(){ return localStorage.getItem(PREMIUM_KEY) === "true"; }
@@ -548,13 +550,6 @@
     return c;
   }
 
-  function openPaywall(){ document.getElementById("paywallGate").classList.add("show"); }
-  function closePaywall(){ document.getElementById("paywallGate").classList.remove("show"); }
-
-  /***************
-   * Completion logic
-   * (fertig = genug Items gelernt)
-   ***************/
   function isLessonCompleted(learnedSet, lessonId){
     const need = MIN_WORDS_PER_LESSON[lessonId] ?? 1;
     return lessonLearnedCount(learnedSet, lessonId) >= need;
@@ -569,8 +564,11 @@
   function lockReason(lessonId){
     if(isPremium()) return null;
     if(lessonId === 1) return null;
-    return `🔒 Avval ${lessonId-1}-dars`;
+    return `🔒 ${lessonId-1}-dars`;
   }
+
+  function openPaywall(){ document.getElementById("paywallGate").classList.add("show"); }
+  function closePaywall(){ document.getElementById("paywallGate").classList.remove("show"); }
 
   /***************
    * UI
@@ -626,18 +624,18 @@
     };
   }
 
-  // ✅ Yutuq: zeige Symbole NUR für fertige Lektionen
+  // Yutuq: Symbole nur wenn fertig
   function renderYutuqIcons(){
     const learned = getLearnedSet();
     const row = document.getElementById("achRow");
     if(!row) return;
     row.innerHTML = "";
 
-    LESSONS.forEach(L=>{
+    LESSONS.forEach((L)=>{
       if(isLessonCompleted(learned, L.id)){
         const d = document.createElement("div");
         d.className = "achIcon";
-        d.title = `${L.id}-dars tayyor ✅`;
+        d.title = `${L.id}-dars ✅`;
         d.textContent = L.icon;
         row.appendChild(d);
       }
@@ -647,17 +645,16 @@
   function renderLessons(){
     const learned = getLearnedSet();
 
-    // Progress global
     const learnedCount = learned.size;
     const pct = Math.max(0, Math.min(100, Math.round((learnedCount / TOTAL_WORDS) * 100)));
     document.getElementById("mainPct").innerText = pct + "%";
-    document.getElementById("progressText").innerText = `${learnedCount} / ${TOTAL_WORDS} so‘z`;
+    document.getElementById("progressText").innerText = `${learnedCount} / ${TOTAL_WORDS}`;
     document.getElementById("progressFill").style.width = pct + "%";
 
     const grid = document.getElementById("lessonGrid");
     grid.innerHTML = "";
 
-    // current = erste Lektion, die offen ist aber noch nicht fertig
+    // current: erste offene Lektion, die noch nicht fertig ist
     let current = 1;
     for(let i=1;i<=LESSONS.length;i++){
       if(canOpenLesson(learned, i) && !isLessonCompleted(learned, i)){
@@ -666,7 +663,7 @@
       if(isLessonCompleted(learned, i)) current = Math.min(LESSONS.length, i+1);
     }
 
-    LESSONS.forEach(L => {
+    LESSONS.forEach((L, idx) => {
       const open = canOpenLesson(learned, L.id);
       const done = isLessonCompleted(learned, L.id);
       const isCurrent = (L.id === current);
@@ -674,11 +671,24 @@
       const a = document.createElement("a");
       a.className = "tile" + (open ? "" : " locked") + (done ? " done" : "") + (isCurrent ? " current" : "");
       a.href = open ? L.file : "#";
-      a.setAttribute("aria-label", L.title);
 
       const step = document.createElement("div");
       step.className = "stepDot";
       a.appendChild(step);
+
+      const [bg, glow] = PASTELS[idx % PASTELS.length];
+
+      const icon = document.createElement("div");
+      icon.className = "icon";
+      icon.textContent = L.icon;
+      icon.style.background = `linear-gradient(180deg, ${bg}, rgba(255,255,255,.85))`;
+      icon.style.boxShadow = `0 22px 50px ${glow}`;
+      a.appendChild(icon);
+
+      const title = document.createElement("div");
+      title.className = "title";
+      title.textContent = L.title;
+      a.appendChild(title);
 
       const tag = document.createElement("div");
       tag.className = "tagRight " + (open ? "open" : "lock");
@@ -690,14 +700,6 @@
       } else {
         tag.textContent = open ? (done ? `${OPEN_LABEL} ✅` : OPEN_LABEL) : lockReason(L.id);
       }
-
-      a.innerHTML += `
-        <div class="icon">${L.icon}</div>
-        <div class="tcol">
-          <div class="title">${L.title}</div>
-          <div class="desc">${L.desc}</div>
-        </div>
-      `;
       a.appendChild(tag);
 
       a.addEventListener("click", (e)=>{
@@ -722,7 +724,6 @@
    * Events
    ***************/
   function wireUI(){
-    // Profile menu toggle
     const profileBtn = document.getElementById("profileBtn");
     const profileMenu = document.getElementById("profileMenu");
 
@@ -740,19 +741,13 @@
       }
     });
 
-    // Change name
     document.getElementById("changeNameBtn").addEventListener("click", ()=>{
       profileMenu?.classList.remove("show");
       localStorage.removeItem(CHILD_KEY);
       showNameGate();
     });
 
-    // Premium
     document.getElementById("premiumBtn").addEventListener("click", ()=> openPaywall());
-    document.getElementById("premiumBtnSmall").addEventListener("click", ()=>{
-      profileMenu?.classList.remove("show");
-      openPaywall();
-    });
 
     document.getElementById("buyBtn").addEventListener("click", ()=>{
       setPremium(true);
@@ -771,7 +766,6 @@
       if(e.target.id === "paywallGate") closePaywall();
     });
 
-    // Reset
     document.getElementById("resetBtn").addEventListener("click", ()=>{
       const ok = confirm("Hammasini qaytadan boshlaymizmi? (Natija o‘chadi)");
       if(!ok) return;
@@ -780,12 +774,11 @@
       updateAll();
     });
 
-    // refresh when returning from lesson pages
     window.addEventListener("focus", updateAll);
     document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) updateAll(); });
     window.addEventListener("pageshow", updateAll);
 
-    // Dev: Shift+P to clear premium
+    // Dev: Shift+P clears premium
     document.addEventListener("keydown", (e)=>{
       if(e.shiftKey && (e.key==="P" || e.key==="p")){
         localStorage.removeItem(PREMIUM_KEY);
@@ -804,4 +797,3 @@
 </script>
 </body>
 </html>
-
