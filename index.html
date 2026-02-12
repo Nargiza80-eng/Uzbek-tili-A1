@@ -7,13 +7,9 @@
 
   <style>
     :root{
-      --bg1:#dff7f0;
-      --bg2:#eaf6ff;
-
       --ink:#0f172a;
       --muted:#475569;
       --line:rgba(15,23,42,.12);
-
       --shadow:0 14px 30px rgba(2,6,23,.12);
       --radius:22px;
     }
@@ -34,7 +30,7 @@
       background-attachment: fixed, fixed;
     }
 
-    .app{max-width:860px;margin:0 auto}
+    .app{max-width:900px;margin:0 auto}
     .top{
       background:rgba(255,255,255,.92);
       border:1px solid var(--line);
@@ -46,11 +42,14 @@
       overflow:hidden;
     }
 
-    /* Hero */
-    .hero{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;justify-content:space-between}
-    .heroLeft{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+    /* Header */
+    .hero{
+      display:flex; gap:14px; align-items:flex-start;
+      flex-wrap:wrap; justify-content:space-between;
+    }
+    .heroLeft{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
 
-    .sunWrap{position:relative; width:104px; height:104px; flex:0 0 auto;}
+    .sunWrap{width:104px;height:104px;flex:0 0 auto}
     .sun{
       width:104px;height:104px;border-radius:999px;
       display:grid;place-items:center;
@@ -63,30 +62,14 @@
     h1{margin:0;font-size:24px;font-weight:1000;letter-spacing:.2px}
 
     .helloBig{
-      margin-top:6px;
-      font-weight:1000;
-      font-size:40px;
-      line-height:1.05;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
+      margin-top:6px; font-weight:1000;
+      font-size:40px; line-height:1.05;
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
     }
-    .helloBig .name{
-      color:#065f46;
-      text-shadow: 0 2px 0 rgba(255,255,255,.45);
-    }
+    .helloBig .name{color:#065f46;text-shadow:0 2px 0 rgba(255,255,255,.45)}
 
-    /* Header right (language + name only) */
-    .topActions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-      align-items:center;
-      position:relative;
-    }
-    .langBtn{
+    .topActions{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; align-items:center; position:relative}
+    .langBtn,.profileBtn{
       border-radius:18px;
       font-weight:1000;
       border:1px solid rgba(15,23,42,.14);
@@ -97,24 +80,10 @@
       font-size:16px;
       white-space:nowrap;
     }
-    .profileBtn{
-      border-radius:18px;
-      font-weight:1000;
-      border:1px solid rgba(15,23,42,.14);
-      cursor:pointer;
-      user-select:none;
-      padding:12px 14px;
-      background: rgba(255,255,255,.94);
-      display:flex;
-      align-items:center;
-      gap:10px;
-      white-space:nowrap;
-      font-size:16px;
-    }
+    .profileBtn{display:flex; align-items:center; gap:10px}
     .profileMenu{
       position:absolute;
-      right:0;
-      top:52px;
+      right:0; top:52px;
       width:240px;
       background: rgba(255,255,255,.97);
       border:1px solid rgba(15,23,42,.12);
@@ -129,7 +98,7 @@
       width:100%;
       text-align:left;
       border-radius:14px;
-      padding:12px 12px;
+      padding:12px;
       border:1px solid transparent;
       background:transparent;
       font-weight:900;
@@ -137,7 +106,6 @@
       font-size:16px;
     }
     .menuItem:hover{background: rgba(15,23,42,.06)}
-    .menuItem:active{transform: translateY(1px)}
 
     /* Progress */
     .barWrap{
@@ -148,45 +116,16 @@
       padding:14px;
       box-shadow: 0 12px 28px rgba(2,6,23,.07);
     }
-    .barRow{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:center;
-      flex-wrap:wrap
-    }
+    .barRow{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
     .barLabel{font-weight:1000;font-size:18px}
     .barText{color:var(--muted);font-weight:1000;font-size:16px}
-    .bar{
-      margin-top:12px;
-      height:18px;
-      background: rgba(15,23,42,.10);
-      border-radius:999px;
-      overflow:hidden;
-      border:1px solid rgba(15,23,42,.10);
-    }
-    .fill{
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg, #22c55e, #16a34a);
-      border-radius:999px;
-      transition: width .45s ease;
-    }
+    .bar{margin-top:12px;height:18px;background: rgba(15,23,42,.10);border-radius:999px;overflow:hidden;border:1px solid rgba(15,23,42,.10)}
+    .fill{height:100%;width:0%;background: linear-gradient(90deg, #22c55e, #16a34a);border-radius:999px;transition: width .45s ease}
 
-    /* Progress icons (only when completed) */
-    .achRow{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
+    .achRow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
     .achIcon{
-      width:46px;height:46px;
-      border-radius:999px;
-      display:grid;
-      place-items:center;
-      font-size:24px;
+      width:46px;height:46px;border-radius:999px;
+      display:grid;place-items:center;font-size:24px;
       background: rgba(34,197,94,.18);
       border:2px solid rgba(34,197,94,.35);
       box-shadow: 0 14px 28px rgba(2,6,23,.10);
@@ -209,82 +148,66 @@
       bottom:10px;
       width:12px;
       border-radius:999px;
-      background: linear-gradient(180deg,
-        rgba(34,197,94,.55),
-        rgba(59,130,246,.45),
-        rgba(245,158,11,.45)
-      );
+      background: linear-gradient(180deg, rgba(34,197,94,.55), rgba(59,130,246,.45), rgba(245,158,11,.45));
       border:2px solid rgba(15,23,42,.10);
       box-shadow: 0 18px 40px rgba(2,6,23,.12);
     }
 
+    /* ✅ MOBILE-SAFE TILE (no overlap) */
     .tile{
       border:2px solid rgba(15,23,42,.10);
       border-radius:28px;
       box-shadow: 0 18px 38px rgba(2,6,23,.14);
-      padding:18px;
       text-decoration:none;
       color:inherit;
-      display:flex;
-      gap:18px;
-      align-items:center;
       position:relative;
       overflow:hidden;
-      min-height:150px;
-      touch-action: manipulation;
       cursor:pointer;
+      touch-action:manipulation;
+
+      display:grid;
+      grid-template-columns: 120px 1fr;
+      grid-template-areas:
+        "icon tag"
+        "icon title"
+        "icon under";
+      gap:14px;
+      padding:16px;
+      align-items:center;
+
       background: rgba(255,255,255,.97);
+      min-height:150px;
     }
     .tile:active{transform: translateY(1px)}
 
-    /* Big step dot */
     .stepDot{
       position:absolute;
       left:-28px;
       top:50%;
       transform: translateY(-50%);
-      width:38px;height:38px;
-      border-radius:999px;
+      width:38px;height:38px;border-radius:999px;
       background: rgba(255,255,255,.98);
       border:3px solid rgba(15,23,42,.22);
       box-shadow: 0 16px 34px rgba(2,6,23,.12);
     }
-    .tile.done .stepDot{
-      border-color: rgba(34,197,94,.70);
-      background: rgba(34,197,94,.25);
-    }
-    .tile.current .stepDot{
-      border-color: rgba(245,158,11,.80);
-      background: rgba(245,158,11,.25);
-    }
+    .tile.done .stepDot{border-color: rgba(34,197,94,.70); background: rgba(34,197,94,.25);}
+    .tile.current .stepDot{border-color: rgba(245,158,11,.80); background: rgba(245,158,11,.25);}
 
-    /* Icon tile */
     .icon{
-      width:130px;height:130px;border-radius:30px;
+      grid-area:icon;
+      width:120px;height:120px;border-radius:28px;
       display:grid;place-items:center;
-      font-size:74px;
-      flex:0 0 auto;
+      font-size:70px;
       border:2px solid rgba(15,23,42,.10);
       box-shadow: 0 18px 44px rgba(2,6,23,.16);
-      position:relative;
-      z-index:2;
       background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.58));
-    }
-
-    /* Title (name only) */
-    .title{
-      font-size:32px;
-      font-weight:1000;
-      line-height:1.05;
-      letter-spacing:.2px;
-      position:relative;
       z-index:2;
     }
 
-    /* OPEN big */
     .tagRight{
-      position:absolute;
-      top:14px; right:14px;
+      grid-area:tag;
+      justify-self:end;
+      align-self:start;
       font-size:22px;
       font-weight:1100;
       padding:12px 16px;
@@ -307,28 +230,38 @@
       color: rgba(15,23,42,.75);
     }
 
-    /* Lesson label under OPEN */
+    .title{
+      grid-area:title;
+      font-size:32px;
+      font-weight:1000;
+      line-height:1.05;
+      letter-spacing:.2px;
+      min-width:0;
+      word-break:break-word;
+      z-index:2;
+    }
+
     .underTag{
-      position:absolute;
-      top:62px;
-      right:18px;
+      grid-area:under;
+      justify-self:end;
+      align-self:end;
       font-size:14px;
       font-weight:1000;
       color: rgba(15,23,42,.80);
-      z-index:3;
       padding:6px 10px;
       border-radius:999px;
       background: rgba(255,255,255,.78);
       border:1px solid rgba(15,23,42,.10);
+      z-index:3;
     }
 
-    /* Faded color strip under the card (same color, softer) */
+    /* Same-color soft strip under each tile */
     .tile::after{
       content:"";
       position:absolute;
-      left:18px;
-      right:18px;
-      bottom:12px;
+      left:16px;
+      right:16px;
+      bottom:10px;
       height:16px;
       border-radius:999px;
       background: var(--soft, rgba(0,0,0,.06));
@@ -402,7 +335,6 @@
       outline:none;
       background: rgba(255,255,255,.95);
     }
-    .nameInput:focus{border-color: rgba(59,130,246,.55);box-shadow: 0 0 0 6px rgba(59,130,246,.18);}
 
     .gateBtn{
       width:min(360px, 86vw);
@@ -430,13 +362,44 @@
     }
     .gateHint{margin-top:10px;font-size:12.5px;font-weight:900;color: rgba(15,23,42,.62);}
 
-    @media (min-width: 768px){
-      .app{max-width:760px;}
-      .helloBig{font-size:46px;}
-      .title{font-size:36px;}
-      .icon{width:140px;height:140px;font-size:80px;}
-      .tile{min-height:160px;}
-      .tagRight{font-size:24px;padding:12px 18px;}
+    /* ✅ Responsive: phone */
+    @media (max-width: 420px){
+      .sunWrap{width:78px;height:78px}
+      .sun{width:78px;height:78px}
+      .sunPct{font-size:18px}
+
+      h1{font-size:20px}
+      .helloBig{font-size:30px}
+
+      .grid{padding-left:22px}
+      .grid::before{left:8px;width:10px}
+      .stepDot{left:-22px;width:30px;height:30px}
+
+      .tile{
+        grid-template-columns: 96px 1fr;
+        gap:12px;
+        min-height:120px;
+      }
+      .icon{width:96px;height:96px;font-size:52px;border-radius:22px}
+      .title{font-size:24px}
+      .tagRight{font-size:16px;padding:10px 12px}
+      .underTag{font-size:12px;padding:6px 10px}
+    }
+
+    /* ✅ Responsive: tablet */
+    @media (min-width: 700px){
+      .tile{grid-template-columns: 140px 1fr; min-height:170px}
+      .icon{width:140px;height:140px;font-size:82px}
+      .title{font-size:38px}
+      .tagRight{font-size:24px}
+    }
+
+    /* ✅ Responsive: desktop */
+    @media (min-width: 980px){
+      .app{max-width:980px}
+      .top{padding:18px}
+      .tile{grid-template-columns: 160px 1fr; min-height:180px}
+      .icon{width:160px;height:160px;font-size:90px}
     }
   </style>
 </head>
@@ -453,7 +416,6 @@
 
           <div>
             <h1>🌿 Dono Bola!</h1>
-
             <div class="helloBig">
               <span>🦁</span>
               <span id="helloWord">Hello,</span>
@@ -488,7 +450,7 @@
         </div>
       </div>
 
-      <!-- Lesson cards -->
+      <!-- Lessons -->
       <div class="grid" id="lessonGrid"></div>
 
       <div class="btnRow">
@@ -527,13 +489,9 @@
   </div>
 
 <script>
-  /***************
-   * CONFIG
-   ***************/
   const PREMIUM_KEY = "premium_unlocked";
   const CHILD_KEY   = "childName";
   const LANG_KEY    = "ui_lang";
-
   const PRICE_LABEL = "$9.99";
 
   const UI = {
@@ -541,7 +499,7 @@
       langBtn: "UZ",
       helloWord: "Hello,",
       friendFallback: "Friend!",
-      profileChangeName: "✏️ Change name",
+      changeName: "✏️ Change name",
       progressLabel: "⭐ Progress",
       openLabel: "OPEN",
       freeLabel: "FREE",
@@ -563,7 +521,7 @@
       langBtn: "ENG",
       helloWord: "Salom,",
       friendFallback: "Do‘st!",
-      profileChangeName: "✏️ Ismni o‘zgartirish",
+      changeName: "✏️ Ismni o‘zgartirish",
       progressLabel: "⭐ Yutuq",
       openLabel: "OCHMOQ",
       freeLabel: "BEPUL",
@@ -587,12 +545,10 @@
     const v = localStorage.getItem(LANG_KEY);
     return (v === "uz" || v === "en") ? v : "en";
   }
-  function setLang(v){
-    localStorage.setItem(LANG_KEY, v);
-  }
+  function setLang(v){ localStorage.setItem(LANG_KEY, v); }
   function T(){ return UI[getLang()]; }
 
-  // completion rule (for showing icons in Progress only when a lesson is completed)
+  // completion rule for progress icons
   const MIN_WORDS_PER_LESSON = { 1:5,2:5,3:5,4:5,5:5,6:5,7:5,8:5,9:5,10:5 };
 
   function getLearnedSet(){
@@ -600,32 +556,31 @@
     catch { return new Set(); }
   }
 
-  // bilingual lesson names (no “1-lesson:” in title)
   const LESSONS = [
-    { id: 1, file:"lesson1.html", icon:"👋", en:"Greetings",     uz:"Salomlashuv",  free:true  },
-    { id: 2, file:"lesson2.html", icon:"🔢", en:"Numbers",       uz:"Sonlar",       free:false },
-    { id: 3, file:"lesson3.html", icon:"🐾", en:"Animals",       uz:"Hayvonlar",    free:false },
-    { id: 4, file:"lesson4.html", icon:"🎨", en:"Colors",        uz:"Ranglar",      free:false },
-    { id: 5, file:"lesson5.html", icon:"🍎", en:"Fruits",        uz:"Mevalar",      free:false },
-    { id: 6, file:"lesson6.html", icon:"🥕", en:"Vegetables",    uz:"Sabzavot",     free:false },
-    { id: 7, file:"lesson7.html", icon:"🏠", en:"Home",          uz:"Uy",           free:false },
-    { id: 8, file:"lesson8.html", icon:"👕", en:"Clothes",       uz:"Kiyim",        free:false },
-    { id: 9, file:"lesson9.html", icon:"🚗", en:"Transport",     uz:"Transport",    free:false },
-    { id:10, file:"lesson10.html",icon:"🌙", en:"Daily routine", uz:"Kun tartibi",  free:false }
+    { id: 1, file:"lesson1.html", icon:"👋", en:"Greetings",     uz:"Salomlashuv", free:true  },
+    { id: 2, file:"lesson2.html", icon:"🔢", en:"Numbers",       uz:"Sonlar",      free:false },
+    { id: 3, file:"lesson3.html", icon:"🐾", en:"Animals",       uz:"Hayvonlar",   free:false },
+    { id: 4, file:"lesson4.html", icon:"🎨", en:"Colors",        uz:"Ranglar",     free:false },
+    { id: 5, file:"lesson5.html", icon:"🍎", en:"Fruits",        uz:"Mevalar",     free:false },
+    { id: 6, file:"lesson6.html", icon:"🥕", en:"Vegetables",    uz:"Sabzavot",    free:false },
+    { id: 7, file:"lesson7.html", icon:"🏠", en:"Home",          uz:"Uy",          free:false },
+    { id: 8, file:"lesson8.html", icon:"👕", en:"Clothes",       uz:"Kiyim",       free:false },
+    { id: 9, file:"lesson9.html", icon:"🚗", en:"Transport",     uz:"Transport",   free:false },
+    { id:10, file:"lesson10.html",icon:"🌙", en:"Daily routine", uz:"Kun tartibi", free:false }
   ];
 
-  // stronger pastel colors + softer strip under each card
+  // Stronger pastels + soft bar (same color)
   const COLORS = [
-    { bg:"rgba(251, 113, 133, .42)", soft:"rgba(251, 113, 133, .18)" }, // rose
-    { bg:"rgba(251, 146,  60, .45)", soft:"rgba(251, 146,  60, .18)" }, // orange
-    { bg:"rgba(250, 204,  21, .45)", soft:"rgba(250, 204,  21, .18)" }, // yellow
-    { bg:"rgba( 34, 197,  94, .38)", soft:"rgba( 34, 197,  94, .16)" }, // green
-    { bg:"rgba( 20, 184, 166, .40)", soft:"rgba( 20, 184, 166, .16)" }, // teal
-    { bg:"rgba( 59, 130, 246, .40)", soft:"rgba( 59, 130, 246, .16)" }, // blue
-    { bg:"rgba( 99, 102, 241, .42)", soft:"rgba( 99, 102, 241, .16)" }, // indigo
-    { bg:"rgba(168,  85, 247, .40)", soft:"rgba(168,  85, 247, .16)" }, // purple
-    { bg:"rgba(236,  72, 153, .38)", soft:"rgba(236,  72, 153, .16)" }, // pink
-    { bg:"rgba(100, 116, 139, .34)", soft:"rgba(100, 116, 139, .14)" }  // slate
+    { bg:"rgba(251, 113, 133, .42)", soft:"rgba(251, 113, 133, .18)" },
+    { bg:"rgba(251, 146,  60, .45)", soft:"rgba(251, 146,  60, .18)" },
+    { bg:"rgba(250, 204,  21, .45)", soft:"rgba(250, 204,  21, .18)" },
+    { bg:"rgba( 34, 197,  94, .38)", soft:"rgba( 34, 197,  94, .16)" },
+    { bg:"rgba( 20, 184, 166, .40)", soft:"rgba( 20, 184, 166, .16)" },
+    { bg:"rgba( 59, 130, 246, .40)", soft:"rgba( 59, 130, 246, .16)" },
+    { bg:"rgba( 99, 102, 241, .42)", soft:"rgba( 99, 102, 241, .16)" },
+    { bg:"rgba(168,  85, 247, .40)", soft:"rgba(168,  85, 247, .16)" },
+    { bg:"rgba(236,  72, 153, .38)", soft:"rgba(236,  72, 153, .16)" },
+    { bg:"rgba(100, 116, 139, .34)", soft:"rgba(100, 116, 139, .14)" }
   ];
 
   const TOTAL_WORDS = 93;
@@ -643,54 +598,48 @@
     }
     return c;
   }
-
   function isLessonCompleted(learnedSet, lessonId){
     const need = MIN_WORDS_PER_LESSON[lessonId] ?? 1;
     return lessonLearnedCount(learnedSet, lessonId) >= need;
   }
 
-  // Without premium only lesson 1 is open
+  // Only lesson 1 is open without premium
   function canOpenLesson(lessonId){
     if(lessonId === 1) return true;
     return isPremium();
   }
 
   function openPaywall(lessonId){
+    const tt = T();
     const gate = document.getElementById("paywallGate");
     const text = document.getElementById("paywallText");
     const buy  = document.getElementById("buyBtn");
-    const tt = T();
 
-    // if opened from bottom "Premium" button
     if(String(lessonId).toLowerCase() === "premium"){
       text.innerText = (getLang()==="uz") ? "Barcha darslar ochiladi 🔓" : "Unlock all lessons 🔓";
     } else {
       text.innerText = tt.paywallText(lessonId);
     }
 
-    buy.innerText  = tt.buyBtn(PRICE_LABEL);
+    buy.innerText = tt.buyBtn(PRICE_LABEL);
     buy.dataset.lessonId = String(lessonId);
-
     gate.classList.add("show");
   }
   function closePaywall(){ document.getElementById("paywallGate").classList.remove("show"); }
 
   function applyTexts(){
     const tt = T();
-
     document.getElementById("langBtn").innerText = tt.langBtn;
     document.getElementById("helloWord").innerText = tt.helloWord;
-    document.getElementById("changeNameBtn").innerText = tt.profileChangeName;
+    document.getElementById("changeNameBtn").innerText = tt.changeName;
     document.getElementById("progressLabel").innerText = tt.progressLabel;
 
-    // Name gate
     document.getElementById("nameGateTitle").innerText = tt.nameGateTitle;
     document.getElementById("nameGateText").innerText  = tt.nameGateText;
     document.getElementById("nameInput").placeholder   = tt.namePlaceholder;
     document.getElementById("startBtn").innerText      = tt.startBtn;
     document.getElementById("nameGateHint").innerText  = tt.nameGateHint;
 
-    // Paywall
     document.getElementById("paywallTitle").innerText = tt.paywallTitle;
     document.getElementById("buyBtn").innerText       = tt.buyBtn(PRICE_LABEL);
     document.getElementById("closePaywallBtn").innerText = tt.close;
@@ -703,12 +652,10 @@
     const child = name ? name : tt.friendFallback;
 
     document.getElementById("childNameBig").innerText = child;
-    const pn = document.getElementById("profileName");
-    if(pn) pn.innerText = child.replace("!", "");
+    document.getElementById("profileName").innerText  = child.replace("!", "");
   }
 
   function showNameGate(){
-    const tt = T();
     const gate = document.getElementById("nameGate");
     gate.classList.add("show");
     const input = document.getElementById("nameInput");
@@ -731,12 +678,10 @@
     };
   }
 
-  // Progress icons: show only for completed lessons
   function renderProgressIcons(){
     const learned = getLearnedSet();
     const row = document.getElementById("achRow");
     row.innerHTML = "";
-
     LESSONS.forEach(L=>{
       if(isLessonCompleted(learned, L.id)){
         const d = document.createElement("div");
@@ -752,7 +697,6 @@
     const tt = T();
     const learned = getLearnedSet();
 
-    // Progress
     const learnedCount = learned.size;
     const pct = Math.max(0, Math.min(100, Math.round((learnedCount / TOTAL_WORDS) * 100)));
     document.getElementById("mainPct").innerText = pct + "%";
@@ -762,7 +706,6 @@
     const grid = document.getElementById("lessonGrid");
     grid.innerHTML = "";
 
-    // current: first incomplete lesson
     let current = 1;
     for(let i=1;i<=LESSONS.length;i++){
       if(!isLessonCompleted(learned, i)){ current = i; break; }
@@ -781,36 +724,30 @@
       a.style.background = `linear-gradient(180deg, ${c.bg}, rgba(255,255,255,.92))`;
       a.style.setProperty("--soft", c.soft);
 
-      // dot
-      const step = document.createElement("div");
-      step.className = "stepDot";
-      a.appendChild(step);
+      const dot = document.createElement("div");
+      dot.className = "stepDot";
+      a.appendChild(dot);
 
-      // icon
-      const icon = document.createElement("div");
-      icon.className = "icon";
-      icon.textContent = L.icon;
-      a.appendChild(icon);
+      const ic = document.createElement("div");
+      ic.className = "icon";
+      ic.textContent = L.icon;
+      a.appendChild(ic);
 
-      // title (name only)
       const title = document.createElement("div");
       title.className = "title";
       title.textContent = (getLang()==="uz") ? L.uz : L.en;
       a.appendChild(title);
 
-      // OPEN tag (or FREE for lesson 1)
       const tag = document.createElement("div");
       tag.className = "tagRight " + (open ? "open" : "lock");
       tag.textContent = (L.id === 1 && !isPremium()) ? tt.freeLabel : tt.openLabel;
       a.appendChild(tag);
 
-      // lesson label under tag
       const under = document.createElement("div");
       under.className = "underTag";
       under.textContent = tt.lessonLabel(L.id);
       a.appendChild(under);
 
-      // click
       a.addEventListener("click", (e)=>{
         if(!open){
           e.preventDefault();
@@ -830,14 +767,14 @@
   }
 
   function wireUI(){
-    // language toggle
+    // language
     document.getElementById("langBtn").addEventListener("click", ()=>{
       const next = (getLang()==="en") ? "uz" : "en";
       setLang(next);
       updateAll();
     });
 
-    // profile menu
+    // profile
     const profileBtn = document.getElementById("profileBtn");
     const profileMenu = document.getElementById("profileMenu");
 
@@ -854,31 +791,26 @@
       }
     });
 
-    // change name
     document.getElementById("changeNameBtn").addEventListener("click", ()=>{
       profileMenu.classList.remove("show");
       localStorage.removeItem(CHILD_KEY);
       showNameGate();
     });
 
-    // bottom premium button -> open paywall
     document.getElementById("premiumBtn").addEventListener("click", ()=> openPaywall("Premium"));
 
-    // buy (demo unlock)
     document.getElementById("buyBtn").addEventListener("click", ()=>{
-      setPremium(true);
+      setPremium(true); // demo unlock
       closePaywall();
       updateAll();
       alert(T().premiumActivated);
     });
 
-    // close paywall
     document.getElementById("closePaywallBtn").addEventListener("click", ()=> closePaywall());
     document.getElementById("paywallGate").addEventListener("click", (e)=>{
       if(e.target.id === "paywallGate") closePaywall();
     });
 
-    // reset
     document.getElementById("resetBtn").addEventListener("click", ()=>{
       const ok = confirm(T().resetConfirm);
       if(!ok) return;
@@ -887,7 +819,6 @@
       updateAll();
     });
 
-    // refresh
     window.addEventListener("focus", updateAll);
     document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) updateAll(); });
     window.addEventListener("pageshow", updateAll);
@@ -895,10 +826,8 @@
 
   window.addEventListener("load", ()=>{
     wireUI();
-    // set default lang if missing
     if(!localStorage.getItem(LANG_KEY)) setLang("en");
-    const nm = localStorage.getItem(CHILD_KEY);
-    if(!nm) showNameGate();
+    if(!localStorage.getItem(CHILD_KEY)) showNameGate();
     updateAll();
   });
 </script>
