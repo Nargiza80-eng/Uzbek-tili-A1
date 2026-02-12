@@ -77,7 +77,7 @@
       text-shadow: 0 2px 0 rgba(255,255,255,.45);
     }
 
-    /* Header right (name only) */
+    /* Header right (language + name only) */
     .topActions{
       display:flex;
       gap:10px;
@@ -85,6 +85,17 @@
       justify-content:flex-end;
       align-items:center;
       position:relative;
+    }
+    .langBtn{
+      border-radius:18px;
+      font-weight:1000;
+      border:1px solid rgba(15,23,42,.14);
+      cursor:pointer;
+      user-select:none;
+      padding:12px 14px;
+      background: rgba(255,255,255,.94);
+      font-size:16px;
+      white-space:nowrap;
     }
     .profileBtn{
       border-radius:18px;
@@ -104,7 +115,7 @@
       position:absolute;
       right:0;
       top:52px;
-      width:220px;
+      width:240px;
       background: rgba(255,255,255,.97);
       border:1px solid rgba(15,23,42,.12);
       border-radius:18px;
@@ -128,7 +139,7 @@
     .menuItem:hover{background: rgba(15,23,42,.06)}
     .menuItem:active{transform: translateY(1px)}
 
-    /* Yutuq */
+    /* Progress */
     .barWrap{
       margin-top:12px;
       background:rgba(255,255,255,.96);
@@ -162,7 +173,7 @@
       transition: width .45s ease;
     }
 
-    /* Yutuq icons (only when completed) */
+    /* Progress icons (only when completed) */
     .achRow{
       display:flex;
       gap:10px;
@@ -257,6 +268,7 @@
       box-shadow: 0 18px 44px rgba(2,6,23,.16);
       position:relative;
       z-index:2;
+      background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.58));
     }
 
     /* Title (name only) */
@@ -295,7 +307,7 @@
       color: rgba(15,23,42,.75);
     }
 
-    /* Lesson number under OPEN */
+    /* Lesson label under OPEN */
     .underTag{
       position:absolute;
       top:62px;
@@ -444,7 +456,7 @@
 
             <div class="helloBig">
               <span>🦁</span>
-              <span>Hello,</span>
+              <span id="helloWord">Hello,</span>
               <span class="name" id="childNameBig">Friend!</span>
               <span>✨</span>
             </div>
@@ -452,6 +464,8 @@
         </div>
 
         <div class="topActions">
+          <button class="langBtn" id="langBtn" type="button">UZ</button>
+
           <button class="profileBtn" id="profileBtn" type="button" aria-haspopup="menu" aria-expanded="false">
             🧒 <span id="profileName">Friend</span> ▾
           </button>
@@ -465,7 +479,7 @@
       <!-- Progress -->
       <div class="barWrap">
         <div class="barRow">
-          <div class="barLabel">⭐ Progress</div>
+          <div class="barLabel" id="progressLabel">⭐ Progress</div>
           <div class="barText" id="progressText">0 / 93</div>
           <div class="achRow" id="achRow"></div>
         </div>
@@ -489,12 +503,12 @@
   <div class="gate" id="nameGate">
     <div class="gateCard" role="dialog" aria-modal="true">
       <div style="font-size:44px; line-height:1;">🧒✨</div>
-      <div class="gateTitle">What’s your name?</div>
-      <p class="gateText">Type your name ✍️</p>
+      <div class="gateTitle" id="nameGateTitle">What’s your name?</div>
+      <p class="gateText" id="nameGateText">Type your name ✍️</p>
       <input class="nameInput" id="nameInput" type="text" autocomplete="name"
              placeholder="Example: Ali" maxlength="18" />
       <button class="gateBtn" id="startBtn" type="button">Start 🚀</button>
-      <div class="gateHint">Tip: 2 letters is enough 🙂</div>
+      <div class="gateHint" id="nameGateHint">Tip: 2 letters is enough 🙂</div>
     </div>
   </div>
 
@@ -502,13 +516,13 @@
   <div class="gate" id="paywallGate">
     <div class="gateCard" role="dialog" aria-modal="true">
       <div style="font-size:44px; line-height:1;">🔓✨</div>
-      <div class="gateTitle">Premium</div>
+      <div class="gateTitle" id="paywallTitle">Premium</div>
       <p class="gateText" id="paywallText">Unlock all lessons 🔓</p>
 
       <button class="gateBtn" id="buyBtn" type="button">Buy Premium — $9.99</button>
       <button class="btnGhost" id="closePaywallBtn" type="button">Close</button>
 
-      <div class="gateHint">GitHub demo now. Real payment later in the app stores.</div>
+      <div class="gateHint" id="paywallHint">GitHub demo now. Real payment later in the app stores.</div>
     </div>
   </div>
 
@@ -518,9 +532,65 @@
    ***************/
   const PREMIUM_KEY = "premium_unlocked";
   const CHILD_KEY   = "childName";
+  const LANG_KEY    = "ui_lang";
 
-  const OPEN_LABEL = "OPEN";
   const PRICE_LABEL = "$9.99";
+
+  const UI = {
+    en: {
+      langBtn: "UZ",
+      helloWord: "Hello,",
+      friendFallback: "Friend!",
+      profileChangeName: "✏️ Change name",
+      progressLabel: "⭐ Progress",
+      openLabel: "OPEN",
+      freeLabel: "FREE",
+      lessonLabel: (id)=> `Lesson ${id}`,
+      paywallTitle: "Premium",
+      paywallText: (id)=> `Premium is required for Lesson ${id}.`,
+      buyBtn: (price)=> `Buy Premium — ${price}`,
+      close: "Close",
+      hint: "GitHub demo now. Real payment later in the app stores.",
+      nameGateTitle: "What’s your name?",
+      nameGateText: "Type your name ✍️",
+      namePlaceholder: "Example: Ali",
+      startBtn: "Start 🚀",
+      nameGateHint: "Tip: 2 letters is enough 🙂",
+      resetConfirm: "Start over? (Progress will be cleared)",
+      premiumActivated: "✅ Premium activated (demo)!"
+    },
+    uz: {
+      langBtn: "ENG",
+      helloWord: "Salom,",
+      friendFallback: "Do‘st!",
+      profileChangeName: "✏️ Ismni o‘zgartirish",
+      progressLabel: "⭐ Yutuq",
+      openLabel: "OCHMOQ",
+      freeLabel: "BEPUL",
+      lessonLabel: (id)=> `${id}-dars`,
+      paywallTitle: "Premium",
+      paywallText: (id)=> `${id}-dars uchun Premium kerak 🔒`,
+      buyBtn: (price)=> `Premium sotib olish — ${price}`,
+      close: "Yopish",
+      hint: "Hozir GitHub demo. Keyin haqiqiy to‘lov bo‘ladi.",
+      nameGateTitle: "Isming nima?",
+      nameGateText: "Ismingni yoz ✍️",
+      namePlaceholder: "Masalan: Ali",
+      startBtn: "Boshlaymiz! 🚀",
+      nameGateHint: "Maslahat: 2 ta harf yetadi 🙂",
+      resetConfirm: "Hammasini qaytadan boshlaymizmi? (Natija o‘chadi)",
+      premiumActivated: "✅ Premium (demo) aktiv!"
+    }
+  };
+
+  function getLang(){
+    const v = localStorage.getItem(LANG_KEY);
+    return (v === "uz" || v === "en") ? v : "en";
+  }
+  function setLang(v){
+    localStorage.setItem(LANG_KEY, v);
+  }
+  function T(){ return UI[getLang()]; }
 
   // completion rule (for showing icons in Progress only when a lesson is completed)
   const MIN_WORDS_PER_LESSON = { 1:5,2:5,3:5,4:5,5:5,6:5,7:5,8:5,9:5,10:5 };
@@ -530,18 +600,18 @@
     catch { return new Set(); }
   }
 
-  // names only (no "1-lesson:" in the title)
+  // bilingual lesson names (no “1-lesson:” in title)
   const LESSONS = [
-    { id: 1, file:"lesson1.html", icon:"👋", name:"Greetings",   free:true  },
-    { id: 2, file:"lesson2.html", icon:"🔢", name:"Numbers",     free:false },
-    { id: 3, file:"lesson3.html", icon:"🐾", name:"Animals",     free:false },
-    { id: 4, file:"lesson4.html", icon:"🎨", name:"Colors",      free:false },
-    { id: 5, file:"lesson5.html", icon:"🍎", name:"Fruits",      free:false },
-    { id: 6, file:"lesson6.html", icon:"🥕", name:"Vegetables",  free:false },
-    { id: 7, file:"lesson7.html", icon:"🏠", name:"Home",        free:false },
-    { id: 8, file:"lesson8.html", icon:"👕", name:"Clothes",     free:false },
-    { id: 9, file:"lesson9.html", icon:"🚗", name:"Transport",   free:false },
-    { id:10, file:"lesson10.html",icon:"🌙", name:"Daily routine",free:false }
+    { id: 1, file:"lesson1.html", icon:"👋", en:"Greetings",     uz:"Salomlashuv",  free:true  },
+    { id: 2, file:"lesson2.html", icon:"🔢", en:"Numbers",       uz:"Sonlar",       free:false },
+    { id: 3, file:"lesson3.html", icon:"🐾", en:"Animals",       uz:"Hayvonlar",    free:false },
+    { id: 4, file:"lesson4.html", icon:"🎨", en:"Colors",        uz:"Ranglar",      free:false },
+    { id: 5, file:"lesson5.html", icon:"🍎", en:"Fruits",        uz:"Mevalar",      free:false },
+    { id: 6, file:"lesson6.html", icon:"🥕", en:"Vegetables",    uz:"Sabzavot",     free:false },
+    { id: 7, file:"lesson7.html", icon:"🏠", en:"Home",          uz:"Uy",           free:false },
+    { id: 8, file:"lesson8.html", icon:"👕", en:"Clothes",       uz:"Kiyim",        free:false },
+    { id: 9, file:"lesson9.html", icon:"🚗", en:"Transport",     uz:"Transport",    free:false },
+    { id:10, file:"lesson10.html",icon:"🌙", en:"Daily routine", uz:"Kun tartibi",  free:false }
   ];
 
   // stronger pastel colors + softer strip under each card
@@ -589,24 +659,56 @@
     const gate = document.getElementById("paywallGate");
     const text = document.getElementById("paywallText");
     const buy  = document.getElementById("buyBtn");
+    const tt = T();
 
-    text.innerText = `Premium is required for Lesson ${lessonId}.`;
-    buy.innerText  = `Buy Premium — ${PRICE_LABEL}`;
+    // if opened from bottom "Premium" button
+    if(String(lessonId).toLowerCase() === "premium"){
+      text.innerText = (getLang()==="uz") ? "Barcha darslar ochiladi 🔓" : "Unlock all lessons 🔓";
+    } else {
+      text.innerText = tt.paywallText(lessonId);
+    }
+
+    buy.innerText  = tt.buyBtn(PRICE_LABEL);
     buy.dataset.lessonId = String(lessonId);
 
     gate.classList.add("show");
   }
   function closePaywall(){ document.getElementById("paywallGate").classList.remove("show"); }
 
+  function applyTexts(){
+    const tt = T();
+
+    document.getElementById("langBtn").innerText = tt.langBtn;
+    document.getElementById("helloWord").innerText = tt.helloWord;
+    document.getElementById("changeNameBtn").innerText = tt.profileChangeName;
+    document.getElementById("progressLabel").innerText = tt.progressLabel;
+
+    // Name gate
+    document.getElementById("nameGateTitle").innerText = tt.nameGateTitle;
+    document.getElementById("nameGateText").innerText  = tt.nameGateText;
+    document.getElementById("nameInput").placeholder   = tt.namePlaceholder;
+    document.getElementById("startBtn").innerText      = tt.startBtn;
+    document.getElementById("nameGateHint").innerText  = tt.nameGateHint;
+
+    // Paywall
+    document.getElementById("paywallTitle").innerText = tt.paywallTitle;
+    document.getElementById("buyBtn").innerText       = tt.buyBtn(PRICE_LABEL);
+    document.getElementById("closePaywallBtn").innerText = tt.close;
+    document.getElementById("paywallHint").innerText  = tt.hint;
+  }
+
   function applyGreeting(){
+    const tt = T();
     const name = localStorage.getItem(CHILD_KEY) || "";
-    const child = name ? name : "Friend!";
+    const child = name ? name : tt.friendFallback;
+
     document.getElementById("childNameBig").innerText = child;
     const pn = document.getElementById("profileName");
     if(pn) pn.innerText = child.replace("!", "");
   }
 
   function showNameGate(){
+    const tt = T();
     const gate = document.getElementById("nameGate");
     gate.classList.add("show");
     const input = document.getElementById("nameInput");
@@ -639,7 +741,7 @@
       if(isLessonCompleted(learned, L.id)){
         const d = document.createElement("div");
         d.className = "achIcon";
-        d.title = `Lesson ${L.id} completed`;
+        d.title = `Lesson ${L.id}`;
         d.textContent = L.icon;
         row.appendChild(d);
       }
@@ -647,6 +749,7 @@
   }
 
   function renderLessons(){
+    const tt = T();
     const learned = getLearnedSet();
 
     // Progress
@@ -687,25 +790,24 @@
       const icon = document.createElement("div");
       icon.className = "icon";
       icon.textContent = L.icon;
-      icon.style.background = `linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.58))`;
       a.appendChild(icon);
 
-      // title
+      // title (name only)
       const title = document.createElement("div");
       title.className = "title";
-      title.textContent = L.name;
+      title.textContent = (getLang()==="uz") ? L.uz : L.en;
       a.appendChild(title);
 
-      // OPEN tag
+      // OPEN tag (or FREE for lesson 1)
       const tag = document.createElement("div");
       tag.className = "tagRight " + (open ? "open" : "lock");
-      tag.textContent = (L.id === 1 && !isPremium()) ? "FREE" : OPEN_LABEL;
+      tag.textContent = (L.id === 1 && !isPremium()) ? tt.freeLabel : tt.openLabel;
       a.appendChild(tag);
 
-      // lesson number under OPEN
+      // lesson label under tag
       const under = document.createElement("div");
       under.className = "underTag";
-      under.textContent = `Lesson ${L.id}`;
+      under.textContent = tt.lessonLabel(L.id);
       a.appendChild(under);
 
       // click
@@ -721,12 +823,20 @@
   }
 
   function updateAll(){
+    applyTexts();
     applyGreeting();
     renderProgressIcons();
     renderLessons();
   }
 
   function wireUI(){
+    // language toggle
+    document.getElementById("langBtn").addEventListener("click", ()=>{
+      const next = (getLang()==="en") ? "uz" : "en";
+      setLang(next);
+      updateAll();
+    });
+
     // profile menu
     const profileBtn = document.getElementById("profileBtn");
     const profileMenu = document.getElementById("profileMenu");
@@ -754,12 +864,12 @@
     // bottom premium button -> open paywall
     document.getElementById("premiumBtn").addEventListener("click", ()=> openPaywall("Premium"));
 
-    // buy
+    // buy (demo unlock)
     document.getElementById("buyBtn").addEventListener("click", ()=>{
-      setPremium(true);          // demo unlock
+      setPremium(true);
       closePaywall();
       updateAll();
-      alert("✅ Premium activated (demo)!");
+      alert(T().premiumActivated);
     });
 
     // close paywall
@@ -770,7 +880,7 @@
 
     // reset
     document.getElementById("resetBtn").addEventListener("click", ()=>{
-      const ok = confirm("Start over? (Progress will be cleared)");
+      const ok = confirm(T().resetConfirm);
       if(!ok) return;
       localStorage.removeItem("learned");
       localStorage.removeItem(PREMIUM_KEY);
@@ -785,6 +895,8 @@
 
   window.addEventListener("load", ()=>{
     wireUI();
+    // set default lang if missing
+    if(!localStorage.getItem(LANG_KEY)) setLang("en");
     const nm = localStorage.getItem(CHILD_KEY);
     if(!nm) showNameGate();
     updateAll();
