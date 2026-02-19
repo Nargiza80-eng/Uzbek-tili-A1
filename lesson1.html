@@ -6,1140 +6,618 @@
   <title>Dono Bola - 1. Dars</title>
 
   <style>
-    :root {
-      --bg: #f0f9ff;
-      --primary: #0984e3;
-      --success: #00b894;
-      --error: #ff6b6b; /* ✅ nur das ist geändert */
-      --sun: #fdcb6e;
-      --radius: 25px;
+    :root{
+      /* ✅ kräftige, kinderfreundliche Farben */
+      --bg: #fff3d6;
+      --primary: #0066ff;
+      --primaryDark:#0047b3;
+      --success: #00c853;
+      --error: #ff1744;
+      --sun: #ffcc00;
+      --orange: #ff6d00;
+      --dark: #1f2937;
+      --radius: 20px;
     }
 
-    body {
-      margin: 0;
-      font-family: 'Comic Sans MS', cursive;
-      background: var(--bg);
-      color: #2d3436;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--dark);
+      min-height:100vh;
       padding: 15px;
-      min-height: 100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+
+      /* ✅ sofort sichtbarer kräftiger Hintergrund */
+      background: radial-gradient(circle at top, #ffffff 0%, var(--bg) 55%, #ffe2a6 100%);
     }
 
     /* --- HEADER --- */
-    .header-box {
-      background: white;
-      width: 100%;
-      max-width: 520px;
+    .header-box{
+      width:100%;
+      max-width:520px;
+      background:white;
       border-radius: var(--radius);
       padding: 15px;
-      text-align: center;
-      box-shadow: 0 8px 0 rgba(0,0,0,0.05);
-      margin-bottom: 12px;
-      border: 4px solid white;
+      text-align:center;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.12);
+      margin-bottom: 15px;
+      border-top: 10px solid var(--primary);
+      border-left: 2px solid rgba(0,0,0,0.06);
+      border-right: 2px solid rgba(0,0,0,0.06);
+      border-bottom: 2px solid rgba(0,0,0,0.06);
+    }
+    .topRow{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+    .topIcon{
+      font-size:30px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .title{
+      margin:0;
+      color: var(--primary);
+      font-weight: 1000;
+      letter-spacing:.2px;
     }
 
-    .progress-container { background: #dfe6e9; height: 15px; border-radius: 10px; margin: 10px 0; overflow: hidden; }
-    .progress-fill { background: var(--success); height: 100%; width: 0%; transition: width 0.5s; }
+    .progress-container{
+      background:#e5e7eb;
+      height: 16px;
+      border-radius: 999px;
+      margin: 12px 0 8px;
+      overflow:hidden;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .progress-fill{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, var(--success), #19e68c);
+      transition: width .45s ease;
+    }
+    #progText{ font-weight: 900; }
 
-    .top-row { display:flex; justify-content: space-between; align-items:center; gap:10px; }
-
-    /* ✅ BIGGER home & book */
-    .topIcon {
-      font-size: 56px;
-      line-height: 1;
-      text-decoration: none;
-      background: none;
+    /* --- NAV --- */
+    .mode-nav{
+      width:100%;
+      max-width:520px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-bottom: 15px;
+    }
+    .mode-btn{
+      padding: 14px 12px;
+      border-radius: 15px;
       border: none;
-      cursor: pointer;
-      padding: 6px 10px;
-      border-radius: 18px;
-    }
-    .topIcon:active { transform: translateY(2px); }
-
-    /* --- Language switch --- */
-    .lang-switch{
-      display:flex; gap:10px; justify-content:center;
-      margin-top: 10px;
-    }
-    .lang-btn{
-      padding:10px 14px; border-radius: 999px;
-      border:none; background:#fff; cursor:pointer;
-      box-shadow: 0 4px 0 #ccc; font-weight:bold; font-size:14px;
-      min-width:70px;
-    }
-    .lang-btn.active{ background: var(--primary); color:#fff; box-shadow: 0 4px 0 #074b81; }
-
-    /* --- MODUS NAVIGATION --- */
-    .mode-nav {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 14px;
-      width: 100%;
-      max-width: 520px;
-      flex-wrap: wrap;
-    }
-    .mode-btn {
-      flex: 1;
-      padding: 16px 12px;
-      border-radius: 18px;
-      border: none;
-      background: white;
-      font-weight: 900;
-      cursor: pointer;
-      box-shadow: 0 5px 0 #ccc;
-      font-size: 19px;
-      min-width: 160px;
-      white-space: nowrap;
+      background:white;
+      font-weight: 1000;
+      cursor:pointer;
+      box-shadow: 0 5px 0 rgba(0,0,0,0.16);
+      font-size: 16px;
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:12px;
-    }
-    .mode-btn.active { background: var(--primary); color: white; box-shadow: 0 5px 0 #074b81; }
-
-    /* ✅ BIGGER icons in buttons */
-    .mode-ico{ font-size: 34px; line-height: 1; }
-
-    /* --- SECTIONS --- */
-    #learnSection, #quizSection, #memorySection, #echoSection, #bubbleSection {
-      display: none; width: 100%; max-width: 520px; text-align: center;
-    }
-    #learnSection { display: grid; } /* default */
-
-    /* --- LERN-KARTEN --- */
-    .learn-grid { display: grid; grid-template-columns: 1fr; gap: 16px; width: 100%; max-width: 520px; }
-    .learn-card {
-      background: white; border-radius: var(--radius); padding: 22px;
-      display: flex; align-items: center; gap: 16px;
-      box-shadow: 0 8px 0 #dfe6e9; border: 3px solid white;
-    }
-    .learn-emoji { font-size: 68px; width: 86px; text-align:center; }
-    .learn-info { text-align: left; flex: 1; }
-    .learn-main { font-weight:900; font-size:24px; }
-    .learn-sub { color:#636e72; font-size:16px; margin-top:2px; }
-    .stars { margin-top: 8px; font-weight: 900; color: #f39c12; font-size: 20px; }
-
-    .btn-audio {
-      background: var(--sun); border: none; width: 70px; height: 70px;
-      border-radius: 50%; font-size: 28px; cursor: pointer;
-      box-shadow: 0 6px 0 #e67e22;
-    }
-    .btn-audio:active { transform: translateY(3px); box-shadow: 0 3px 0 #e67e22; }
-
-    /* --- QUIZ --- */
-    .quiz-card { background: white; border-radius: 30px; padding: 28px; box-shadow: 0 10px 0 #dfe6e9; }
-    .quiz-emoji { font-size: 104px; margin-top: 4px; }
-    .option-btn {
-      width: 100%; padding: 16px; margin: 10px 0; border-radius: 20px;
-      border: 3px solid #f1f2f6; background: white; font-size: 18px; font-weight: 900; cursor: pointer;
-      box-shadow: 0 5px 0 #f1f2f6;
-    }
-    .option-btn:active { transform: translateY(2px); box-shadow: none; }
-
-    /* --- MEMORY --- */
-    .memory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .memory-card {
-      height: 118px; background: var(--primary); border-radius: 18px;
-      display: flex; justify-content: center; align-items: center;
-      font-size: 30px; color: white; cursor: pointer;
-      box-shadow: 0 6px 0 #074b81;
-      user-select:none; padding:8px; text-align:center;
-    }
-    .memory-card.flipped { background: white; color: #2d3436; box-shadow: 0 6px 0 #ccc; }
-    .memory-card.matched { visibility: hidden; }
-
-    /* --- ALBUM --- */
-    .album-overlay {
-      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-      z-index: 1000; justify-content: center; align-items: center;
-    }
-    .album-content { background: white; padding: 26px; border-radius: 30px; text-align: center; width: 85%; max-width: 420px; }
-    .sticker-grid{
-      display:grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-top: 14px;
-    }
-    .sticker-slot {
-      width: 84px; height: 84px; background: #eee; border-radius: 50%;
-      display: inline-flex; justify-content: center; align-items: center;
-      font-size: 42px; opacity: 0.2; filter: grayscale(1);
-      border: 2px dashed #bbb;
-    }
-    .sticker-slot.unlocked { opacity: 1; filter: none; background: #fff9e6; border: 3px solid var(--sun); }
-
-    /* --- ECHO --- */
-    .lion-big { font-size: 138px; margin: 14px; transition: 0.3s; display: inline-block; }
-    .talking { animation: mouthMove 0.28s infinite; transform-origin: 50% 70%; }
-    @keyframes mouthMove { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.12); } }
-
-    .mic-btn-huge{
-      width: 136px; height: 136px; border-radius: 50%; border: none;
-      background: #ff4757; color: white; font-size: 56px; cursor: pointer;
-      box-shadow: 0 10px 0 #b33939; margin: 14px;
+      gap:10px;
+      user-select:none;
       touch-action: manipulation;
     }
-    .mic-btn-huge:active { transform: translateY(6px); box-shadow: 0 4px 0 #b33939; }
-    .mic-btn-huge.active { background: #2ed573; box-shadow: 0 4px 0 #1c9e54; transform: translateY(6px); }
+    .mode-btn:active{ transform: translateY(2px); box-shadow: 0 3px 0 rgba(0,0,0,0.16); }
 
-    .banner{
-      background:white; padding:15px; border-radius:30px;
-      border:4px solid #70a1ff;
-      font-size:26px; font-weight:900;
+    .mode-btn.active{ color:#fff; }
+    #btnLearn.active  { background: linear-gradient(180deg, var(--primary), var(--primaryDark)); }
+    #btnQuiz.active   { background: linear-gradient(180deg, var(--orange), #ff3d00); }
+    #btnMemory.active { background: linear-gradient(180deg, var(--success), #009e45); }
+    #btnBubble.active { background: linear-gradient(180deg, #111827, #000000); }
+
+    /* --- CONTENT --- */
+    #learnSection, #quizSection, #memorySection, #bubbleSection{
+      width:100%;
+      max-width:520px;
+      display:none;
+    }
+
+    .card{
+      background:white;
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+      margin-bottom: 10px;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    /* Learn list */
+    .learnRow{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+    .emojiBig{ font-size:44px; width:56px; text-align:center; }
+    .wordBox{ flex:1; }
+    .wordMain{ font-weight:1000; font-size:20px; }
+    .wordSub{ opacity:.75; margin-top:2px; font-weight:800; }
+
+    .btn-audio{
+      background: var(--sun);
+      border:none;
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      font-size: 28px;
+      cursor:pointer;
+      box-shadow: 0 5px 0 #caa000;
+      user-select:none;
+      touch-action: manipulation;
+    }
+    .btn-audio:active{ transform: translateY(2px); box-shadow: 0 3px 0 #caa000; }
+
+    /* Quiz */
+    #qEmoji{ font-size:96px; text-align:center; }
+    #qWord{ margin: 6px 0 12px; text-align:center; font-size:28px; font-weight:1000; }
+    .optBtn{
+      width:100%;
+      padding: 14px 12px;
+      border-radius: 16px;
+      border: 2px solid rgba(0,0,0,0.06);
+      background:white;
+      font-weight:1000;
+      font-size:16px;
+      cursor:pointer;
+      box-shadow: 0 5px 0 rgba(0,0,0,0.10);
       margin-bottom:10px;
+      touch-action: manipulation;
     }
-    .small-note{ font-weight:900; color:#334155; font-size:16px; margin-top:6px; }
-    .speech-line{
-      margin-top:10px;
-      padding:12px;
-      border-radius:18px;
-      background:#fff;
-      border:3px dashed #d0d7de;
-      font-weight:900;
-      color:#111827;
-      min-height: 24px;
-    }
-    .speech-ok{ border-color:#86efac; background:#ecfdf5; }
-    .speech-bad{ border-color:#fecaca; background:#fef2f2; }
+    .optBtn:active{ transform: translateY(2px); box-shadow: 0 3px 0 rgba(0,0,0,0.10); }
+    .optBtn.ok{ background: var(--success); color:#fff; border-color: transparent; }
+    .optBtn.no{ background: var(--error); color:#fff; border-color: transparent; }
 
-    /* --- BUBBLES --- */
+    /* Memory */
+    .memory-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; }
+    .memory-card{
+      height: 104px;
+      background: linear-gradient(180deg, var(--primary), var(--primaryDark));
+      border-radius: 14px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size: 24px;
+      color:#fff;
+      cursor:pointer;
+      font-weight:1000;
+      transition: transform .12s ease;
+      user-select:none;
+      border: 2px solid rgba(255,255,255,0.25);
+      touch-action: manipulation;
+    }
+    .memory-card:active{ transform: scale(.98); }
+    .memory-card.flipped{
+      background:#fff;
+      color: var(--dark);
+      border: 2px solid var(--primary);
+    }
+    .memory-card.matched{ visibility:hidden; }
+
+    /* Bubble */
     #bubbleArea{
-      position: relative; width: 100%; height: 60vh;
-      background: linear-gradient(#70a1ff, #1e90ff); border-radius: 30px;
-      border: 8px solid white; overflow: hidden; margin-top: 10px;
+      background: radial-gradient(circle at top, #4da3ff 0%, var(--primary) 45%, #003c9e 100%);
+      height: 420px;
+      border-radius: 22px;
+      position:relative;
+      overflow:hidden;
+      border: 6px solid #fff;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.14);
     }
     .bubble{
-      position: absolute; width: 118px; height: 118px; background: rgba(255,255,255,0.55);
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 58px; border: 3px solid white; animation: floatUp 4s linear forwards;
-      cursor: pointer; user-select:none;
+      position:absolute;
+      width: 78px;
+      height: 78px;
+      background: rgba(255,255,255,0.55);
+      border-radius: 50%;
+      border: 2px solid #fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 36px;
+      cursor:pointer;
+      user-select:none;
+      animation: floatUp 4s linear forwards;
+      backdrop-filter: blur(3px);
+      touch-action: manipulation;
     }
-    @keyframes floatUp { 0% { transform: translateY(65vh); } 100% { transform: translateY(-15vh); } }
+    @keyframes floatUp{
+      from{ bottom: -90px; transform: translateY(0); }
+      to{ bottom: 460px; transform: translateY(-10px); }
+    }
 
-    /* --- CELEBRATION OVERLAY --- */
-    .celebrate-overlay{
+    /* Overlay celebration */
+    .overlay{
       display:none;
-      position:fixed; inset:0;
-      background: rgba(0,0,0,0.75);
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,0.80);
       z-index: 2000;
-      align-items:center; justify-content:center;
+      align-items:center;
+      justify-content:center;
       padding: 16px;
     }
-    .celebrate-overlay.show{ display:flex; }
-    .celebrate-card{
-      width: 100%;
-      max-width: 520px;
-      background: white;
-      border-radius: 30px;
-      padding: 22px;
+    .celeb-box{
+      width:min(420px, 92vw);
+      background:white;
+      padding: 24px;
+      border-radius: 26px;
       text-align:center;
-      box-shadow: 0 14px 0 rgba(0,0,0,0.12);
-      position: relative;
-      overflow: hidden;
-      border: 6px solid #fff;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+      border: 6px solid rgba(255,255,255,0.8);
     }
-    .celebrate-emoji{ font-size: 78px; }
-    .celebrate-title{ font-size: 28px; font-weight: 900; margin-top: 6px; }
-    .celebrate-text{ color:#374151; font-weight: 800; margin-top: 8px; font-size: 16px; }
-    .celebrate-btn{
-      margin-top: 14px;
-      width: 100%;
+    .celebBtn{
+      width:100%;
       padding: 14px;
-      border-radius: 18px;
-      border: none;
-      background: var(--success);
-      color: white;
-      font-weight: 900;
-      font-size: 18px;
-      cursor: pointer;
-      box-shadow: 0 6px 0 #09725b;
+      background: linear-gradient(180deg, var(--success), #009e45);
+      color:white;
+      border:none;
+      border-radius: 14px;
+      font-weight:1000;
+      cursor:pointer;
+      margin-top: 10px;
+      font-size: 16px;
+      box-shadow: 0 6px 0 #047a3b;
+      touch-action: manipulation;
     }
-    .celebrate-btn:active{ transform: translateY(3px); box-shadow: 0 3px 0 #09725b; }
-
-    .confetti{
-      position:absolute; inset:0;
-      pointer-events:none;
-      overflow:hidden;
-    }
-    .dot{
-      position:absolute;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      opacity: 0.95;
-      animation: fall 2.2s linear forwards;
-    }
-    @keyframes fall{
-      0%{ transform: translateY(-20px) rotate(0deg); }
-      100%{ transform: translateY(560px) rotate(360deg); opacity: 0.9; }
-    }
+    .celebBtn:active{ transform: translateY(2px); box-shadow: 0 4px 0 #047a3b; }
   </style>
 </head>
 
 <body>
 
-  <!-- Sounds from your repo -->
-  <audio id="cheerAudio" src="sounds/cheer.mp3" preload="auto"></audio>
-
-  <!-- Celebration Overlay -->
-  <div class="celebrate-overlay" id="celebrateOverlay">
-    <div class="celebrate-card">
-      <div class="confetti" id="confetti"></div>
-      <div class="celebrate-emoji" id="celebrateEmoji">🎉</div>
-      <div class="celebrate-title" id="celebrateTitle">Barakalla!</div>
-      <div class="celebrate-text" id="celebrateText">Zo‘r!</div>
-      <button class="celebrate-btn" onclick="closeCelebrate()">OK ✅</button>
+  <div class="overlay" id="celebOverlay">
+    <div class="celeb-box">
+      <div id="celebEmoji" style="font-size:80px;">🏆</div>
+      <h2 id="celebTitle" style="margin:8px 0 6px;">Barakalla!</h2>
+      <p id="celebText" style="margin:0; font-weight:800; opacity:.85;">Darsni a'lo darajada tugatdingiz!</p>
+      <button class="celebBtn" onclick="closeCeleb()">DAVOM ETAMIZ ✅</button>
     </div>
   </div>
 
   <div class="header-box">
-    <div class="top-row">
-      <a href="index.html" class="topIcon" aria-label="Home">🏠</a>
-      <h3 style="margin:0;" id="titleText">1-dars: Salomlashuv</h3>
-      <button onclick="toggleAlbum()" class="topIcon" aria-label="Album">📖</button>
+    <div class="topRow">
+      <span class="topIcon" onclick="goHome()" aria-label="Home">🏠</span>
+      <h2 class="title">1-Dars</h2>
+      <span class="topIcon" onclick="toggleBookHint()" aria-label="Book">📖</span>
     </div>
 
-    <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
-    <small id="progressText">0 / 5</small>
-
-    <div class="lang-switch">
-      <button class="lang-btn active" id="langUZ" onclick="setLang('uz')">UZ</button>
-      <button class="lang-btn" id="langEN" onclick="setLang('en')">EN</button>
+    <div class="progress-container">
+      <div class="progress-fill" id="progressFill"></div>
     </div>
+    <div id="progText">0 / 5</div>
   </div>
 
   <div class="mode-nav">
-    <button class="mode-btn active" id="btnLearn"  onclick="changeMode('learn')"><span class="mode-ico">📖</span><span id="tLearn">O'rganish</span></button>
-    <button class="mode-btn"        id="btnQuiz"   onclick="changeMode('quiz')"><span class="mode-ico">🎯</span><span id="tQuiz">Test</span></button>
-    <button class="mode-btn"        id="btnMemory" onclick="changeMode('memory')"><span class="mode-ico">🧠</span><span id="tMemory">O'yin</span></button>
-    <button class="mode-btn"        id="btnEcho"   onclick="changeMode('echo')"><span class="mode-ico">🗣️</span><span id="tEcho">Aks-sado</span></button>
-    <button class="mode-btn"        id="btnBubble" onclick="changeMode('bubble')"><span class="mode-ico">🫧</span><span id="tBubble">Pufakchalar</span></button>
+    <button class="mode-btn active" id="btnLearn" onclick="changeMode('learn')">📖 O'rganish</button>
+    <button class="mode-btn" id="btnQuiz" onclick="changeMode('quiz')">🎯 Test</button>
+    <button class="mode-btn" id="btnMemory" onclick="changeMode('memory')">🧠 O'yin</button>
+    <button class="mode-btn" id="btnBubble" onclick="changeMode('bubble')" style="grid-column: span 2;">🫧 Pufakchalar</button>
   </div>
 
-  <!-- Learn -->
-  <div id="learnSection" class="learn-grid"></div>
+  <div id="learnSection"></div>
 
-  <!-- Quiz -->
   <div id="quizSection">
-    <div class="quiz-card">
-      <div id="qEmoji" class="quiz-emoji">👋</div>
-      <h2 id="qWordMain" style="margin: 8px 0 10px; font-size: 34px;">Salom</h2>
+    <div class="card">
+      <div id="qEmoji">👋</div>
+      <div id="qWord">Salom</div>
 
-      <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="playCurrentQuizAudio()">
-        🔊 <span id="listenBtnText">Eshitish</span>
-      </button>
+      <button class="btn-audio" style="width:100%; height:auto; border-radius:16px; padding:14px; box-shadow:0 5px 0 #caa000; font-weight:1000;"
+              onclick="playCurrentQuizAudio()">🔊 Eshitish</button>
 
+      <div style="height:12px;"></div>
       <div id="optionsBox"></div>
     </div>
   </div>
 
-  <!-- Memory -->
   <div id="memorySection">
-    <div id="memStats" style="margin-bottom:10px; font-weight:900; font-size:16px;">
-      <span id="movesLabel">Urinishlar</span>: <span id="moves">0</span>
+    <div class="card" style="font-weight:1000; margin-bottom:10px;">
+      🧠 Memory: topib juftini qiling!
     </div>
-    <div class="memory-grid" id="memoryGrid"></div>
+    <div class="memory-grid" id="memGrid"></div>
   </div>
 
-  <!-- Echo -->
-  <div id="echoSection">
-    <div id="lionChar" class="lion-big">🦁</div>
-
-    <div id="echoText" class="banner">Eshiting...</div>
-
-    <div style="display:flex; justify-content:center; flex-wrap:wrap;">
-      <button class="mic-btn-huge" style="background:#f1c40f; box-shadow: 0 10px 0 #c49f0a;" onclick="playEchoAudio()">🔊</button>
-      <button class="mic-btn-huge" id="micBtn"
-        onpointerdown="startMic()" onpointerup="stopMic()" onpointercancel="stopMic()">
-        🎤
-      </button>
-    </div>
-
-    <div class="small-note" id="echoHint">🔁 Eshit → ayt → tekshir!</div>
-    <div class="speech-line" id="speechLine">🎙️ ...</div>
-    <div class="small-note" id="echoProgress">⭐ 0 / 5</div>
-    <div class="small-note" id="echoTryLine">🔁 Urinish: 0 / 3</div>
-  </div>
-
-  <!-- Bubbles -->
   <div id="bubbleSection">
-    <div id="bubbleTask" class="banner">Top: ...</div>
+    <div class="card" id="bTask" style="text-align:center; font-weight:1000; font-size:22px;"></div>
     <div id="bubbleArea"></div>
-    <div class="small-note" id="bubbleHint">Emoji top! ⭐</div>
-    <div class="small-note" id="bubbleScoreLine">⭐ 0 / 5</div>
   </div>
 
-  <!-- Album -->
-  <div id="albumOverlay" class="album-overlay" onclick="toggleAlbum()">
-    <div class="album-content" onclick="event.stopPropagation()">
-      <h3 id="albumTitle" style="margin-top:0;">Mening Stikerlarim</h3>
-      <div class="sticker-grid">
-        <div id="stk_1" class="sticker-slot">🐰</div>
-        <div id="stk_2" class="sticker-slot">🐻</div>
-        <div id="stk_3" class="sticker-slot">🦁</div>
-        <div id="stk_4" class="sticker-slot">🐠</div>
-      </div>
-      <br>
-      <button class="mode-btn" onclick="toggleAlbum()" id="closeAlbumBtn">Yopish</button>
-    </div>
-  </div>
+  <script>
+    // --- DATA ---
+    const data = [
+      { key: "1",  emoji: "👋", uz: "Salom",        en: "Hello" },
+      { key: "6",  emoji: "🙏", uz: "Rahmat",       en: "Thank you" },
+      { key: "9",  emoji: "🌸", uz: "Iltimos",      en: "Please" },
+      { key: "4",  emoji: "🙂", uz: "Yaxshimisiz?", en: "How are you?" },
+      { key: "11", emoji: "🌙", uz: "Xayr",         en: "Bye" }
+    ];
 
-<script>
-  const data = [
-    { key: "1",  emoji: "👋", uz: "Salom",        en: "Hello" },
-    { key: "6",  emoji: "🙏", uz: "Rahmat",       en: "Thank you" },
-    { key: "9",  emoji: "🌸", uz: "Iltimos",      en: "Please" },
-    { key: "4",  emoji: "🙂", uz: "Yaxshimisiz?", en: "How are you?" },
-    { key: "11", emoji: "🌙", uz: "Xayr",         en: "Bye" }
-  ];
+    // ✅ Audio folders like your old lesson:
+    // Uzbek: a/<key>.mp3
+    // English: en/<key>.mp3
+    let currentLang = "uz";
 
-  const UI = {
-    uz: {
-      title: "1-dars: Salomlashuv",
-      learn: "O'rganish",
-      quiz: "Test",
-      memory: "O'yin",
-      echo: "Aks-sado",
-      bubble: "Pufakchalar",
-      listen: "Eshitish",
-      moves: "Urinishlar",
-      album: "Mening Stikerlarim",
-      close: "Yopish",
-      echoHint: "🔁 Eshit → ayt → tekshir!",
-      bubbleHint: "To‘g‘ri emojini top! ⭐",
-      bubbleTask: "Top: ",
-      doneQuizTitle: "Barakalla! 🐰",
-      doneQuizText: "Test tugadi! Siz quyon stikerini oldingiz!",
-      winMemoryTitle: "Zo‘r! 🐻",
-      winMemoryText: "Memory tugadi! Siz ayiq stikerini oldingiz!",
-      echoWinTitle: "Ajoyib! 🦁",
-      echoWinText: "Aks-sado tugadi! Siz sher stikerini oldingiz!",
-      winBubbleTitle: "Super! 🐠",
-      winBubbleText: "Pufakchalar tugadi! Siz baliq stikerini oldingiz!",
-      allDoneTitle: "HAMMASI TUGADI! 🎉👏",
-      allDoneText: "Siz 1-dars va hamma o‘yinlarni tugatdingiz! YAY! 🎊",
-      sayAgain: "❌ Xato. Yana urinib ko‘r!",
-      micNoSupport: "⚠️ Mikrofon yo‘q. Chrome ishlating."
-    },
-    en: {
-      title: "Lesson 1: Greetings",
-      learn: "Learn",
-      quiz: "Quiz",
-      memory: "Game",
-      echo: "Echo",
-      bubble: "Bubbles",
-      listen: "Listen",
-      moves: "Moves",
-      album: "My Stickers",
-      close: "Close",
-      echoHint: "🔁 Listen → say it → check!",
-      bubbleHint: "Find the correct emoji! ⭐",
-      bubbleTask: "Tap: ",
-      doneQuizTitle: "Well done! 🐰",
-      doneQuizText: "Quiz complete! You earned the bunny sticker!",
-      winMemoryTitle: "You won! 🐻",
-      winMemoryText: "Memory complete! You earned the bear sticker!",
-      echoWinTitle: "Great! 🦁",
-      echoWinText: "Echo complete! You earned the lion sticker!",
-      winBubbleTitle: "Amazing! 🐠",
-      winBubbleText: "Bubbles complete! You earned the fish sticker!",
-      allDoneTitle: "ALL DONE! 🎉👏",
-      allDoneText: "You finished Lesson 1 and all games! YAY! 🎊",
-      sayAgain: "❌ Not quite. Try again!",
-      micNoSupport: "⚠️ Mic not supported. Use Chrome."
-    }
-  };
-
-  let currentLang = "uz";
-
-  // ✅ Global progress for index.html (your homepage counts L1_*)
-  const GLOBAL_LEARNED_KEY = "learned";
-  function getGlobalLearnedSet(){
-    try { return new Set(JSON.parse(localStorage.getItem(GLOBAL_LEARNED_KEY) || "[]")); }
-    catch { return new Set(); }
-  }
-  function markGlobalLearned(wordKey){
-    const learned = getGlobalLearnedSet();
-    const gKey = "L1_" + wordKey;
-    if(!learned.has(gKey)){
-      learned.add(gKey);
-      localStorage.setItem(GLOBAL_LEARNED_KEY, JSON.stringify([...learned]));
-    }
-  }
-  function syncGlobalLearnedFromStars(){
-    const st = loadStars();
-    for(const item of data){
-      if((st[item.key] || 0) > 0) markGlobalLearned(item.key);
-    }
-  }
-
-  // ✅ Unlock helper for homepage (optional, but nice)
-  function unlockNextLessonFlag(){
-    localStorage.setItem("lesson2_unlocked", "true");
-  }
-
-  const STARS_KEY = "lesson1_stars_v3";
-  const QUIZ_DONE_KEY = "lesson1_quiz_done_v3";
-  const STICKERS_KEY = "stickers";
-  const DONE_MEMORY_KEY = "lesson1_done_memory_v1";
-  const DONE_ECHO_KEY   = "lesson1_done_echo_v1";
-  const DONE_BUBBLE_KEY = "lesson1_done_bubble_v1";
-  const DONE_ALL_KEY    = "lesson1_done_all_v1";
-
-  // --- SOUND HELPERS (your mp3) ---
-  function playSound(file){
-    const a = new Audio("sounds/" + file);
-    a.play().catch(()=>{});
-  }
-  function sfxWin(){ playSound("success.mp3"); }
-  function sfxFail(){ playSound("fail.mp3"); }
-  function sfxPop(){ playSound("pop.mp3"); }
-  function playCheerYay(){
-    const a = document.getElementById("cheerAudio");
-    if(a){ a.currentTime = 0; a.play().catch(()=>{}); }
-    else { playSound("cheer.mp3"); }
-  }
-
-  function loadStars(){ try { return JSON.parse(localStorage.getItem(STARS_KEY) || "{}"); } catch { return {}; } }
-  function saveStars(st){ localStorage.setItem(STARS_KEY, JSON.stringify(st)); }
-  function starText(n){ n=Math.max(0,Math.min(3,n)); return "★".repeat(n)+"☆".repeat(3-n); }
-
-  function loadQuizDone(){ try { return JSON.parse(localStorage.getItem(QUIZ_DONE_KEY) || "[]"); } catch { return []; } }
-  function saveQuizDone(arr){ localStorage.setItem(QUIZ_DONE_KEY, JSON.stringify(arr)); }
-  function quizDoneCount(){ return loadQuizDone().length; }
-
-  function updateProgress(){
-    const done = quizDoneCount();
-    const pct = (done / data.length) * 100;
-    document.getElementById('progressFill').style.width = pct + '%';
-    document.getElementById('progressText').innerText = `${done} / ${data.length}`;
-  }
-
-  function celebrate(title, text, emoji="🎉"){
-    document.getElementById("celebrateEmoji").innerText = emoji;
-    document.getElementById("celebrateTitle").innerText = title;
-    document.getElementById("celebrateText").innerText = text;
-
-    const conf = document.getElementById("confetti");
-    conf.innerHTML = "";
-    const colors = ["#F59E0B","#EF4444","#10B981","#3B82F6","#A855F7","#F97316"];
-    for(let i=0;i<75;i++){
-      const d = document.createElement("div");
-      d.className = "dot";
-      d.style.left = (Math.random()*100) + "%";
-      d.style.top  = (-30 - Math.random()*220) + "px";
-      d.style.background = colors[Math.floor(Math.random()*colors.length)];
-      d.style.animationDelay = (Math.random()*0.25) + "s";
-      d.style.animationDuration = (1.6 + Math.random()*1.1) + "s";
-      conf.appendChild(d);
+    function audioPath(key){
+      return (currentLang === "en") ? `en/${key}.mp3` : `a/${key}.mp3`;
     }
 
-    document.getElementById("celebrateOverlay").classList.add("show");
-    sfxWin();
-  }
-
-  function closeCelebrate(){
-    document.getElementById("celebrateOverlay").classList.remove("show");
-    checkAllCompleted();
-  }
-
-  function checkAllCompleted(){
-    const quizDone = (quizDoneCount() === data.length);
-    const memDone  = (localStorage.getItem(DONE_MEMORY_KEY) === "1");
-    const echoDone = (localStorage.getItem(DONE_ECHO_KEY) === "1");
-    const bubDone  = (localStorage.getItem(DONE_BUBBLE_KEY) === "1");
-
-    if(quizDone && memDone && echoDone && bubDone){
-      if(localStorage.getItem(DONE_ALL_KEY) !== "1"){
-        localStorage.setItem(DONE_ALL_KEY, "1");
-        unlockNextLessonFlag();
-        const T = UI[currentLang];
-        celebrate(T.allDoneTitle, T.allDoneText, "🏆");
-        playCheerYay();
-      }
-      return true;
+    // One global audio (no overlap)
+    let currentAudio = null;
+    function playAudio(key, rate=1.0){
+      try{
+        if(currentAudio){
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+        }
+      }catch(e){}
+      const a = new Audio(audioPath(key));
+      a.playbackRate = rate;
+      currentAudio = a;
+      a.play().catch(()=>{});
+      return a;
     }
-    return false;
-  }
 
-  function setLang(lang){
-    currentLang = lang;
-    document.getElementById("langUZ").classList.toggle("active", lang==="uz");
-    document.getElementById("langEN").classList.toggle("active", lang==="en");
+    // --- STATE ---
+    let quizIdx = 0;
+    let flippedCards = [];
+    let matches = 0;
+    let bubbleIdx = 0;
+    let bubbleTimer = null;
 
-    const T = UI[lang];
-    document.getElementById("titleText").innerText = T.title;
-    document.getElementById("tLearn").innerText = T.learn;
-    document.getElementById("tQuiz").innerText = T.quiz;
-    document.getElementById("tMemory").innerText = T.memory;
-    document.getElementById("tEcho").innerText = T.echo;
-    document.getElementById("tBubble").innerText = T.bubble;
-    document.getElementById("listenBtnText").innerText = T.listen;
-    document.getElementById("movesLabel").innerText = T.moves;
-    document.getElementById("albumTitle").innerText = T.album;
-    document.getElementById("closeAlbumBtn").innerText = T.close;
-    document.getElementById("echoHint").innerText = T.echoHint;
-    document.getElementById("bubbleHint").innerText = T.bubbleHint;
+    // --- UI HELPERS ---
+    function setActiveButton(mode){
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      const btnId = 'btn' + mode.charAt(0).toUpperCase() + mode.slice(1);
+      const btn = document.getElementById(btnId);
+      if(btn) btn.classList.add('active');
+    }
 
-    renderLearn(true);
-    loadQuiz();
+    function showSection(mode){
+      const sections = ['learnSection','quizSection','memorySection','bubbleSection'];
+      sections.forEach(id => document.getElementById(id).style.display = 'none');
+      document.getElementById(mode + 'Section').style.display = 'block';
+    }
 
-    bubbleOrder = [];
-    bubbleIdx = 0;
+    function stopBubbles(){
+      if(bubbleTimer){ clearInterval(bubbleTimer); bubbleTimer = null; }
+    }
 
-    if(document.getElementById("echoSection").style.display === "block") playEchoAudio();
-    if(document.getElementById("bubbleSection").style.display === "block") startBubbles();
-  }
+    function updateProg(){
+      // progress based on quizIdx (like your simple version)
+      const p = (quizIdx / data.length) * 100;
+      document.getElementById('progressFill').style.width = p + '%';
+      document.getElementById('progText').innerText = quizIdx + " / " + data.length;
+    }
 
-  function changeMode(mode) {
-    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('btn' + mode.charAt(0).toUpperCase() + mode.slice(1)).classList.add('active');
+    // --- NAV ---
+    function changeMode(m){
+      stopBubbles();
+      setActiveButton(m);
+      showSection(m);
 
-    document.getElementById('learnSection').style.display = 'none';
-    document.getElementById('quizSection').style.display = 'none';
-    document.getElementById('memorySection').style.display = 'none';
-    document.getElementById('echoSection').style.display = 'none';
-    document.getElementById('bubbleSection').style.display = 'none';
+      if(m === 'learn') renderLearn();
+      if(m === 'quiz') loadQuiz();
+      if(m === 'memory') initMemory();
+      if(m === 'bubble') startBubbles();
+    }
 
-    stopBubbles();
-    stopRecognition();
-    clearTimeout(echoNextTimer);
+    // --- LEARN ---
+    function renderLearn(){
+      const cont = document.getElementById('learnSection');
+      cont.innerHTML = '';
 
-    if(mode === 'learn'){ document.getElementById('learnSection').style.display='grid'; renderLearn(true); }
-    if(mode === 'quiz'){  document.getElementById('quizSection').style.display='block'; loadQuiz(); }
-    if(mode === 'memory'){document.getElementById('memorySection').style.display='block'; initMemory(); }
-    if(mode === 'echo'){  document.getElementById('echoSection').style.display='block'; startEchoGame(); }
-    if(mode === 'bubble'){document.getElementById('bubbleSection').style.display='block'; startBubbles(); }
-  }
+      data.forEach(item => {
+        const d = document.createElement('div');
+        d.className = 'card';
 
-  function audioPath(key){ return currentLang === "en" ? `en/${key}.mp3` : `a/${key}.mp3`; }
+        d.innerHTML = `
+          <div class="learnRow">
+            <div class="emojiBig">${item.emoji}</div>
+            <div class="wordBox">
+              <div class="wordMain">${item.uz}</div>
+              <div class="wordSub">${item.en}</div>
+            </div>
+            <button class="btn-audio" aria-label="Play audio">🔊</button>
+          </div>
+        `;
 
-  let currentAudio = null;
-  function stopAudio(){
-    try{
-      if(currentAudio){
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-      }
-    }catch(e){}
-    currentAudio = null;
-  }
+        const btn = d.querySelector('.btn-audio');
+        btn.addEventListener('click', ()=> playAudio(item.key, 1.0));
 
-  function playAudio(key, rate=1.0){
-    stopAudio();
-    const a = new Audio(audioPath(key));
-    a.playbackRate = rate;
-    currentAudio = a;
-    a.play().catch(()=>{});
-    return a;
-  }
-
-  function setStarForKey(key, value){
-    const st = loadStars();
-    st[key] = Math.max(0, Math.min(3, value));
-    saveStars(st);
-
-    if(st[key] > 0) markGlobalLearned(key);
-
-    const el = document.getElementById("star_" + key);
-    if(el) el.innerText = starText(st[key]);
-  }
-
-  function renderLearn(bindEvents){
-    const st = loadStars();
-    const container = document.getElementById('learnSection');
-    container.innerHTML = '';
-
-    data.forEach(item => {
-      const s = st[item.key] || 0;
-      const main = (currentLang === "en") ? item.en : item.uz;
-      const sub  = (currentLang === "en") ? item.uz : item.en;
-
-      const div = document.createElement('div');
-      div.className = 'learn-card';
-      div.innerHTML = `
-        <div class="learn-emoji">${item.emoji}</div>
-        <div class="learn-info">
-          <div class="learn-main">${main}</div>
-          <div class="learn-sub">${sub}</div>
-          <div class="stars" id="star_${item.key}">${starText(s)}</div>
-        </div>
-        <button class="btn-audio" data-key="${item.key}">🔊</button>
-      `;
-      container.appendChild(div);
-    });
-
-    if(bindEvents){
-      container.querySelectorAll('.btn-audio').forEach(btn=>{
-        btn.addEventListener('click', ()=>{
-          const key = btn.getAttribute('data-key');
-          playAudio(key, 1.0);
-          const current = (loadStars()[key] || 0);
-          setStarForKey(key, current + 1);
-        });
+        cont.appendChild(d);
       });
     }
-  }
 
-  let currentQuizIdx = 0;
-
-  function playCurrentQuizAudio(){
-    const item = data[currentQuizIdx];
-    playAudio(item.key, 1.0);
-  }
-
-  function loadQuiz(){
-    updateProgress();
-    const done = loadQuizDone();
-
-    let safety = 0;
-    while(done.includes(data[currentQuizIdx].key) && safety < 20){
-      currentQuizIdx = (currentQuizIdx + 1) % data.length;
-      safety++;
+    // --- QUIZ ---
+    function playCurrentQuizAudio(){
+      const item = data[quizIdx % data.length];
+      playAudio(item.key, 1.0);
     }
 
-    if(done.length === data.length){
-      document.getElementById('qEmoji').innerText = "🏆";
-      document.getElementById('qWordMain').innerText = (currentLang==="en") ? "Quiz completed!" : "Test tugadi!";
-      document.getElementById('optionsBox').innerHTML =
-        `<button class="option-btn" onclick="restartQuiz()">🔁 Restart</button>`;
-      return;
-    }
+    function loadQuiz(){
+      updateProg();
 
-    const item = data[currentQuizIdx];
-    document.getElementById('qEmoji').innerText = item.emoji;
+      const item = data[quizIdx % data.length];
+      document.getElementById('qEmoji').innerText = item.emoji;
+      document.getElementById('qWord').innerText = item.uz;
 
-    const qWord = (currentLang === "en") ? item.en : item.uz;
-    document.getElementById('qWordMain').innerText = qWord;
+      // choices: correct + 2 random wrong from data
+      const correct = item.en;
+      const pool = data.map(d => d.en).filter(x => x !== correct);
+      const wrong1 = pool[Math.floor(Math.random()*pool.length)];
+      let wrong2 = pool[Math.floor(Math.random()*pool.length)];
+      if(wrong2 === wrong1) wrong2 = pool[(pool.indexOf(wrong1)+1) % pool.length];
 
-    const correct = (currentLang === "en") ? item.uz : item.en;
-    const pool = data.map(x => (currentLang === "en") ? x.uz : x.en);
+      let opts = [correct, wrong1, wrong2].sort(()=>Math.random()-0.5);
 
-    let choices = [correct];
-    while(choices.length < 3) {
-      const r = pool[Math.floor(Math.random()*pool.length)];
-      if(!choices.includes(r)) choices.push(r);
-    }
-    choices.sort(() => Math.random() - 0.5);
+      const box = document.getElementById('optionsBox');
+      box.innerHTML = '';
 
-    const box = document.getElementById('optionsBox');
-    box.innerHTML = '';
+      opts.forEach(o=>{
+        const b = document.createElement('button');
+        b.className = 'optBtn';
+        b.innerText = o;
 
-    choices.forEach(c => {
-      const btn = document.createElement('button');
-      btn.className = 'option-btn';
-      btn.innerText = c;
+        b.onclick = ()=>{
+          // lock to prevent double click spam
+          box.querySelectorAll('button').forEach(x=> x.disabled = true);
 
-      btn.onclick = () => {
-        if(c === correct) {
-          btn.style.background = 'var(--success)'; btn.style.color = 'white';
-
-          const doneList = loadQuizDone();
-          if(!doneList.includes(item.key)){
-            doneList.push(item.key);
-            saveQuizDone(doneList);
+          if(o === correct){
+            b.classList.add('ok');
+            quizIdx++;
+            setTimeout(()=>{
+              if(quizIdx >= data.length){
+                showCeleb("🎉", "Barakalla!", "Test tugadi! ✅");
+                quizIdx = 0;
+              }
+              loadQuiz();
+            }, 420);
+          }else{
+            b.classList.add('no');
+            setTimeout(()=>{
+              loadQuiz(); // reset question quickly
+            }, 520);
           }
+        };
 
-          setStarForKey(item.key, 3);
+        box.appendChild(b);
+      });
+    }
 
-          setTimeout(() => {
-            currentQuizIdx = (currentQuizIdx + 1) % data.length;
+    // --- MEMORY ---
+    function initMemory(){
+      matches = 0;
+      flippedCards = [];
+      const grid = document.getElementById('memGrid');
+      grid.innerHTML = '';
 
-            if(loadQuizDone().length === data.length){
-              unlockSticker(1);
-              const T = UI[currentLang];
-              celebrate(T.doneQuizTitle, T.doneQuizText, "🐰");
-              checkAllCompleted();
-            }
+      let cards = [];
+      data.forEach(d=>{
+        cards.push({k:d.key, v:d.emoji});
+        cards.push({k:d.key, v:d.uz});
+      });
+      cards.sort(()=>Math.random()-0.5);
 
-            updateProgress();
-            loadQuiz();
-          }, 420);
-        } else {
-          btn.style.background = 'var(--error)'; btn.style.color = 'white';
-          sfxFail();
-          setTimeout(() => { btn.style.background = 'white'; btn.style.color = '#2d3436'; }, 600);
-        }
-      };
+      cards.forEach(c=>{
+        const el = document.createElement('div');
+        el.className = 'memory-card';
+        el.innerText = '❓';
 
-      box.appendChild(btn);
-    });
-  }
+        el.onclick = ()=>{
+          if(flippedCards.length >= 2) return;
+          if(el.classList.contains('flipped') || el.classList.contains('matched')) return;
 
-  function restartQuiz(){
-    saveQuizDone([]);
-    currentQuizIdx = 0;
-    updateProgress();
-    loadQuiz();
-  }
+          el.classList.add('flipped');
+          el.innerText = c.v;
+          flippedCards.push({el, k:c.k});
 
-  let flippedCards = [];
-  let moves = 0;
-  let matches = 0;
+          if(flippedCards.length === 2){
+            setTimeout(()=>{
+              const a = flippedCards[0];
+              const b = flippedCards[1];
 
-  function initMemory() {
-    const grid = document.getElementById('memoryGrid');
-    grid.innerHTML = '';
-    moves = 0; matches = 0;
-    flippedCards = [];
-    document.getElementById('moves').innerText = moves;
-
-    let cards = [];
-    data.forEach(item => {
-      const word = (currentLang === "en") ? item.en : item.uz;
-      cards.push({ id: item.key, val: item.emoji });
-      cards.push({ id: item.key, val: word });
-    });
-    cards.sort(() => Math.random() - 0.5);
-
-    cards.forEach(c => {
-      const div = document.createElement('div');
-      div.className = 'memory-card';
-      div.innerText = "❓";
-
-      div.onclick = () => {
-        if(flippedCards.length < 2 && !div.classList.contains('flipped') && !div.classList.contains('matched')) {
-          div.classList.add('flipped');
-          div.innerText = c.val;
-          flippedCards.push({ div, id: c.id });
-
-          if(flippedCards.length === 2) {
-            moves++;
-            document.getElementById('moves').innerText = moves;
-
-            setTimeout(() => {
-              if(flippedCards[0].id === flippedCards[1].id) {
-                flippedCards.forEach(f => f.div.classList.add('matched'));
+              if(a.k === b.k){
+                a.el.classList.add('matched');
+                b.el.classList.add('matched');
                 matches++;
-                sfxWin();
-                if(matches === data.length) {
-                  localStorage.setItem(DONE_MEMORY_KEY, "1");
-                  unlockSticker(2);
-                  const T = UI[currentLang];
-                  celebrate(T.winMemoryTitle, T.winMemoryText, "🐻");
-                  checkAllCompleted();
+
+                if(matches === data.length){
+                  showCeleb("🏆", "Zo'r!", "Memory tugadi! ✅");
                 }
-              } else {
-                sfxFail();
-                flippedCards.forEach(f => {
-                  f.div.classList.remove('flipped');
-                  f.div.innerText = "❓";
-                });
+              }else{
+                a.el.classList.remove('flipped'); a.el.innerText = '❓';
+                b.el.classList.remove('flipped'); b.el.innerText = '❓';
               }
               flippedCards = [];
-            }, 800);
+            }, 650);
           }
-        }
-      };
+        };
 
-      grid.appendChild(div);
-    });
-  }
-
-  let echoOrder = [];
-  let echoIdx = 0;
-  let echoTries = 0;
-  let recognition = null;
-  let isRecognizing = false;
-  let echoNextTimer = null;
-
-  function shuffle(arr){
-    const a = [...arr];
-    for(let i=a.length-1;i>0;i--){
-      const j = Math.floor(Math.random()*(i+1));
-      [a[i],a[j]] = [a[j],a[i]];
-    }
-    return a;
-  }
-
-  function startEchoGame(){
-    echoOrder = shuffle(data.map(x=>x.key));
-    echoIdx = 0;
-    echoTries = 0;
-    clearTimeout(echoNextTimer);
-    updateEchoProgress();
-    updateEchoTries();
-    setSpeechLine("🎙️ ...", "");
-    playEchoAudio();
-  }
-
-  function currentEchoItem(){
-    if(!echoOrder || echoOrder.length === 0) return null;
-    if(echoIdx < 0 || echoIdx >= echoOrder.length) return null;
-    const key = echoOrder[echoIdx];
-    return data.find(x=>x.key===key) || null;
-  }
-
-  function updateEchoProgress(){
-    const el = document.getElementById("echoProgress");
-    if(!el) return;
-    const total = echoOrder.length || data.length;
-    const current = Math.min(echoIdx + 1, total);
-    el.innerText = `⭐ ${current} / ${total}`;
-  }
-
-  function updateEchoTries(){
-    const el = document.getElementById("echoTryLine");
-    if(el) el.innerText = `🔁 Urinish: ${echoTries} / 3`;
-  }
-
-  function setSpeechLine(text, state){
-    const el = document.getElementById("speechLine");
-    el.className =
-      "speech-line" +
-      (state==="ok" ? " speech-ok" : state==="bad" ? " speech-bad" : "");
-    el.innerText = text;
-  }
-
-  function playEchoAudio() {
-    const item = currentEchoItem();
-    if(!item){
-      startEchoGame();
-      return;
-    }
-    const word = (currentLang === "en") ? item.en : item.uz;
-    document.getElementById('echoText').innerText = word;
-
-    const lion = document.getElementById('lionChar');
-    lion.classList.add('talking');
-
-    const a = playAudio(item.key, 0.85);
-    a.onended = () => lion.classList.remove('talking');
-  }
-
-  function normalizeText(s){
-    return (s || "")
-      .toLowerCase()
-      .replace(/[‘’`]/g, "'")
-      .replace(/\s+/g, " ")
-      .trim();
-  }
-
-  function finishEchoGame(){
-    localStorage.setItem(DONE_ECHO_KEY, "1");
-    unlockSticker(3);
-    const T = UI[currentLang];
-    celebrate(T.echoWinTitle, T.echoWinText, "🦁");
-    checkAllCompleted();
-  }
-
-  function goNextEchoWord(reasonText){
-    clearTimeout(echoNextTimer);
-
-    echoIdx++;
-    echoTries = 0;
-
-    updateEchoProgress();
-    updateEchoTries();
-
-    if(echoIdx >= (echoOrder.length || data.length)){
-      finishEchoGame();
-      stopMic();
-      return;
+        grid.appendChild(el);
+      });
     }
 
-    if(reasonText) setSpeechLine(reasonText, "bad");
-
-    echoNextTimer = setTimeout(() => {
-      setSpeechLine("🎙️ ...", "");
-      playEchoAudio();
-    }, reasonText ? 1200 : 650);
-  }
-
-  function startMic() {
-    const T = UI[currentLang];
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    if(!SpeechRecognition){
-      echoTries++;
-      updateEchoTries();
-      setSpeechLine(T.micNoSupport, "bad");
-      sfxFail();
-      if(echoTries >= 3) goNextEchoWord((currentLang==="en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
-      return;
+    // --- BUBBLES ---
+    function updateBTask(){
+      document.getElementById('bTask').innerText = "Top: " + data[bubbleIdx].uz;
     }
 
-    if(isRecognizing) return;
-
-    recognition = new SpeechRecognition();
-    recognition.lang = (currentLang === "en") ? "en-US" : "uz-UZ";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 3;
-
-    isRecognizing = true;
-    document.getElementById('micBtn').classList.add('active');
-    document.getElementById('lionChar').innerText = "👂";
-    setSpeechLine("🎙️ ...", "");
-
-    recognition.onresult = (event) => {
-      const fresh = currentEchoItem();
-      if(!fresh) return;
-
-      const target = normalizeText((currentLang === "en") ? fresh.en : fresh.uz);
-      const transcript = normalizeText(event.results[0][0].transcript);
-
-      const ok =
-        transcript === target ||
-        transcript.includes(target) ||
-        target.includes(transcript);
-
-      if(ok){
-        setSpeechLine("✅ " + transcript, "ok");
-        sfxWin();
-        goNextEchoWord();
-      } else {
-        echoTries++;
-        updateEchoTries();
-        setSpeechLine(UI[currentLang].sayAgain + " (" + transcript + ")", "bad");
-        sfxFail();
-        if(echoTries >= 3){
-          goNextEchoWord((currentLang==="en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
-        }
-      }
-    };
-
-    recognition.onerror = () => {
-      echoTries++;
-      updateEchoTries();
-      setSpeechLine(UI[currentLang].sayAgain, "bad");
-      sfxFail();
-      if(echoTries >= 3){
-        goNextEchoWord((currentLang==="en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
-      }
-    };
-
-    recognition.onend = () => {
-      isRecognizing = false;
-      document.getElementById('micBtn').classList.remove('active');
-      document.getElementById('lionChar').innerText = "🦁";
-    };
-
-    recognition.start();
-  }
-
-  function stopRecognition(){
-    try{ if(recognition) recognition.stop(); }catch(e){}
-    recognition = null;
-    isRecognizing = false;
-    document.getElementById('micBtn').classList.remove('active');
-    document.getElementById('lionChar').innerText = "🦁";
-  }
-  function stopMic(){ stopRecognition(); }
-
-  let bubbleInt = null;
-  let bubbleOrder = [];
-  let bubbleIdx = 0;
-  let bubbleTarget = null;
-
-  function stopBubbles(){
-    if(bubbleInt){ clearInterval(bubbleInt); bubbleInt = null; }
-  }
-
-  function updateBubbleScoreLine(){
-    const el = document.getElementById("bubbleScoreLine");
-    if(el) el.innerText = `⭐ ${bubbleIdx} / ${data.length}`;
-  }
-
-  function finishBubbleGame(){
-    localStorage.setItem(DONE_BUBBLE_KEY, "1");
-    unlockSticker(4);
-    const T = UI[currentLang];
-    celebrate(T.winBubbleTitle, T.winBubbleText, "🐠");
-    checkAllCompleted();
-  }
-
-  function startBubbles(){
-    stopBubbles();
-
-    if(bubbleOrder.length === 0){
-      bubbleOrder = shuffle(data.map(x=>x.key));
+    function startBubbles(){
+      stopBubbles();
       bubbleIdx = 0;
+      updateBTask();
+
+      const area = document.getElementById('bubbleArea');
+      area.innerHTML = '';
+
+      bubbleTimer = setInterval(()=>{
+        const b = document.createElement('div');
+        const rand = data[Math.floor(Math.random()*data.length)];
+        b.className = 'bubble';
+        b.innerText = rand.emoji;
+        b.style.left = (Math.random()*78 + 8) + '%';
+
+        b.onclick = ()=>{
+          if(rand.key === data[bubbleIdx].key){
+            // correct
+            b.style.background = "rgba(0,200,83,0.75)";
+            b.innerText = "⭐";
+            setTimeout(()=> b.remove(), 120);
+
+            bubbleIdx++;
+            if(bubbleIdx >= data.length){
+              stopBubbles();
+              showCeleb("🐠", "Super!", "Pufakchalar tugadi! ✅");
+              return;
+            }
+            updateBTask();
+          }else{
+            // wrong
+            b.style.background = "rgba(255,23,68,0.60)";
+            b.innerText = "💨";
+            setTimeout(()=> b.remove(), 120);
+          }
+        };
+
+        area.appendChild(b);
+        setTimeout(()=>{ try{ b.remove(); }catch(e){} }, 4000);
+      }, 1200);
     }
 
-    if(bubbleIdx >= data.length){
-      finishBubbleGame();
-      bubbleOrder = [];
-      bubbleIdx = 0;
-      updateBubbleScoreLine();
-      return;
+    // --- OVERLAY ---
+    function showCeleb(emoji, title, text){
+      document.getElementById('celebEmoji').innerText = emoji || "🏆";
+      document.getElementById('celebTitle').innerText = title || "Barakalla!";
+      document.getElementById('celebText').innerText = text || "Zo'r!";
+      document.getElementById('celebOverlay').style.display = 'flex';
+    }
+    function closeCeleb(){
+      document.getElementById('celebOverlay').style.display = 'none';
+      changeMode('learn');
     }
 
-    const key = bubbleOrder[bubbleIdx];
-    bubbleTarget = data.find(x=>x.key===key);
-
-    const taskWord = (currentLang === "en") ? bubbleTarget.en : bubbleTarget.uz;
-    const T = UI[currentLang];
-    document.getElementById('bubbleTask').innerText = T.bubbleTask + taskWord;
-
-    playAudio(bubbleTarget.key, 1.0);
-
-    const area = document.getElementById('bubbleArea');
-    area.innerHTML = "";
-    updateBubbleScoreLine();
-
-    bubbleInt = setInterval(() => {
-      const b = document.createElement('div');
-      const randomItem = data[Math.floor(Math.random() * data.length)];
-
-      b.className = 'bubble';
-      b.innerText = randomItem.emoji;
-      b.style.left = (Math.random() * 70 + 10) + '%';
-
-      b.onclick = () => {
-        sfxPop();
-
-        if(randomItem.key === bubbleTarget.key) {
-          b.innerText = '⭐';
-          b.style.background = '#2ed573';
-          b.style.borderColor = '#fff';
-          bubbleIdx++;
-          stopBubbles();
-          setTimeout(startBubbles, 500);
-        } else {
-          b.innerText = '💨';
-          setTimeout(() => b.remove(), 150);
-        }
-      };
-
-      area.appendChild(b);
-      setTimeout(() => b.remove(), 4000);
-    }, 1200);
-  }
-
-  function toggleAlbum() {
-    const album = document.getElementById('albumOverlay');
-    album.style.display = (album.style.display === 'flex') ? 'none' : 'flex';
-
-    const earned = JSON.parse(localStorage.getItem(STICKERS_KEY) || "[]");
-    earned.forEach(id => {
-      const el = document.getElementById('stk_'+id);
-      if(el) el.classList.add('unlocked');
-    });
-  }
-
-  function unlockSticker(id) {
-    let earned = JSON.parse(localStorage.getItem(STICKERS_KEY) || "[]");
-    if(!earned.includes(id)) {
-      earned.push(id);
-      localStorage.setItem(STICKERS_KEY, JSON.stringify(earned));
+    // --- Header icons ---
+    function goHome(){
+      // if you want: location.href = "index.html";
+      location.reload();
     }
-  }
+    function toggleBookHint(){
+      showCeleb("📖", "Eslatma", "Audio fayllar: a/1.mp3, en/1.mp3 (va hokazo).");
+    }
 
-  (function init(){
-    setLang("uz");
-    renderLearn(true);
-
-    syncGlobalLearnedFromStars();
-
-    updateProgress();
-    updateBubbleScoreLine();
-    updateEchoProgress();
-    updateEchoTries();
-
-    checkAllCompleted();
-  })();
-</script>
-
+    // --- INIT ---
+    renderLearn();
+    changeMode('learn');
+    updateProg();
+  </script>
 </body>
 </html>
