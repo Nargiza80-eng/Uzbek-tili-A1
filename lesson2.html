@@ -1,406 +1,323 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>2-dars – Sonlar 1–10</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sonlar 1–10 (O'quv Darsligi)</title>
+  <style>
+    :root {
+      --bg: #F0F4F8;
+      --card: #FFFFFF;
+      --ink: #2D3748;
+      --muted: #718096;
+      --accent: #4FD1C5;
+      --accent-dark: #38B2AC;
+      --good: #48BB78;
+      --bad: #F56565;
+      --gold: #ECC94B;
+      --shadow: 0 4px 6px rgba(0,0,0,0.05), 0 10px 15px rgba(0,0,0,0.1);
+      --radius: 20px;
+    }
 
-<style>
-:root{
-  --bg:#F7F3EE;
-  --card:#FFFFFF;
-  --ink:#1F2937;
-  --muted:#6B7280;
-  --line:#E7E0D8;
-  --accent:#6FA8A1;
-  --accent2:#F2C98A;
-  --good:#16a34a;
-  --bad:#dc2626;
-  --shadow:0 10px 26px rgba(31,41,55,0.10);
-  --radius:18px;
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      padding: 15px;
+    }
 
-  --blue:#1976D2;
-  --yellow:#F5C400;
-}
+    .app { max-width: 800px; margin: 0 auto; }
 
-body{
-  margin:0;
-  font-family:system-ui;
-  background:var(--bg);
-  color:var(--ink);
-  padding:18px;
-}
+    /* Header & Progress */
+    .top-section {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 25px;
+      margin-bottom: 25px;
+      text-align: center;
+    }
 
-.app{max-width:980px;margin:0 auto;}
-.top{
-  background:var(--card);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:18px;
-  position:relative;
-  overflow:hidden;
-}
+    .langSwitch {
+      display: inline-flex;
+      background: #EDF2F7;
+      padding: 4px;
+      border-radius: 50px;
+      margin-top: 15px;
+    }
 
-.headRow{
-  display:flex;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  gap:10px;
-}
+    .langBtn {
+      border: none; padding: 8px 20px; border-radius: 50px;
+      cursor: pointer; font-weight: bold; transition: 0.3s; background: transparent;
+    }
 
-h1{margin:0;font-size:22px;}
-.sub{color:var(--muted);font-weight:800;}
+    .langBtn.active { background: var(--accent); color: white; }
 
-.langSwitch{
-  display:flex;
-  gap:6px;
-  background:#F1FBF9;
-  border-radius:999px;
-  padding:6px;
-}
-.langBtn{
-  border:none;
-  background:transparent;
-  padding:6px 12px;
-  border-radius:999px;
-  font-weight:1000;
-  cursor:pointer;
-}
-.langBtn.active{background:var(--accent);color:white;}
+    .track { height: 14px; background: #E2E8F0; border-radius: 10px; overflow: hidden; margin-top: 15px; }
+    .fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--good)); transition: width 0.6s ease; }
 
-.bar{
-  margin-top:12px;
-  background:#fff;
-  border-radius:14px;
-  padding:10px;
-  box-shadow:var(--shadow);
-}
-.track{
-  height:12px;
-  background:#F3F4F6;
-  border-radius:999px;
-  margin-top:10px;
-}
-.fill{height:100%;width:0%;background:var(--accent);border-radius:999px;}
+    /* Vokabel Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
 
-.grid{
-  margin-top:14px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:12px;
-}
+    .card {
+      background: white; padding: 20px; border-radius: var(--radius);
+      text-align: center; box-shadow: var(--shadow); transition: transform 0.2s;
+    }
+    .card:hover { transform: scale(1.05); }
 
-.card{
-  background:#fff;
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:14px;
-  text-align:center;
-}
+    .num-circle {
+      width: 45px; height: 45px; background: #E6FFFA;
+      border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; margin: 0 auto 10px;
+      font-weight: 800; font-size: 22px; color: var(--accent-dark);
+    }
 
-.num{
-  width:56px;height:56px;
-  border-radius:14px;
-  background:#E9F3F1;
-  display:flex;align-items:center;justify-content:center;
-  font-size:24px;font-weight:1000;
-  margin:0 auto;
-}
+    .word { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
 
-.uz{font-size:26px;font-weight:1000;margin-top:10px}
-.en{font-size:18px;font-weight:1000;margin-top:10px;display:none}
-.pr{color:var(--muted);font-style:italic;font-size:13px}
+    .btn-play {
+      width: 100%; border: none; background: #FEFCBF;
+      padding: 10px; border-radius: 12px; cursor: pointer; font-size: 18px;
+    }
 
-.audioBtn{
-  width:100%;
-  margin-top:10px;
-  padding:12px;
-  border:none;
-  border-radius:14px;
-  background:var(--accent2);
-  font-weight:1000;
-  cursor:pointer;
-}
+    /* Game Card */
+    .game-card {
+      background: white; border-radius: var(--radius);
+      padding: 25px; margin-bottom: 25px; box-shadow: var(--shadow);
+      position: relative;
+    }
 
-.stars{margin-top:6px;font-size:18px;color:#F59E0B;font-weight:1000;}
+    .game-title { font-size: 22px; font-weight: 800; margin: 0 0 10px; display: flex; align-items: center; gap: 10px; }
+    .status-badge { font-size: 14px; background: #EDF2F7; padding: 4px 12px; border-radius: 20px; }
 
-.quizWrap{
-  margin-top:10px;
-  border:1px dashed #E5E7EB;
-  border-radius:14px;
-  padding:10px;
-  text-align:left;
-}
+    .choiceRow { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px; }
+    
+    .btn-choice {
+      padding: 15px 25px; border: 2px solid #E2E8F0;
+      background: white; border-radius: 15px; cursor: pointer;
+      font-weight: bold; font-size: 18px; transition: 0.2s;
+    }
+    .btn-choice:hover { border-color: var(--accent); }
+    .btn-choice.good { background: var(--good); color: white; border-color: var(--good); }
+    .btn-choice.bad { background: var(--bad); color: white; border-color: var(--bad); }
 
-.opt{
-  width:100%;
-  margin-top:6px;
-  padding:10px;
-  border-radius:12px;
-  border:1px solid var(--line);
-  background:white;
-  font-weight:1000;
-  cursor:pointer;
-}
+    /* Zählspiel Spezifisch */
+    #emojiArea { font-size: 40px; letter-spacing: 8px; margin: 20px 0; text-align: center; min-height: 60px; }
 
-.result{margin-top:6px;font-weight:1000;display:none;}
-.result.good{display:block;color:var(--good);}
-.result.bad{display:block;color:var(--bad);}
-
-/* ===== GAMES ===== */
-.gamesSection{margin-top:16px;display:grid;gap:14px;}
-
-.gameCard{
-  background:#fff;
-  border-radius:28px;
-  box-shadow:0 16px 34px rgba(31,41,55,0.14);
-  padding:16px;
-}
-
-.gameHead{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.gameEmoji{
-  width:58px;height:58px;
-  border-radius:18px;
-  background:#EEF6FF;
-  display:flex;align-items:center;justify-content:center;
-  font-size:30px;
-}
-
-.gameTitle{
-  font-size:18px;
-  font-weight:1000;
-  color:var(--blue);
-  margin:0;
-}
-
-.gameSub{font-size:12px;color:var(--muted);font-style:italic;}
-
-.gameBtn{
-  width:66px;height:66px;
-  border-radius:50%;
-  border:none;
-  background:var(--yellow);
-  font-size:24px;
-  cursor:pointer;
-}
-
-.choiceRow{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
-
-.choiceBtn{
-  padding:10px 14px;
-  border-radius:14px;
-  border:1px solid var(--line);
-  background:white;
-  font-weight:1000;
-  cursor:pointer;
-}
-
-.choiceBtn.good{background:#ECFDF5;color:var(--good);}
-.choiceBtn.bad{background:#FEF2F2;color:var(--bad);}
-
-.emojiLine{text-align:center;font-size:34px;letter-spacing:6px;}
-
-.gameResult{margin-top:8px;font-weight:1000;text-align:center;display:none;}
-.gameResult.good{display:block;color:var(--good);}
-.gameResult.bad{display:block;color:var(--bad);}
-</style>
+    /* Matching Game */
+    .matching-box { display: flex; gap: 15px; margin-top: 15px; }
+    .col { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+    .drag-item { 
+        padding: 15px; background: #F7FAFC; border: 2px solid #E2E8F0; 
+        border-radius: 12px; text-align: center; cursor: grab; font-weight: bold;
+    }
+    .drop-zone { 
+        padding: 15px; border: 2px dashed var(--accent); border-radius: 12px; 
+        text-align: center; min-height: 25px; transition: 0.3s;
+    }
+    .drop-zone.over { background: #E6FFFA; }
+    .matched { background: var(--good) !important; color: white; border-color: var(--good) !important; }
+  </style>
 </head>
-
 <body>
+
 <div class="app">
-<div class="top">
-
-<div class="headRow">
-  <div>
-    <h1 id="title">🔢 2-dars: Sonlar 1–10</h1>
-    <div class="sub" id="subtitle">Birga sanaymiz 😊</div>
-  </div>
-
-  <div class="langSwitch">
-    <button id="btn-uz" class="langBtn active" onclick="setLang('uz')">UZ</button>
-    <button id="btn-en" class="langBtn" onclick="setLang('en')">EN</button>
-  </div>
-</div>
-
-<div class="bar">
-  <div id="progressText">0 / 10</div>
-  <div class="track"><div class="fill" id="progressFill"></div></div>
-</div>
-
-<div class="grid" id="grid"></div>
-
-<!-- ===== GAMES ===== -->
-<div class="gamesSection">
-
-<div class="gameCard">
-  <div class="gameHead">
-    <div>
-      <div class="gameTitle">🔗 Juftini top</div>
-      <div class="gameSub">Son ↔ So‘z</div>
-      <div id="g1Status">❓</div>
+  <div class="top-section">
+    <h1 style="margin:0; font-size: 28px;">🔢 2-Dars: Sonlar</h1>
+    <div id="progLabel">0 / 10 o'rganildi</div>
+    <div class="track"><div class="fill" id="progFill"></div></div>
+    
+    <div class="langSwitch">
+      <button id="btn-uz" class="langBtn active" onclick="setLang('uz')">O'zbekcha</button>
+      <button id="btn-en" class="langBtn" onclick="setLang('en')">English</button>
     </div>
-    <button class="gameBtn" onclick="startGame1()">▶</button>
   </div>
-  <div class="choiceRow" id="g1Grid"></div>
-  <div class="gameResult" id="g1Res"></div>
-</div>
 
-<div class="gameCard">
-  <div class="gameHead">
-    <div>
-      <div class="gameTitle">🎧 Eshit</div>
-      <div class="gameSub">Audio quiz</div>
-      <div id="g2Status">❓</div>
+  <div class="grid" id="vocabGrid"></div>
+
+  <div class="game-card">
+    <div class="game-title">🔗 Juftini top <span class="status-badge" id="g1Status">❓</span></div>
+    <div class="matching-box">
+      <div class="col" id="dragNums"></div>
+      <div class="col" id="dropWords"></div>
     </div>
-    <button class="gameBtn" onclick="startGame2()">🔊</button>
+    <button class="btn-play" style="margin-top:20px; background:var(--accent); color:white;" onclick="initMatchingGame()">Yangilash 🔄</button>
   </div>
-  <div class="choiceRow" id="g2Choices"></div>
-  <div class="gameResult" id="g2Res"></div>
-</div>
 
-<div class="gameCard">
-  <div class="gameHead">
-    <div>
-      <div class="gameTitle">🍎 Sanab ko‘r</div>
-      <div class="gameSub">Count</div>
-      <div id="g3Status">❓</div>
-    </div>
-    <button class="gameBtn" onclick="startGame3()">▶</button>
+  <div class="game-card">
+    <div class="game-title">🍎 Sanab ko‘r (Count) <span class="status-badge" id="g3Status">❓</span></div>
+    <p style="text-align:center; color:var(--muted)">Nechta olma bor?</p>
+    <div id="emojiArea"></div>
+    <div class="choiceRow" id="countChoices"></div>
+    <button class="btn-play" style="margin-top:20px; background:var(--gold);" onclick="startCountingGame()">O'yinni boshlash ▶</button>
   </div>
-  <div class="emojiLine" id="g3Emojis">🍎🍎🍎</div>
-  <div class="choiceRow" id="g3Choices"></div>
-  <div class="gameResult" id="g3Res"></div>
-</div>
 
-<div class="gameCard">
-  <div class="gameHead">
-    <div>
-      <div class="gameTitle">🧩 Tartib</div>
-      <div class="gameSub">1 → 10</div>
-      <div id="g4Status">❓</div>
-    </div>
-    <button class="gameBtn" onclick="startGame4()">▶</button>
+  <div class="game-card">
+    <div class="game-title">🧩 Tartib (1-10) <span class="status-badge" id="g4Status">❓</span></div>
+    <p id="orderTask" style="text-align:center; font-weight:bold; color:var(--accent-dark)">Tartib bilan bosing</p>
+    <div class="choiceRow" id="orderGrid"></div>
+    <button class="btn-play" style="margin-top:20px;" onclick="startOrderGame()">Boshlash ▶</button>
   </div>
-  <div class="choiceRow" id="g4Choices"></div>
-  <div class="gameResult" id="g4Res"></div>
-</div>
-
-</div>
-
-</div>
 </div>
 
 <script>
-const LESSON_ID="lesson2";
-let currentLang="uz";
+  const LESSON_ID = "lesson_2_final";
+  const items = [
+    {k: "1", n: 1, uz: "bir", en: "one", e: "🍎"}, {k: "2", n: 2, uz: "ikki", en: "two", e: "🍎"},
+    {k: "3", n: 3, uz: "uch", en: "three", e: "🍎"}, {k: "4", n: 4, uz: "to'rt", en: "four", e: "🍎"},
+    {k: "5", n: 5, uz: "besh", en: "five", e: "🍎"}, {k: "6", n: 6, uz: "olti", en: "six", e: "🍎"},
+    {k: "7", n: 7, uz: "yetti", en: "seven", e: "🍎"}, {k: "8", n: 8, uz: "sakkiz", en: "eight", e: "🍎"},
+    {k: "9", n: 9, uz: "to'qqiz", en: "nine", e: "🍎"}, {k: "10", n: 10, uz: "o'n", en: "ten", e: "🍎"}
+  ];
 
-const items=[
- {key:"1",n:1,uz:"bir",en:"one"},
- {key:"2",n:2,uz:"ikki",en:"two"},
- {key:"3",n:3,uz:"uch",en:"three"},
- {key:"4",n:4,uz:"to‘rt",en:"four"},
- {key:"5",n:5,uz:"besh",en:"five"},
- {key:"6",n:6,uz:"olti",en:"six"},
- {key:"7",n:7,uz:"yetti",en:"seven"},
- {key:"8",n:8,uz:"sakkiz",en:"eight"},
- {key:"9",n:9,uz:"to‘qqiz",en:"nine"},
- {key:"10",n:10,uz:"o‘n",en:"ten"}
-];
+  let state = {
+    lang: 'uz',
+    stars: {},
+    games: { g1: false, g3: false, g4: false }
+  };
 
-function getDefaultState(){
- return {stars:{},quizDone:{},gamesDone:{g1:false,g2:false,g3:false,g4:false}};
-}
-function loadState(){
- try{
-  const s=JSON.parse(localStorage.getItem(LESSON_ID));
-  return {...getDefaultState(),...s};
- }catch{return getDefaultState();}
-}
-function saveState(s){localStorage.setItem(LESSON_ID,JSON.stringify(s));}
+  function init() {
+    const saved = localStorage.getItem(LESSON_ID);
+    if(saved) state = JSON.parse(saved);
+    renderAll();
+  }
 
-function shuffle(arr){return [...arr].sort(()=>Math.random()-0.5);}
+  function save() { localStorage.setItem(LESSON_ID, JSON.stringify(state)); }
 
-function setLang(lang){
- currentLang=lang;
- document.getElementById("btn-uz").classList.toggle("active",lang==="uz");
- document.getElementById("btn-en").classList.toggle("active",lang==="en");
- render();
- updateGameStatus();
-}
+  function setLang(l) {
+    state.lang = l;
+    document.getElementById('btn-uz').classList.toggle('active', l === 'uz');
+    document.getElementById('btn-en').classList.toggle('active', l === 'en');
+    renderAll();
+  }
 
-function render(){
- const grid=document.getElementById("grid");
- grid.innerHTML="";
- const state=loadState();
+  function renderAll() {
+    renderVocab();
+    updateProgress();
+    updateGameStatus();
+  }
 
- items.forEach(it=>{
-  const card=document.createElement("div");
-  card.className="card";
-  card.innerHTML=`
-   <div class="num">${it.n}</div>
-   <div class="uz">${it.uz}</div>
-   <div class="en">${it.en}</div>
-   <button class="audioBtn" onclick="playAudio('${it.key}')">▶</button>
-   <div class="stars">${"★".repeat(state.stars[it.key]||0)}</div>
-  `;
-  grid.appendChild(card);
- });
- updateProgress();
-}
+  function renderVocab() {
+    const g = document.getElementById('vocabGrid');
+    g.innerHTML = items.map(it => `
+      <div class="card">
+        <div class="num-circle">${it.n}</div>
+        <div class="word">${state.lang === 'uz' ? it.uz : it.en}</div>
+        <button class="btn-play" onclick="speak('${it.uz}', '${it.k}')">🔊</button>
+        <div style="margin-top:8px; color:var(--gold)">${"★".repeat(state.stars[it.k] || 0)}</div>
+      </div>
+    `).join('');
+  }
 
-function playAudio(key){
- const s=loadState();
- s.stars[key]=(s.stars[key]||0)+1;
- saveState(s);
- render();
-}
+  function speak(text, key) {
+    const msg = new SpeechSynthesisUtterance(text);
+    msg.lang = 'tr-TR';
+    window.speechSynthesis.speak(msg);
+    state.stars[key] = (state.stars[key] || 0) + 1;
+    save(); renderVocab(); updateProgress();
+  }
 
-function updateProgress(){
- const s=loadState();
- const done=Object.values(s.quizDone).filter(Boolean).length;
- document.getElementById("progressText").innerText=`${done} / 10`;
- document.getElementById("progressFill").style.width=(done*10)+"%";
-}
+  function updateProgress() {
+    const count = Object.keys(state.stars).length;
+    document.getElementById('progLabel').innerText = `${count} / 10 o'rganildi`;
+    document.getElementById('progFill').style.width = (count * 10) + "%";
+  }
 
-function setGameDone(g){
- const s=loadState();
- s.gamesDone[g]=true;
- saveState(s);
- updateGameStatus();
-}
+  function updateGameStatus() {
+    ['g1', 'g3', 'g4'].forEach(id => {
+        document.getElementById(id+'Status').innerText = state.games[id] ? "✅ Bajarildi" : "❓";
+    });
+  }
 
-function updateGameStatus(){
- const s=loadState();
- ["g1","g2","g3","g4"].forEach(g=>{
-  const el=document.getElementById(g+"Status");
-  if(el) el.innerText=s.gamesDone[g]?"✅":"❓";
- });
-}
+  // --- GAME 1: MATCHING ---
+  function initMatchingGame() {
+    const nCol = document.getElementById('dragNums');
+    const wCol = document.getElementById('dropWords');
+    nCol.innerHTML = ''; wCol.innerHTML = '';
+    const pool = [...items].sort(() => 0.5 - Math.random()).slice(0, 5);
+    pool.forEach(it => {
+      const d = document.createElement('div');
+      d.className='drag-item'; d.draggable=true; d.innerText=it.n; d.dataset.k=it.k;
+      d.ondragstart = (e) => e.dataTransfer.setData('text', it.k);
+      nCol.appendChild(d);
+    });
+    [...pool].sort(() => 0.5-Math.random()).forEach(it => {
+      const d = document.createElement('div');
+      d.className='drop-zone'; d.innerText= (state.lang==='uz'?it.uz:it.en); d.dataset.k=it.k;
+      d.ondragover=(e)=> {e.preventDefault(); d.classList.add('over')};
+      d.ondrop=(e)=>{
+        const k = e.dataTransfer.getData('text');
+        if(k === d.dataset.k) {
+          d.classList.add('matched'); d.innerText = "✅ " + d.innerText;
+          state.games.g1 = true; save(); updateGameStatus();
+        }
+        d.classList.remove('over');
+      };
+      wCol.appendChild(d);
+    });
+  }
 
-/* simple games demo */
-function startGame2(){
- const choices=document.getElementById("g2Choices");
- choices.innerHTML="";
- const correct=Math.ceil(Math.random()*10);
- shuffle([correct,correct+1,correct+2]).forEach(n=>{
-  const b=document.createElement("button");
-  b.className="choiceBtn";
-  b.innerText=n;
-  b.onclick=()=>{ if(n===correct){b.classList.add("good");setGameDone("g2");}};
-  choices.appendChild(b);
- });
-}
+  // --- GAME 3: COUNTING (ÄPFEL) ---
+  function startCountingGame() {
+    const area = document.getElementById('emojiArea');
+    const choices = document.getElementById('countChoices');
+    const target = Math.floor(Math.random() * 10) + 1;
+    
+    area.innerText = "🍎".repeat(target);
+    choices.innerHTML = "";
 
-(function init(){
- if(!localStorage.getItem(LESSON_ID)) saveState(getDefaultState());
- render();
- updateGameStatus();
-})();
+    const options = new Set([target]);
+    while(options.size < 4) options.add(Math.floor(Math.random() * 10) + 1);
+    
+    [...options].sort(() => 0.5 - Math.random()).forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-choice';
+        btn.innerText = opt;
+        btn.onclick = () => {
+            if(opt === target) {
+                btn.classList.add('good');
+                state.games.g3 = true; save(); updateGameStatus();
+                setTimeout(startCountingGame, 1000);
+            } else {
+                btn.classList.add('bad');
+            }
+        };
+        choices.appendChild(btn);
+    });
+  }
+
+  // --- GAME 4: ORDER ---
+  let nextOrder = 1;
+  function startOrderGame() {
+    nextOrder = 1;
+    const grid = document.getElementById('orderGrid');
+    grid.innerHTML = "";
+    document.getElementById('orderTask').innerText = "1 ni toping...";
+    [...items].sort(() => 0.5 - Math.random()).forEach(it => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-choice'; btn.innerText = it.n;
+        btn.onclick = () => {
+            if(it.n === nextOrder) {
+                btn.classList.add('good'); btn.disabled = true;
+                if(nextOrder === 10) {
+                    state.games.g4 = true; save(); updateGameStatus();
+                    document.getElementById('orderTask').innerText = "Barakalla! 🎉";
+                } else {
+                    nextOrder++;
+                    document.getElementById('orderTask').innerText = nextOrder + " ni toping...";
+                }
+            }
+        };
+        grid.appendChild(btn);
+    });
+  }
+
+  init();
 </script>
 </body>
 </html>
