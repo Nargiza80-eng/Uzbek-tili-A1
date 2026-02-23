@@ -1,35 +1,43 @@
-/* ==== DONO BOLA HEADER ==== */
+// components/header.js
 
-function renderHeader(titleText){
-  const el = document.getElementById("header-container");
-  if(!el) return;
+(function () {
+  function injectSkyInto(el) {
+    if (!el) return;
 
-  el.innerHTML = `
-    <div class="header-box">
-      <div class="sun">☀️</div>
-      <div class="cloud c1">☁️</div>
-      <div class="cloud c2">☁️</div>
+    // prevent duplicates
+    if (el.classList.contains("has-sky")) return;
 
-      <div class="top-row">
-        <button class="topIcon" onclick="goHome()">🏠</button>
-        <div class="header-title">${titleText}</div>
-        <button class="topIcon" onclick="toggleAlbum()">📖</button>
-      </div>
+    el.classList.add("has-sky");
 
-      <div class="progress-container">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
+    const sky = document.createElement("div");
+    sky.className = "sky";
+    sky.innerHTML = `
+      <div class="sun"></div>
+      <div class="cloud c1"></div>
+      <div class="cloud c2"></div>
+      <div class="cloud c3"></div>
+      <div class="sparkle s1"></div>
+      <div class="sparkle s2"></div>
+      <div class="sparkle s3"></div>
+    `;
 
-      <div id="progressText">0 / 10</div>
+    // insert sky as first child (behind everything)
+    el.insertBefore(sky, el.firstChild);
+  }
 
-      <div class="lang-switch">
-        <button class="lang-btn active" id="langUZ" onclick="setLang('uz')">UZ</button>
-        <button class="lang-btn" id="langEN" onclick="setLang('en')">EN</button>
-      </div>
-    </div>
-  `;
-}
+  function run() {
+    // 1) Your lesson2 header uses .top
+    const top = document.querySelector(".top");
+    if (top) injectSkyInto(top);
 
-function goHome(){
-  window.location.href = "index.html";
-}
+    // 2) Your lesson1 header uses .header-box (optional)
+    const headerBox = document.querySelector(".header-box");
+    if (headerBox) injectSkyInto(headerBox);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", run);
+  } else {
+    run();
+  }
+})();
