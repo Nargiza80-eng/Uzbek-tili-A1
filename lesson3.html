@@ -4,34 +4,138 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>3-dars – Hayvonlar</title>
+<style>
+ :root{
+  --headerGrad1:#FFDEE9;
+  --headerGrad2:#B5FFFC;
 
-  <style>
-    :root{
-      --bg:#F7F3EE; --card:#FFFFFF; --ink:#1F2937; --muted:#6B7280; --line:#E7E0D8;
-      --accent:#6FA8A1; --accent2:#F2C98A; --shadow:0 8px 24px rgba(31,41,55,0.08); --radius:18px;
-    }
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);padding:18px;}
-    .app{max-width:860px;margin:0 auto;}
-    .top{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;}
-    .headRow{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;}
-    h1{margin:0;font-size:22px;}
-    .sub{margin-top:6px;color:var(--muted)}
-    .langSwitch{display:flex;gap:6px;background:#F1FBF9;border:1px solid #D7F1ED;padding:6px;border-radius:999px;}
-    .langBtn{border:none;background:transparent;padding:6px 12px;border-radius:999px;font-weight:800;cursor:pointer;color:#1B4D48;}
-    .langBtn.active{background:var(--accent);color:#fff;}
-    .grid{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;text-align:center;}
-    .emoji{font-size:34px}
-    .uz{font-size:28px;font-weight:900;margin-top:8px}
-    .en{font-size:16px;font-weight:700;margin-top:8px;display:none}
-    .pr{color:var(--muted);font-style:italic;margin-top:6px}
-    .audioBtn{width:100%;margin-top:10px;padding:10px;font-size:15px;border:none;border-radius:14px;background:var(--accent2);color:#3b2a10;font-weight:900;cursor:pointer;}
-    .navRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
-    a.nav,a.next{flex:1;min-width:200px;text-align:center;text-decoration:none;padding:12px;border-radius:14px;font-weight:900;}
-    a.nav{background:#fff;border:1px solid var(--line);color:var(--ink);}
-    a.next{background:var(--accent);color:#fff;}
+  --blue:#2F6BFF;
+  --blueDark:#1E40AF;
+
+  --ink:#0F172A;
+  --muted:#475569;
+
+  --track:#E5E7EB;
+}
+
+.top{
+  background:linear-gradient(135deg,var(--headerGrad1),var(--headerGrad2));
+  border-radius:30px;
+  box-shadow:0 16px 34px rgba(0,0,0,0.10);
+  padding:18px 16px 16px;
+  margin-bottom:16px;
+}
+
+.titleRow{
+  display:grid;
+  grid-template-columns:72px 1fr 72px;
+  align-items:center;
+}
+
+.iconBtn{
+  font-size:46px;
+  background:none;
+  border:none;
+  cursor:pointer;
+}
+
+.titleWrap{
+  text-align:center;
+}
+
+.title{
+  margin:0;
+  font-size:30px;
+  font-weight:1000;
+  color:var(--ink);
+}
+
+.subtitle{
+  margin-top:4px;
+  font-size:18px;
+  font-weight:900;
+  color:var(--muted);
+}
+
+.track{
+  margin-top:10px;
+  height:16px;
+  background:var(--track);
+  border-radius:999px;
+  overflow:hidden;
+}
+
+.fill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#22C55E,#4ADE80,#34D399);
+  transition:width .35s ease;
+}
+
+.progressText{
+  text-align:center;
+  font-weight:1000;
+  font-size:18px;
+  margin-top:6px;
+}
+
+.langRow{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  margin-top:10px;
+}
+
+.langBtn{
+  width:130px;
+  padding:10px 0;
+  border:none;
+  border-radius:999px;
+  font-weight:1000;
+  font-size:18px;
+  background:#E5E7EB;
+  color:var(--blueDark);
+  cursor:pointer;
+}
+
+.langBtn.active{
+  background:var(--blue);
+  color:white;
+  box-shadow: inset 0 -6px 0 rgba(0,0,0,0.18);
+}
   </style>
+  
+<div class="top">
+  <div class="titleRow">
 
+    <!-- 🏠 LEFT -->
+    <button class="iconBtn" onclick="goHome()">🏠</button>
+
+    <!-- TITLE -->
+    <div class="titleWrap">
+      <h1 class="title">2-dars: Sonlar</h1>
+      <div class="subtitle">Birga o‘rganamiz 😊</div>
+    </div>
+
+    <!-- 📖 RIGHT -->
+    <button class="iconBtn" onclick="openLearn()">📖</button>
+
+  </div>
+
+  <!-- Progress -->
+  <div class="track">
+    <div class="fill" id="progressFill"></div>
+  </div>
+
+  <div class="progressText" id="progressText">0 / 10</div>
+
+  <!-- UZ / EN -->
+  <div class="langRow">
+    <button id="btn-uz" class="langBtn active" onclick="setLang('uz')">UZ</button>
+    <button id="btn-en" class="langBtn" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+  
   <script>
     let currentLang = "uz";
     function setLang(lang){
@@ -49,6 +153,28 @@
       const p = a.play();
       if(p && typeof p.catch === "function"){ p.catch(()=>alert("Audio o‘ynamadi. Fayl nomi/papka tekshiring.")); }
     }
+    function goHome(){
+  window.location.href = "index.html";
+}
+
+function setLang(lang){
+  state.lang = lang;
+
+  document.getElementById("btn-uz").classList.toggle("active", lang==="uz");
+  document.getElementById("btn-en").classList.toggle("active", lang==="en");
+
+  saveState();
+  renderAll();
+}
+
+function updateHeaderProgress(done,total){
+  document.getElementById("progressText").innerText = `${done} / ${total}`;
+  document.getElementById("progressFill").style.width = (done/total*100)+"%";
+}
+
+function openLearn(){
+  openSection("learn");
+}
   </script>
 </head>
 
