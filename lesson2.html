@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>2-dars: Sonlar (1–10)</title>
 
-  <!-- ✅ Shared animated header (sun + clouds) -->
+  <!-- ✅ Shared Header Component -->
   <link rel="stylesheet" href="components/header.css">
   <script src="components/header.js" defer></script>
 
   <style>
     :root{
-      /* 🎨 Lesson2 colors (fröhlich, anders als Lesson1) */
       --bg:#FFF6E8;
       --panel:#FFFFFF;
       --ink:#1F2937;
@@ -20,9 +19,7 @@
       --blue:#2F6BFF;
       --blueDark:#1E4ED8;
 
-      --accent:#FF6B6B;
       --accent2:#22C55E;
-
       --yellow:#FACC15;
       --gold:#F59E0B;
 
@@ -31,123 +28,27 @@
 
       --shadow:0 16px 34px rgba(0,0,0,0.10);
       --shadowSoft:0 10px 22px rgba(0,0,0,0.10);
+
       --rBig:30px;
       --r:22px;
       --pad:16px;
-
-      /* ✅ Sky colors for header.css */
-      --skyTop:#FFD5F3;
-      --skyMid:#FFF6E8;
-      --sunLight:#FFF7C2;
-      --sunMid:#FFD400;
-      --sunDark:#FFB300;
     }
 
     *{box-sizing:border-box;}
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:var(--bg);
-      color:var(--ink);
-      padding:14px;
+      background: var(--bg);
+      color: var(--ink);
+      padding: 14px;
     }
-    .app{max-width:900px;margin:0 auto;}
-
-    /* ===== HEADER PANEL (.top) ===== */
-    .top{
-      background:var(--panel);
-      border-radius:var(--rBig);
-      box-shadow:var(--shadow);
-      padding:var(--pad);
-      overflow:hidden; /* important for sky */
-      position:relative; /* sky helper */
+    .app{
+      width:100%;
+      max-width:520px;     /* keep mobile look like screenshot */
+      margin:0 auto;
     }
 
-    .titleRow{
-      display:grid;
-      grid-template-columns:72px 1fr 72px;
-      gap:10px;
-      align-items:center;
-    }
-
-    .iconBox{
-      width:64px;height:64px;
-      display:flex;align-items:center;justify-content:center;
-      background:transparent;
-      border:none;
-      cursor:pointer;
-      user-select:none;
-      font-size:48px;
-      padding:0;
-      border-radius:18px;
-    }
-    .iconBox:active{transform:scale(0.97);}
-
-    .titleWrap{text-align:center;min-width:0;}
-    .title{
-      margin:0;
-      font-size:34px;
-      font-weight:900;
-      letter-spacing:0.2px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .sub{
-      margin-top:6px;
-      color:var(--muted);
-      font-weight:900;
-      font-size:18px;
-    }
-
-    .track{
-      margin:14px 4px 0;
-      height:18px;
-      background:#E5E7EB;
-      border-radius:999px;
-      overflow:hidden;
-      box-shadow: inset 0 2px 0 rgba(0,0,0,0.06);
-    }
-    .fill{
-      height:100%;
-      width:0%;
-      background:linear-gradient(90deg,var(--accent2), #34D399);
-      transition:width .35s ease;
-    }
-    .progMini{
-      text-align:center;
-      margin-top:10px;
-      font-weight:900;
-      font-size:20px;
-      color:#111827;
-    }
-
-    /* ===== UZ / EN pill ===== */
-    .langRow{
-      display:flex;
-      justify-content:center;
-      gap:18px;
-      margin-top:12px;
-    }
-    .langBtn{
-      width:160px;
-      padding:14px 0;
-      border:none;
-      cursor:pointer;
-      border-radius:999px;
-      font-weight:1000;
-      font-size:20px;
-      box-shadow:var(--shadowSoft);
-      background:#E5E7EB;
-      color:var(--blueDark);
-    }
-    .langBtn.active{
-      background:var(--blue);
-      color:#fff;
-      box-shadow: inset 0 -8px 0 rgba(0,0,0,0.18), var(--shadowSoft);
-    }
-
-    /* ===== MENU ===== */
+    /* ===== MENU buttons block (like your screenshot) ===== */
     .menuWrap{
       margin-top:14px;
       background:#F5F2E8;
@@ -174,6 +75,7 @@
       box-shadow:var(--shadowSoft);
       background:#fff;
       color:var(--blue);
+      position:relative;
       user-select:none;
     }
     .menuBtn.primary{
@@ -205,18 +107,15 @@
       gap:10px;
     }
 
-    /* VOCAB */
     .grid{
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
       gap:14px;
     }
+
     @media(max-width:560px){
-      .grid{grid-template-columns:1fr;}
-      .title{font-size:30px;}
       .menuBtn{font-size:24px;height:82px;}
-      .langBtn{width:140px;}
-      .iconBox{font-size:44px;}
+      .grid{grid-template-columns:repeat(2,minmax(0,1fr));}
     }
 
     .card{
@@ -265,7 +164,6 @@
     }
     .speaker:active{transform:scale(0.95);}
 
-    /* Games */
     .hint{
       text-align:center;
       color:var(--muted);
@@ -321,7 +219,6 @@
     .choiceBtn.good{background:var(--good);color:#fff;border-color:var(--good);}
     .choiceBtn.bad{background:var(--bad);color:#fff;border-color:var(--bad);}
 
-    /* Panel buttons */
     .btnRow{
       margin-top:14px;
       display:flex;
@@ -363,91 +260,82 @@
 </head>
 
 <body>
-<div class="app">
 
-  <!-- ✅ HEADER -->
-  <div class="top">
-    <div class="titleRow">
-      <button class="iconBox" title="Bosh sahifa" onclick="goHome()">🏠</button>
+  <!-- ✅ NEW HEADER (component) -->
+  <div id="lessonHeader"></div>
 
-      <div class="titleWrap">
-        <h1 class="title">2-dars: Sonlar</h1>
-        <div class="sub" id="progLabel">0 / 10 o'rganildi</div>
-      </div>
+  <div class="app">
 
-      <button class="iconBox" title="Dars kitob" onclick="openSection('learn')">📖</button>
-    </div>
-
-    <div class="track"><div class="fill" id="progFill"></div></div>
-    <div class="progMini" id="progMini">0 / 10</div>
-
-    <div class="langRow">
-      <button id="btn-uz" class="langBtn active" onclick="setLang('uz')">UZ</button>
-      <button id="btn-en" class="langBtn" onclick="setLang('en')">EN</button>
-    </div>
-
+    <!-- Menü Buttons -->
     <div class="menuWrap">
       <div class="menu">
         <button class="menuBtn primary" onclick="openSection('learn')">
           <span class="menuEmoji">📘</span>O‘rganish
         </button>
+
         <button class="menuBtn" onclick="openSection('order')">
           <span class="menuEmoji">🧩</span>Tartib
         </button>
+
         <button class="menuBtn" onclick="openSection('count')">
           <span class="menuEmoji">🍎</span>Sanab ko‘r
         </button>
+
         <button class="menuBtn" onclick="openSection('match')">
           <span class="menuEmoji">🔗</span>Juftini top
         </button>
       </div>
     </div>
-  </div>
 
-  <!-- ✅ PANELS (open only after clicking menu buttons) -->
+    <!-- PANELS -->
 
-  <div class="panel" id="panel-learn">
-    <div class="panelTitle">📘 O‘rganish</div>
-    <div class="grid" id="vocabGrid"></div>
-  </div>
-
-  <div class="panel" id="panel-order">
-    <div class="panelTitle">🧩 Tartib <span class="badge" id="g4Status">❓</span></div>
-    <p id="orderTask" class="hint">Tartib bilan bosing</p>
-    <div class="choiceRow" id="orderGrid"></div>
-    <div class="btnRow">
-      <button class="btn primary" onclick="startOrderGame()">Boshlash ▶</button>
-      <button class="btn soft" onclick="closePanels()">Yopish ✖</button>
+    <!-- O‘rganish -->
+    <div class="panel" id="panel-learn">
+      <div class="panelTitle">📘 O‘rganish</div>
+      <div class="grid" id="vocabGrid"></div>
     </div>
-  </div>
 
-  <div class="panel" id="panel-count">
-    <div class="panelTitle">🍎 Sanab ko‘r <span class="badge" id="g3Status">❓</span></div>
-    <p class="hint">Nechta olma bor?</p>
-    <div id="emojiArea"></div>
-    <div class="choiceRow" id="countChoices"></div>
-    <div class="btnRow">
-      <button class="btn primary" onclick="startCountingGame()">Boshlash ▶</button>
-      <button class="btn soft" onclick="closePanels()">Yopish ✖</button>
+    <!-- Tartib -->
+    <div class="panel" id="panel-order">
+      <div class="panelTitle">🧩 Tartib <span class="badge" id="g4Status">❓</span></div>
+      <p id="orderTask" class="hint">Tartib bilan bosing</p>
+      <div class="choiceRow" id="orderGrid"></div>
+      <div class="btnRow">
+        <button class="btn primary" onclick="startOrderGame()">Boshlash ▶</button>
+        <button class="btn soft" onclick="closePanels()">Yopish ✖</button>
+      </div>
     </div>
-  </div>
 
-  <div class="panel" id="panel-match">
-    <div class="panelTitle">🔗 Juftini top <span class="badge" id="g1Status">❓</span></div>
-    <div class="matchingBox">
-      <div class="col" id="dragNums"></div>
-      <div class="col" id="dropWords"></div>
+    <!-- Sanab ko‘r -->
+    <div class="panel" id="panel-count">
+      <div class="panelTitle">🍎 Sanab ko‘r <span class="badge" id="g3Status">❓</span></div>
+      <p class="hint">Nechta olma bor?</p>
+      <div id="emojiArea"></div>
+      <div class="choiceRow" id="countChoices"></div>
+      <div class="btnRow">
+        <button class="btn primary" onclick="startCountingGame()">Boshlash ▶</button>
+        <button class="btn soft" onclick="closePanels()">Yopish ✖</button>
+      </div>
     </div>
-    <div class="btnRow">
-      <button class="btn primary" onclick="initMatchingGame()">Yangilash 🔄</button>
-      <button class="btn soft" onclick="closePanels()">Yopish ✖</button>
-    </div>
-  </div>
 
-</div>
+    <!-- Juftini top -->
+    <div class="panel" id="panel-match">
+      <div class="panelTitle">🔗 Juftini top <span class="badge" id="g1Status">❓</span></div>
+      <div class="matchingBox">
+        <div class="col" id="dragNums"></div>
+        <div class="col" id="dropWords"></div>
+      </div>
+      <div class="btnRow">
+        <button class="btn primary" onclick="initMatchingGame()">Yangilash 🔄</button>
+        <button class="btn soft" onclick="closePanels()">Yopish ✖</button>
+      </div>
+    </div>
+
+  </div>
 
 <script>
-  const LESSON_ID = "lesson2_sonlar_lesson1style";
+  /* -------------------- DATA + STATE -------------------- */
+  const LESSON_ID = "lesson2_sonlar_v2";
 
   const items = [
     {k:"1",  n:1,  uz:"bir",     en:"one"},
@@ -482,8 +370,31 @@
     }catch(e){}
   }
 
-  function goHome(){ window.location.href = "index.html"; }
+  /* -------------------- HEADER (component) -------------------- */
+  function learnedCount(){
+    return Object.values(state.learned).filter(Boolean).length;
+  }
 
+  function initHeader(){
+    renderLessonHeader({
+      mountId: "lessonHeader",
+      title: "2-dars: Sonlar",
+      total: 10,
+      learned: learnedCount(),
+      lang: state.lang,
+      homeHref: "index.html",
+      onBookClick: () => openSection("learn"),
+      onLang: (l) => setLang(l)
+    });
+  }
+
+  function refreshHeader(){
+    if (typeof updateHeaderProgress === "function") {
+      updateHeaderProgress({ learned: learnedCount(), total: 10 });
+    }
+  }
+
+  /* -------------------- PANELS -------------------- */
   function closePanels(){
     document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
     window.scrollTo({top:0, behavior:"smooth"});
@@ -491,38 +402,34 @@
 
   function openSection(name){
     document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
+
     const panel = document.getElementById("panel-"+name);
     if(panel) panel.classList.add("show");
 
-    if(name==="match") initMatchingGame();
-    if(name==="count") startCountingGame();
-    if(name==="order") startOrderGame();
+    // ✅ Spiele erst starten, wenn Button geklickt wird
+    if(name==="match"){ initMatchingGame(); }
+    if(name==="count"){ startCountingGame(); }
+    if(name==="order"){ startOrderGame(); }
 
     panel?.scrollIntoView({behavior:"smooth", block:"start"});
   }
 
+  /* -------------------- LANGUAGE -------------------- */
   function setLang(l){
     state.lang = l;
-    document.getElementById("btn-uz").classList.toggle("active", l==="uz");
-    document.getElementById("btn-en").classList.toggle("active", l==="en");
     save();
     renderVocab();
 
+    // update matching words if panel open
     if(document.getElementById("panel-match").classList.contains("show")){
       initMatchingGame();
     }
   }
 
+  /* -------------------- UI HELPERS -------------------- */
   function starsText(n){
     n = Math.max(0, Math.min(3, n||0));
     return "★".repeat(n) + "☆".repeat(3-n);
-  }
-
-  function updateProgress(){
-    const learnedCount = Object.values(state.learned).filter(Boolean).length;
-    document.getElementById("progLabel").innerText = `${learnedCount} / 10 o'rganildi`;
-    document.getElementById("progMini").innerText  = `${learnedCount} / 10`;
-    document.getElementById("progFill").style.width = (learnedCount*10) + "%";
   }
 
   function updateBadges(){
@@ -536,6 +443,7 @@
     set("g4Status", state.games.g4);
   }
 
+  /* -------------------- SOUND FEEDBACK -------------------- */
   let audioCtx=null;
   function beepSuccess(){
     try{
@@ -566,11 +474,13 @@
     }catch(e){}
   }
 
+  /* -------------------- VOCAB -------------------- */
   function speakWord(key){
     const it = items.find(x=>x.k===key);
     if(!it) return;
 
     const text = (state.lang==="uz") ? it.uz : it.en;
+
     try{
       const u = new SpeechSynthesisUtterance(text);
       u.lang = (state.lang==="uz") ? "uz-UZ" : "en-US";
@@ -584,8 +494,9 @@
     state.stars[key]=Math.min(3,(state.stars[key]||0)+1);
     beepSuccess();
     save();
+
     renderVocab();
-    updateProgress();
+    refreshHeader();
   }
 
   function renderVocab(){
@@ -604,6 +515,7 @@
     }).join("");
   }
 
+  /* -------------------- GAME HELPERS -------------------- */
   function shuffle(arr){
     const a=[...arr];
     for(let i=a.length-1;i>0;i--){
@@ -613,7 +525,9 @@
     return a;
   }
 
+  /* -------------------- GAME 1: Matching -------------------- */
   let matchesCorrect=0, matchesTotal=0;
+
   function initMatchingGame(){
     const nCol=document.getElementById("dragNums");
     const wCol=document.getElementById("dropWords");
@@ -642,6 +556,7 @@
       dz.dataset.k=it.k;
 
       dz.ondragover = e => { e.preventDefault(); dz.classList.add("over"); };
+      dz.ondragleave = () => dz.classList.remove("over");
 
       dz.ondrop = e => {
         const k = e.dataTransfer.getData("text");
@@ -649,7 +564,7 @@
         if(k===dz.dataset.k){
           if(dz.classList.contains("matched")) { dz.classList.remove("over"); return; }
           dz.classList.add("matched");
-          dz.innerText="✅ "+dz.innerText;
+          dz.innerText="✅ " + dz.innerText;
           matchesCorrect++;
           beepSuccess();
 
@@ -670,6 +585,7 @@
     });
   }
 
+  /* -------------------- GAME 3: Counting -------------------- */
   function startCountingGame(){
     const area=document.getElementById("emojiArea");
     const choices=document.getElementById("countChoices");
@@ -707,6 +623,7 @@
     });
   }
 
+  /* -------------------- GAME 4: Order -------------------- */
   let nextOrder=1;
   function startOrderGame(){
     const grid=document.getElementById("orderGrid");
@@ -748,18 +665,17 @@
     });
   }
 
-  (function init(){
+  /* -------------------- INIT -------------------- */
+  document.addEventListener("DOMContentLoaded", () => {
     load();
-    document.getElementById("btn-uz").classList.toggle("active", state.lang==="uz");
-    document.getElementById("btn-en").classList.toggle("active", state.lang==="en");
-
+    initHeader();
     renderVocab();
-    updateProgress();
     updateBadges();
+    refreshHeader();
 
-    // ✅ Make sure the sky gets applied even if defer timing is weird
-    window.renderSkyHeader && window.renderSkyHeader();
-  })();
+    // ✅ Panels closed by default (games do NOT run automatically)
+  });
 </script>
+
 </body>
 </html>
