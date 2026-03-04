@@ -59,65 +59,49 @@
       overflow:hidden;
     }
 
-    /* NEU: Header mit Icons links/rechts und Titel mittig */
+    /* NEU: Header mit Sonne/Wolken oben, dann Titel, dann Sprachumschalter */
     .header-container {
       margin-bottom: 8px;
+      text-align: center;
     }
 
-    .header-main {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
+    /* Wetter/Sonne oben */
+    .weather-icon {
+      font-size: 48px;
+      margin-bottom: 8px;
+      display: block;
+      animation: float 3s ease-in-out infinite;
     }
 
-    .header-icon {
-      background: rgba(255,255,255,.8);
-      border: 1px solid var(--line);
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      font-size: 24px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      transition: all 0.2s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
     }
 
-    .header-icon:hover {
-      transform: scale(1.05);
-      background: white;
-    }
-
-    .header-icon:active {
-      transform: scale(0.95);
-    }
-
-    /* Dono Bola Titel zwischen den Icons */
+    /* Titel */
     .header-title {
       font-size: 32px;
       font-weight: 1000;
       color: #065f46;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
       text-shadow: 0 2px 4px rgba(0,0,0,0.08);
       letter-spacing: -0.5px;
+      margin-bottom: 12px;
     }
 
     .leaf-icon {
       font-size: 28px;
     }
 
-    /* Sprachumschalter unter dem Titel */
+    /* Sprachumschalter */
     .lang-switcher {
       display: flex;
       justify-content: center;
       gap: 12px;
-      margin-top: 12px;
+      margin-bottom: 16px;
     }
 
     .lang-btn {
@@ -137,15 +121,29 @@
       color: white;
     }
 
+    /* Begrüßung mit klickbarem Namen */
     .header-greeting {
       text-align: center;
-      margin: 16px 0 8px;
+      margin: 8px 0;
       font-size: 28px;
       font-weight: 1000;
     }
     
     .header-greeting .name { 
-      color: #065f46; 
+      color: #065f46;
+      cursor: pointer;
+      border-bottom: 2px dashed #065f46;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .header-greeting .name:hover {
+      transform: scale(1.05);
+      border-bottom-style: solid;
+    }
+
+    .header-greeting .name:active {
+      transform: scale(0.95);
     }
 
     /* Premium Banner */
@@ -514,16 +512,17 @@
       body { 
         padding: 12px; 
       }
+      .weather-icon {
+        font-size: 40px;
+      }
       .header-title { 
         font-size: 26px; 
       }
       .leaf-icon {
         font-size: 24px;
       }
-      .header-icon {
-        width: 42px;
-        height: 42px;
-        font-size: 20px;
+      .header-greeting {
+        font-size: 22px;
       }
       .grid { 
         padding-left: 22px; 
@@ -543,9 +542,6 @@
         gap: 12px; 
         min-height: 100px; 
       }
-      .header-greeting { 
-        font-size: 22px; 
-      }
       .premium-banner { 
         padding: 16px; 
       }
@@ -560,33 +556,28 @@
   <div class="app">
     <div class="top">
 
-      <!-- NEU: Header mit Titel zwischen Haus und Buch -->
+      <!-- NEU: Vereinfachter Header OHNE Haus/Buch Icons -->
       <div class="header-container">
-        <div class="header-main">
-          <!-- Haus Icon (Home) -->
-          <a href="index.html" class="header-icon" title="Home">🏠</a>
-          
-          <!-- Titel jetzt in der MITTE zwischen den Icons -->
-          <div class="header-title">
-            <span class="leaf-icon">🌿</span>
-            <span>Dono Bola</span>
-          </div>
-          
-          <!-- Buch Icon (Wörterbuch/Lektionen) -->
-          <button class="header-icon" onclick="openBook()" title="Wörterbuch" style="border: none;">📖</button>
+        <!-- Sonne mit Wolken oben -->
+        <div class="weather-icon">🌤️</div>
+        
+        <!-- Titel -->
+        <div class="header-title">
+          <span class="leaf-icon">🌿</span>
+          <span>Dono Bola</span>
         </div>
         
-        <!-- Sprach-Umschalter unter dem Titel -->
+        <!-- Sprach-Umschalter -->
         <div class="lang-switcher">
           <button class="lang-btn active" id="btn-uz" onclick="toggleLanguage()">UZ</button>
           <button class="lang-btn" id="btn-en" onclick="toggleLanguage()">EN</button>
         </div>
       </div>
 
-      <!-- Begrüßung -->
+      <!-- Begrüßung mit klickbarem Namen -->
       <div class="header-greeting" id="greetingText">
         <span id="helloWord">Hello,</span>
-        <span class="name" id="childNameBig">Friend!</span>
+        <span class="name" id="childNameBig" onclick="changeName()">Friend!</span>
         <span>✨</span>
       </div>
 
@@ -668,6 +659,8 @@
         nameGateText: "Type your name ✍️",
         namePlaceholder: "Example: Ali",
         startBtn: "Start 🚀",
+        changeNameTitle: "Change Name",
+        changeNameText: "Enter a new name ✍️",
         purchaseSuccess: "✅ Premium activated! Enjoy all lessons!",
         purchaseError: "❌ Purchase failed. Please try again.",
         restoring: "Restoring purchases...",
@@ -690,6 +683,8 @@
         nameGateText: "Ismingni yoz ✍️",
         namePlaceholder: "Masalan: Ali",
         startBtn: "Boshlaymiz! 🚀",
+        changeNameTitle: "Ismni O'zgartirish",
+        changeNameText: "Yangi ism kiriting ✍️",
         purchaseSuccess: "✅ Premium faollashdi! Barcha darslardan foydalaning!",
         purchaseError: "❌ Xatolik yuz berdi. Qayta urinib ko'ring.",
         restoring: "Xaridlar tiklanmoqda...",
@@ -700,6 +695,7 @@
     // === STATE ===
     let currentLang = "en";
     let isPurchasing = false;
+    let isChangingName = false;
 
     // === HILFSFUNKTIONEN ===
     function getLang() {
@@ -766,9 +762,10 @@
       showToast._tm = setTimeout(() => t.classList.remove("show"), duration);
     }
 
-    function openBook() {
-      // Hier können Sie das Wörterbuch öffnen
-      showToast(currentLang === "uz" ? "Wörterbuch kommt bald!" : "Dictionary coming soon!");
+    // === NAME ÄNDERN ===
+    function changeName() {
+      isChangingName = true;
+      showNameGate(true);
     }
 
     // === KAUF HANDLER (Simuliert für Web) ===
@@ -779,7 +776,6 @@
       isPurchasing = true;
       showToast(tt.processing);
       
-      // Simulation für Web (hier später echte Kauf-Logik einfügen)
       setTimeout(() => {
         setPremium(true);
         showToast(tt.purchaseSuccess, 3000);
@@ -906,21 +902,29 @@
       document.getElementById("purchaseGate").classList.remove("show");
     }
 
-    function showNameGate() {
+    function showNameGate(isChange = false) {
       const tt = T();
       const gate = document.getElementById("nameGate");
       gate.classList.add("show");
       
-      document.getElementById("nameGateTitle").innerText = tt.nameGateTitle;
-      document.getElementById("nameGateText").innerText = tt.nameGateText;
+      // Unterschiedlicher Text für erstmalige Eingabe vs. Änderung
+      document.getElementById("nameGateTitle").innerText = isChange ? tt.changeNameTitle : tt.nameGateTitle;
+      document.getElementById("nameGateText").innerText = isChange ? tt.changeNameText : tt.nameGateText;
       
       const input = document.getElementById("nameInput");
       const btn = document.getElementById("startBtn");
       
       input.placeholder = tt.namePlaceholder;
-      btn.innerText = tt.startBtn;
-      btn.disabled = true;
-      input.value = "";
+      btn.innerText = isChange ? "Save 💾" : tt.startBtn;
+      
+      // Bei Namensänderung aktuellen Namen vorausfüllen
+      if (isChange) {
+        const currentName = localStorage.getItem(STORAGE.CHILD_NAME) || "";
+        input.value = currentName;
+      } else {
+        btn.disabled = true;
+        input.value = "";
+      }
       
       setTimeout(() => input.focus(), 100);
       
@@ -939,6 +943,11 @@
         localStorage.setItem(STORAGE.CHILD_NAME, nm);
         gate.classList.remove("show");
         applyGreeting();
+        
+        if (isChange) {
+          showToast(currentLang === "uz" ? "Ism saqlandi! ✅" : "Name saved! ✅");
+          isChangingName = false;
+        }
       };
     }
 
@@ -962,7 +971,7 @@
       updateUI();
       
       if (!localStorage.getItem(STORAGE.CHILD_NAME)) {
-        showNameGate();
+        showNameGate(false);
       }
       
       window.addEventListener("pageshow", updateUI);
