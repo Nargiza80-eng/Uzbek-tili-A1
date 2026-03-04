@@ -1,10 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="uz">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Dono Bola - 1. Dars</title>
+
+  <!-- NEU: Header CSS einbinden -->
+  <link rel="stylesheet" href="components/header.css">
 
  <style>
   :root {
@@ -36,50 +38,6 @@
     padding: 15px;
     min-height: 100vh;
   }
-
-  /* --- HEADER --- */
-  .header-box {
-    background: white;
-    width: 100%;
-    max-width: 520px;
-    border-radius: var(--radius);
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 8px 0 rgba(0,0,0,0.05);
-    margin-bottom: 12px;
-    border: 4px solid white;
-  }
-
-  .progress-container { background: var(--shadowSoft); height: 15px; border-radius: 10px; margin: 10px 0; overflow: hidden; }
-  .progress-fill { background: var(--success); height: 100%; width: 0%; transition: width 0.5s; }
-
-  .top-row { display:flex; justify-content: space-between; align-items:center; gap:10px; }
-
-  /* ✅ BIGGER home & book */
-  .topIcon {
-    font-size: 56px;
-    line-height: 1;
-    text-decoration: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 6px 10px;
-    border-radius: 18px;
-  }
-  .topIcon:active { transform: translateY(2px); }
-
-  /* --- Language switch --- */
-  .lang-switch{
-    display:flex; gap:10px; justify-content:center;
-    margin-top: 10px;
-  }
-  .lang-btn{
-    padding:10px 14px; border-radius: 999px;
-    border:none; background:#fff; cursor:pointer;
-    box-shadow: 0 4px 0 var(--shadowBtn); font-weight:bold; font-size:14px;
-    min-width:70px;
-  }
-  .lang-btn.active{ background: var(--primary); color:#fff; box-shadow: 0 4px 0 #0047b3; }
 
   /* --- MODUS NAVIGATION --- */
   .mode-nav {
@@ -303,24 +261,26 @@
       <div class="confetti" id="confetti"></div>
       <div class="celebrate-emoji" id="celebrateEmoji">🎉</div>
       <div class="celebrate-title" id="celebrateTitle">Barakalla!</div>
-      <div class="celebrate-text" id="celebrateText">Zo‘r!</div>
+      <div class="celebrate-text" id="celebrateText">Zo'r!</div>
       <button class="celebrate-btn" onclick="closeCelebrate()">OK ✅</button>
     </div>
   </div>
 
-  <div class="header-box">
-    <div class="top-row">
-      <a href="index.html" class="topIcon" aria-label="Home">🏠</a>
-      <h3 style="margin:0;" id="titleText">1-dars: Salomlashuv</h3>
-      <button onclick="toggleAlbum()" class="topIcon" aria-label="Album">📖</button>
-    </div>
+  <!-- NEU: Animierter Header (wie bei Sonlar) -->
+  <div id="lessonHeader"></div>
 
-    <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
-    <small id="progressText">0 / 5</small>
-
-    <div class="lang-switch">
-      <button class="lang-btn active" id="langUZ" onclick="setLang('uz')">UZ</button>
-      <button class="lang-btn" id="langEN" onclick="setLang('en')">EN</button>
+  <!-- Album Overlay (wird vom Header-Buch-Button aufgerufen) -->
+  <div id="albumOverlay" class="album-overlay" onclick="toggleAlbum()">
+    <div class="album-content" onclick="event.stopPropagation()">
+      <h3 id="albumTitle" style="margin-top:0;">Mening Stikerlarim</h3>
+      <div class="sticker-grid">
+        <div id="stk_1" class="sticker-slot">🐰</div>
+        <div id="stk_2" class="sticker-slot">🐻</div>
+        <div id="stk_3" class="sticker-slot">🦁</div>
+        <div id="stk_4" class="sticker-slot">🐠</div>
+      </div>
+      <br>
+      <button class="mode-btn" onclick="toggleAlbum()" id="closeAlbumBtn">Yopish</button>
     </div>
   </div>
 
@@ -385,20 +345,8 @@
     <div class="small-note" id="bubbleScoreLine">⭐ 0 / 5</div>
   </div>
 
-  <!-- Album -->
-  <div id="albumOverlay" class="album-overlay" onclick="toggleAlbum()">
-    <div class="album-content" onclick="event.stopPropagation()">
-      <h3 id="albumTitle" style="margin-top:0;">Mening Stikerlarim</h3>
-      <div class="sticker-grid">
-        <div id="stk_1" class="sticker-slot">🐰</div>
-        <div id="stk_2" class="sticker-slot">🐻</div>
-        <div id="stk_3" class="sticker-slot">🦁</div>
-        <div id="stk_4" class="sticker-slot">🐠</div>
-      </div>
-      <br>
-      <button class="mode-btn" onclick="toggleAlbum()" id="closeAlbumBtn">Yopish</button>
-    </div>
-  </div>
+<!-- NEU: Header JavaScript einbinden -->
+<script src="components/header.js"></script>
 
 <script>
   const data = [
@@ -422,20 +370,20 @@
       album: "Mening Stikerlarim",
       close: "Yopish",
       echoHint: "🔁 Eshit → ayt → tekshir!",
-      bubbleHint: "To‘g‘ri emojini top! ⭐",
+      bubbleHint: "To'g'ri emojini top! ⭐",
       bubbleTask: "Top: ",
       doneQuizTitle: "Barakalla! 🐰",
       doneQuizText: "Test tugadi! Siz quyon stikerini oldingiz!",
-      winMemoryTitle: "Zo‘r! 🐻",
+      winMemoryTitle: "Zo'r! 🐻",
       winMemoryText: "Memory tugadi! Siz ayiq stikerini oldingiz!",
       echoWinTitle: "Ajoyib! 🦁",
       echoWinText: "Aks-sado tugadi! Siz sher stikerini oldingiz!",
       winBubbleTitle: "Super! 🐠",
       winBubbleText: "Pufakchalar tugadi! Siz baliq stikerini oldingiz!",
       allDoneTitle: "HAMMASI TUGADI! 🎉👏",
-      allDoneText: "Siz 1-dars va hamma o‘yinlarni tugatdingiz! YAY! 🎊",
-      sayAgain: "❌ Xato. Yana urinib ko‘r!",
-      micNoSupport: "⚠️ Mikrofon yo‘q. Chrome ishlating."
+      allDoneText: "Siz 1-dars va hamma o'yinlarni tugatdingiz! YAY! 🎊",
+      sayAgain: "❌ Xato. Yana urinib ko'r!",
+      micNoSupport: "⚠️ Mikrofon yo'q. Chrome ishlating."
     },
     en: {
       title: "Lesson 1: Greetings",
@@ -527,8 +475,11 @@
   function updateProgress(){
     const done = quizDoneCount();
     const pct = (done / data.length) * 100;
-    document.getElementById('progressFill').style.width = pct + '%';
-    document.getElementById('progressText').innerText = `${done} / ${data.length}`;
+    
+    // NEU: Header-Fortschritt aktualisieren
+    if (typeof setHeaderProgress === 'function') {
+      setHeaderProgress({ learned: done, total: data.length });
+    }
   }
 
   function celebrate(title, text, emoji="🎉"){
@@ -581,11 +532,19 @@
 
   function setLang(lang){
     currentLang = lang;
-    document.getElementById("langUZ").classList.toggle("active", lang==="uz");
-    document.getElementById("langEN").classList.toggle("active", lang==="en");
+    
+    // NEU: Header-Sprache aktualisieren
+    const uzBtn = document.getElementById('hdrUZ');
+    const enBtn = document.getElementById('hdrEN');
+    if (uzBtn) uzBtn.classList.toggle('active', lang === 'uz');
+    if (enBtn) enBtn.classList.toggle('active', lang === 'en');
 
     const T = UI[lang];
-    document.getElementById("titleText").innerText = T.title;
+    
+    // NEU: Header-Titel aktualisieren
+    const hdrTitle = document.getElementById('hdrTitle');
+    if (hdrTitle) hdrTitle.innerText = T.title;
+
     document.getElementById("tLearn").innerText = T.learn;
     document.getElementById("tQuiz").innerText = T.quiz;
     document.getElementById("tMemory").innerText = T.memory;
@@ -936,7 +895,7 @@
   function normalizeText(s){
     return (s || "")
       .toLowerCase()
-      .replace(/[‘’`]/g, "'")
+      .replace(/[''`]/g, "'")
       .replace(/\s+/g, " ")
       .trim();
   }
@@ -1153,18 +1112,32 @@
     }
   }
 
+  // NEU: Header initialisieren
+  function initHeader() {
+    renderLessonHeader({
+      mountId: "lessonHeader",
+      title: UI[currentLang].title,
+      total: data.length,
+      learned: quizDoneCount(),
+      homeHref: "index.html",
+      lang: currentLang,
+      onLangChange: (lang) => setLang(lang),
+      bookTargetId: "albumOverlay" // Album öffnen beim Buch-Click
+    });
+    
+    // Album Overlay initial verstecken
+    document.getElementById('albumOverlay').style.display = 'none';
+  }
+
   // INIT (always refresh UI from storage)
   (function init(){
-    setLang("uz");
+    initHeader(); // NEU: Header zuerst initialisieren
     renderLearn(true);
 
     // ✅ sync homepage learned from already-earned stars
     syncGlobalLearnedFromStars();
 
     updateProgress();
-    updateBubbleScoreLine();
-    updateEchoProgress();
-    updateEchoTries();
 
     // ✅ If already completed earlier, keep state consistent
     checkAllCompleted();
