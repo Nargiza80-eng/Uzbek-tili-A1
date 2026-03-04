@@ -9,25 +9,15 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
   <style>
-    :root{
-      --ink:#0f172a;
-      --muted:#475569;
-      --line:rgba(15,23,42,.12);
-      --shadow:0 14px 30px rgba(2,6,23,.12);
-      --radius:22px;
-      --safe-top: env(safe-area-inset-top);
-      --safe-bottom: env(safe-area-inset-bottom);
-    }
-
-    *{box-sizing:border-box}
+    *{box-sizing:border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
     
     body{
       margin:0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      color:var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color:#0f172a;
       padding:16px;
-      padding-top: calc(16px + var(--safe-top));
-      padding-bottom: calc(16px + var(--safe-bottom));
+      padding-top: calc(16px + env(safe-area-inset-top));
+      padding-bottom: calc(16px + env(safe-area-inset-bottom));
       min-height:100vh;
       min-height: 100dvh;
       overflow-x:hidden;
@@ -43,90 +33,230 @@
     }
 
     .app{
-      max-width:860px;
+      max-width: 100%;
       margin:0 auto;
+      width: 100%;
     }
 
     .top{
       background:rgba(255,255,255,.92);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:16px;
+      border:1px solid rgba(15,23,42,.12);
+      border-radius:22px;
+      box-shadow:0 14px 30px rgba(2,6,23,.12);
+      padding: 16px;
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
       position:relative;
       overflow:hidden;
+      width: 100%;
     }
 
-    /* NEU: Header mit Sonne/Wolken oben, dann Titel, dann Sprachumschalter */
-    .header-container {
-      margin-bottom: 8px;
-      text-align: center;
+    /* ============ HEADER ============ */
+    .dono-header {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto 16px;
+      border-radius: 28px;
+      background: #ffffff;
+      box-shadow: 0 14px 0 rgba(0,0,0,0.08);
+      border: 4px solid #fff;
+      overflow: hidden;
+      position: relative;
     }
 
-    /* Wetter/Sonne oben */
-    .weather-icon {
-      font-size: 48px;
-      margin-bottom: 8px;
-      display: block;
-      animation: float 3s ease-in-out infinite;
+    .dono-header .content {
+      position: relative;
+      z-index: 2;
+      padding: 16px;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-5px); }
+    .dono-header .top-row {
+      display: grid;
+      grid-template-columns: 64px 1fr 64px;
+      align-items: center;
+      gap: 12px;
     }
 
-    /* Titel */
-    .header-title {
-      font-size: 32px;
-      font-weight: 1000;
-      color: #065f46;
+    .dono-header .topIcon {
+      width: 60px;
+      height: 60px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.08);
-      letter-spacing: -0.5px;
-      margin-bottom: 12px;
+      font-size: 36px;
+      line-height: 1;
+      user-select: none;
+      text-decoration: none;
+    }
+    .dono-header .topIcon:active { transform: translateY(2px) scale(0.98); }
+
+    .dono-header .titleWrap {
+      min-width: 0;
+      text-align: center;
+    }
+    .dono-header .title {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 1000;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #1f2937;
+    }
+    .dono-header .sub {
+      margin-top: 6px;
+      font-size: 18px;
+      font-weight: 1000;
+      color: rgba(31,41,55,0.65);
     }
 
-    .leaf-icon {
-      font-size: 28px;
+    .dono-header .progress-track {
+      height: 16px;
+      background: rgba(255,255,255,0.65);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 12px 4px 0;
+      box-shadow: inset 0 2px 0 rgba(0,0,0,0.06);
+      border: 2px solid rgba(255,255,255,0.7);
+    }
+    .dono-header .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #22c55e, #34d399);
+      transition: width 0.45s ease;
     }
 
-    /* Sprachumschalter */
-    .lang-switcher {
+    .dono-header .mini {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: 1000;
+      color: #111827;
+    }
+
+    .dono-header .langRow {
       display: flex;
       justify-content: center;
-      gap: 12px;
-      margin-bottom: 16px;
+      gap: 16px;
+      margin-top: 12px;
     }
 
-    .lang-btn {
-      padding: 8px 24px;
-      border: 2px solid #065f46;
-      background: white;
-      color: #065f46;
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: 700;
+    .dono-header .langBtn {
+      width: 100px;
+      padding: 10px 0;
       font-size: 16px;
-      transition: all 0.2s;
+      font-weight: 1000;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      background: rgba(255,255,255,0.70);
+      color: #1e4ed8;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.10);
+    }
+    .dono-header .langBtn.active {
+      background: #2f6bff;
+      color: #fff;
+      box-shadow: inset 0 -8px 0 rgba(0,0,0,0.18), 0 10px 20px rgba(0,0,0,0.10);
     }
 
-    .lang-btn.active {
-      background: #065f46;
-      color: white;
+    .dono-header .sky {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(255, 214, 102, 0.78) 0%, rgba(255, 214, 102, 0.0) 58%),
+        linear-gradient(180deg, #7DD3FC 0%, #A5F3FC 45%, #FFF6E8 100%);
     }
 
-    /* Begrüßung mit klickbarem Namen */
+    .dono-header .sun {
+      position: absolute;
+      left: -20px;
+      top: -25px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #FFF7C2 0%, #FFD400 45%, #FFB300 100%);
+      box-shadow: 0 18px 35px rgba(255,179,0,0.35);
+      animation: sunBob 4s ease-in-out infinite;
+    }
+
+    @keyframes sunBob {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50%      { transform: translateY(6px) rotate(1.5deg); }
+    }
+
+    .dono-header .sun::before {
+      content: "";
+      position: absolute;
+      inset: -40px;
+      border-radius: 50%;
+      background: repeating-conic-gradient(from -10deg, rgba(255,214,0,0.0) 0deg 10deg, rgba(255,214,0,0.32) 10deg 14deg);
+      opacity: 0.65;
+      animation: raysSpin 18s linear infinite;
+    }
+    @keyframes raysSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .dono-header .cloud {
+      position: absolute;
+      width: 120px;
+      height: 40px;
+      background: rgba(255,255,255,0.90);
+      border-radius: 999px;
+      filter: drop-shadow(0 10px 12px rgba(0,0,0,0.08));
+    }
+    .dono-header .cloud::before,
+    .dono-header .cloud::after {
+      content: "";
+      position: absolute;
+      background: rgba(255,255,255,0.90);
+      border-radius: 50%;
+    }
+    .dono-header .cloud::before { width: 50px; height: 50px; left: 15px; top: -20px; }
+    .dono-header .cloud::after { width: 65px; height: 65px; left: 45px; top: -30px; }
+
+    .dono-header .c1 { top: 18px; left: 90px; opacity: 0.95; animation: cloudMove1 70s linear infinite; }
+    .dono-header .c2 { top: 60px; left:  15px; opacity: 0.85; transform: scale(0.9);  animation: cloudMove2 95s linear infinite; }
+    .dono-header .c3 { top: 35px; left: 300px; opacity: 0.80; transform: scale(1.05); animation: cloudMove3 120s linear infinite; }
+
+    @keyframes cloudMove1 { from { transform: translateX(-320px); } to { transform: translateX(1000px); } }
+    @keyframes cloudMove2 { from { transform: translateX(900px) scale(0.9); } to { transform: translateX(-340px) scale(0.9); } }
+    @keyframes cloudMove3 { from { transform: translateX(-640px) scale(1.05); } to { transform: translateX(800px) scale(1.05); } }
+
+    .dono-header .sparkle{
+      position:absolute;
+      width: 8px;
+      height: 8px;
+      border-radius:50%;
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.25);
+      animation: twinkle 3.2s ease-in-out infinite;
+    }
+    .dono-header .s1 { top: 20px; right: 80px; animation-delay: 0.2s; }
+    .dono-header .s2 { top: 50px; right:  50px; animation-delay: 1.1s; }
+    .dono-header .s3 { top: 28px; right: 130px; animation-delay: 1.9s; }
+
+    @keyframes twinkle{
+      0%,100% { transform: scale(0.85); opacity: 0.6; }
+      50%     { transform: scale(1.15); opacity: 1; }
+    }
+
+    /* Begrüßung */
     .header-greeting {
       text-align: center;
-      margin: 8px 0;
-      font-size: 28px;
+      margin: 16px 0 12px;
+      font-size: 26px;
       font-weight: 1000;
+      line-height: 1.3;
     }
     
     .header-greeting .name { 
@@ -135,97 +265,87 @@
       border-bottom: 2px dashed #065f46;
       transition: all 0.2s;
       display: inline-block;
+      padding: 0 4px;
     }
-
-    .header-greeting .name:hover {
-      transform: scale(1.05);
-      border-bottom-style: solid;
-    }
-
-    .header-greeting .name:active {
-      transform: scale(0.95);
-    }
+    .header-greeting .name:active { transform: scale(0.95); }
 
     /* Premium Banner */
     .premium-banner {
       background: linear-gradient(135deg, #fbbf24, #f59e0b);
       border-radius: 20px;
-      padding: 20px;
-      margin: 16px 0;
+      padding: 16px;
+      margin: 12px 0;
       text-align: center;
       box-shadow: 0 8px 0 rgba(245, 158, 11, 0.3);
     }
     
     .premium-banner h3 {
-      margin: 0 0 10px 0;
-      font-size: 24px;
+      margin: 0 0 8px 0;
+      font-size: 20px;
       color: #fff;
       text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     
     .premium-banner p {
-      margin: 0 0 15px 0;
+      margin: 0 0 12px 0;
       color: rgba(255,255,255,0.95);
-      font-size: 16px;
+      font-size: 14px;
     }
     
     .buy-btn {
       background: #fff;
       color: #f59e0b;
       border: none;
-      padding: 14px 32px;
+      padding: 12px 24px;
       border-radius: 999px;
       font-weight: 1000;
-      font-size: 18px;
+      font-size: 16px;
       cursor: pointer;
       box-shadow: 0 6px 20px rgba(0,0,0,0.2);
       -webkit-appearance: none;
-      appearance: none;
     }
-    
-    .buy-btn:active { 
-      transform: translateY(2px); 
-    }
+    .buy-btn:active { transform: translateY(2px); }
 
-    /* Lesson Grid */
+    /* ============ LESSON GRID ============ */
     .grid{
-      margin-top:16px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:18px;
-      position:relative;
-      padding-left:30px;
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      padding-left: 28px;
     }
     
+    /* Timeline */
     .grid::before{
-      content:"";
-      position:absolute;
-      left:12px;
-      top:10px;
-      bottom:10px;
-      width:12px;
-      border-radius:999px;
+      content: "";
+      position: absolute;
+      left: 8px;
+      top: 10px;
+      bottom: 10px;
+      width: 10px;
+      border-radius: 999px;
       background: linear-gradient(180deg,
         rgba(34,197,94,.55),
         rgba(59,130,246,.45),
         rgba(245,158,11,.45)
       );
-      border:2px solid rgba(15,23,42,.10);
+      border: 2px solid rgba(15,23,42,.10);
       box-shadow: 0 18px 40px rgba(2,6,23,.12);
     }
 
     .stepDot{
-      position:absolute;
-      left:-28px;
-      top:50%;
+      position: absolute;
+      left: -24px;
+      top: 50%;
       transform: translateY(-50%);
-      width:38px;
-      height:38px;
-      border-radius:999px;
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
       background: rgba(255,255,255,.98);
-      border:3px solid rgba(15,23,42,.22);
+      border: 3px solid rgba(15,23,42,.22);
       box-shadow: 0 16px 34px rgba(2,6,23,.12);
-      z-index:2;
+      z-index: 2;
     }
     
     .tile.done .stepDot{
@@ -238,163 +358,151 @@
       background: rgba(245,158,11,.25);
     }
 
+    /* TILE - Wie im Foto: Groß, abgerundet, schöne Schrift */
     .tile{
-      border:2px solid rgba(15,23,42,.10);
-      border-radius:28px;
+      border: 2px solid rgba(15,23,42,.10);
+      border-radius: 32px; /* Sehr abgerundet wie im Foto */
       box-shadow: 0 18px 38px rgba(2,6,23,.14);
-      padding:16px;
-      text-decoration:none;
-      color:inherit;
-      position:relative;
-      overflow:hidden;
+      padding: 24px 20px; /* Viel Padding wie im Foto */
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
-      cursor:pointer;
+      cursor: pointer;
       background: rgba(255,255,255,.97);
-      display:grid;
-      grid-template-columns: clamp(64px, 18vw, 92px) 1fr auto;
-      grid-template-areas: "icon title tag";
-      align-items:center;
-      gap: clamp(10px, 2.4vw, 14px);
-      min-height: clamp(110px, 22vw, 150px);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 120px; /* Höhere Karten */
+      transition: transform 0.2s, box-shadow 0.2s;
     }
     
     .tile:active{
-      transform: translateY(1px);
+      transform: translateY(2px);
+      box-shadow: 0 12px 28px rgba(2,6,23,.12);
     }
     
     .tile.locked{
-      opacity:0.6;
+      opacity: 0.6;
       filter: grayscale(0.5);
       cursor: not-allowed;
     }
 
     .icon{
-      grid-area: icon;
-      width: clamp(64px, 18vw, 92px);
-      height: clamp(64px, 18vw, 92px);
-      display:grid;
-      place-items:center;
-      font-size: clamp(48px, 12vw, 72px);
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
-      border-radius:0 !important;
-      z-index:2;
+      flex-shrink: 0;
+      width: 72px; /* Größere Icons */
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 56px; /* Größere Emojis */
+      line-height: 1;
+      z-index: 2;
     }
 
+    /* Titel: Groß, fett, keine Umbrüche */
     .title{
-      grid-area: title;
-      font-size: clamp(20px, 5vw, 36px);
-      font-weight:1000;
-      line-height:1.05;
-      letter-spacing:.2px;
-      display:flex;
-      align-items:center;
-      justify-content:flex-start;
-      text-align:left;
-      min-width:0;
-      overflow-wrap:anywhere;
-      hyphens:auto;
-      padding: 0 8px;
-      z-index:2;
+      flex: 1;
+      min-width: 0;
+      font-size: 32px; /* Große Schrift wie im Foto */
+      font-weight: 1000; /* Extra fett */
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      white-space: nowrap; /* Kein Umbruch */
+      overflow: hidden;
+      text-overflow: ellipsis; /* "..." wenn zu lang */
+      text-align: left;
+      z-index: 2;
+      color: #0f172a;
     }
 
     .tagRight{
-      grid-area: tag;
-      justify-self:end;
-      align-self:center;
-      display:flex;
-      flex-direction:column;
-      align-items:flex-end;
-      justify-content:center;
-      gap:2px;
-      padding: 0;
-      min-width: 0;
-      border: none;
-      background: transparent;
-      box-shadow: none;
-      z-index:2;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 4px;
+      z-index: 2;
+      min-width: 70px;
     }
     
     .tagRight .main{
-      font-size: clamp(14px, 3.4vw, 20px);
-      font-weight:1100;
-      letter-spacing:.6px;
-      white-space:nowrap;
+      font-size: 20px; /* Größer */
+      font-weight: 1000;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
     }
     
     .tagRight .sub{
-      font-size: clamp(10px, 2.6vw, 12px);
-      font-weight:900;
-      letter-spacing:.2px;
+      font-size: 16px; /* Größer */
+      font-weight: 900;
+      letter-spacing: 0.2px;
       color: rgba(15,23,42,.60);
-      white-space:nowrap;
+      white-space: nowrap;
     }
 
-    .tagRight.open{ 
-      color:#065f46; 
-    }
-    
-    .tagRight.lock{ 
-      color: rgba(15,23,42,.70); 
-    }
-    
-    .tagRight.free{ 
-      color:#22c55e; 
-    }
+    .tagRight.open{ color: #065f46; }
+    .tagRight.lock{ color: rgba(15,23,42,.70); }
+    .tagRight.free{ color: #22c55e; }
 
+    /* Unterer Schatten/Balken wie im Foto */
     .tile::after{
-      content:"";
-      position:absolute;
-      left:16px;
-      right:16px;
-      bottom:10px;
-      height:16px;
-      border-radius:999px;
+      content: "";
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 12px;
+      height: 14px;
+      border-radius: 999px;
       background: var(--soft, rgba(0,0,0,.06));
-      border:1px solid rgba(15,23,42,.06);
-      opacity:.95;
-      z-index:0;
+      border: 1px solid rgba(15,23,42,.06);
+      opacity: 0.95;
+      z-index: 0;
     }
 
     /* Toast */
     .toast{
-      position:fixed;
-      left:50%;
-      bottom: calc(18px + var(--safe-bottom));
-      transform:translateX(-50%) translateY(10px);
+      position: fixed;
+      left: 50%;
+      bottom: calc(18px + env(safe-area-inset-bottom));
+      transform: translateX(-50%) translateY(10px);
       background: rgba(255,255,255,.94);
-      border:1px solid rgba(15,23,42,.12);
+      border: 1px solid rgba(15,23,42,.12);
       box-shadow: 0 18px 40px rgba(2,6,23,.18);
-      border-radius:999px;
-      padding:12px 20px;
-      font-weight:1000;
-      opacity:0;
-      pointer-events:none;
+      border-radius: 999px;
+      padding: 12px 20px;
+      font-weight: 1000;
+      opacity: 0;
+      pointer-events: none;
       transition: opacity .22s ease, transform .22s ease;
-      z-index:20000;
-      max-width: 92vw;
-      text-align:center;
-      font-size: 16px;
+      z-index: 20000;
+      max-width: 90vw;
+      text-align: center;
+      font-size: 15px;
+      white-space: nowrap;
     }
     
     .toast.show{
-      opacity:1;
-      transform:translateX(-50%) translateY(0);
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
     /* Gates */
     .gate{
-      position:fixed; 
-      inset:0;
-      z-index:10000;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:16px;
-      padding-top: calc(16px + var(--safe-top));
-      padding-bottom: calc(16px + var(--safe-bottom));
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      padding-top: calc(16px + env(safe-area-inset-top));
+      padding-bottom: calc(16px + env(safe-area-inset-bottom));
       background:
         radial-gradient(circle at 25% 15%, rgba(255,255,255,.18), transparent 35%),
         radial-gradient(circle at 80% 25%, rgba(255,255,255,.14), transparent 40%),
@@ -403,53 +511,51 @@
       -webkit-backdrop-filter: blur(10px) saturate(1.1);
     }
     
-    .gate.show{
-      display:flex;
-    }
+    .gate.show{ display: flex; }
 
     .gateCard{
-      width:min(520px, 92vw);
+      width: min(400px, 92vw);
       max-height: 90vh;
       overflow-y: auto;
       background: rgba(255,255,255,.92);
-      border:1px solid rgba(255,255,255,.35);
-      border-radius:26px;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 24px;
       box-shadow: 0 22px 70px rgba(2,6,23,.35);
-      padding:24px;
-      text-align:center;
+      padding: 24px;
+      text-align: center;
       transform: translateY(16px) scale(.98);
-      opacity:0;
+      opacity: 0;
       transition: transform .22s ease, opacity .22s ease;
     }
     
     .gate.show .gateCard{
       transform: translateY(0) scale(1);
-      opacity:1;
+      opacity: 1;
     }
 
     .gateTitle{
-      font-size:24px;
-      font-weight:1000;
-      margin:6px 0 6px;
+      font-size: 22px;
+      font-weight: 1000;
+      margin: 6px 0;
     }
     
     .gateText{
-      margin:0 0 12px;
-      font-weight:900;
-      font-size:17px;
+      margin: 0 0 12px;
+      font-weight: 900;
+      font-size: 15px;
       color: rgba(15,23,42,.82);
-      line-height:1.35;
+      line-height: 1.35;
     }
 
     .nameInput{
-      width:100%;
-      max-width:360px;
-      padding:14px 16px;
-      border-radius:18px;
-      border:1px solid rgba(15,23,42,.18);
-      font-weight:1000;
-      font-size:18px;
-      outline:none;
+      width: 100%;
+      max-width: 320px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(15,23,42,.18);
+      font-weight: 1000;
+      font-size: 18px;
+      outline: none;
       background: rgba(255,255,255,.95);
       -webkit-appearance: none;
     }
@@ -460,17 +566,17 @@
     }
 
     .gateBtn{
-      width:100%;
-      max-width:360px;
-      margin-top:10px;
-      padding:14px;
-      border-radius:18px;
-      border:1px solid rgba(5,46,27,.10);
+      width: 100%;
+      max-width: 320px;
+      margin-top: 10px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(5,46,27,.10);
       background: linear-gradient(180deg, #34d399, #22c55e);
-      color:#052e1b;
-      font-weight:1000;
-      cursor:pointer;
-      font-size:18px;
+      color: #052e1b;
+      font-weight: 1000;
+      cursor: pointer;
+      font-size: 17px;
       -webkit-appearance: none;
     }
     
@@ -484,70 +590,53 @@
       color: #374151;
     }
 
-    /* iPad / Tablet */
+    /* Desktop: Mehr Spalten */
     @media (min-width: 768px) {
-      .app { 
-        max-width: 700px; 
+      body { padding: 24px; }
+      .app { max-width: 800px; }
+      
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding-left: 0;
       }
-      .grid { 
-        grid-template-columns: repeat(2, 1fr); 
-        padding-left: 0; 
+      
+      .grid::before,
+      .stepDot { display: none; }
+      
+      .tile {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 32px 24px;
+        min-height: 200px;
+        gap: 16px;
       }
-      .grid::before { 
-        display: none; 
+      
+      .icon {
+        width: 90px;
+        height: 90px;
+        font-size: 72px;
       }
-      .stepDot { 
-        display: none; 
-      }
-      .tile { 
-        min-height: 180px; 
-      }
-      .header-title {
+      
+      .title {
         font-size: 36px;
+        text-align: center;
+        white-space: normal;
       }
+      
+      .tagRight {
+        align-items: center;
+      }
+      
+      .tagRight .main { font-size: 22px; }
+      .tagRight .sub { font-size: 18px; }
     }
 
-    /* Mobile */
-    @media (max-width: 420px){
-      body { 
-        padding: 12px; 
-      }
-      .weather-icon {
-        font-size: 40px;
-      }
-      .header-title { 
-        font-size: 26px; 
-      }
-      .leaf-icon {
-        font-size: 24px;
-      }
-      .header-greeting {
-        font-size: 22px;
-      }
-      .grid { 
-        padding-left: 22px; 
-        gap: 14px; 
-      }
-      .grid::before { 
-        left: 8px; 
-        width: 10px; 
-      }
-      .stepDot { 
-        left: -22px; 
-        width: 30px; 
-        height: 30px; 
-      }
-      .tile { 
-        padding: 14px; 
-        gap: 12px; 
-        min-height: 100px; 
-      }
-      .premium-banner { 
-        padding: 16px; 
-      }
-      .premium-banner h3 { 
-        font-size: 20px; 
-      }
+    @media (min-width: 1200px) {
+      .app { max-width: 1000px; }
+      .grid { grid-template-columns: repeat(3, 1fr); }
     }
   </style>
 </head>
@@ -556,39 +645,20 @@
   <div class="app">
     <div class="top">
 
-      <!-- NEU: Vereinfachter Header OHNE Haus/Buch Icons -->
-      <div class="header-container">
-        <!-- Sonne mit Wolken oben -->
-        <div class="weather-icon">🌤️</div>
-        
-        <!-- Titel -->
-        <div class="header-title">
-          <span class="leaf-icon">🌿</span>
-          <span>Dono Bola</span>
-        </div>
-        
-        <!-- Sprach-Umschalter -->
-        <div class="lang-switcher">
-          <button class="lang-btn active" id="btn-uz" onclick="toggleLanguage()">UZ</button>
-          <button class="lang-btn" id="btn-en" onclick="toggleLanguage()">EN</button>
-        </div>
-      </div>
+      <div id="mainHeader"></div>
 
-      <!-- Begrüßung mit klickbarem Namen -->
       <div class="header-greeting" id="greetingText">
         <span id="helloWord">Hello,</span>
         <span class="name" id="childNameBig" onclick="changeName()">Friend!</span>
         <span>✨</span>
       </div>
 
-      <!-- Premium Banner (nur wenn nicht gekauft) -->
       <div class="premium-banner" id="premiumBanner" style="display:none;">
         <h3 id="premiumTitle">🔓 Unlock All Lessons</h3>
         <p id="premiumText">Get lessons 2-10 for only $4.99</p>
         <button class="buy-btn" id="buyBtn" onclick="handleBuyClick()">Buy Now - $4.99</button>
       </div>
 
-      <!-- Lektionen -->
       <div class="grid" id="lessonGrid"></div>
 
     </div>
@@ -596,10 +666,9 @@
 
   <div class="toast" id="toast"></div>
 
-  <!-- Name Gate -->
   <div class="gate" id="nameGate">
     <div class="gateCard" role="dialog" aria-modal="true">
-      <div style="font-size:44px; line-height:1;">🧒✨</div>
+      <div style="font-size: 40px; line-height:1;">🧒✨</div>
       <div class="gateTitle" id="nameGateTitle">What's your name?</div>
       <p class="gateText" id="nameGateText">Type your name ✍️</p>
       <input class="nameInput" id="nameInput" type="text" autocomplete="name"
@@ -608,10 +677,9 @@
     </div>
   </div>
 
-  <!-- Purchase Gate -->
   <div class="gate" id="purchaseGate">
     <div class="gateCard" role="dialog" aria-modal="true">
-      <div style="font-size:44px; line-height:1;">🔓✨</div>
+      <div style="font-size: 40px; line-height:1;">🔓✨</div>
       <div class="gateTitle" id="purchaseTitle">Premium Required</div>
       <p class="gateText" id="purchaseText">
         Unlock lessons 2-10 for $4.99<br>
@@ -621,6 +689,127 @@
       <button class="gateBtn secondary" onclick="closePurchaseGate()">Maybe Later</button>
     </div>
   </div>
+
+  <script>
+    /* Header Component */
+    (function(){
+      const DEFAULTS = {
+        mountId: "mainHeader",
+        title: "🌿 Dono Bola",
+        total: 93,
+        learned: 0,
+        homeHref: "index.html",
+        bookTargetId: null,
+        lang: "en",
+        onLangChange: null,
+      };
+
+      function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+      function buildHeaderHTML(opts){
+        const learned = clamp(Number(opts.learned || 0), 0, opts.total);
+        const pct = opts.total ? (learned / opts.total) * 100 : 0;
+        const isUz = opts.lang === "uz";
+
+        return `
+          <div class="dono-header" data-total="${opts.total}">
+            <div class="sky">
+              <div class="sun"></div>
+              <div class="cloud c1"></div>
+              <div class="cloud c2"></div>
+              <div class="cloud c3"></div>
+              <div class="sparkle s1"></div>
+              <div class="sparkle s2"></div>
+              <div class="sparkle s3"></div>
+            </div>
+
+            <div class="content">
+              <div class="top-row">
+                <a class="topIcon" href="${opts.homeHref}" aria-label="Home">🏠</a>
+
+                <div class="titleWrap">
+                  <h1 class="title" id="hdrTitle">${opts.title}</h1>
+                  <div class="sub" id="hdrSub">${learned} / ${opts.total} ${isUz ? "o'rganildi" : "learned"}</div>
+                </div>
+
+                <button class="topIcon" id="hdrBookBtn" aria-label="Book" type="button">📖</button>
+              </div>
+
+              <div class="progress-track">
+                <div class="progress-fill" id="hdrFill" style="width:${pct}%"></div>
+              </div>
+
+              <div class="mini" id="hdrMini">${learned} / ${opts.total}</div>
+
+              <div class="langRow">
+                <button class="langBtn ${opts.lang==="uz" ? "active" : ""}" id="hdrUZ" type="button">UZ</button>
+                <button class="langBtn ${opts.lang==="en" ? "active" : ""}" id="hdrEN" type="button">EN</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function attachHeaderEvents(root, opts){
+        const bookBtn = root.querySelector("#hdrBookBtn");
+        const uzBtn = root.querySelector("#hdrUZ");
+        const enBtn = root.querySelector("#hdrEN");
+
+        if(bookBtn){
+          bookBtn.addEventListener("click", () => {
+            showToast(opts.lang === "uz" ? "Wörterbuch kommt bald!" : "Dictionary coming soon!");
+          });
+        }
+
+        const setLangUI = (lang) => {
+          uzBtn?.classList.toggle("active", lang==="uz");
+          enBtn?.classList.toggle("active", lang==="en");
+          const sub = root.querySelector("#hdrSub");
+          const learned = clamp(Number(opts.learned || 0), 0, opts.total);
+          if(sub) sub.textContent = `${learned} / ${opts.total} ${lang==="uz" ? "o'rganildi" : "learned"}`;
+        };
+
+        uzBtn?.addEventListener("click", () => {
+          setLangUI("uz");
+          if(typeof opts.onLangChange === "function") opts.onLangChange("uz");
+        });
+
+        enBtn?.addEventListener("click", () => {
+          setLangUI("en");
+          if(typeof opts.onLangChange === "function") opts.onLangChange("en");
+        });
+      }
+
+      window.renderLessonHeader = function(options){
+        const opts = {...DEFAULTS, ...(options||{})};
+        const mount = document.getElementById(opts.mountId);
+        if(!mount){
+          console.warn("renderLessonHeader(): mount element not found:", opts.mountId);
+          return;
+        }
+        mount.innerHTML = buildHeaderHTML(opts);
+        attachHeaderEvents(mount, opts);
+      };
+
+      window.setHeaderProgress = function({ learned, total } = {}){
+        const header = document.querySelector(".dono-header");
+        if(!header) return;
+
+        const t = total ?? Number(header.getAttribute("data-total") || 93);
+        const l = clamp(Number(learned ?? 0), 0, t);
+        const pct = t ? (l / t) * 100 : 0;
+        const lang = document.querySelector("#hdrUZ")?.classList.contains("active") ? "uz" : "en";
+
+        const sub = header.querySelector("#hdrSub");
+        const mini = header.querySelector("#hdrMini");
+        const fill = header.querySelector("#hdrFill");
+
+        if(sub) sub.textContent = `${l} / ${t} ${lang==="uz" ? "o'rganildi" : "learned"}`;
+        if(mini) mini.textContent = `${l} / ${t}`;
+        if(fill) fill.style.width = pct + "%";
+      };
+    })();
+  </script>
 
   <script>
     // === KONFIGURATION ===
@@ -661,6 +850,7 @@
         startBtn: "Start 🚀",
         changeNameTitle: "Change Name",
         changeNameText: "Enter a new name ✍️",
+        saveBtn: "Save 💾",
         purchaseSuccess: "✅ Premium activated! Enjoy all lessons!",
         purchaseError: "❌ Purchase failed. Please try again.",
         restoring: "Restoring purchases...",
@@ -685,6 +875,7 @@
         startBtn: "Boshlaymiz! 🚀",
         changeNameTitle: "Ismni O'zgartirish",
         changeNameText: "Yangi ism kiriting ✍️",
+        saveBtn: "Saqlash 💾",
         purchaseSuccess: "✅ Premium faollashdi! Barcha darslardan foydalaning!",
         purchaseError: "❌ Xatolik yuz berdi. Qayta urinib ko'ring.",
         restoring: "Xaridlar tiklanmoqda...",
@@ -706,27 +897,6 @@
     function setLang(lang) {
       currentLang = lang;
       localStorage.setItem(STORAGE.LANG, lang);
-      updateLangButtons();
-    }
-
-    function toggleLanguage() {
-      const newLang = currentLang === "en" ? "uz" : "en";
-      setLang(newLang);
-      applyGreeting();
-      updateUI();
-    }
-
-    function updateLangButtons() {
-      const btnUz = document.getElementById("btn-uz");
-      const btnEn = document.getElementById("btn-en");
-      
-      if (currentLang === "uz") {
-        btnUz.classList.add("active");
-        btnEn.classList.remove("active");
-      } else {
-        btnUz.classList.remove("active");
-        btnEn.classList.add("active");
-      }
     }
 
     function T() {
@@ -762,13 +932,11 @@
       showToast._tm = setTimeout(() => t.classList.remove("show"), duration);
     }
 
-    // === NAME ÄNDERN ===
     function changeName() {
       isChangingName = true;
       showNameGate(true);
     }
 
-    // === KAUF HANDLER (Simuliert für Web) ===
     async function handleBuyClick() {
       if (isPurchasing) return;
       
@@ -784,12 +952,15 @@
       }, 1500);
     }
 
-    // === UI AKTUALISIEREN ===
     function updateUI() {
       const tt = T();
       const premium = isPremium();
+      const learned = getLearnedSet().size;
       
-      // Premium Banner
+      if (typeof setHeaderProgress === 'function') {
+        setHeaderProgress({ learned: learned, total: CONFIG.TOTAL_WORDS });
+      }
+      
       const banner = document.getElementById("premiumBanner");
       if (banner) {
         banner.style.display = premium ? "none" : "block";
@@ -835,7 +1006,6 @@
         { bg: "rgba(100, 116, 139, .34)", soft: "rgba(100, 116, 139, .14)" }
       ];
       
-      // Aktuelle Lektion finden
       let current = 1;
       for (let i = 1; i <= LESSONS.length; i++) {
         const completed = Array.from(learned).filter(k => k.startsWith("L" + i + "_")).length >= 5;
@@ -889,7 +1059,6 @@
       });
     }
 
-    // === GATES ===
     function openPurchaseGate() {
       const tt = T();
       document.getElementById("purchaseTitle").innerText = tt.purchaseTitle;
@@ -907,7 +1076,6 @@
       const gate = document.getElementById("nameGate");
       gate.classList.add("show");
       
-      // Unterschiedlicher Text für erstmalige Eingabe vs. Änderung
       document.getElementById("nameGateTitle").innerText = isChange ? tt.changeNameTitle : tt.nameGateTitle;
       document.getElementById("nameGateText").innerText = isChange ? tt.changeNameText : tt.nameGateText;
       
@@ -915,12 +1083,12 @@
       const btn = document.getElementById("startBtn");
       
       input.placeholder = tt.namePlaceholder;
-      btn.innerText = isChange ? "Save 💾" : tt.startBtn;
+      btn.innerText = isChange ? tt.saveBtn : tt.startBtn;
       
-      // Bei Namensänderung aktuellen Namen vorausfüllen
       if (isChange) {
         const currentName = localStorage.getItem(STORAGE.CHILD_NAME) || "";
         input.value = currentName;
+        btn.disabled = false;
       } else {
         btn.disabled = true;
         input.value = "";
@@ -959,14 +1127,31 @@
       document.getElementById("helloWord").innerText = tt.helloWord;
     }
 
-    // === START ===
+    function initHeader() {
+      const learned = getLearnedSet().size;
+      
+      renderLessonHeader({
+        mountId: "mainHeader",
+        title: "🌿 Dono Bola",
+        total: CONFIG.TOTAL_WORDS,
+        learned: learned,
+        homeHref: "index.html",
+        lang: currentLang,
+        onLangChange: (lang) => {
+          setLang(lang);
+          applyGreeting();
+          updateUI();
+        }
+      });
+    }
+
     window.addEventListener("load", () => {
       currentLang = getLang();
       if (!localStorage.getItem(STORAGE.LANG)) {
         setLang("en");
       }
       
-      updateLangButtons();
+      initHeader();
       applyGreeting();
       updateUI();
       
