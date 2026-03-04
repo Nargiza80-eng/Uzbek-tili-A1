@@ -8,8 +8,6 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-  <link rel="stylesheet" href="components/header.css">
-
   <style>
     :root{
       --ink:#0f172a;
@@ -61,26 +59,82 @@
       overflow:hidden;
     }
 
-    /* NEU: App Titel über dem Header */
-    .app-title {
-      text-align: center;
-      margin: 0 0 12px 0;
-      font-size: 32px;
-      font-weight: 1000;
-      color: #065f46;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    /* NEU: Header mit Icons links/rechts und Titel mittig */
+    .header-container {
+      margin-bottom: 8px;
+    }
+
+    .header-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+    }
+
+    .header-icon {
+      background: rgba(255,255,255,.8);
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 24px;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
-    .app-title .leaf {
+
+    .header-icon:hover {
+      transform: scale(1.05);
+      background: white;
+    }
+
+    .header-icon:active {
+      transform: scale(0.95);
+    }
+
+    /* Dono Bola Titel zwischen den Icons */
+    .header-title {
+      font-size: 32px;
+      font-weight: 1000;
+      color: #065f46;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      letter-spacing: -0.5px;
+    }
+
+    .leaf-icon {
       font-size: 28px;
     }
 
-    /* Header Container */
-    .header-container {
-      margin-bottom: 16px;
+    /* Sprachumschalter unter dem Titel */
+    .lang-switcher {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .lang-btn {
+      padding: 8px 24px;
+      border: 2px solid #065f46;
+      background: white;
+      color: #065f46;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 16px;
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active {
+      background: #065f46;
+      color: white;
     }
 
     .header-greeting {
@@ -89,7 +143,10 @@
       font-size: 28px;
       font-weight: 1000;
     }
-    .header-greeting .name { color: #065f46; }
+    
+    .header-greeting .name { 
+      color: #065f46; 
+    }
 
     /* Premium Banner */
     .premium-banner {
@@ -100,17 +157,20 @@
       text-align: center;
       box-shadow: 0 8px 0 rgba(245, 158, 11, 0.3);
     }
+    
     .premium-banner h3 {
       margin: 0 0 10px 0;
       font-size: 24px;
       color: #fff;
       text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
+    
     .premium-banner p {
       margin: 0 0 15px 0;
       color: rgba(255,255,255,0.95);
       font-size: 16px;
     }
+    
     .buy-btn {
       background: #fff;
       color: #f59e0b;
@@ -124,7 +184,10 @@
       -webkit-appearance: none;
       appearance: none;
     }
-    .buy-btn:active { transform: translateY(2px); }
+    
+    .buy-btn:active { 
+      transform: translateY(2px); 
+    }
 
     /* Lesson Grid */
     .grid{
@@ -135,6 +198,7 @@
       position:relative;
       padding-left:30px;
     }
+    
     .grid::before{
       content:"";
       position:absolute;
@@ -157,14 +221,24 @@
       left:-28px;
       top:50%;
       transform: translateY(-50%);
-      width:38px;height:38px;border-radius:999px;
+      width:38px;
+      height:38px;
+      border-radius:999px;
       background: rgba(255,255,255,.98);
       border:3px solid rgba(15,23,42,.22);
       box-shadow: 0 16px 34px rgba(2,6,23,.12);
       z-index:2;
     }
-    .tile.done .stepDot{border-color: rgba(34,197,94,.70); background: rgba(34,197,94,.25);}
-    .tile.current .stepDot{border-color: rgba(245,158,11,.80); background: rgba(245,158,11,.25);}
+    
+    .tile.done .stepDot{
+      border-color: rgba(34,197,94,.70); 
+      background: rgba(34,197,94,.25);
+    }
+    
+    .tile.current .stepDot{
+      border-color: rgba(245,158,11,.80); 
+      background: rgba(245,158,11,.25);
+    }
 
     .tile{
       border:2px solid rgba(15,23,42,.10);
@@ -186,7 +260,11 @@
       gap: clamp(10px, 2.4vw, 14px);
       min-height: clamp(110px, 22vw, 150px);
     }
-    .tile:active{transform: translateY(1px)}
+    
+    .tile:active{
+      transform: translateY(1px);
+    }
+    
     .tile.locked{
       opacity:0.6;
       filter: grayscale(0.5);
@@ -240,12 +318,14 @@
       box-shadow: none;
       z-index:2;
     }
+    
     .tagRight .main{
       font-size: clamp(14px, 3.4vw, 20px);
       font-weight:1100;
       letter-spacing:.6px;
       white-space:nowrap;
     }
+    
     .tagRight .sub{
       font-size: clamp(10px, 2.6vw, 12px);
       font-weight:900;
@@ -254,9 +334,17 @@
       white-space:nowrap;
     }
 
-    .tagRight.open{ color:#065f46; }
-    .tagRight.lock{ color: rgba(15,23,42,.70); }
-    .tagRight.free{ color:#22c55e; }
+    .tagRight.open{ 
+      color:#065f46; 
+    }
+    
+    .tagRight.lock{ 
+      color: rgba(15,23,42,.70); 
+    }
+    
+    .tagRight.free{ 
+      color:#22c55e; 
+    }
 
     .tile::after{
       content:"";
@@ -292,11 +380,16 @@
       text-align:center;
       font-size: 16px;
     }
-    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
 
     /* Gates */
     .gate{
-      position:fixed; inset:0;
+      position:fixed; 
+      inset:0;
       z-index:10000;
       display:none;
       align-items:center;
@@ -311,7 +404,10 @@
       backdrop-filter: blur(10px) saturate(1.1);
       -webkit-backdrop-filter: blur(10px) saturate(1.1);
     }
-    .gate.show{display:flex}
+    
+    .gate.show{
+      display:flex;
+    }
 
     .gateCard{
       width:min(520px, 92vw);
@@ -327,9 +423,18 @@
       opacity:0;
       transition: transform .22s ease, opacity .22s ease;
     }
-    .gate.show .gateCard{transform: translateY(0) scale(1);opacity:1}
+    
+    .gate.show .gateCard{
+      transform: translateY(0) scale(1);
+      opacity:1;
+    }
 
-    .gateTitle{font-size:24px;font-weight:1000;margin:6px 0 6px}
+    .gateTitle{
+      font-size:24px;
+      font-weight:1000;
+      margin:6px 0 6px;
+    }
+    
     .gateText{
       margin:0 0 12px;
       font-weight:900;
@@ -350,7 +455,11 @@
       background: rgba(255,255,255,.95);
       -webkit-appearance: none;
     }
-    .nameInput:focus{border-color: rgba(59,130,246,.55);box-shadow: 0 0 0 6px rgba(59,130,246,.18);}
+    
+    .nameInput:focus{
+      border-color: rgba(59,130,246,.55);
+      box-shadow: 0 0 0 6px rgba(59,130,246,.18);
+    }
 
     .gateBtn{
       width:100%;
@@ -366,10 +475,12 @@
       font-size:18px;
       -webkit-appearance: none;
     }
+    
     .gateBtn:disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
+    
     .gateBtn.secondary {
       background: #e5e7eb;
       color: #374151;
@@ -377,24 +488,70 @@
 
     /* iPad / Tablet */
     @media (min-width: 768px) {
-      .app { max-width: 700px; }
-      .grid { grid-template-columns: repeat(2, 1fr); padding-left: 0; }
-      .grid::before { display: none; }
-      .stepDot { display: none; }
-      .tile { min-height: 180px; }
+      .app { 
+        max-width: 700px; 
+      }
+      .grid { 
+        grid-template-columns: repeat(2, 1fr); 
+        padding-left: 0; 
+      }
+      .grid::before { 
+        display: none; 
+      }
+      .stepDot { 
+        display: none; 
+      }
+      .tile { 
+        min-height: 180px; 
+      }
+      .header-title {
+        font-size: 36px;
+      }
     }
 
     /* Mobile */
     @media (max-width: 420px){
-      body { padding: 12px; }
-      .app-title { font-size: 26px; }
-      .grid { padding-left: 22px; gap: 14px; }
-      .grid::before { left: 8px; width: 10px; }
-      .stepDot { left: -22px; width: 30px; height: 30px; }
-      .tile { padding: 14px; gap: 12px; min-height: 100px; }
-      .header-greeting { font-size: 22px; }
-      .premium-banner { padding: 16px; }
-      .premium-banner h3 { font-size: 20px; }
+      body { 
+        padding: 12px; 
+      }
+      .header-title { 
+        font-size: 26px; 
+      }
+      .leaf-icon {
+        font-size: 24px;
+      }
+      .header-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 20px;
+      }
+      .grid { 
+        padding-left: 22px; 
+        gap: 14px; 
+      }
+      .grid::before { 
+        left: 8px; 
+        width: 10px; 
+      }
+      .stepDot { 
+        left: -22px; 
+        width: 30px; 
+        height: 30px; 
+      }
+      .tile { 
+        padding: 14px; 
+        gap: 12px; 
+        min-height: 100px; 
+      }
+      .header-greeting { 
+        font-size: 22px; 
+      }
+      .premium-banner { 
+        padding: 16px; 
+      }
+      .premium-banner h3 { 
+        font-size: 20px; 
+      }
     }
   </style>
 </head>
@@ -403,15 +560,27 @@
   <div class="app">
     <div class="top">
 
-      <!-- NEU: App Titel ganz oben -->
-      <h1 class="app-title">
-        <span class="leaf">🌿</span>
-        <span>Dono Bola</span>
-      </h1>
-
-      <!-- Header Container -->
+      <!-- NEU: Header mit Titel zwischen Haus und Buch -->
       <div class="header-container">
-        <div id="mainHeader"></div>
+        <div class="header-main">
+          <!-- Haus Icon (Home) -->
+          <a href="index.html" class="header-icon" title="Home">🏠</a>
+          
+          <!-- Titel jetzt in der MITTE zwischen den Icons -->
+          <div class="header-title">
+            <span class="leaf-icon">🌿</span>
+            <span>Dono Bola</span>
+          </div>
+          
+          <!-- Buch Icon (Wörterbuch/Lektionen) -->
+          <button class="header-icon" onclick="openBook()" title="Wörterbuch" style="border: none;">📖</button>
+        </div>
+        
+        <!-- Sprach-Umschalter unter dem Titel -->
+        <div class="lang-switcher">
+          <button class="lang-btn active" id="btn-uz" onclick="toggleLanguage()">UZ</button>
+          <button class="lang-btn" id="btn-en" onclick="toggleLanguage()">EN</button>
+        </div>
       </div>
 
       <!-- Begrüßung -->
@@ -462,482 +631,345 @@
     </div>
   </div>
 
-  <!-- Capacitor Core -->
-  <script src="https://unpkg.com/@capacitor/core@5/dist/capacitor.js"></script>
-  
-  <!-- Header Component -->
-  <script src="components/header.js"></script>
+  <script>
+    // === KONFIGURATION ===
+    const CONFIG = {
+      PRODUCT_ID: "premium_unlock_all",
+      PRICE: "$4.99",
+      FREE_LESSONS: [1],
+      TOTAL_LESSONS: 10,
+      TOTAL_WORDS: 93
+    };
 
-<script>
-  // === KONFIGURATION ===
-  const CONFIG = {
-    PRODUCT_ID: "premium_unlock_all",
-    PRICE: "$4.99",
-    FREE_LESSONS: [1],
-    TOTAL_LESSONS: 10,
-    TOTAL_WORDS: 93
-  };
+    // === STORAGE KEYS ===
+    const STORAGE = {
+      PREMIUM: "premium_unlocked_v1",
+      CHILD_NAME: "childName",
+      LANG: "ui_lang",
+      LEARNED: "learned"
+    };
 
-  // === STORAGE KEYS ===
-  const STORAGE = {
-    PREMIUM: "premium_unlocked_v1",
-    CHILD_NAME: "childName",
-    LANG: "ui_lang",
-    LEARNED: "learned"
-  };
+    // === TEXT ÜBERSETZUNGEN ===
+    const UI_TEXT = {
+      en: {
+        langBtn: "UZ",
+        helloWord: "Hello,",
+        friendFallback: "Friend!",
+        freeLabel: "FREE",
+        openLabel: "OPEN",
+        lockedLabel: "LOCKED",
+        lessonLabel: (id) => `Lesson ${id}`,
+        premiumTitle: "🔓 Unlock All Lessons",
+        premiumText: `Get lessons 2-10 for only ${CONFIG.PRICE}`,
+        buyNow: `Buy Now - ${CONFIG.PRICE}`,
+        purchaseTitle: "Premium Required",
+        purchaseText: `Unlock lessons 2-10 for ${CONFIG.PRICE}<br>One-time purchase, forever yours!`,
+        nameGateTitle: "What's your name?",
+        nameGateText: "Type your name ✍️",
+        namePlaceholder: "Example: Ali",
+        startBtn: "Start 🚀",
+        purchaseSuccess: "✅ Premium activated! Enjoy all lessons!",
+        purchaseError: "❌ Purchase failed. Please try again.",
+        restoring: "Restoring purchases...",
+        processing: "Processing..."
+      },
+      uz: {
+        langBtn: "ENG",
+        helloWord: "Salom,",
+        friendFallback: "Do'st!",
+        freeLabel: "BEPUL",
+        openLabel: "OCHIQ",
+        lockedLabel: "QULFLANGAN",
+        lessonLabel: (id) => `${id}-dars`,
+        premiumTitle: "🔓 Barcha Darslarni Ochish",
+        premiumText: `2-10 darslar faqat ${CONFIG.PRICE}`,
+        buyNow: `Sotib olish - ${CONFIG.PRICE}`,
+        purchaseTitle: "Premium Kerak",
+        purchaseText: `${CONFIG.PRICE} evaziga 2-10 darslarni oching<br>Bir marta to'lov, umrbod sizniki!`,
+        nameGateTitle: "Isming nima?",
+        nameGateText: "Ismingni yoz ✍️",
+        namePlaceholder: "Masalan: Ali",
+        startBtn: "Boshlaymiz! 🚀",
+        purchaseSuccess: "✅ Premium faollashdi! Barcha darslardan foydalaning!",
+        purchaseError: "❌ Xatolik yuz berdi. Qayta urinib ko'ring.",
+        restoring: "Xaridlar tiklanmoqda...",
+        processing: "Jarayonda..."
+      }
+    };
 
-  // === TEXT ÜBERSETZUNGEN ===
-  const UI_TEXT = {
-    en: {
-      langBtn: "UZ",
-      helloWord: "Hello,",
-      friendFallback: "Friend!",
-      freeLabel: "FREE",
-      openLabel: "OPEN",
-      lockedLabel: "LOCKED",
-      lessonLabel: (id) => `Lesson ${id}`,
-      premiumTitle: "🔓 Unlock All Lessons",
-      premiumText: `Get lessons 2-10 for only ${CONFIG.PRICE}`,
-      buyNow: `Buy Now - ${CONFIG.PRICE}`,
-      purchaseTitle: "Premium Required",
-      purchaseText: `Unlock lessons 2-10 for ${CONFIG.PRICE}<br>One-time purchase, forever yours!`,
-      nameGateTitle: "What's your name?",
-      nameGateText: "Type your name ✍️",
-      namePlaceholder: "Example: Ali",
-      startBtn: "Start 🚀",
-      purchaseSuccess: "✅ Premium activated! Enjoy all lessons!",
-      purchaseError: "❌ Purchase failed. Please try again.",
-      restoring: "Restoring purchases...",
-      processing: "Processing..."
-    },
-    uz: {
-      langBtn: "ENG",
-      helloWord: "Salom,",
-      friendFallback: "Do'st!",
-      freeLabel: "BEPUL",
-      openLabel: "OCHIQ",
-      lockedLabel: "QULFLANGAN",
-      lessonLabel: (id) => `${id}-dars`,
-      premiumTitle: "🔓 Barcha Darslarni Ochish",
-      premiumText: `2-10 darslar faqat ${CONFIG.PRICE}`,
-      buyNow: `Sotib olish - ${CONFIG.PRICE}`,
-      purchaseTitle: "Premium Kerak",
-      purchaseText: `${CONFIG.PRICE} evaziga 2-10 darslarni oching<br>Bir marta to'lov, umrbod sizniki!`,
-      nameGateTitle: "Isming nima?",
-      nameGateText: "Ismingni yoz ✍️",
-      namePlaceholder: "Masalan: Ali",
-      startBtn: "Boshlaymiz! 🚀",
-      purchaseSuccess: "✅ Premium faollashdi! Barcha darslardan foydalaning!",
-      purchaseError: "❌ Xatolik yuz berdi. Qayta urinib ko'ring.",
-      restoring: "Xaridlar tiklanmoqda...",
-      processing: "Jarayonda..."
-    }
-  };
+    // === STATE ===
+    let currentLang = "en";
+    let isPurchasing = false;
 
-  // === BILLING MANAGER ===
-  class BillingManager {
-    constructor() {
-      this.isNative = (typeof Capacitor !== 'undefined' && Capacitor.isNativePlatform());
-      this.platform = this.isNative ? Capacitor.getPlatform() : 'web';
-      this.initialized = false;
+    // === HILFSFUNKTIONEN ===
+    function getLang() {
+      const saved = localStorage.getItem(STORAGE.LANG);
+      return saved === "uz" ? "uz" : "en";
     }
 
-    async initialize() {
-      if (!this.isNative) {
-        console.log("Web mode: Billing simulated");
-        this.initialized = true;
-        return true;
-      }
-
-      try {
-        if (!Capacitor.Plugins.InAppPurchase) {
-          console.warn("InAppPurchase plugin not available");
-          return false;
-        }
-        
-        await Capacitor.Plugins.InAppPurchase.getProducts({
-          products: [CONFIG.PRODUCT_ID]
-        });
-        
-        this.initialized = true;
-        console.log(`Billing initialized on ${this.platform}`);
-        return true;
-      } catch (e) {
-        console.error("Billing init failed:", e);
-        return false;
-      }
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem(STORAGE.LANG, lang);
+      updateLangButtons();
     }
 
-    async purchase() {
-      if (!this.isNative) {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            console.log("Web: Simulated purchase");
-            resolve({ success: true, productId: CONFIG.PRODUCT_ID });
-          }, 1500);
-        });
-      }
-
-      try {
-        const result = await Capacitor.Plugins.InAppPurchase.buy({
-          productId: CONFIG.PRODUCT_ID
-        });
-
-        if (this.platform === 'ios' && result && result.transactionId) {
-          await Capacitor.Plugins.InAppPurchase.finishTransaction({
-            transactionId: result.transactionId,
-            productId: CONFIG.PRODUCT_ID
-          });
-        }
-
-        return { success: true, ...result };
-      } catch (e) {
-        console.error("Purchase failed:", e);
-        return { success: false, error: e.message };
-      }
+    function toggleLanguage() {
+      const newLang = currentLang === "en" ? "uz" : "en";
+      setLang(newLang);
+      applyGreeting();
+      updateUI();
     }
 
-    async restore() {
-      if (!this.isNative) {
-        return { purchases: [] };
-      }
-
-      try {
-        const result = await Capacitor.Plugins.InAppPurchase.restore();
-        
-        if (this.platform === 'ios' && result.purchases) {
-          for (const purchase of result.purchases) {
-            if (purchase.transactionId) {
-              await Capacitor.Plugins.InAppPurchase.finishTransaction({
-                transactionId: purchase.transactionId,
-                productId: purchase.productId
-              });
-            }
-          }
-        }
-        
-        return result;
-      } catch (e) {
-        console.error("Restore failed:", e);
-        return { purchases: [] };
-      }
-    }
-
-    async checkPremium() {
-      const localPremium = localStorage.getItem(STORAGE.PREMIUM) === "true";
+    function updateLangButtons() {
+      const btnUz = document.getElementById("btn-uz");
+      const btnEn = document.getElementById("btn-en");
       
-      if (!this.isNative) {
-        return localPremium;
+      if (currentLang === "uz") {
+        btnUz.classList.add("active");
+        btnEn.classList.remove("active");
+      } else {
+        btnUz.classList.remove("active");
+        btnEn.classList.add("active");
       }
+    }
 
+    function T() {
+      return UI_TEXT[currentLang];
+    }
+
+    function isPremium() {
+      return localStorage.getItem(STORAGE.PREMIUM) === "true";
+    }
+
+    function setPremium(value) {
+      localStorage.setItem(STORAGE.PREMIUM, value ? "true" : "false");
+      updateUI();
+    }
+
+    function getLearnedSet() {
       try {
-        const result = await this.restore();
-        const hasPremium = result.purchases && result.purchases.some(
-          p => p.productId === CONFIG.PRODUCT_ID && 
-          (p.state === 'active' || p.state === 'purchased' || p.state === 'restored')
-        );
-        
-        if (hasPremium && !localPremium) {
-          localStorage.setItem(STORAGE.PREMIUM, "true");
-        }
-        
-        return hasPremium || localPremium;
-      } catch (e) {
-        return localPremium;
+        return new Set(JSON.parse(localStorage.getItem(STORAGE.LEARNED) || "[]"));
+      } catch {
+        return new Set();
       }
     }
-  }
 
-  const Billing = new BillingManager();
-
-  // === STATE ===
-  let currentLang = "en";
-  let isPurchasing = false;
-
-  // === HILFSFUNKTIONEN ===
-  function getLang() {
-    const saved = localStorage.getItem(STORAGE.LANG);
-    return saved === "uz" ? "uz" : "en";
-  }
-
-  function setLang(lang) {
-    currentLang = lang;
-    localStorage.setItem(STORAGE.LANG, lang);
-  }
-
-  function T() {
-    return UI_TEXT[currentLang];
-  }
-
-  function isPremium() {
-    return localStorage.getItem(STORAGE.PREMIUM) === "true";
-  }
-
-  function setPremium(value) {
-    localStorage.setItem(STORAGE.PREMIUM, value ? "true" : "false");
-    updateUI();
-  }
-
-  function getLearnedSet() {
-    try {
-      return new Set(JSON.parse(localStorage.getItem(STORAGE.LEARNED) || "[]"));
-    } catch {
-      return new Set();
+    function normalizeName(s) {
+      return (s || "").trim().replace(/\s+/g, " ").slice(0, 18);
     }
-  }
 
-  function normalizeName(s) {
-    return (s || "").trim().replace(/\s+/g, " ").slice(0, 18);
-  }
+    function showToast(msg, duration = 2500) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      clearTimeout(showToast._tm);
+      showToast._tm = setTimeout(() => t.classList.remove("show"), duration);
+    }
 
-  function showToast(msg, duration = 2500) {
-    const t = document.getElementById("toast");
-    t.textContent = msg;
-    t.classList.add("show");
-    clearTimeout(showToast._tm);
-    showToast._tm = setTimeout(() => t.classList.remove("show"), duration);
-  }
+    function openBook() {
+      // Hier können Sie das Wörterbuch öffnen
+      showToast(currentLang === "uz" ? "Wörterbuch kommt bald!" : "Dictionary coming soon!");
+    }
 
-  // === KAUF HANDLER ===
-  async function handleBuyClick() {
-    if (isPurchasing) return;
-    
-    const tt = T();
-    isPurchasing = true;
-    showToast(tt.processing);
-    
-    try {
-      const result = await Billing.purchase();
+    // === KAUF HANDLER (Simuliert für Web) ===
+    async function handleBuyClick() {
+      if (isPurchasing) return;
       
-      if (result.success) {
+      const tt = T();
+      isPurchasing = true;
+      showToast(tt.processing);
+      
+      // Simulation für Web (hier später echte Kauf-Logik einfügen)
+      setTimeout(() => {
         setPremium(true);
         showToast(tt.purchaseSuccess, 3000);
         closePurchaseGate();
-      } else {
-        showToast(tt.purchaseError);
+        isPurchasing = false;
+      }, 1500);
+    }
+
+    // === UI AKTUALISIEREN ===
+    function updateUI() {
+      const tt = T();
+      const premium = isPremium();
+      
+      // Premium Banner
+      const banner = document.getElementById("premiumBanner");
+      if (banner) {
+        banner.style.display = premium ? "none" : "block";
+        document.getElementById("premiumTitle").innerText = tt.premiumTitle;
+        document.getElementById("premiumText").innerText = tt.premiumText;
+        document.getElementById("buyBtn").innerText = tt.buyNow;
       }
-    } catch (e) {
-      console.error("Purchase error:", e);
-      showToast(tt.purchaseError);
-    } finally {
-      isPurchasing = false;
+      
+      renderLessons();
     }
-  }
 
-  // === UI AKTUALISIEREN ===
-  function updateUI() {
-    const tt = T();
-    const premium = isPremium();
-    
-    // Premium Banner
-    const banner = document.getElementById("premiumBanner");
-    if (banner) {
-      banner.style.display = premium ? "none" : "block";
-      document.getElementById("premiumTitle").innerText = tt.premiumTitle;
-      document.getElementById("premiumText").innerText = tt.premiumText;
-      document.getElementById("buyBtn").innerText = tt.buyNow;
-    }
-    
-    renderLessons();
-  }
-
-  function renderLessons() {
-    const tt = T();
-    const learned = getLearnedSet();
-    const premium = isPremium();
-    
-    // Header Progress
-    if (typeof setHeaderProgress === 'function') {
-      setHeaderProgress({ 
-        learned: learned.size, 
-        total: CONFIG.TOTAL_WORDS 
+    function renderLessons() {
+      const tt = T();
+      const learned = getLearnedSet();
+      const premium = isPremium();
+      
+      const grid = document.getElementById("lessonGrid");
+      grid.innerHTML = "";
+      
+      const LESSONS = [
+        { id: 1, file: "lesson1.html", icon: "👋", en: "Greetings", uz: "Salomlashuv" },
+        { id: 2, file: "lesson2.html", icon: "🔢", en: "Numbers", uz: "Sonlar" },
+        { id: 3, file: "lesson3.html", icon: "🐾", en: "Animals", uz: "Hayvonlar" },
+        { id: 4, file: "lesson4.html", icon: "🎨", en: "Colors", uz: "Ranglar" },
+        { id: 5, file: "lesson5.html", icon: "🍎", en: "Fruits", uz: "Mevalar" },
+        { id: 6, file: "lesson6.html", icon: "🥕", en: "Vegetables", uz: "Sabzavot" },
+        { id: 7, file: "lesson7.html", icon: "🏠", en: "Home", uz: "Uy" },
+        { id: 8, file: "lesson8.html", icon: "👕", en: "Clothes", uz: "Kiyim" },
+        { id: 9, file: "lesson9.html", icon: "🚗", en: "Transport", uz: "Transport" },
+        { id: 10, file: "lesson10.html", icon: "🌙", en: "Daily routine", uz: "Kun tartibi" }
+      ];
+      
+      const COLORS = [
+        { bg: "rgba(251, 113, 133, .42)", soft: "rgba(251, 113, 133, .18)" },
+        { bg: "rgba(251, 146,  60, .45)", soft: "rgba(251, 146,  60, .18)" },
+        { bg: "rgba(250, 204,  21, .45)", soft: "rgba(250, 204,  21, .18)" },
+        { bg: "rgba( 34, 197,  94, .38)", soft: "rgba( 34, 197,  94, .16)" },
+        { bg: "rgba( 20, 184, 166, .40)", soft: "rgba( 20, 184, 166, .16)" },
+        { bg: "rgba( 59, 130, 246, .40)", soft: "rgba( 59, 130, 246, .16)" },
+        { bg: "rgba( 99, 102, 241, .42)", soft: "rgba( 99, 102, 241, .16)" },
+        { bg: "rgba(168,  85, 247, .40)", soft: "rgba(168,  85, 247, .16)" },
+        { bg: "rgba(236,  72, 153, .38)", soft: "rgba(236,  72, 153, .16)" },
+        { bg: "rgba(100, 116, 139, .34)", soft: "rgba(100, 116, 139, .14)" }
+      ];
+      
+      // Aktuelle Lektion finden
+      let current = 1;
+      for (let i = 1; i <= LESSONS.length; i++) {
+        const completed = Array.from(learned).filter(k => k.startsWith("L" + i + "_")).length >= 5;
+        if (!completed) {
+          current = i;
+          break;
+        }
+      }
+      
+      LESSONS.forEach((L, idx) => {
+        const isFree = CONFIG.FREE_LESSONS.includes(L.id);
+        const isLocked = !isFree && !premium;
+        const isDone = Array.from(learned).filter(k => k.startsWith("L" + L.id + "_")).length >= 5;
+        const isCurrent = (L.id === current);
+        
+        const c = COLORS[idx % COLORS.length];
+        
+        const el = document.createElement(isLocked ? "div" : "a");
+        if (!isLocked) {
+          el.href = L.file;
+        }
+        
+        el.className = "tile" + 
+          (isDone ? " done" : "") + 
+          (isCurrent ? " current" : "") +
+          (isLocked ? " locked" : "");
+        
+        el.style.background = `linear-gradient(180deg, ${c.bg}, rgba(255,255,255,.92))`;
+        el.style.setProperty("--soft", c.soft);
+        
+        if (isLocked) {
+          el.onclick = (e) => {
+            e.preventDefault();
+            openPurchaseGate();
+          };
+        }
+        
+        const label = isLocked ? '🔒' : isFree ? tt.freeLabel : isDone ? '✅' : tt.openLabel;
+        
+        el.innerHTML = `
+          <div class="stepDot"></div>
+          <div class="icon">${L.icon}</div>
+          <div class="title">${currentLang === "uz" ? L.uz : L.en}</div>
+          <div class="tagRight ${isLocked ? 'lock' : isFree ? 'free' : 'open'}">
+            <span class="main">${label}</span>
+            <span class="sub">${tt.lessonLabel(L.id)}</span>
+          </div>
+        `;
+        
+        grid.appendChild(el);
       });
     }
-    
-    const grid = document.getElementById("lessonGrid");
-    grid.innerHTML = "";
-    
-    const LESSONS = [
-      { id: 1, file: "lesson1.html", icon: "👋", en: "Greetings", uz: "Salomlashuv" },
-      { id: 2, file: "lesson2.html", icon: "🔢", en: "Numbers", uz: "Sonlar" },
-      { id: 3, file: "lesson3.html", icon: "🐾", en: "Animals", uz: "Hayvonlar" },
-      { id: 4, file: "lesson4.html", icon: "🎨", en: "Colors", uz: "Ranglar" },
-      { id: 5, file: "lesson5.html", icon: "🍎", en: "Fruits", uz: "Mevalar" },
-      { id: 6, file: "lesson6.html", icon: "🥕", en: "Vegetables", uz: "Sabzavot" },
-      { id: 7, file: "lesson7.html", icon: "🏠", en: "Home", uz: "Uy" },
-      { id: 8, file: "lesson8.html", icon: "👕", en: "Clothes", uz: "Kiyim" },
-      { id: 9, file: "lesson9.html", icon: "🚗", en: "Transport", uz: "Transport" },
-      { id: 10, file: "lesson10.html", icon: "🌙", en: "Daily routine", uz: "Kun tartibi" }
-    ];
-    
-    const COLORS = [
-      { bg: "rgba(251, 113, 133, .42)", soft: "rgba(251, 113, 133, .18)" },
-      { bg: "rgba(251, 146,  60, .45)", soft: "rgba(251, 146,  60, .18)" },
-      { bg: "rgba(250, 204,  21, .45)", soft: "rgba(250, 204,  21, .18)" },
-      { bg: "rgba( 34, 197,  94, .38)", soft: "rgba( 34, 197,  94, .16)" },
-      { bg: "rgba( 20, 184, 166, .40)", soft: "rgba( 20, 184, 166, .16)" },
-      { bg: "rgba( 59, 130, 246, .40)", soft: "rgba( 59, 130, 246, .16)" },
-      { bg: "rgba( 99, 102, 241, .42)", soft: "rgba( 99, 102, 241, .16)" },
-      { bg: "rgba(168,  85, 247, .40)", soft: "rgba(168,  85, 247, .16)" },
-      { bg: "rgba(236,  72, 153, .38)", soft: "rgba(236,  72, 153, .16)" },
-      { bg: "rgba(100, 116, 139, .34)", soft: "rgba(100, 116, 139, .14)" }
-    ];
-    
-    // Aktuelle Lektion finden
-    let current = 1;
-    for (let i = 1; i <= LESSONS.length; i++) {
-      const completed = Array.from(learned).filter(k => k.startsWith("L" + i + "_")).length >= 5;
-      if (!completed) {
-        current = i;
-        break;
-      }
+
+    // === GATES ===
+    function openPurchaseGate() {
+      const tt = T();
+      document.getElementById("purchaseTitle").innerText = tt.purchaseTitle;
+      document.getElementById("purchaseText").innerHTML = tt.purchaseText;
+      document.getElementById("purchaseBuyBtn").innerText = tt.buyNow;
+      document.getElementById("purchaseGate").classList.add("show");
     }
-    
-    LESSONS.forEach((L, idx) => {
-      const isFree = CONFIG.FREE_LESSONS.includes(L.id);
-      const isLocked = !isFree && !premium;
-      const isDone = Array.from(learned).filter(k => k.startsWith("L" + L.id + "_")).length >= 5;
-      const isCurrent = (L.id === current);
-      
-      const c = COLORS[idx % COLORS.length];
-      
-      const el = document.createElement(isLocked ? "div" : "a");
-      if (!isLocked) {
-        el.href = L.file;
-      }
-      
-      el.className = "tile" + 
-        (isDone ? " done" : "") + 
-        (isCurrent ? " current" : "") +
-        (isLocked ? " locked" : "");
-      
-      el.style.background = `linear-gradient(180deg, ${c.bg}, rgba(255,255,255,.92))`;
-      el.style.setProperty("--soft", c.soft);
-      
-      if (isLocked) {
-        el.onclick = (e) => {
-          e.preventDefault();
-          openPurchaseGate();
-        };
-      }
-      
-      const label = isLocked ? '🔒' : isFree ? tt.freeLabel : isDone ? '✅' : tt.openLabel;
-      
-      el.innerHTML = `
-        <div class="stepDot"></div>
-        <div class="icon">${L.icon}</div>
-        <div class="title">${currentLang === "uz" ? L.uz : L.en}</div>
-        <div class="tagRight ${isLocked ? 'lock' : isFree ? 'free' : 'open'}">
-          <span class="main">${label}</span>
-          <span class="sub">${tt.lessonLabel(L.id)}</span>
-        </div>
-      `;
-      
-      grid.appendChild(el);
-    });
-  }
 
-  // === GATES ===
-  function openPurchaseGate() {
-    const tt = T();
-    document.getElementById("purchaseTitle").innerText = tt.purchaseTitle;
-    document.getElementById("purchaseText").innerHTML = tt.purchaseText;
-    document.getElementById("purchaseBuyBtn").innerText = tt.buyNow;
-    document.getElementById("purchaseGate").classList.add("show");
-  }
+    function closePurchaseGate() {
+      document.getElementById("purchaseGate").classList.remove("show");
+    }
 
-  function closePurchaseGate() {
-    document.getElementById("purchaseGate").classList.remove("show");
-  }
-
-  function showNameGate() {
-    const tt = T();
-    const gate = document.getElementById("nameGate");
-    gate.classList.add("show");
-    
-    document.getElementById("nameGateTitle").innerText = tt.nameGateTitle;
-    document.getElementById("nameGateText").innerText = tt.nameGateText;
-    
-    const input = document.getElementById("nameInput");
-    const btn = document.getElementById("startBtn");
-    
-    input.placeholder = tt.namePlaceholder;
-    btn.innerText = tt.startBtn;
-    btn.disabled = true;
-    input.value = "";
-    
-    setTimeout(() => input.focus(), 100);
-    
-    const validate = () => {
-      btn.disabled = normalizeName(input.value).length < 2;
-    };
-    
-    input.oninput = validate;
-    input.onkeydown = (e) => {
-      if (e.key === "Enter" && !btn.disabled) btn.click();
-    };
-    
-    btn.onclick = () => {
-      const nm = normalizeName(input.value);
-      if (nm.length < 2) return;
-      localStorage.setItem(STORAGE.CHILD_NAME, nm);
-      gate.classList.remove("show");
-      applyGreeting();
-    };
-  }
-
-  function applyGreeting() {
-    const tt = T();
-    const name = localStorage.getItem(STORAGE.CHILD_NAME) || "";
-    const child = name ? name : tt.friendFallback;
-    document.getElementById("childNameBig").innerText = child;
-    document.getElementById("helloWord").innerText = tt.helloWord;
-  }
-
-  function initHeader() {
-    // Header OHNE Titel, da wir den eigenen haben
-    renderLessonHeader({
-      mountId: "mainHeader",
-      title: "", // Leer lassen, da wir eigenen Titel haben
-      total: CONFIG.TOTAL_WORDS,
-      learned: getLearnedSet().size,
-      homeHref: "index.html",
-      lang: currentLang,
-      onLangChange: (lang) => {
-        setLang(lang);
+    function showNameGate() {
+      const tt = T();
+      const gate = document.getElementById("nameGate");
+      gate.classList.add("show");
+      
+      document.getElementById("nameGateTitle").innerText = tt.nameGateTitle;
+      document.getElementById("nameGateText").innerText = tt.nameGateText;
+      
+      const input = document.getElementById("nameInput");
+      const btn = document.getElementById("startBtn");
+      
+      input.placeholder = tt.namePlaceholder;
+      btn.innerText = tt.startBtn;
+      btn.disabled = true;
+      input.value = "";
+      
+      setTimeout(() => input.focus(), 100);
+      
+      const validate = () => {
+        btn.disabled = normalizeName(input.value).length < 2;
+      };
+      
+      input.oninput = validate;
+      input.onkeydown = (e) => {
+        if (e.key === "Enter" && !btn.disabled) btn.click();
+      };
+      
+      btn.onclick = () => {
+        const nm = normalizeName(input.value);
+        if (nm.length < 2) return;
+        localStorage.setItem(STORAGE.CHILD_NAME, nm);
+        gate.classList.remove("show");
         applyGreeting();
-        updateUI();
-      },
-      bookTargetId: null
-    });
-  }
+      };
+    }
 
-  // === START ===
-  window.addEventListener("load", async () => {
-    currentLang = getLang();
-    if (!localStorage.getItem(STORAGE.LANG)) {
-      setLang("en");
+    function applyGreeting() {
+      const tt = T();
+      const name = localStorage.getItem(STORAGE.CHILD_NAME) || "";
+      const child = name ? name : tt.friendFallback;
+      document.getElementById("childNameBig").innerText = child;
+      document.getElementById("helloWord").innerText = tt.helloWord;
     }
-    
-    await Billing.initialize();
-    
-    const tt = T();
-    showToast(tt.restoring, 2000);
-    await Billing.checkPremium();
-    
-    initHeader();
-    applyGreeting();
-    updateUI();
-    
-    if (!localStorage.getItem(STORAGE.CHILD_NAME)) {
-      showNameGate();
-    }
-    
-    window.addEventListener("pageshow", updateUI);
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) updateUI();
+
+    // === START ===
+    window.addEventListener("load", () => {
+      currentLang = getLang();
+      if (!localStorage.getItem(STORAGE.LANG)) {
+        setLang("en");
+      }
+      
+      updateLangButtons();
+      applyGreeting();
+      updateUI();
+      
+      if (!localStorage.getItem(STORAGE.CHILD_NAME)) {
+        showNameGate();
+      }
+      
+      window.addEventListener("pageshow", updateUI);
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) updateUI();
+      });
     });
-  });
-</script>
+  </script>
 </body>
 </html>
