@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Dono Bola! Learn Uzbek</title>
 
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
   <link rel="stylesheet" href="components/header.css">
 
   <style>
@@ -56,6 +59,28 @@
       -webkit-backdrop-filter: blur(6px);
       position:relative;
       overflow:hidden;
+    }
+
+    /* NEU: App Titel über dem Header */
+    .app-title {
+      text-align: center;
+      margin: 0 0 12px 0;
+      font-size: 32px;
+      font-weight: 1000;
+      color: #065f46;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .app-title .leaf {
+      font-size: 28px;
+    }
+
+    /* Header Container */
+    .header-container {
+      margin-bottom: 16px;
     }
 
     .header-greeting {
@@ -362,6 +387,7 @@
     /* Mobile */
     @media (max-width: 420px){
       body { padding: 12px; }
+      .app-title { font-size: 26px; }
       .grid { padding-left: 22px; gap: 14px; }
       .grid::before { left: 8px; width: 10px; }
       .stepDot { left: -22px; width: 30px; height: 30px; }
@@ -377,8 +403,16 @@
   <div class="app">
     <div class="top">
 
-      <!-- Einheitlicher Header -->
-      <div id="mainHeader"></div>
+      <!-- NEU: App Titel ganz oben -->
+      <h1 class="app-title">
+        <span class="leaf">🌿</span>
+        <span>Dono Bola</span>
+      </h1>
+
+      <!-- Header Container -->
+      <div class="header-container">
+        <div id="mainHeader"></div>
+      </div>
 
       <!-- Begrüßung -->
       <div class="header-greeting" id="greetingText">
@@ -500,7 +534,7 @@
     }
   };
 
-  // === BILLING MANAGER (in einer Datei) ===
+  // === BILLING MANAGER ===
   class BillingManager {
     constructor() {
       this.isNative = (typeof Capacitor !== 'undefined' && Capacitor.isNativePlatform());
@@ -516,7 +550,6 @@
       }
 
       try {
-        // Prüfen ob Plugin verfügbar
         if (!Capacitor.Plugins.InAppPurchase) {
           console.warn("InAppPurchase plugin not available");
           return false;
@@ -537,7 +570,6 @@
 
     async purchase() {
       if (!this.isNative) {
-        // Web-Test: Simulierter Kauf
         return new Promise((resolve) => {
           setTimeout(() => {
             console.log("Web: Simulated purchase");
@@ -551,7 +583,6 @@
           productId: CONFIG.PRODUCT_ID
         });
 
-        // iOS: Transaction bestätigen
         if (this.platform === 'ios' && result && result.transactionId) {
           await Capacitor.Plugins.InAppPurchase.finishTransaction({
             transactionId: result.transactionId,
@@ -574,7 +605,6 @@
       try {
         const result = await Capacitor.Plugins.InAppPurchase.restore();
         
-        // iOS: Alle Transactions bestätigen
         if (this.platform === 'ios' && result.purchases) {
           for (const purchase of result.purchases) {
             if (purchase.transactionId) {
@@ -618,7 +648,6 @@
     }
   }
 
-  // Global Billing Instanz
   const Billing = new BillingManager();
 
   // === STATE ===
@@ -866,9 +895,10 @@
   }
 
   function initHeader() {
+    // Header OHNE Titel, da wir den eigenen haben
     renderLessonHeader({
       mountId: "mainHeader",
-      title: "🌿 Dono Bola",
+      title: "", // Leer lassen, da wir eigenen Titel haben
       total: CONFIG.TOTAL_WORDS,
       learned: getLearnedSet().size,
       homeHref: "index.html",
@@ -884,31 +914,25 @@
 
   // === START ===
   window.addEventListener("load", async () => {
-    // Sprache laden
     currentLang = getLang();
     if (!localStorage.getItem(STORAGE.LANG)) {
       setLang("en");
     }
     
-    // Billing initialisieren
     await Billing.initialize();
     
-    // Käufe wiederherstellen
     const tt = T();
     showToast(tt.restoring, 2000);
     await Billing.checkPremium();
     
-    // UI aufbauen
     initHeader();
     applyGreeting();
     updateUI();
     
-    // Name Gate zeigen wenn nötig
     if (!localStorage.getItem(STORAGE.CHILD_NAME)) {
       showNameGate();
     }
     
-    // Aktualisieren wenn zurück aus Lektion
     window.addEventListener("pageshow", updateUI);
     document.addEventListener("visibilitychange", () => {
       if (!document.hidden) updateUI();
