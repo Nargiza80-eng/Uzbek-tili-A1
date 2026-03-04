@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dono Bola! (4–6)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Dono Bola! Learn Uzbek</title>
+
+  <link rel="stylesheet" href="components/header.css">
 
   <style>
     :root{
@@ -12,15 +14,21 @@
       --line:rgba(15,23,42,.12);
       --shadow:0 14px 30px rgba(2,6,23,.12);
       --radius:22px;
+      --safe-top: env(safe-area-inset-top);
+      --safe-bottom: env(safe-area-inset-bottom);
     }
 
     *{box-sizing:border-box}
+    
     body{
       margin:0;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       color:var(--ink);
       padding:16px;
+      padding-top: calc(16px + var(--safe-top));
+      padding-bottom: calc(16px + var(--safe-bottom));
       min-height:100vh;
+      min-height: 100dvh;
       overflow-x:hidden;
 
       background:
@@ -28,9 +36,16 @@
         url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27720%27%20height%3D%27720%27%20viewBox%3D%270%200%20720%20720%27%3E%3Crect%20width%3D%27720%27%20height%3D%27720%27%20fill%3D%27%23f7fbff%27/%3E%3Cg%20opacity%3D%270.22%27%3E%3Cg%20transform%3D%27translate(40%2C40)%27%3E%3Cpath%20d%3D%27M120%200%20L160%2040%20L120%2080%20L80%2040%20Z%27%20fill%3D%27%230ea5a4%27/%3E%3Cpath%20d%3D%27M120%20110%20L170%20160%20L120%20210%20L70%20160%20Z%27%20fill%3D%27%2322c55e%27/%3E%3Cpath%20d%3D%27M120%20240%20L160%20280%20L120%20320%20L80%20280%20Z%27%20fill%3D%27%23f59e0b%27/%3E%3Cpath%20d%3D%27M0%20120%20L40%20160%20L0%20200%20L-40%20160%20Z%27%20fill%3D%27%2314b8a6%27/%3E%3Cpath%20d%3D%27M240%20120%20L280%20160%20L240%20200%20L200%20160%20Z%27%20fill%3D%27%2310b981%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
       background-size: cover, 720px 720px;
       background-attachment: fixed, fixed;
+      
+      overscroll-behavior: none;
+      -webkit-overflow-scrolling: touch;
     }
 
-    .app{max-width:860px;margin:0 auto}
+    .app{
+      max-width:860px;
+      margin:0 auto;
+    }
+
     .top{
       background:rgba(255,255,255,.92);
       border:1px solid var(--line);
@@ -38,129 +53,55 @@
       box-shadow:var(--shadow);
       padding:16px;
       backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       position:relative;
       overflow:hidden;
     }
-    .top.premiumGlow{
-      box-shadow: 0 0 0 8px rgba(34,197,94,.15), var(--shadow);
-      transition: box-shadow .35s ease;
-    }
 
-    /* Header */
-    .hero{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;justify-content:space-between}
-    .heroLeft{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+    .header-greeting {
+      text-align: center;
+      margin: 16px 0 8px;
+      font-size: 28px;
+      font-weight: 1000;
+    }
+    .header-greeting .name { color: #065f46; }
 
-    .sunWrap{width:104px;height:104px;flex:0 0 auto}
-    .sun{
-      width:104px;height:104px;border-radius:999px;
-      display:grid;place-items:center;
-      background: radial-gradient(circle at 30% 30%, #fff6cc, #fbbf24 55%, #f59e0b 100%);
-      box-shadow: 0 12px 28px rgba(245,158,11,.36);
-      border: 5px solid rgba(255,255,255,.72);
+    /* Premium Banner */
+    .premium-banner {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      border-radius: 20px;
+      padding: 20px;
+      margin: 16px 0;
+      text-align: center;
+      box-shadow: 0 8px 0 rgba(245, 158, 11, 0.3);
     }
-    .sunPct{font-weight:1000;font-size:22px;color:#7c2d12;text-shadow:0 2px 0 rgba(255,255,255,.35)}
+    .premium-banner h3 {
+      margin: 0 0 10px 0;
+      font-size: 24px;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .premium-banner p {
+      margin: 0 0 15px 0;
+      color: rgba(255,255,255,0.95);
+      font-size: 16px;
+    }
+    .buy-btn {
+      background: #fff;
+      color: #f59e0b;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 999px;
+      font-weight: 1000;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .buy-btn:active { transform: translateY(2px); }
 
-    h1{margin:0;font-size:24px;font-weight:1000;letter-spacing:.2px}
-    .helloBig{
-      margin-top:6px;
-      font-weight:1000;
-      font-size:40px;
-      line-height:1.05;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
-    .helloBig .name{color:#065f46;text-shadow:0 2px 0 rgba(255,255,255,.45)}
-
-    .topActions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-      align-items:center;
-      position:relative;
-    }
-    .langBtn,.profileBtn{
-      border-radius:18px;
-      font-weight:1000;
-      border:1px solid rgba(15,23,42,.14);
-      cursor:pointer;
-      user-select:none;
-      padding:12px 14px;
-      background: rgba(255,255,255,.94);
-      font-size:16px;
-      white-space:nowrap;
-    }
-    .profileBtn{display:flex;align-items:center;gap:10px}
-
-    .profileMenu{
-      position:absolute;
-      right:0;
-      top:52px;
-      width:240px;
-      background: rgba(255,255,255,.97);
-      border:1px solid rgba(15,23,42,.12);
-      border-radius:18px;
-      box-shadow: 0 18px 36px rgba(2,6,23,.16);
-      padding:8px;
-      display:none;
-      z-index:50;
-    }
-    .profileMenu.show{display:block}
-    .menuItem{
-      width:100%;
-      text-align:left;
-      border-radius:14px;
-      padding:12px 12px;
-      border:1px solid transparent;
-      background:transparent;
-      font-weight:900;
-      cursor:pointer;
-      font-size:16px;
-    }
-    .menuItem:hover{background: rgba(15,23,42,.06)}
-    .menuItem:active{transform: translateY(1px)}
-
-    /* Progress */
-    .barWrap{
-      margin-top:12px;
-      background:rgba(255,255,255,.96);
-      border:1px solid var(--line);
-      border-radius:20px;
-      padding:14px;
-      box-shadow: 0 12px 28px rgba(2,6,23,.07);
-    }
-    .barRow{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
-    .barLabel{font-weight:1000;font-size:18px}
-    .barText{color:var(--muted);font-weight:1000;font-size:16px}
-    .bar{
-      margin-top:12px;
-      height:18px;
-      background: rgba(15,23,42,.10);
-      border-radius:999px;
-      overflow:hidden;
-      border:1px solid rgba(15,23,42,.10);
-    }
-    .fill{
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg, #22c55e, #16a34a);
-      border-radius:999px;
-      transition: width .45s ease;
-    }
-
-    .achRow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
-    .achIcon{
-      width:46px;height:46px;border-radius:999px;
-      display:grid;place-items:center;
-      font-size:24px;
-      background: rgba(34,197,94,.18);
-      border:2px solid rgba(34,197,94,.35);
-      box-shadow: 0 14px 28px rgba(2,6,23,.10);
-    }
-
-    /* Lesson list + visible path */
+    /* Lesson Grid */
     .grid{
       margin-top:16px;
       display:grid;
@@ -186,7 +127,6 @@
       box-shadow: 0 18px 40px rgba(2,6,23,.12);
     }
 
-    /* Step dot */
     .stepDot{
       position:absolute;
       left:-28px;
@@ -201,7 +141,6 @@
     .tile.done .stepDot{border-color: rgba(34,197,94,.70); background: rgba(34,197,94,.25);}
     .tile.current .stepDot{border-color: rgba(245,158,11,.80); background: rgba(245,158,11,.25);}
 
-    /* ===== TILE ===== */
     .tile{
       border:2px solid rgba(15,23,42,.10);
       border-radius:28px;
@@ -212,20 +151,23 @@
       position:relative;
       overflow:hidden;
       touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
       cursor:pointer;
       background: rgba(255,255,255,.97);
-
       display:grid;
-      grid-template-columns: clamp(64px, 18vw, 92px) 1fr auto; /* responsive */
+      grid-template-columns: clamp(64px, 18vw, 92px) 1fr auto;
       grid-template-areas: "icon title tag";
       align-items:center;
       gap: clamp(10px, 2.4vw, 14px);
       min-height: clamp(110px, 22vw, 150px);
     }
     .tile:active{transform: translateY(1px)}
-    .tile.locked{opacity:.78; filter: grayscale(.16);}
+    .tile.locked{
+      opacity:0.6;
+      filter: grayscale(0.5);
+      cursor: not-allowed;
+    }
 
-    /* Emoji icon only (responsive) */
     .icon{
       grid-area: icon;
       width: clamp(64px, 18vw, 92px);
@@ -240,19 +182,16 @@
       z-index:2;
     }
 
-    /* Title (responsive) */
     .title{
       grid-area: title;
       font-size: clamp(20px, 5vw, 36px);
       font-weight:1000;
       line-height:1.05;
       letter-spacing:.2px;
-
       display:flex;
       align-items:center;
       justify-content:flex-start;
       text-align:left;
-
       min-width:0;
       overflow-wrap:anywhere;
       hyphens:auto;
@@ -260,18 +199,15 @@
       z-index:2;
     }
 
-    /* ===== STATUS: NO FRAME (text only) ===== */
     .tagRight{
       grid-area: tag;
       justify-self:end;
       align-self:center;
-
       display:flex;
       flex-direction:column;
       align-items:flex-end;
       justify-content:center;
       gap:2px;
-
       padding: 0;
       min-width: 0;
       border: none;
@@ -295,8 +231,8 @@
 
     .tagRight.open{ color:#065f46; }
     .tagRight.lock{ color: rgba(15,23,42,.70); }
+    .tagRight.free{ color:#22c55e; }
 
-    /* Bottom line (kept) */
     .tile::after{
       content:"";
       position:absolute;
@@ -311,42 +247,17 @@
       z-index:0;
     }
 
-    /* Bottom buttons */
-    .btnRow{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
-    .btnWide{
-      flex:1;min-width:240px;
-      text-align:center;
-      padding:16px;
-      border-radius:20px;
-      font-weight:1000;
-      border:1px solid transparent;
-      cursor:pointer;
-      user-select:none;
-      font-size:18px;
-    }
-    .btnWide.primary{
-      background: linear-gradient(180deg, #34d399, #22c55e);
-      color:#052e1b;
-      border-color: rgba(5,46,27,.10);
-      box-shadow: 0 18px 40px rgba(34,197,94,.22);
-    }
-    .btnWide.secondary{
-      background: rgba(255,255,255,.96);
-      color: var(--ink);
-      border-color: var(--line);
-    }
-
     /* Toast */
     .toast{
       position:fixed;
       left:50%;
-      bottom:18px;
+      bottom: calc(18px + var(--safe-bottom));
       transform:translateX(-50%) translateY(10px);
       background: rgba(255,255,255,.94);
       border:1px solid rgba(15,23,42,.12);
       box-shadow: 0 18px 40px rgba(2,6,23,.18);
       border-radius:999px;
-      padding:12px 16px;
+      padding:12px 20px;
       font-weight:1000;
       opacity:0;
       pointer-events:none;
@@ -354,9 +265,7 @@
       z-index:20000;
       max-width: 92vw;
       text-align:center;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      font-size: 16px;
     }
     .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
@@ -368,24 +277,27 @@
       align-items:center;
       justify-content:center;
       padding:16px;
+      padding-top: calc(16px + var(--safe-top));
+      padding-bottom: calc(16px + var(--safe-bottom));
       background:
         radial-gradient(circle at 25% 15%, rgba(255,255,255,.18), transparent 35%),
         radial-gradient(circle at 80% 25%, rgba(255,255,255,.14), transparent 40%),
         rgba(2,6,23,.55);
       backdrop-filter: blur(10px) saturate(1.1);
+      -webkit-backdrop-filter: blur(10px) saturate(1.1);
     }
     .gate.show{display:flex}
 
-    /* Pop-in animation */
     .gateCard{
       width:min(520px, 92vw);
+      max-height: 90vh;
+      overflow-y: auto;
       background: rgba(255,255,255,.92);
       border:1px solid rgba(255,255,255,.35);
       border-radius:26px;
       box-shadow: 0 22px 70px rgba(2,6,23,.35);
-      padding:16px;
+      padding:24px;
       text-align:center;
-
       transform: translateY(16px) scale(.98);
       opacity:0;
       transition: transform .22s ease, opacity .22s ease;
@@ -400,23 +312,24 @@
       color: rgba(15,23,42,.82);
       line-height:1.35;
     }
-    #paywallMain{display:block;font-size:18px;margin-bottom:6px}
-    #paywallSub{display:block;font-size:14px;color: rgba(15,23,42,.62)}
 
     .nameInput{
-      width:min(360px, 86vw);
-      padding:14px 14px;
+      width:100%;
+      max-width:360px;
+      padding:14px 16px;
       border-radius:18px;
       border:1px solid rgba(15,23,42,.18);
       font-weight:1000;
       font-size:18px;
       outline:none;
       background: rgba(255,255,255,.95);
+      -webkit-appearance: none;
     }
     .nameInput:focus{border-color: rgba(59,130,246,.55);box-shadow: 0 0 0 6px rgba(59,130,246,.18);}
 
     .gateBtn{
-      width:min(360px, 86vw);
+      width:100%;
+      max-width:360px;
       margin-top:10px;
       padding:14px;
       border-radius:18px;
@@ -426,116 +339,63 @@
       font-weight:1000;
       cursor:pointer;
       font-size:18px;
+      -webkit-appearance: none;
+    }
+    .gateBtn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .gateBtn.secondary {
+      background: #e5e7eb;
+      color: #374151;
     }
 
-    @keyframes pulseSoft{
-      0%,100%{ transform: translateY(0); filter: saturate(1); }
-      50%{ transform: translateY(-1px); filter: saturate(1.15); }
-    }
-    .gateBtn.pulse{
-      animation: pulseSoft 1.2s ease-in-out infinite;
-      box-shadow: 0 16px 38px rgba(34,197,94,.25);
+    /* iPad / Tablet */
+    @media (min-width: 768px) {
+      .app { max-width: 700px; }
+      .grid { grid-template-columns: repeat(2, 1fr); padding-left: 0; }
+      .grid::before { display: none; }
+      .stepDot { display: none; }
+      .tile { min-height: 180px; }
     }
 
-    .btnGhost{
-      width:min(360px, 86vw);
-      margin-top:10px;
-      padding:14px;
-      border-radius:18px;
-      border:1px dashed rgba(15,23,42,.22);
-      background: rgba(255,255,255,.92);
-      color: rgba(15,23,42,.88);
-      font-weight:1000;
-      cursor:pointer;
-      font-size:16px;
-    }
-    .gateHint{margin-top:10px;font-size:12.5px;font-weight:900;color: rgba(15,23,42,.62);}
-
-    /* Mobile header: text next to sun */
+    /* Mobile */
     @media (max-width: 420px){
-      .hero{ gap:12px; }
-      .heroLeft{ flex-wrap: nowrap; align-items: center; gap:12px; width: 100%; }
-      .sunWrap{ width:78px; height:78px; }
-      .sun{ width:78px; height:78px; }
-      .sunPct{ font-size:18px; }
-      .heroLeft > div:last-child{ flex:1; min-width:0; }
-
-      h1{ font-size:18px; line-height:1.1; margin:0; }
-      .helloBig{ font-size:28px; margin-top:4px; line-height:1.05; }
-
-      .topActions{ gap:8px; }
-      .langBtn,.profileBtn{ padding:10px 12px; font-size:15px; }
-
-      .grid{ padding-left:22px; }
-      .grid::before{ left:8px; width:10px; }
-      .stepDot{ left:-22px; width:30px; height:30px; }
-
-      .tile{
-        padding:14px;
-        gap: 12px;
-      }
-    }
-
-    @media (min-width: 768px){
-      .app{max-width:760px;}
-      .helloBig{font-size:46px;}
-      /* title/icon/tag are already responsive with clamp() */
-      .tile{min-height:150px;}
+      body { padding: 12px; }
+      .grid { padding-left: 22px; gap: 14px; }
+      .grid::before { left: 8px; width: 10px; }
+      .stepDot { left: -22px; width: 30px; height: 30px; }
+      .tile { padding: 14px; gap: 12px; min-height: 100px; }
+      .header-greeting { font-size: 22px; }
+      .premium-banner { padding: 16px; }
+      .premium-banner h3 { font-size: 20px; }
     }
   </style>
 </head>
 
 <body>
   <div class="app">
-    <div class="top" id="topCard">
+    <div class="top">
 
-      <div class="hero">
-        <div class="heroLeft">
-          <div class="sunWrap" aria-hidden="true">
-            <div class="sun"><div class="sunPct" id="mainPct">0%</div></div>
-          </div>
+      <!-- Einheitlicher Header -->
+      <div id="mainHeader"></div>
 
-          <div>
-            <h1>🌿 Dono Bola!</h1>
-            <div class="helloBig">
-              <span>🦁</span>
-              <span id="helloWord">Hello,</span>
-              <span class="name" id="childNameBig">Friend!</span>
-              <span>✨</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="topActions">
-          <button class="langBtn" id="langBtn" type="button">UZ</button>
-
-          <button class="profileBtn" id="profileBtn" type="button" aria-haspopup="menu" aria-expanded="false">
-            🧒 <span id="profileName">Friend</span> ▾
-          </button>
-
-          <div class="profileMenu" id="profileMenu" role="menu">
-            <button class="menuItem" id="changeNameBtn" type="button">✏️ Change name</button>
-          </div>
-        </div>
+      <!-- Begrüßung -->
+      <div class="header-greeting" id="greetingText">
+        <span id="helloWord">Hello,</span>
+        <span class="name" id="childNameBig">Friend!</span>
+        <span>✨</span>
       </div>
 
-      <div class="barWrap">
-        <div class="barRow">
-          <div class="barLabel" id="progressLabel">⭐ Progress</div>
-          <div class="barText" id="progressText">0 / 93</div>
-          <div class="achRow" id="achRow"></div>
-        </div>
-        <div class="bar">
-          <div class="fill" id="progressFill"></div>
-        </div>
+      <!-- Premium Banner (nur wenn nicht gekauft) -->
+      <div class="premium-banner" id="premiumBanner" style="display:none;">
+        <h3 id="premiumTitle">🔓 Unlock All Lessons</h3>
+        <p id="premiumText">Get lessons 2-10 for only $4.99</p>
+        <button class="buy-btn" id="buyBtn" onclick="handleBuyClick()">Buy Now - $4.99</button>
       </div>
 
+      <!-- Lektionen -->
       <div class="grid" id="lessonGrid"></div>
-
-      <div class="btnRow">
-        <button class="btnWide primary" id="premiumBtn" type="button">🔓 Premium</button>
-        <button class="btnWide secondary" id="resetBtn" type="button">♻️ Reset</button>
-      </div>
 
     </div>
   </div>
@@ -546,405 +406,513 @@
   <div class="gate" id="nameGate">
     <div class="gateCard" role="dialog" aria-modal="true">
       <div style="font-size:44px; line-height:1;">🧒✨</div>
-      <div class="gateTitle" id="nameGateTitle">What’s your name?</div>
+      <div class="gateTitle" id="nameGateTitle">What's your name?</div>
       <p class="gateText" id="nameGateText">Type your name ✍️</p>
       <input class="nameInput" id="nameInput" type="text" autocomplete="name"
-             placeholder="Example: Ali" maxlength="18" />
+             placeholder="Example: Ali" maxlength="18" inputmode="text" />
       <button class="gateBtn" id="startBtn" type="button">Start 🚀</button>
-      <div class="gateHint" id="nameGateHint">Tip: 2 letters is enough 🙂</div>
     </div>
   </div>
 
-  <!-- Paywall Gate -->
-  <div class="gate" id="paywallGate">
+  <!-- Purchase Gate -->
+  <div class="gate" id="purchaseGate">
     <div class="gateCard" role="dialog" aria-modal="true">
       <div style="font-size:44px; line-height:1;">🔓✨</div>
-      <div class="gateTitle" id="paywallTitle">Premium</div>
-
-      <p class="gateText">
-        <span id="paywallMain">Unlock all lessons 🔓</span>
-        <span id="paywallSub">One-time payment: $9.99. Then everything is unlocked forever ✅</span>
+      <div class="gateTitle" id="purchaseTitle">Premium Required</div>
+      <p class="gateText" id="purchaseText">
+        Unlock lessons 2-10 for $4.99<br>
+        One-time purchase, forever yours!
       </p>
-
-      <button class="gateBtn pulse" id="buyBtn" type="button">Buy Premium — $9.99</button>
-      <button class="btnGhost" id="closePaywallBtn" type="button">Close</button>
-
-      <div class="gateHint" id="paywallHint">GitHub demo now. Real payment later in the app stores.</div>
+      <button class="gateBtn" id="purchaseBuyBtn" onclick="handleBuyClick()">Buy - $4.99</button>
+      <button class="gateBtn secondary" onclick="closePurchaseGate()">Maybe Later</button>
     </div>
   </div>
 
-<script>
-  const PREMIUM_KEY = "premium_unlocked";
-  const CHILD_KEY   = "childName";
-  const LANG_KEY    = "ui_lang";
-  const PRICE_LABEL = "$9.99";
+  <!-- Capacitor Core -->
+  <script src="https://unpkg.com/@capacitor/core@5/dist/capacitor.js"></script>
+  
+  <!-- Header Component -->
+  <script src="components/header.js"></script>
 
-  const UI = {
+<script>
+  // === KONFIGURATION ===
+  const CONFIG = {
+    PRODUCT_ID: "premium_unlock_all",
+    PRICE: "$4.99",
+    FREE_LESSONS: [1],
+    TOTAL_LESSONS: 10,
+    TOTAL_WORDS: 93
+  };
+
+  // === STORAGE KEYS ===
+  const STORAGE = {
+    PREMIUM: "premium_unlocked_v1",
+    CHILD_NAME: "childName",
+    LANG: "ui_lang",
+    LEARNED: "learned"
+  };
+
+  // === TEXT ÜBERSETZUNGEN ===
+  const UI_TEXT = {
     en: {
       langBtn: "UZ",
       helloWord: "Hello,",
       friendFallback: "Friend!",
-      profileChangeName: "✏️ Change name",
-      progressLabel: "⭐ Progress",
-      openLabel: "OPEN",
       freeLabel: "FREE",
-      lessonLabel: (id)=> `Lesson ${id}`,
-      paywallTitle: "Premium",
-      paywallText: (id)=> `Premium is required for Lesson ${id}.`,
-      paywallOneTime: (price)=> `One-time payment: ${price}. Then everything is unlocked forever ✅`,
-      buyBtn: (price)=> `Buy Premium — ${price}`,
-      close: "Close",
-      hint: "GitHub demo now. Real payment later in the app stores.",
-      nameGateTitle: "What’s your name?",
+      openLabel: "OPEN",
+      lockedLabel: "LOCKED",
+      lessonLabel: (id) => `Lesson ${id}`,
+      premiumTitle: "🔓 Unlock All Lessons",
+      premiumText: `Get lessons 2-10 for only ${CONFIG.PRICE}`,
+      buyNow: `Buy Now - ${CONFIG.PRICE}`,
+      purchaseTitle: "Premium Required",
+      purchaseText: `Unlock lessons 2-10 for ${CONFIG.PRICE}<br>One-time purchase, forever yours!`,
+      nameGateTitle: "What's your name?",
       nameGateText: "Type your name ✍️",
       namePlaceholder: "Example: Ali",
       startBtn: "Start 🚀",
-      nameGateHint: "Tip: 2 letters is enough 🙂",
-      resetConfirm: "Start over? (Progress will be cleared)",
-      premiumActivated: "✅ Premium activated (demo)!"
+      purchaseSuccess: "✅ Premium activated! Enjoy all lessons!",
+      purchaseError: "❌ Purchase failed. Please try again.",
+      restoring: "Restoring purchases...",
+      processing: "Processing..."
     },
     uz: {
       langBtn: "ENG",
       helloWord: "Salom,",
-      friendFallback: "Do‘st!",
-      profileChangeName: "✏️ Ismni o‘zgartirish",
-      progressLabel: "⭐ Yutuq",
-      openLockedLabel: "OCHMOQ",
-      openUnlockedLabel: "OCHIQ",
+      friendFallback: "Do'st!",
       freeLabel: "BEPUL",
-      lessonLabel: (id)=> `${id}-dars`,
-      paywallTitle: "Premium",
-      paywallText: (id)=> `${id}-dars uchun Premium kerak 🔒`,
-      paywallOneTime: (price)=> `Bir marta to‘lov: ${price}. Keyin hammasi umrbod ochiq ✅`,
-      buyBtn: (price)=> `Premium sotib olish — ${price}`,
-      close: "Yopish",
-      hint: "Hozir GitHub demo. Keyin haqiqiy to‘lov bo‘ladi.",
+      openLabel: "OCHIQ",
+      lockedLabel: "QULFLANGAN",
+      lessonLabel: (id) => `${id}-dars`,
+      premiumTitle: "🔓 Barcha Darslarni Ochish",
+      premiumText: `2-10 darslar faqat ${CONFIG.PRICE}`,
+      buyNow: `Sotib olish - ${CONFIG.PRICE}`,
+      purchaseTitle: "Premium Kerak",
+      purchaseText: `${CONFIG.PRICE} evaziga 2-10 darslarni oching<br>Bir marta to'lov, umrbod sizniki!`,
       nameGateTitle: "Isming nima?",
       nameGateText: "Ismingni yoz ✍️",
       namePlaceholder: "Masalan: Ali",
       startBtn: "Boshlaymiz! 🚀",
-      nameGateHint: "Maslahat: 2 ta harf yetadi 🙂",
-      resetConfirm: "Hammasini qaytadan boshlaymizmi? (Natija o‘chadi)",
-      premiumActivated: "✅ Premium (demo) aktiv!"
+      purchaseSuccess: "✅ Premium faollashdi! Barcha darslardan foydalaning!",
+      purchaseError: "❌ Xatolik yuz berdi. Qayta urinib ko'ring.",
+      restoring: "Xaridlar tiklanmoqda...",
+      processing: "Jarayonda..."
     }
   };
 
-  function getLang(){
-    const v = localStorage.getItem(LANG_KEY);
-    return (v === "uz" || v === "en") ? v : "en";
-  }
-  function setLang(v){ localStorage.setItem(LANG_KEY, v); }
-  function T(){ return UI[getLang()]; }
-
-  const MIN_WORDS_PER_LESSON = { 1:5,2:5,3:5,4:5,5:5,6:5,7:5,8:5,9:5,10:5 };
-
-  function getLearnedSet(){
-    try { return new Set(JSON.parse(localStorage.getItem("learned") || "[]")); }
-    catch { return new Set(); }
-  }
-
-  const LESSONS = [
-    { id: 1, file:"lesson1.html", icon:"👋", en:"Greetings",      uz:"Salomlashuv" },
-    { id: 2, file:"lesson2.html", icon:"🔢", en:"Numbers",        uz:"Sonlar" },
-    { id: 3, file:"lesson3.html", icon:"🐾", en:"Animals",        uz:"Hayvonlar" },
-    { id: 4, file:"lesson4.html", icon:"🎨", en:"Colors",         uz:"Ranglar" },
-    { id: 5, file:"lesson5.html", icon:"🍎", en:"Fruits",         uz:"Mevalar" },
-    { id: 6, file:"lesson6.html", icon:"🥕", en:"Vegetables",     uz:"Sabzavot" },
-    { id: 7, file:"lesson7.html", icon:"🏠", en:"Home",           uz:"Uy" },
-    { id: 8, file:"lesson8.html", icon:"👕", en:"Clothes",        uz:"Kiyim" },
-    { id: 9, file:"lesson9.html", icon:"🚗", en:"Transport",      uz:"Transport" },
-    { id:10, file:"lesson10.html",icon:"🌙", en:"Daily routine",  uz:"Kun tartibi" }
-  ];
-
-  const COLORS = [
-    { bg:"rgba(251, 113, 133, .42)", soft:"rgba(251, 113, 133, .18)" },
-    { bg:"rgba(251, 146,  60, .45)", soft:"rgba(251, 146,  60, .18)" },
-    { bg:"rgba(250, 204,  21, .45)", soft:"rgba(250, 204,  21, .18)" },
-    { bg:"rgba( 34, 197,  94, .38)", soft:"rgba( 34, 197,  94, .16)" },
-    { bg:"rgba( 20, 184, 166, .40)", soft:"rgba( 20, 184, 166, .16)" },
-    { bg:"rgba( 59, 130, 246, .40)", soft:"rgba( 59, 130, 246, .16)" },
-    { bg:"rgba( 99, 102, 241, .42)", soft:"rgba( 99, 102, 241, .16)" },
-    { bg:"rgba(168,  85, 247, .40)", soft:"rgba(168,  85, 247, .16)" },
-    { bg:"rgba(236,  72, 153, .38)", soft:"rgba(236,  72, 153, .16)" },
-    { bg:"rgba(100, 116, 139, .34)", soft:"rgba(100, 116, 139, .14)" }
-  ];
-
-  const TOTAL_WORDS = 93;
-
-  function isPremium(){ return localStorage.getItem(PREMIUM_KEY) === "true"; }
-  function setPremium(v){ localStorage.setItem(PREMIUM_KEY, v ? "true" : "false"); }
-
-  function normalizeName(s){ return (s || "").trim().replace(/\s+/g, " ").slice(0, 18); }
-
-  function lessonLearnedCount(learnedSet, lessonId){
-    let c = 0;
-    const prefix = "L" + lessonId + "_";
-    for (const key of learnedSet){
-      if (key.startsWith(prefix)) c++;
+  // === BILLING MANAGER (in einer Datei) ===
+  class BillingManager {
+    constructor() {
+      this.isNative = (typeof Capacitor !== 'undefined' && Capacitor.isNativePlatform());
+      this.platform = this.isNative ? Capacitor.getPlatform() : 'web';
+      this.initialized = false;
     }
-    return c;
+
+    async initialize() {
+      if (!this.isNative) {
+        console.log("Web mode: Billing simulated");
+        this.initialized = true;
+        return true;
+      }
+
+      try {
+        // Prüfen ob Plugin verfügbar
+        if (!Capacitor.Plugins.InAppPurchase) {
+          console.warn("InAppPurchase plugin not available");
+          return false;
+        }
+        
+        await Capacitor.Plugins.InAppPurchase.getProducts({
+          products: [CONFIG.PRODUCT_ID]
+        });
+        
+        this.initialized = true;
+        console.log(`Billing initialized on ${this.platform}`);
+        return true;
+      } catch (e) {
+        console.error("Billing init failed:", e);
+        return false;
+      }
+    }
+
+    async purchase() {
+      if (!this.isNative) {
+        // Web-Test: Simulierter Kauf
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            console.log("Web: Simulated purchase");
+            resolve({ success: true, productId: CONFIG.PRODUCT_ID });
+          }, 1500);
+        });
+      }
+
+      try {
+        const result = await Capacitor.Plugins.InAppPurchase.buy({
+          productId: CONFIG.PRODUCT_ID
+        });
+
+        // iOS: Transaction bestätigen
+        if (this.platform === 'ios' && result && result.transactionId) {
+          await Capacitor.Plugins.InAppPurchase.finishTransaction({
+            transactionId: result.transactionId,
+            productId: CONFIG.PRODUCT_ID
+          });
+        }
+
+        return { success: true, ...result };
+      } catch (e) {
+        console.error("Purchase failed:", e);
+        return { success: false, error: e.message };
+      }
+    }
+
+    async restore() {
+      if (!this.isNative) {
+        return { purchases: [] };
+      }
+
+      try {
+        const result = await Capacitor.Plugins.InAppPurchase.restore();
+        
+        // iOS: Alle Transactions bestätigen
+        if (this.platform === 'ios' && result.purchases) {
+          for (const purchase of result.purchases) {
+            if (purchase.transactionId) {
+              await Capacitor.Plugins.InAppPurchase.finishTransaction({
+                transactionId: purchase.transactionId,
+                productId: purchase.productId
+              });
+            }
+          }
+        }
+        
+        return result;
+      } catch (e) {
+        console.error("Restore failed:", e);
+        return { purchases: [] };
+      }
+    }
+
+    async checkPremium() {
+      const localPremium = localStorage.getItem(STORAGE.PREMIUM) === "true";
+      
+      if (!this.isNative) {
+        return localPremium;
+      }
+
+      try {
+        const result = await this.restore();
+        const hasPremium = result.purchases && result.purchases.some(
+          p => p.productId === CONFIG.PRODUCT_ID && 
+          (p.state === 'active' || p.state === 'purchased' || p.state === 'restored')
+        );
+        
+        if (hasPremium && !localPremium) {
+          localStorage.setItem(STORAGE.PREMIUM, "true");
+        }
+        
+        return hasPremium || localPremium;
+      } catch (e) {
+        return localPremium;
+      }
+    }
   }
 
-  function isLessonCompleted(learnedSet, lessonId){
-    const need = MIN_WORDS_PER_LESSON[lessonId] ?? 1;
-    return lessonLearnedCount(learnedSet, lessonId) >= need;
+  // Global Billing Instanz
+  const Billing = new BillingManager();
+
+  // === STATE ===
+  let currentLang = "en";
+  let isPurchasing = false;
+
+  // === HILFSFUNKTIONEN ===
+  function getLang() {
+    const saved = localStorage.getItem(STORAGE.LANG);
+    return saved === "uz" ? "uz" : "en";
   }
 
-  function canOpenLesson(lessonId){
-    if(lessonId === 1) return true;
-    return isPremium();
+  function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem(STORAGE.LANG, lang);
   }
 
-  function showToast(msg){
+  function T() {
+    return UI_TEXT[currentLang];
+  }
+
+  function isPremium() {
+    return localStorage.getItem(STORAGE.PREMIUM) === "true";
+  }
+
+  function setPremium(value) {
+    localStorage.setItem(STORAGE.PREMIUM, value ? "true" : "false");
+    updateUI();
+  }
+
+  function getLearnedSet() {
+    try {
+      return new Set(JSON.parse(localStorage.getItem(STORAGE.LEARNED) || "[]"));
+    } catch {
+      return new Set();
+    }
+  }
+
+  function normalizeName(s) {
+    return (s || "").trim().replace(/\s+/g, " ").slice(0, 18);
+  }
+
+  function showToast(msg, duration = 2500) {
     const t = document.getElementById("toast");
     t.textContent = msg;
     t.classList.add("show");
     clearTimeout(showToast._tm);
-    showToast._tm = setTimeout(()=> t.classList.remove("show"), 1900);
+    showToast._tm = setTimeout(() => t.classList.remove("show"), duration);
   }
 
-  function openPaywall(lessonId){
-    const gate = document.getElementById("paywallGate");
-    const main = document.getElementById("paywallMain");
-    const sub  = document.getElementById("paywallSub");
-    const buy  = document.getElementById("buyBtn");
-    const title= document.getElementById("paywallTitle");
+  // === KAUF HANDLER ===
+  async function handleBuyClick() {
+    if (isPurchasing) return;
+    
     const tt = T();
-
-    title.innerText = tt.paywallTitle;
-
-    if(String(lessonId).toLowerCase() === "premium"){
-      main.innerText = (getLang()==="uz") ? "Barcha darslar ochiladi 🔓" : "Unlock all lessons 🔓";
-      sub.innerText  = tt.paywallOneTime(PRICE_LABEL);
-    } else {
-      main.innerText = tt.paywallText(lessonId);
-      sub.innerText  = tt.paywallOneTime(PRICE_LABEL);
+    isPurchasing = true;
+    showToast(tt.processing);
+    
+    try {
+      const result = await Billing.purchase();
+      
+      if (result.success) {
+        setPremium(true);
+        showToast(tt.purchaseSuccess, 3000);
+        closePurchaseGate();
+      } else {
+        showToast(tt.purchaseError);
+      }
+    } catch (e) {
+      console.error("Purchase error:", e);
+      showToast(tt.purchaseError);
+    } finally {
+      isPurchasing = false;
     }
-
-    buy.innerText  = tt.buyBtn(PRICE_LABEL);
-    buy.dataset.lessonId = String(lessonId);
-    buy.classList.add("pulse");
-
-    gate.classList.add("show");
   }
-  function closePaywall(){ document.getElementById("paywallGate").classList.remove("show"); }
 
-  function applyTexts(){
+  // === UI AKTUALISIEREN ===
+  function updateUI() {
     const tt = T();
-    document.getElementById("langBtn").innerText = tt.langBtn;
-    document.getElementById("helloWord").innerText = tt.helloWord;
-    document.getElementById("changeNameBtn").innerText = tt.profileChangeName;
-    document.getElementById("progressLabel").innerText = tt.progressLabel;
-
-    document.getElementById("nameGateTitle").innerText = tt.nameGateTitle;
-    document.getElementById("nameGateText").innerText  = tt.nameGateText;
-    document.getElementById("nameInput").placeholder   = tt.namePlaceholder;
-    document.getElementById("startBtn").innerText      = tt.startBtn;
-    document.getElementById("nameGateHint").innerText  = tt.nameGateHint;
-
-    document.getElementById("closePaywallBtn").innerText = tt.close;
-    document.getElementById("paywallHint").innerText  = tt.hint;
+    const premium = isPremium();
+    
+    // Premium Banner
+    const banner = document.getElementById("premiumBanner");
+    if (banner) {
+      banner.style.display = premium ? "none" : "block";
+      document.getElementById("premiumTitle").innerText = tt.premiumTitle;
+      document.getElementById("premiumText").innerText = tt.premiumText;
+      document.getElementById("buyBtn").innerText = tt.buyNow;
+    }
+    
+    renderLessons();
   }
 
-  function applyGreeting(){
+  function renderLessons() {
     const tt = T();
-    const name = localStorage.getItem(CHILD_KEY) || "";
-    const child = name ? name : tt.friendFallback;
-
-    document.getElementById("childNameBig").innerText = child;
-    document.getElementById("profileName").innerText = child.replace("!", "");
+    const learned = getLearnedSet();
+    const premium = isPremium();
+    
+    // Header Progress
+    if (typeof setHeaderProgress === 'function') {
+      setHeaderProgress({ 
+        learned: learned.size, 
+        total: CONFIG.TOTAL_WORDS 
+      });
+    }
+    
+    const grid = document.getElementById("lessonGrid");
+    grid.innerHTML = "";
+    
+    const LESSONS = [
+      { id: 1, file: "lesson1.html", icon: "👋", en: "Greetings", uz: "Salomlashuv" },
+      { id: 2, file: "lesson2.html", icon: "🔢", en: "Numbers", uz: "Sonlar" },
+      { id: 3, file: "lesson3.html", icon: "🐾", en: "Animals", uz: "Hayvonlar" },
+      { id: 4, file: "lesson4.html", icon: "🎨", en: "Colors", uz: "Ranglar" },
+      { id: 5, file: "lesson5.html", icon: "🍎", en: "Fruits", uz: "Mevalar" },
+      { id: 6, file: "lesson6.html", icon: "🥕", en: "Vegetables", uz: "Sabzavot" },
+      { id: 7, file: "lesson7.html", icon: "🏠", en: "Home", uz: "Uy" },
+      { id: 8, file: "lesson8.html", icon: "👕", en: "Clothes", uz: "Kiyim" },
+      { id: 9, file: "lesson9.html", icon: "🚗", en: "Transport", uz: "Transport" },
+      { id: 10, file: "lesson10.html", icon: "🌙", en: "Daily routine", uz: "Kun tartibi" }
+    ];
+    
+    const COLORS = [
+      { bg: "rgba(251, 113, 133, .42)", soft: "rgba(251, 113, 133, .18)" },
+      { bg: "rgba(251, 146,  60, .45)", soft: "rgba(251, 146,  60, .18)" },
+      { bg: "rgba(250, 204,  21, .45)", soft: "rgba(250, 204,  21, .18)" },
+      { bg: "rgba( 34, 197,  94, .38)", soft: "rgba( 34, 197,  94, .16)" },
+      { bg: "rgba( 20, 184, 166, .40)", soft: "rgba( 20, 184, 166, .16)" },
+      { bg: "rgba( 59, 130, 246, .40)", soft: "rgba( 59, 130, 246, .16)" },
+      { bg: "rgba( 99, 102, 241, .42)", soft: "rgba( 99, 102, 241, .16)" },
+      { bg: "rgba(168,  85, 247, .40)", soft: "rgba(168,  85, 247, .16)" },
+      { bg: "rgba(236,  72, 153, .38)", soft: "rgba(236,  72, 153, .16)" },
+      { bg: "rgba(100, 116, 139, .34)", soft: "rgba(100, 116, 139, .14)" }
+    ];
+    
+    // Aktuelle Lektion finden
+    let current = 1;
+    for (let i = 1; i <= LESSONS.length; i++) {
+      const completed = Array.from(learned).filter(k => k.startsWith("L" + i + "_")).length >= 5;
+      if (!completed) {
+        current = i;
+        break;
+      }
+    }
+    
+    LESSONS.forEach((L, idx) => {
+      const isFree = CONFIG.FREE_LESSONS.includes(L.id);
+      const isLocked = !isFree && !premium;
+      const isDone = Array.from(learned).filter(k => k.startsWith("L" + L.id + "_")).length >= 5;
+      const isCurrent = (L.id === current);
+      
+      const c = COLORS[idx % COLORS.length];
+      
+      const el = document.createElement(isLocked ? "div" : "a");
+      if (!isLocked) {
+        el.href = L.file;
+      }
+      
+      el.className = "tile" + 
+        (isDone ? " done" : "") + 
+        (isCurrent ? " current" : "") +
+        (isLocked ? " locked" : "");
+      
+      el.style.background = `linear-gradient(180deg, ${c.bg}, rgba(255,255,255,.92))`;
+      el.style.setProperty("--soft", c.soft);
+      
+      if (isLocked) {
+        el.onclick = (e) => {
+          e.preventDefault();
+          openPurchaseGate();
+        };
+      }
+      
+      const label = isLocked ? '🔒' : isFree ? tt.freeLabel : isDone ? '✅' : tt.openLabel;
+      
+      el.innerHTML = `
+        <div class="stepDot"></div>
+        <div class="icon">${L.icon}</div>
+        <div class="title">${currentLang === "uz" ? L.uz : L.en}</div>
+        <div class="tagRight ${isLocked ? 'lock' : isFree ? 'free' : 'open'}">
+          <span class="main">${label}</span>
+          <span class="sub">${tt.lessonLabel(L.id)}</span>
+        </div>
+      `;
+      
+      grid.appendChild(el);
+    });
   }
 
-  function showNameGate(){
+  // === GATES ===
+  function openPurchaseGate() {
+    const tt = T();
+    document.getElementById("purchaseTitle").innerText = tt.purchaseTitle;
+    document.getElementById("purchaseText").innerHTML = tt.purchaseText;
+    document.getElementById("purchaseBuyBtn").innerText = tt.buyNow;
+    document.getElementById("purchaseGate").classList.add("show");
+  }
+
+  function closePurchaseGate() {
+    document.getElementById("purchaseGate").classList.remove("show");
+  }
+
+  function showNameGate() {
+    const tt = T();
     const gate = document.getElementById("nameGate");
     gate.classList.add("show");
+    
+    document.getElementById("nameGateTitle").innerText = tt.nameGateTitle;
+    document.getElementById("nameGateText").innerText = tt.nameGateText;
+    
     const input = document.getElementById("nameInput");
     const btn = document.getElementById("startBtn");
-
+    
+    input.placeholder = tt.namePlaceholder;
+    btn.innerText = tt.startBtn;
     btn.disabled = true;
     input.value = "";
-    setTimeout(() => input.focus(), 50);
-
-    const validate = () => { btn.disabled = normalizeName(input.value).length < 2; };
+    
+    setTimeout(() => input.focus(), 100);
+    
+    const validate = () => {
+      btn.disabled = normalizeName(input.value).length < 2;
+    };
+    
     input.oninput = validate;
-    input.onkeydown = (e)=>{ if(e.key==="Enter" && !btn.disabled) btn.click(); };
-
+    input.onkeydown = (e) => {
+      if (e.key === "Enter" && !btn.disabled) btn.click();
+    };
+    
     btn.onclick = () => {
       const nm = normalizeName(input.value);
-      if(nm.length < 2) return;
-      localStorage.setItem(CHILD_KEY, nm);
+      if (nm.length < 2) return;
+      localStorage.setItem(STORAGE.CHILD_NAME, nm);
       gate.classList.remove("show");
       applyGreeting();
     };
   }
 
-  function renderProgressIcons(){
-    const learned = getLearnedSet();
-    const row = document.getElementById("achRow");
-    row.innerHTML = "";
-    LESSONS.forEach(L=>{
-      if(isLessonCompleted(learned, L.id)){
-        const d = document.createElement("div");
-        d.className = "achIcon";
-        d.title = `Lesson ${L.id}`;
-        d.textContent = L.icon;
-        row.appendChild(d);
-      }
-    });
-  }
-
-  function renderLessons(){
+  function applyGreeting() {
     const tt = T();
-    const learned = getLearnedSet();
-    const premium = isPremium();
+    const name = localStorage.getItem(STORAGE.CHILD_NAME) || "";
+    const child = name ? name : tt.friendFallback;
+    document.getElementById("childNameBig").innerText = child;
+    document.getElementById("helloWord").innerText = tt.helloWord;
+  }
 
-    const learnedCount = learned.size;
-    const pct = Math.max(0, Math.min(100, Math.round((learnedCount / TOTAL_WORDS) * 100)));
-    document.getElementById("mainPct").innerText = pct + "%";
-    document.getElementById("progressText").innerText = `${learnedCount} / ${TOTAL_WORDS}`;
-    document.getElementById("progressFill").style.width = pct + "%";
+  function initHeader() {
+    renderLessonHeader({
+      mountId: "mainHeader",
+      title: "🌿 Dono Bola",
+      total: CONFIG.TOTAL_WORDS,
+      learned: getLearnedSet().size,
+      homeHref: "index.html",
+      lang: currentLang,
+      onLangChange: (lang) => {
+        setLang(lang);
+        applyGreeting();
+        updateUI();
+      },
+      bookTargetId: null
+    });
+  }
 
-    const grid = document.getElementById("lessonGrid");
-    grid.innerHTML = "";
-
-    let current = 1;
-    for(let i=1;i<=LESSONS.length;i++){
-      if(!isLessonCompleted(learned, i)){ current = i; break; }
+  // === START ===
+  window.addEventListener("load", async () => {
+    // Sprache laden
+    currentLang = getLang();
+    if (!localStorage.getItem(STORAGE.LANG)) {
+      setLang("en");
     }
-
-    LESSONS.forEach((L, idx)=>{
-      const open = canOpenLesson(L.id);
-      const done = isLessonCompleted(learned, L.id);
-      const isCurrent = (L.id === current);
-
-      const c = COLORS[idx % COLORS.length];
-
-      const a = document.createElement("a");
-      a.className = "tile" + (open ? "" : " locked") + (done ? " done" : "") + (isCurrent ? " current" : "");
-      a.href = open ? L.file : "#";
-      a.style.background = `linear-gradient(180deg, ${c.bg}, rgba(255,255,255,.92))`;
-      a.style.setProperty("--soft", c.soft);
-
-      const step = document.createElement("div");
-      step.className = "stepDot";
-      a.appendChild(step);
-
-      const icon = document.createElement("div");
-      icon.className = "icon";
-      icon.textContent = L.icon;
-      a.appendChild(icon);
-
-      const title = document.createElement("div");
-      title.className = "title";
-      title.textContent = (getLang()==="uz") ? L.uz : L.en;
-      a.appendChild(title);
-
-      const isFree = (L.id === 1 && !premium);
-
-      let mainLabel = "OPEN";
-      if(getLang() === "uz"){
-        if(isFree){
-          mainLabel = tt.freeLabel; // BEPUL
-        } else {
-          mainLabel = premium ? tt.openUnlockedLabel : tt.openLockedLabel; // OCHIQ / OCHMOQ
-        }
-      } else {
-        mainLabel = isFree ? tt.freeLabel : tt.openLabel; // FREE / OPEN
-      }
-
-      const tag = document.createElement("div");
-      tag.className = "tagRight " + (open ? "open" : "lock");
-      tag.innerHTML = `
-        <span class="main">${mainLabel}</span>
-        <span class="sub">${tt.lessonLabel(L.id)}</span>
-      `;
-      a.appendChild(tag);
-
-      a.addEventListener("click", (e)=>{
-        if(!open){
-          e.preventDefault();
-          openPaywall(L.id);
-        }
-      });
-
-      grid.appendChild(a);
-    });
-  }
-
-  function updateAll(){
-    applyTexts();
+    
+    // Billing initialisieren
+    await Billing.initialize();
+    
+    // Käufe wiederherstellen
+    const tt = T();
+    showToast(tt.restoring, 2000);
+    await Billing.checkPremium();
+    
+    // UI aufbauen
+    initHeader();
     applyGreeting();
-    renderProgressIcons();
-    renderLessons();
-  }
-
-  function wireUI(){
-    document.getElementById("langBtn").addEventListener("click", ()=>{
-      const next = (getLang()==="en") ? "uz" : "en";
-      setLang(next);
-      updateAll();
-    });
-
-    const profileBtn = document.getElementById("profileBtn");
-    const profileMenu = document.getElementById("profileMenu");
-
-    profileBtn.addEventListener("click", ()=>{
-      const isOpen = profileMenu.classList.toggle("show");
-      profileBtn.setAttribute("aria-expanded", String(isOpen));
-    });
-
-    document.addEventListener("click", (e)=>{
-      const inside = profileMenu.contains(e.target) || profileBtn.contains(e.target);
-      if(!inside){
-        profileMenu.classList.remove("show");
-        profileBtn.setAttribute("aria-expanded","false");
-      }
-    });
-
-    document.getElementById("changeNameBtn").addEventListener("click", ()=>{
-      profileMenu.classList.remove("show");
-      localStorage.removeItem(CHILD_KEY);
+    updateUI();
+    
+    // Name Gate zeigen wenn nötig
+    if (!localStorage.getItem(STORAGE.CHILD_NAME)) {
       showNameGate();
+    }
+    
+    // Aktualisieren wenn zurück aus Lektion
+    window.addEventListener("pageshow", updateUI);
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) updateUI();
     });
-
-    document.getElementById("premiumBtn").addEventListener("click", ()=> openPaywall("Premium"));
-
-    document.getElementById("buyBtn").addEventListener("click", ()=>{
-      setPremium(true);
-      closePaywall();
-      updateAll();
-
-      const top = document.getElementById("topCard");
-      top.classList.add("premiumGlow");
-      setTimeout(()=> top.classList.remove("premiumGlow"), 1200);
-
-      showToast(T().premiumActivated);
-    });
-
-    document.getElementById("closePaywallBtn").addEventListener("click", ()=> closePaywall());
-    document.getElementById("paywallGate").addEventListener("click", (e)=>{
-      if(e.target.id === "paywallGate") closePaywall();
-    });
-
-    document.getElementById("resetBtn").addEventListener("click", ()=>{
-      const ok = confirm(T().resetConfirm);
-      if(!ok) return;
-      localStorage.removeItem("learned");
-      localStorage.removeItem(PREMIUM_KEY);
-      updateAll();
-    });
-
-    window.addEventListener("focus", updateAll);
-    document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) updateAll(); });
-    window.addEventListener("pageshow", updateAll);
-  }
-
-  window.addEventListener("load", ()=>{
-    wireUI();
-    if(!localStorage.getItem(LANG_KEY)) setLang("en");
-    const nm = localStorage.getItem(CHILD_KEY);
-    if(!nm) showNameGate();
-    updateAll();
   });
 </script>
 </body>
