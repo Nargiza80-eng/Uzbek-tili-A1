@@ -10,32 +10,26 @@
 
   <style>
     :root{
-      --bg:#FFF6E8;
-      --panel:#FFFFFF;
-      --ink:#1F2937;
-      --muted:#6B7280;
-      --blue:#2F6BFF;
-      --blueDark:#1E4ED8;
-      --accent2:#22C55E;
-      --yellow:#FACC15;
-      --gold:#F59E0B;
-      --good:#22C55E;
-      --bad:#EF4444;
-      --shadow:0 16px 34px rgba(0,0,0,0.10);
-      --shadowSoft:0 10px 22px rgba(0,0,0,0.10);
-      --rBig:30px;
-      --r:22px;
+      --bg:#eaf6ff;
+      --bg2:#fff2cc;
+      --primary:#0066ff;
+      --success:#00c853;
+      --error:#ff2d55;
+      --sun:#ffcc00;
+      --shadowSoft:#cfe3ff;
+      --shadowBtn:#b8c2cc;
+      --radius:25px;
     }
 
-    *{box-sizing:border-box; touch-action:manipulation;}
+    *{box-sizing:border-box; touch-action:manipulation; font-style:normal;}
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--ink);
-      padding: 14px;
-      -webkit-user-select:none;
-      user-select:none;
+      font-family:system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background:linear-gradient(180deg, var(--bg2) 0%, var(--bg) 55%, #fff 100%);
+      color:#2d3436;
+      padding:12px;
+      min-height:100vh;
+      -webkit-font-smoothing:antialiased;
     }
     .app{
       width:100%;
@@ -43,16 +37,17 @@
       margin:0 auto;
     }
 
+    /* Menü Buttons */
     .menuWrap{
       margin-top:14px;
       background:#F5F2E8;
-      border-radius:var(--rBig);
+      border-radius:var(--radius);
       padding:14px;
-      box-shadow:var(--shadowSoft);
+      box-shadow:0 10px 0 var(--shadowBtn);
     }
     .menu{
       display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
+      grid-template-columns:repeat(2, 1fr);
       gap:14px;
     }
     .menuBtn{
@@ -60,109 +55,117 @@
       border-radius:24px;
       border:none;
       cursor:pointer;
-      font-weight:1000;
-      font-size:28px;
+      font-weight:800;
+      font-size:24px;
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:14px;
-      box-shadow:var(--shadowSoft);
+      gap:12px;
       background:#fff;
-      color:var(--blue);
-      position:relative;
+      color:var(--primary);
+      box-shadow:0 8px 0 var(--shadowBtn);
     }
     .menuBtn.primary{
-      background:var(--blue);
+      background:var(--primary);
       color:#fff;
-      box-shadow: inset 0 -10px 0 rgba(0,0,0,0.18), var(--shadowSoft);
+      box-shadow:0 8px 0 #0047b3;
     }
-    .menuBtn:active{transform:scale(0.98);}
-    .menuEmoji{font-size:30px}
+    .menuBtn:active{
+      transform:translateY(4px);
+      box-shadow:0 4px 0 var(--shadowBtn);
+    }
+    .menuEmoji{font-size:32px;}
 
-    @media(max-width:560px){
-      .menuBtn{font-size:24px;height:82px;}
+    @media(max-width:375px){
+      .menuBtn{font-size:20px;height:78px;}
+      .menuEmoji{font-size:28px;}
     }
 
     .panel{
       margin-top:16px;
-      background:#fff;
-      border-radius:var(--rBig);
-      box-shadow:var(--shadowSoft);
-      padding:16px;
       display:none;
     }
     .panel.show{display:block;}
 
-    .panelTitle{
-      margin:0 0 10px;
-      font-weight:1000;
-      font-size:22px;
-      color:#111827;
+    /* LERN-KARTEN */
+    .learn-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
+    }
+    .learn-card{
+      background:#fff;
+      border-radius:var(--radius);
+      padding:20px;
       display:flex;
       align-items:center;
-      gap:10px;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:14px;
-    }
-
-    .card{
-      background:#fff;
-      border-radius:var(--rBig);
-      box-shadow:var(--shadowSoft);
-      padding:14px;
-      position:relative;
-      min-height:160px;
-      overflow:hidden;
+      gap:16px;
+      box-shadow:0 8px 0 var(--shadowSoft);
+      border:3px solid #fff;
     }
     .numCircle{
-      width:54px;height:54px;
+      width:70px;
+      height:70px;
       border-radius:50%;
       background:#EEF2FF;
-      color:var(--blueDark);
-      display:flex;align-items:center;justify-content:center;
-      font-weight:1000;
-      font-size:22px;
+      color:var(--primary);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:32px;
+      flex-shrink:0;
+      box-shadow:0 4px 0 #dbe4ff;
     }
-    .word{
+    .numEmoji{
+      font-size:20px;
+      margin-left:4px;
+    }
+    .learn-info{
+      text-align:left;
+      flex:1;
+    }
+    .learn-main{
+      font-weight:900;
       font-size:28px;
-      font-weight:1000;
-      margin-top:12px;
+      color:#2d3436;
+    }
+    .learn-sub{
+      color:#636e72;
+      font-size:18px;
+      margin-top:4px;
     }
     .stars{
       margin-top:10px;
-      font-size:18px;
-      font-weight:1000;
-      letter-spacing:2px;
-      color:var(--gold);
-      min-height:22px;
-    }
-    .speaker{
-      position:absolute;
-      right:14px;
-      top:54px;
-      width:86px;height:86px;
-      border-radius:50%;
-      border:none;
-      cursor:pointer;
-      background:var(--yellow);
-      box-shadow: inset 0 -10px 0 rgba(0,0,0,0.14), var(--shadowSoft);
-      display:flex;align-items:center;justify-content:center;
-      font-size:34px;
-    }
-    .speaker:active{transform:scale(0.95);}
-
-    .hint{
-      text-align:center;
-      color:var(--muted);
       font-weight:900;
-      margin:6px 0 0;
+      color:#f39c12;
+      font-size:20px;
+    }
+    .btn-audio{
+      background:var(--sun);
+      border:none;
+      width:70px;
+      height:70px;
+      border-radius:50%;
+      font-size:28px;
+      cursor:pointer;
+      box-shadow:0 6px 0 #cc7a00;
+      flex-shrink:0;
+    }
+    .btn-audio:active{
+      transform:translateY(3px);
+      box-shadow:0 3px 0 #cc7a00;
     }
 
-    /* DRAG & DROP MATCHING */
+    @media(max-width:375px){
+      .numCircle{width:60px;height:60px;font-size:28px;}
+      .numEmoji{font-size:16px;}
+      .learn-main{font-size:24px;}
+      .learn-sub{font-size:16px;}
+      .btn-audio{width:60px;height:60px;font-size:24px;}
+    }
+
+    /* Matching */
     .matchingBox{
       display:flex;
       gap:12px;
@@ -182,57 +185,52 @@
       border-radius:18px;
       text-align:center;
       cursor:grab;
-      font-weight:1000;
-      font-size:26px;
+      font-weight:900;
+      font-size:28px;
       box-shadow:0 8px 18px rgba(0,0,0,0.06);
-      transition:all 0.2s;
       touch-action:none;
       position:relative;
-      z-index:10;
     }
     .dragItem.dragging{
-      opacity:0.8;
-      transform:scale(1.05);
-      z-index:1000;
       position:fixed;
-      pointer-events:none;
+      z-index:1000;
+      opacity:0.9;
+      transform:scale(1.1);
       box-shadow:0 20px 40px rgba(0,0,0,0.3);
     }
     .dragItem.matched{
-      background:var(--good);
+      background:var(--success);
       color:#fff;
-      border-color:var(--good);
+      border-color:var(--success);
       opacity:0.5;
-      cursor:default;
       pointer-events:none;
+    }
+    .dragEmoji{
+      font-size:16px;
+      margin-left:4px;
     }
     .dropZone{
       padding:16px;
-      border:3px dashed var(--blue);
+      border:3px dashed var(--primary);
       border-radius:18px;
       text-align:center;
       min-height:60px;
-      font-weight:1000;
+      font-weight:900;
       font-size:20px;
       background:#fff;
-      transition:all 0.2s;
       display:flex;
       align-items:center;
       justify-content:center;
-      position:relative;
     }
     .dropZone.drag-over{
       background:#EEF2FF;
       border-style:solid;
       border-width:4px;
-      transform:scale(1.02);
     }
     .dropZone.matched{
-      background:var(--good)!important;
+      background:var(--success)!important;
       color:#fff;
-      border-color:var(--good)!important;
-      border-style:solid;
-      pointer-events:none;
+      border-color:var(--success)!important;
     }
     .dropZone.bad{
       animation:shake 0.5s;
@@ -246,31 +244,59 @@
     }
 
     /* Counting */
-    #emojiArea{font-size:42px;letter-spacing:8px;margin:16px 0;text-align:center;min-height:64px;}
-    .choiceRow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px;}
-    .choiceBtn{
-      padding:14px 22px;
-      border:2px solid #E5E7EB;
+    .quiz-card{
       background:#fff;
-      border-radius:18px;
-      cursor:pointer;
-      font-weight:1000;
-      font-size:18px;
-      box-shadow:0 8px 18px rgba(0,0,0,0.06);
-      min-width:88px;
+      border-radius:30px;
+      padding:28px;
+      box-shadow:0 10px 0 var(--shadowSoft);
       text-align:center;
     }
-    .choiceBtn.good{background:var(--good);color:#fff;border-color:var(--good);}
-    .choiceBtn.bad{background:var(--bad);color:#fff;border-color:var(--bad);}
+    .quiz-emoji{
+      font-size:80px;
+      margin:10px 0;
+    }
+    .choiceRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:center;
+      margin-top:20px;
+    }
+    .choiceBtn{
+      padding:16px 24px;
+      border:3px solid #E5E7EB;
+      background:#fff;
+      border-radius:20px;
+      cursor:pointer;
+      font-weight:900;
+      font-size:20px;
+      box-shadow:0 8px 0 #E5E7EB;
+      min-width:80px;
+    }
+    .choiceBtn:active{
+      transform:translateY(4px);
+      box-shadow:0 4px 0 #E5E7EB;
+    }
+    .choiceBtn.good{
+      background:var(--success);
+      color:#fff;
+      border-color:var(--success);
+      box-shadow:0 4px 0 #09725b;
+    }
+    .choiceBtn.bad{
+      background:var(--error);
+      color:#fff;
+      border-color:var(--error);
+    }
 
-    /* Balloons */
+    /* Balloons - SCHNELLER */
     #balloonArea{
       position:relative;
       width:100%;
       height:350px;
       background:linear-gradient(#3b82f6, #0ea5ff);
       border-radius:30px;
-      border:8px solid white;
+      border:8px solid #fff;
       overflow:hidden;
       margin-top:10px;
     }
@@ -284,12 +310,10 @@
       align-items:center;
       justify-content:center;
       font-size:28px;
-      font-weight:1000;
+      font-weight:900;
       cursor:pointer;
       box-shadow:0 4px 8px rgba(0,0,0,0.2);
-      animation:floatUp 5s linear forwards;
-      user-select:none;
-      touch-action:manipulation;
+      animation:floatUp 4s linear forwards; /* Schneller: 4s statt 5s */
     }
     .balloon::after{
       content:'';
@@ -315,42 +339,62 @@
     }
 
     .btnRow{
-      margin-top:14px;
+      margin-top:20px;
       display:flex;
-      gap:10px;
+      gap:12px;
       flex-wrap:wrap;
       justify-content:center;
     }
     .btn{
       border:none;
-      border-radius:18px;
-      padding:14px 18px;
-      font-weight:1000;
+      border-radius:20px;
+      padding:16px 24px;
+      font-weight:900;
       cursor:pointer;
-      box-shadow:var(--shadowSoft);
-      min-width:190px;
       font-size:18px;
+      box-shadow:0 8px 0 var(--shadowBtn);
+    }
+    .btn:active{
+      transform:translateY(4px);
+      box-shadow:0 4px 0 var(--shadowBtn);
     }
     .btn.primary{
-      background:var(--blue);
+      background:var(--primary);
       color:#fff;
-      box-shadow: inset 0 -10px 0 rgba(0,0,0,0.18), var(--shadowSoft);
+      box-shadow:0 8px 0 #0047b3;
+    }
+    .btn.primary:active{
+      box-shadow:0 4px 0 #0047b3;
     }
     .btn.soft{
       background:#fff;
-      color:var(--blueDark);
-      border:2px solid #E5E7EB;
+      color:var(--primary);
+      border:3px solid #E5E7EB;
+    }
+
+    .hint{
+      text-align:center;
+      color:#636e72;
+      font-weight:700;
+      font-size:18px;
+      margin:10px 0;
+    }
+    #balloonTask{
+      font-size:26px;
+      color:var(--primary);
+      font-weight:900;
     }
 
     .badge{
       font-size:14px;
-      font-weight:1000;
+      font-weight:900;
       padding:6px 12px;
       border-radius:999px;
       background:#EEF2FF;
-      color:var(--blueDark);
+      color:var(--primary);
+      margin-left:10px;
     }
-    .badge.done{background:#ECFDF5;color:var(--good);}
+    .badge.done{background:#ECFDF5;color:var(--success);}
   </style>
 </head>
 
@@ -360,10 +404,11 @@
 
   <div class="app">
 
+    <!-- Menü -->
     <div class="menuWrap">
       <div class="menu">
         <button class="menuBtn primary" onclick="openSection('learn')">
-          <span class="menuEmoji">📘</span><span id="btnLearn">O'rganish</span>
+          <span class="menuEmoji">📖</span><span id="btnLearn">O'rganish</span>
         </button>
         <button class="menuBtn" onclick="openSection('count')">
           <span class="menuEmoji">🍎</span><span id="btnCount">Sanab ko'r</span>
@@ -372,87 +417,106 @@
           <span class="menuEmoji">🔗</span><span id="btnMatch">Juftini top</span>
         </button>
         <button class="menuBtn" onclick="openSection('balloon')">
-          <span class="menuEmoji">🎈</span><span id="btnBalloon">Shariklar</span>
+          <span class="menuEmoji">🫧</span><span id="btnBalloon">Pufakchalar</span>
         </button>
       </div>
     </div>
 
     <!-- O'rganish -->
     <div class="panel" id="panel-learn">
-      <div class="panelTitle">📘 <span id="titleLearn">O'rganish</span></div>
-      <div class="grid" id="vocabGrid"></div>
+      <div class="learn-grid" id="vocabGrid"></div>
     </div>
 
     <!-- Sanab ko'r -->
     <div class="panel" id="panel-count">
-      <div class="panelTitle">🍎 <span id="titleCount">Sanab ko'r</span> <span class="badge" id="g3Status">❓</span></div>
-      <p id="hintCount" class="hint">Nechta olma bor?</p>
-      <div id="emojiArea"></div>
-      <div class="choiceRow" id="countChoices"></div>
-      <div class="btnRow">
-        <button class="btn primary" onclick="startCountingGame()"><span id="btnStart">Boshlash</span> ▶</button>
-        <button class="btn soft" onclick="closePanels()"><span id="btnClose">Yopish</span> ✖</button>
+      <div class="quiz-card">
+        <p class="hint" id="hintCount">Nechta olma bor?</p>
+        <div class="quiz-emoji" id="emojiArea"></div>
+        <div class="choiceRow" id="countChoices"></div>
+        <div class="btnRow">
+          <button class="btn primary" onclick="startCountingGame()">
+            <span id="btnStart">Boshlash</span> ▶
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Juftini top - Drag & Drop -->
+    <!-- Juftini top -->
     <div class="panel" id="panel-match">
-      <div class="panelTitle">🔗 <span id="titleMatch">Juftini top</span> <span class="badge" id="g1Status">❓</span></div>
-      <p class="hint" id="hintDrag">Raqamni ushlab so'zga olib boring</p>
-      <div class="matchingBox">
-        <div class="col" id="dragNums"></div>
-        <div class="col" id="dropWords"></div>
-      </div>
-      <div class="btnRow">
-        <button class="btn primary" onclick="initMatchingGame()"><span id="btnNew">Yangilash</span> 🔄</button>
-        <button class="btn soft" onclick="closePanels()"><span id="btnClose2">Yopish</span> ✖</button>
+      <div style="background:#fff;border-radius:25px;padding:20px;box-shadow:0 10px 0 var(--shadowSoft);">
+        <h2 style="margin:0 0 10px;font-size:22px;">
+          🔗 <span id="titleMatch">Juftini top</span>
+          <span class="badge" id="g1Status">❓</span>
+        </h2>
+        <p class="hint" id="hintDrag">Raqamni ushlab so'zga olib boring</p>
+        <div class="matchingBox">
+          <div class="col" id="dragNums"></div>
+          <div class="col" id="dropWords"></div>
+        </div>
+        <div class="btnRow">
+          <button class="btn primary" onclick="initMatchingGame()">
+            <span id="btnNew">Yangilash</span> 🔄
+          </button>
+          <button class="btn soft" onclick="closePanels()">
+            <span id="btnClose">Yopish</span> ✖
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Shariklar -->
+    <!-- Pufakchalar -->
     <div class="panel" id="panel-balloon">
-      <div class="panelTitle">🎈 <span id="titleBalloon">Shariklar</span> <span class="badge" id="g4Status">❓</span></div>
-      <p id="hintBalloon" class="hint">To'g'ri raqamni top!</p>
-      <div id="balloonTask" class="hint" style="font-size:24px;color:var(--blue);margin-bottom:10px;">5</div>
-      <div id="balloonArea"></div>
-      <div class="btnRow">
-        <button class="btn primary" onclick="startBalloonGame()"><span id="btnStart2">Boshlash</span> ▶</button>
-        <button class="btn soft" onclick="closePanels()"><span id="btnClose3">Yopish</span> ✖</button>
+      <div style="background:#fff;border-radius:25px;padding:20px;box-shadow:0 10px 0 var(--shadowSoft);">
+        <h2 style="margin:0 0 10px;font-size:22px;">
+          🫧 <span id="titleBalloon">Pufakchalar</span>
+          <span class="badge" id="g4Status">❓</span>
+        </h2>
+        <p class="hint" id="hintBalloon">To'g'ri raqamni top!</p>
+        <div id="balloonTask">5</div>
+        <div id="balloonArea"></div>
+        <div class="btnRow">
+          <button class="btn primary" onclick="startBalloonGame()">
+            <span id="btnStart2">Boshlash</span> ▶
+          </button>
+          <button class="btn soft" onclick="closePanels()">
+            <span id="btnClose2">Yopish</span> ✖
+          </button>
+        </div>
       </div>
     </div>
 
   </div>
 
 <script>
-  const LESSON_ID = "lesson2_sonlar_v4";
+  const LESSON_ID = "lesson2_sonlar_v6";
 
   const items = [
-    {k:"21", n:1, uz:"bir", en:"one"},
-    {k:"22", n:2, uz:"ikki", en:"two"},
-    {k:"23", n:3, uz:"uch", en:"three"},
-    {k:"24", n:4, uz:"to'rt", en:"four"},
-    {k:"25", n:5, uz:"besh", en:"five"},
-    {k:"26", n:6, uz:"olti", en:"six"},
-    {k:"27", n:7, uz:"yetti", en:"seven"},
-    {k:"28", n:8, uz:"sakkiz", en:"eight"},
-    {k:"29", n:9, uz:"to'qqiz", en:"nine"},
-    {k:"30", n:10, uz:"o'n", en:"ten"},
+    {k:"21", n:1, uz:"bir", en:"one", emoji:"🥇"},
+    {k:"22", n:2, uz:"ikki", en:"two", emoji:"🦆"},
+    {k:"23", n:3, uz:"uch", en:"three", emoji:"🐱"},
+    {k:"24", n:4, uz:"to'rt", en:"four", emoji:"🍀"},
+    {k:"25", n:5, uz:"besh", en:"five", emoji:"⭐"},
+    {k:"26", n:6, uz:"olti", en:"six", emoji:"🐝"},
+    {k:"27", n:7, uz:"yetti", en:"seven", emoji:"🌈"},
+    {k:"28", n:8, uz:"sakkiz", en:"eight", emoji:"🎱"},
+    {k:"29", n:9, uz:"to'qqiz", en:"nine", emoji:"🎈"},
+    {k:"30", n:10, uz:"o'n", en:"ten", emoji:"🦶"},
   ];
 
   const UI = {
     uz: {
-      learn: "O'rganish", count: "Sanab ko'r", match: "Juftini top", balloon: "Shariklar",
-      titleLearn: "O'rganish", titleCount: "Sanab ko'r", titleMatch: "Juftini top", titleBalloon: "Shariklar",
-      hintCount: "Nechta olma bor?", hintBalloon: "To'g'ri raqamni top!", hintDrag: "Raqamni ushlab so'zga olib boring",
-      btnStart: "Boshlash", btnStart2: "Boshlash", btnClose: "Yopish", btnClose2: "Yopish", btnClose3: "Yopish", btnNew: "Yangilash",
-      find: "Top:", wellDone: "Barakalla!"
+      learn: "O'rganish", count: "Sanab ko'r", match: "Juftini top", balloon: "Pufakchalar",
+      hintCount: "Nechta olma bor?", hintDrag: "Raqamni ushlab so'zga olib boring",
+      hintBalloon: "To'g'ri raqamni top!", btnStart: "Boshlash", btnStart2: "Boshlash",
+      btnClose: "Yopish", btnClose2: "Yopish", btnNew: "Yangilash",
+      find: "Top:", wellDone: "Barakalla", apples: "olma"
     },
     en: {
-      learn: "Learn", count: "Counting", match: "Matching", balloon: "Balloons",
-      titleLearn: "Learn", titleCount: "Counting", titleMatch: "Matching", titleBalloon: "Balloons",
-      hintCount: "How many apples?", hintBalloon: "Find the correct number!", hintDrag: "Drag number to word",
-      btnStart: "Start", btnStart2: "Start", btnClose: "Close", btnClose2: "Close", btnClose3: "Close", btnNew: "New Game",
-      find: "Find:", wellDone: "Well done!"
+      learn: "Learn", count: "Counting", match: "Matching", balloon: "Bubbles",
+      hintCount: "How many apples?", hintDrag: "Drag number to word",
+      hintBalloon: "Find the correct number!", btnStart: "Start", btnStart2: "Start",
+      btnClose: "Close", btnClose2: "Close", btnNew: "New Game",
+      find: "Find:", wellDone: "Well done", apples: "apples"
     }
   };
 
@@ -530,18 +594,13 @@
     document.getElementById("btnCount").innerText = t.count;
     document.getElementById("btnMatch").innerText = t.match;
     document.getElementById("btnBalloon").innerText = t.balloon;
-    document.getElementById("titleLearn").innerText = t.titleLearn;
-    document.getElementById("titleCount").innerText = t.titleCount;
-    document.getElementById("titleMatch").innerText = t.titleMatch;
-    document.getElementById("titleBalloon").innerText = t.titleBalloon;
     document.getElementById("hintCount").innerText = t.hintCount;
-    document.getElementById("hintBalloon").innerText = t.hintBalloon;
     document.getElementById("hintDrag").innerText = t.hintDrag;
+    document.getElementById("hintBalloon").innerText = t.hintBalloon;
     document.getElementById("btnStart").innerText = t.btnStart;
     document.getElementById("btnStart2").innerText = t.btnStart2;
     document.getElementById("btnClose").innerText = t.btnClose;
     document.getElementById("btnClose2").innerText = t.btnClose2;
-    document.getElementById("btnClose3").innerText = t.btnClose3;
     document.getElementById("btnNew").innerText = t.btnNew;
   }
 
@@ -558,9 +617,9 @@
     const panel = document.getElementById("panel-"+name);
     if(panel) panel.classList.add("show");
 
-    if(name==="match"){ initMatchingGame(); }
-    if(name==="count"){ startCountingGame(); }
-    if(name==="balloon"){ startBalloonGame(); }
+    if(name==="match") initMatchingGame();
+    if(name==="count") startCountingGame();
+    if(name==="balloon") startBalloonGame();
 
     panel?.scrollIntoView({behavior:"smooth", block:"start"});
   }
@@ -573,11 +632,11 @@
   function updateBadges(){
     const set = (id, done)=>{
       const el = document.getElementById(id);
+      if(!el) return;
       el.classList.toggle("done", !!done);
       el.innerText = done ? "✅" : "❓";
     };
     set("g1Status", state.games.g1);
-    set("g3Status", state.games.g3);
     set("g4Status", state.games.g4);
   }
 
@@ -622,7 +681,6 @@
       const u = new SpeechSynthesisUtterance(text);
       u.lang = langCode;
       u.rate = 0.9;
-      u.pitch = 1.0;
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(u);
     }catch(e){}
@@ -636,17 +694,34 @@
     refreshHeader();
   }
 
+  /* ==================== LERN-KARTEN ==================== */
   function renderVocab(){
     const grid = document.getElementById("vocabGrid");
+    
     grid.innerHTML = items.map(it=>{
-      const word = (state.lang==="uz") ? it.uz : it.en;
+      let mainWord, subWord;
+      
+      if(state.lang === "uz"){
+        mainWord = it.uz;
+        subWord = it.en;
+      } else {
+        mainWord = it.en;
+        subWord = it.uz;
+      }
+      
       const st = starsText(state.stars[it.k]||0);
+      
       return `
-        <div class="card">
-          <div class="numCircle">${it.n}</div>
-          <div class="word">${word}</div>
-          <button class="speaker" onclick="speakWord('${it.k}')" aria-label="speak">🔊</button>
-          <div class="stars">${st}</div>
+        <div class="learn-card">
+          <div class="numCircle">
+            ${it.n}<span class="numEmoji">${it.emoji}</span>
+          </div>
+          <div class="learn-info">
+            <div class="learn-main">${mainWord}</div>
+            <div class="learn-sub">${subWord}</div>
+            <div class="stars">${st}</div>
+          </div>
+          <button class="btn-audio" onclick="speakWord('${it.k}')">🔊</button>
         </div>
       `;
     }).join("");
@@ -661,8 +736,7 @@
     return a;
   }
 
-  /* ==================== DRAG & DROP MATCHING ==================== */
-  
+  /* ==================== DRAG & DROP ==================== */
   function initMatchingGame(){
     const nCol = document.getElementById("dragNums");
     const wCol = document.getElementById("dropWords");
@@ -676,7 +750,7 @@
     matchesCorrect = 0;
     matchesTotal = pool.length;
 
-    // Erstelle Drop-Zonen (rechts)
+    // Drop-Zonen (Wörter)
     const shuffledWords = shuffle([...pool]);
     shuffledWords.forEach(it => {
       const dz = document.createElement("div");
@@ -685,7 +759,6 @@
       dz.dataset.k = it.k;
       dz.dataset.matched = "false";
       
-      // Desktop Drag Events
       dz.ondragenter = (e) => {
         e.preventDefault();
         if(dz.dataset.matched === "false") dz.classList.add("drag-over");
@@ -697,15 +770,14 @@
       wCol.appendChild(dz);
     });
 
-    // Erstelle Drag-Elemente (links)
+    // Drag-Elemente (Zahlen mit kleinem Emoji)
     pool.forEach(it => {
       const d = document.createElement("div");
       d.className = "dragItem";
-      d.innerText = it.n;
+      d.innerHTML = `${it.n}<span class="dragEmoji">${it.emoji}</span>`;
       d.dataset.k = it.k;
       d.draggable = true;
       
-      // Desktop
       d.ondragstart = (e) => {
         draggedElement = d;
         e.dataTransfer.effectAllowed = "move";
@@ -717,7 +789,6 @@
         draggedElement = null;
       };
       
-      // Touch / Mobile
       d.ontouchstart = (e) => handleTouchStart(e, d);
       d.ontouchmove = (e) => handleTouchMove(e, d);
       d.ontouchend = (e) => handleTouchEnd(e, d);
@@ -729,7 +800,6 @@
   function handleDrop(e, dropZone) {
     e.preventDefault();
     dropZone.classList.remove("drag-over");
-    
     if(dropZone.dataset.matched === "true") return;
     
     const draggedKey = e.dataTransfer.getData("text/plain");
@@ -738,12 +808,10 @@
 
   function checkMatch(key, dropZone) {
     if(key === dropZone.dataset.k) {
-      // Richtig!
       dropZone.dataset.matched = "true";
       dropZone.classList.add("matched");
       dropZone.innerText = "✅ " + dropZone.innerText;
       
-      // Finde und markiere das Drag-Element
       const dragEl = document.querySelector(`.dragItem[data-k="${key}"]`);
       if(dragEl) dragEl.classList.add("matched");
       
@@ -757,15 +825,13 @@
         setTimeout(() => alert(UI[state.lang].wellDone + "! 🎉"), 300);
       }
     } else {
-      // Falsch!
       dropZone.classList.add("bad");
       beepFail();
       setTimeout(() => dropZone.classList.remove("bad"), 500);
     }
   }
 
-  /* ==================== TOUCH HANDLER ==================== */
-  
+  /* Touch Handler */
   function handleTouchStart(e, elem) {
     const touch = e.touches[0];
     const rect = elem.getBoundingClientRect();
@@ -774,21 +840,17 @@
     
     elem.classList.add("dragging");
     draggedElement = elem;
-    
-    // Positioniere Element unter Finger
     moveAt(touch.clientX, touch.clientY, elem);
   }
 
   function handleTouchMove(e, elem) {
-    e.preventDefault(); // Verhindere Scrollen
+    e.preventDefault();
     const touch = e.touches[0];
     moveAt(touch.clientX, touch.clientY, elem);
     
-    // Visuelles Feedback für Drop-Zonen
-    const dropZones = document.querySelectorAll(".dropZone");
-    dropZones.forEach(dz => {
+    document.querySelectorAll(".dropZone").forEach(dz => {
       if(dz.dataset.matched === "true") return;
-      if(isOverElement(touch.clientX, touch.clientY, dz)) {
+      if(isOver(touch.clientX, touch.clientY, dz)) {
         dz.classList.add("drag-over");
       } else {
         dz.classList.remove("drag-over");
@@ -802,15 +864,13 @@
     elem.style.left = "";
     elem.style.top = "";
     elem.style.width = "";
-    elem.style.zIndex = "";
     
     const touch = e.changedTouches[0];
-    const dropZones = document.querySelectorAll(".dropZone");
-    
     let dropped = false;
-    dropZones.forEach(dz => {
+    
+    document.querySelectorAll(".dropZone").forEach(dz => {
       dz.classList.remove("drag-over");
-      if(!dropped && dz.dataset.matched === "false" && isOverElement(touch.clientX, touch.clientY, dz)) {
+      if(!dropped && dz.dataset.matched === "false" && isOver(touch.clientX, touch.clientY, dz)) {
         checkMatch(elem.dataset.k, dz);
         dropped = true;
       }
@@ -824,53 +884,49 @@
     elem.style.left = (x - touchOffsetX) + "px";
     elem.style.top = (y - touchOffsetY) + "px";
     elem.style.width = elem.offsetWidth + "px";
-    elem.style.zIndex = "1000";
   }
 
-  function isOverElement(x, y, elem) {
+  function isOver(x, y, elem) {
     const rect = elem.getBoundingClientRect();
     return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
   }
 
-  /* ==================== COUNTING GAME ==================== */
-  
+  /* ==================== COUNTING ==================== */
   function startCountingGame(){
-    const area=document.getElementById("emojiArea");
-    const choices=document.getElementById("countChoices");
+    const area = document.getElementById("emojiArea");
+    const choices = document.getElementById("countChoices");
     if(!area || !choices) return;
 
-    choices.innerHTML="";
-    const target=Math.floor(Math.random()*10)+1;
-    area.innerText="🍎".repeat(target);
+    choices.innerHTML = "";
+    const target = Math.floor(Math.random() * 10) + 1;
+    area.innerText = "🍎".repeat(target);
 
-    const opts=new Set([target]);
-    while(opts.size<4) opts.add(Math.floor(Math.random()*10)+1);
+    const opts = new Set([target]);
+    while(opts.size < 4) opts.add(Math.floor(Math.random() * 10) + 1);
 
-    shuffle([...opts]).forEach(opt=>{
-      const b=document.createElement("button");
-      b.className="choiceBtn";
-      b.innerText=opt;
-
-      b.onclick=()=>{
-        if(opt===target){
+    shuffle([...opts]).forEach(opt => {
+      const b = document.createElement("button");
+      b.className = "choiceBtn";
+      b.innerText = opt;
+      b.onclick = () => {
+        if(opt === target){
           b.classList.add("good");
           beepSuccess();
-          state.games.g3=true;
+          state.games.g3 = true;
           save();
           updateBadges();
           setTimeout(startCountingGame, 750);
-        }else{
+        } else {
           b.classList.add("bad");
           beepFail();
-          setTimeout(()=>b.classList.remove("bad"), 240);
+          setTimeout(() => b.classList.remove("bad"), 240);
         }
       };
       choices.appendChild(b);
     });
   }
 
-  /* ==================== BALLOON GAME ==================== */
-  
+  /* ==================== BALLOONS - SCHNELLER ==================== */
   function stopBalloonGame(){
     if(balloonInterval){
       clearInterval(balloonInterval);
@@ -886,13 +942,15 @@
 
     area.innerHTML = "";
     let balloonScore = 0;
-    const balloonNeeded = 5;
+    const needed = 5;
     
     const targetItem = items[Math.floor(Math.random() * items.length)];
     let currentTarget = targetItem.n;
-    task.innerText = UI[state.lang].find + " " + 
-                     ((state.lang === "uz") ? targetItem.uz : targetItem.en);
+    
+    const targetWord = (state.lang === "uz") ? targetItem.uz : targetItem.en;
+    task.innerText = UI[state.lang].find + " " + targetWord;
 
+    // SCHNELLER: 800ms statt 1500ms
     balloonInterval = setInterval(() => {
       const b = document.createElement("div");
       b.className = "balloon";
@@ -902,7 +960,8 @@
       b.dataset.n = randomItem.n;
       
       b.style.left = (Math.random() * 75 + 5) + '%';
-      b.style.animationDuration = (4 + Math.random() * 2) + 's';
+      // Schnellere Animation
+      b.style.animationDuration = (3 + Math.random() * 1.5) + 's';
 
       b.onclick = () => {
         if(parseInt(b.dataset.n) === currentTarget){
@@ -910,7 +969,7 @@
           beepSuccess();
           balloonScore++;
           
-          if(balloonScore >= balloonNeeded){
+          if(balloonScore >= needed){
             stopBalloonGame();
             state.games.g4 = true;
             save();
@@ -919,8 +978,8 @@
           } else {
             const newTarget = items[Math.floor(Math.random() * items.length)];
             currentTarget = newTarget.n;
-            task.innerText = UI[state.lang].find + " " + 
-                             ((state.lang === "uz") ? newTarget.uz : newTarget.en);
+            const newWord = (state.lang === "uz") ? newTarget.uz : newTarget.en;
+            task.innerText = UI[state.lang].find + " " + newWord;
           }
         } else {
           beepFail();
@@ -929,12 +988,12 @@
       };
 
       area.appendChild(b);
-      setTimeout(() => b.remove(), 6000);
-    }, 1400);
+      // Schneller entfernen
+      setTimeout(() => b.remove(), 4500);
+    }, 800); // 800ms statt 1500ms
   }
 
   /* ==================== INIT ==================== */
-  
   document.addEventListener("DOMContentLoaded", () => {
     load();
     updateUI();
