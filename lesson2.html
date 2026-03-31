@@ -2,10 +2,9 @@
 <html lang="uz">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
   <title>2-dars: Sonlar (1–10)</title>
 
-  <!-- ✅ Shared Header Component -->
   <link rel="stylesheet" href="components/header.css">
   <script src="components/header.js" defer></script>
 
@@ -15,40 +14,35 @@
       --panel:#FFFFFF;
       --ink:#1F2937;
       --muted:#6B7280;
-
       --blue:#2F6BFF;
       --blueDark:#1E4ED8;
-
       --accent2:#22C55E;
       --yellow:#FACC15;
       --gold:#F59E0B;
-
       --good:#22C55E;
       --bad:#EF4444;
-
       --shadow:0 16px 34px rgba(0,0,0,0.10);
       --shadowSoft:0 10px 22px rgba(0,0,0,0.10);
-
       --rBig:30px;
       --r:22px;
-      --pad:16px;
     }
 
-    *{box-sizing:border-box;}
+    *{box-sizing:border-box; touch-action:manipulation;}
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       background: var(--bg);
       color: var(--ink);
       padding: 14px;
+      -webkit-user-select:none;
+      user-select:none;
     }
     .app{
       width:100%;
-      max-width:520px;     /* keep mobile look like screenshot */
+      max-width:520px;
       margin:0 auto;
     }
 
-    /* ===== MENU buttons block (like your screenshot) ===== */
     .menuWrap{
       margin-top:14px;
       background:#F5F2E8;
@@ -76,7 +70,6 @@
       background:#fff;
       color:var(--blue);
       position:relative;
-      user-select:none;
     }
     .menuBtn.primary{
       background:var(--blue);
@@ -86,7 +79,10 @@
     .menuBtn:active{transform:scale(0.98);}
     .menuEmoji{font-size:30px}
 
-    /* ===== CONTENT PANELS (hidden until clicked) ===== */
+    @media(max-width:560px){
+      .menuBtn{font-size:24px;height:82px;}
+    }
+
     .panel{
       margin-top:16px;
       background:#fff;
@@ -111,11 +107,6 @@
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
       gap:14px;
-    }
-
-    @media(max-width:560px){
-      .menuBtn{font-size:24px;height:82px;}
-      .grid{grid-template-columns:repeat(2,minmax(0,1fr));}
     }
 
     .card{
@@ -171,37 +162,90 @@
       margin:6px 0 0;
     }
 
-    /* Matching */
-    .matchingBox{display:flex;gap:12px;margin-top:14px;}
-    .col{flex:1;display:flex;flex-direction:column;gap:10px;}
+    /* DRAG & DROP MATCHING */
+    .matchingBox{
+      display:flex;
+      gap:12px;
+      margin-top:14px;
+      min-height:300px;
+    }
+    .col{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
     .dragItem{
-      padding:14px;
+      padding:16px;
       background:#F8FAFC;
-      border:2px solid #E5E7EB;
+      border:3px solid #E5E7EB;
       border-radius:18px;
       text-align:center;
       cursor:grab;
       font-weight:1000;
+      font-size:26px;
       box-shadow:0 8px 18px rgba(0,0,0,0.06);
-      user-select:none;
+      transition:all 0.2s;
+      touch-action:none;
+      position:relative;
+      z-index:10;
+    }
+    .dragItem.dragging{
+      opacity:0.8;
+      transform:scale(1.05);
+      z-index:1000;
+      position:fixed;
+      pointer-events:none;
+      box-shadow:0 20px 40px rgba(0,0,0,0.3);
+    }
+    .dragItem.matched{
+      background:var(--good);
+      color:#fff;
+      border-color:var(--good);
+      opacity:0.5;
+      cursor:default;
+      pointer-events:none;
     }
     .dropZone{
-      padding:14px;
-      border:2px dashed var(--blue);
+      padding:16px;
+      border:3px dashed var(--blue);
       border-radius:18px;
       text-align:center;
-      min-height:22px;
+      min-height:60px;
       font-weight:1000;
+      font-size:20px;
       background:#fff;
-      transition:.2s;
-      box-shadow:0 8px 18px rgba(0,0,0,0.06);
-      user-select:none;
+      transition:all 0.2s;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
     }
-    .dropZone.over{background:#EEF2FF;}
-    .dropZone.bad{background:#FEF2F2;border-color:#FECACA;}
-    .dropZone.matched{background:var(--good)!important;color:#fff;border-color:var(--good)!important;}
+    .dropZone.drag-over{
+      background:#EEF2FF;
+      border-style:solid;
+      border-width:4px;
+      transform:scale(1.02);
+    }
+    .dropZone.matched{
+      background:var(--good)!important;
+      color:#fff;
+      border-color:var(--good)!important;
+      border-style:solid;
+      pointer-events:none;
+    }
+    .dropZone.bad{
+      animation:shake 0.5s;
+      background:#FEF2F2;
+    }
 
-    /* Counting + Order */
+    @keyframes shake{
+      0%,100%{transform:translateX(0);}
+      20%,60%{transform:translateX(-10px);}
+      40%,80%{transform:translateX(10px);}
+    }
+
+    /* Counting */
     #emojiArea{font-size:42px;letter-spacing:8px;margin:16px 0;text-align:center;min-height:64px;}
     .choiceRow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px;}
     .choiceBtn{
@@ -218,6 +262,57 @@
     }
     .choiceBtn.good{background:var(--good);color:#fff;border-color:var(--good);}
     .choiceBtn.bad{background:var(--bad);color:#fff;border-color:var(--bad);}
+
+    /* Balloons */
+    #balloonArea{
+      position:relative;
+      width:100%;
+      height:350px;
+      background:linear-gradient(#3b82f6, #0ea5ff);
+      border-radius:30px;
+      border:8px solid white;
+      overflow:hidden;
+      margin-top:10px;
+    }
+    .balloon{
+      position:absolute;
+      width:70px;
+      height:90px;
+      background:rgba(255,255,255,0.95);
+      border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      font-weight:1000;
+      cursor:pointer;
+      box-shadow:0 4px 8px rgba(0,0,0,0.2);
+      animation:floatUp 5s linear forwards;
+      user-select:none;
+      touch-action:manipulation;
+    }
+    .balloon::after{
+      content:'';
+      position:absolute;
+      bottom:-15px;
+      left:50%;
+      width:2px;
+      height:15px;
+      background:rgba(255,255,255,0.6);
+      transform:translateX(-50%);
+    }
+    @keyframes floatUp{
+      0%{transform:translateY(400px);}
+      100%{transform:translateY(-100px);}
+    }
+    .balloon.pop{
+      animation:pop 0.3s forwards;
+    }
+    @keyframes pop{
+      0%{transform:scale(1);}
+      50%{transform:scale(1.3);}
+      100%{transform:scale(0);opacity:0;}
+    }
 
     .btnRow{
       margin-top:14px;
@@ -261,94 +356,105 @@
 
 <body>
 
-  <!-- ✅ NEW HEADER (component) -->
   <div id="lessonHeader"></div>
 
   <div class="app">
 
-    <!-- Menü Buttons -->
     <div class="menuWrap">
       <div class="menu">
         <button class="menuBtn primary" onclick="openSection('learn')">
-          <span class="menuEmoji">📘</span>O‘rganish
+          <span class="menuEmoji">📘</span><span id="btnLearn">O'rganish</span>
         </button>
-
-        <button class="menuBtn" onclick="openSection('order')">
-          <span class="menuEmoji">🧩</span>Tartib
-        </button>
-
         <button class="menuBtn" onclick="openSection('count')">
-          <span class="menuEmoji">🍎</span>Sanab ko‘r
+          <span class="menuEmoji">🍎</span><span id="btnCount">Sanab ko'r</span>
         </button>
-
         <button class="menuBtn" onclick="openSection('match')">
-          <span class="menuEmoji">🔗</span>Juftini top
+          <span class="menuEmoji">🔗</span><span id="btnMatch">Juftini top</span>
+        </button>
+        <button class="menuBtn" onclick="openSection('balloon')">
+          <span class="menuEmoji">🎈</span><span id="btnBalloon">Shariklar</span>
         </button>
       </div>
     </div>
 
-    <!-- PANELS -->
-
-    <!-- O‘rganish -->
+    <!-- O'rganish -->
     <div class="panel" id="panel-learn">
-      <div class="panelTitle">📘 O‘rganish</div>
+      <div class="panelTitle">📘 <span id="titleLearn">O'rganish</span></div>
       <div class="grid" id="vocabGrid"></div>
     </div>
 
-    <!-- Tartib -->
-    <div class="panel" id="panel-order">
-      <div class="panelTitle">🧩 Tartib <span class="badge" id="g4Status">❓</span></div>
-      <p id="orderTask" class="hint">Tartib bilan bosing</p>
-      <div class="choiceRow" id="orderGrid"></div>
-      <div class="btnRow">
-        <button class="btn primary" onclick="startOrderGame()">Boshlash ▶</button>
-        <button class="btn soft" onclick="closePanels()">Yopish ✖</button>
-      </div>
-    </div>
-
-    <!-- Sanab ko‘r -->
+    <!-- Sanab ko'r -->
     <div class="panel" id="panel-count">
-      <div class="panelTitle">🍎 Sanab ko‘r <span class="badge" id="g3Status">❓</span></div>
-      <p class="hint">Nechta olma bor?</p>
+      <div class="panelTitle">🍎 <span id="titleCount">Sanab ko'r</span> <span class="badge" id="g3Status">❓</span></div>
+      <p id="hintCount" class="hint">Nechta olma bor?</p>
       <div id="emojiArea"></div>
       <div class="choiceRow" id="countChoices"></div>
       <div class="btnRow">
-        <button class="btn primary" onclick="startCountingGame()">Boshlash ▶</button>
-        <button class="btn soft" onclick="closePanels()">Yopish ✖</button>
+        <button class="btn primary" onclick="startCountingGame()"><span id="btnStart">Boshlash</span> ▶</button>
+        <button class="btn soft" onclick="closePanels()"><span id="btnClose">Yopish</span> ✖</button>
       </div>
     </div>
 
-    <!-- Juftini top -->
+    <!-- Juftini top - Drag & Drop -->
     <div class="panel" id="panel-match">
-      <div class="panelTitle">🔗 Juftini top <span class="badge" id="g1Status">❓</span></div>
+      <div class="panelTitle">🔗 <span id="titleMatch">Juftini top</span> <span class="badge" id="g1Status">❓</span></div>
+      <p class="hint" id="hintDrag">Raqamni ushlab so'zga olib boring</p>
       <div class="matchingBox">
         <div class="col" id="dragNums"></div>
         <div class="col" id="dropWords"></div>
       </div>
       <div class="btnRow">
-        <button class="btn primary" onclick="initMatchingGame()">Yangilash 🔄</button>
-        <button class="btn soft" onclick="closePanels()">Yopish ✖</button>
+        <button class="btn primary" onclick="initMatchingGame()"><span id="btnNew">Yangilash</span> 🔄</button>
+        <button class="btn soft" onclick="closePanels()"><span id="btnClose2">Yopish</span> ✖</button>
+      </div>
+    </div>
+
+    <!-- Shariklar -->
+    <div class="panel" id="panel-balloon">
+      <div class="panelTitle">🎈 <span id="titleBalloon">Shariklar</span> <span class="badge" id="g4Status">❓</span></div>
+      <p id="hintBalloon" class="hint">To'g'ri raqamni top!</p>
+      <div id="balloonTask" class="hint" style="font-size:24px;color:var(--blue);margin-bottom:10px;">5</div>
+      <div id="balloonArea"></div>
+      <div class="btnRow">
+        <button class="btn primary" onclick="startBalloonGame()"><span id="btnStart2">Boshlash</span> ▶</button>
+        <button class="btn soft" onclick="closePanels()"><span id="btnClose3">Yopish</span> ✖</button>
       </div>
     </div>
 
   </div>
 
 <script>
-  /* -------------------- DATA + STATE -------------------- */
-  const LESSON_ID = "lesson2_sonlar_v2";
+  const LESSON_ID = "lesson2_sonlar_v4";
 
   const items = [
-    {k:"1",  n:1,  uz:"bir",     en:"one"},
-    {k:"2",  n:2,  uz:"ikki",    en:"two"},
-    {k:"3",  n:3,  uz:"uch",     en:"three"},
-    {k:"4",  n:4,  uz:"to'rt",   en:"four"},
-    {k:"5",  n:5,  uz:"besh",    en:"five"},
-    {k:"6",  n:6,  uz:"olti",    en:"six"},
-    {k:"7",  n:7,  uz:"yetti",   en:"seven"},
-    {k:"8",  n:8,  uz:"sakkiz",  en:"eight"},
-    {k:"9",  n:9,  uz:"to'qqiz", en:"nine"},
-    {k:"10", n:10, uz:"o'n",     en:"ten"},
+    {k:"21", n:1, uz:"bir", en:"one"},
+    {k:"22", n:2, uz:"ikki", en:"two"},
+    {k:"23", n:3, uz:"uch", en:"three"},
+    {k:"24", n:4, uz:"to'rt", en:"four"},
+    {k:"25", n:5, uz:"besh", en:"five"},
+    {k:"26", n:6, uz:"olti", en:"six"},
+    {k:"27", n:7, uz:"yetti", en:"seven"},
+    {k:"28", n:8, uz:"sakkiz", en:"eight"},
+    {k:"29", n:9, uz:"to'qqiz", en:"nine"},
+    {k:"30", n:10, uz:"o'n", en:"ten"},
   ];
+
+  const UI = {
+    uz: {
+      learn: "O'rganish", count: "Sanab ko'r", match: "Juftini top", balloon: "Shariklar",
+      titleLearn: "O'rganish", titleCount: "Sanab ko'r", titleMatch: "Juftini top", titleBalloon: "Shariklar",
+      hintCount: "Nechta olma bor?", hintBalloon: "To'g'ri raqamni top!", hintDrag: "Raqamni ushlab so'zga olib boring",
+      btnStart: "Boshlash", btnStart2: "Boshlash", btnClose: "Yopish", btnClose2: "Yopish", btnClose3: "Yopish", btnNew: "Yangilash",
+      find: "Top:", wellDone: "Barakalla!"
+    },
+    en: {
+      learn: "Learn", count: "Counting", match: "Matching", balloon: "Balloons",
+      titleLearn: "Learn", titleCount: "Counting", titleMatch: "Matching", titleBalloon: "Balloons",
+      hintCount: "How many apples?", hintBalloon: "Find the correct number!", hintDrag: "Drag number to word",
+      btnStart: "Start", btnStart2: "Start", btnClose: "Close", btnClose2: "Close", btnClose3: "Close", btnNew: "New Game",
+      find: "Find:", wellDone: "Well done!"
+    }
+  };
 
   let state = {
     lang: "uz",
@@ -356,6 +462,13 @@
     learned: {},
     games: { g1:false, g3:false, g4:false }
   };
+
+  let draggedElement = null;
+  let touchOffsetX = 0;
+  let touchOffsetY = 0;
+  let matchesCorrect = 0;
+  let matchesTotal = 0;
+  let balloonInterval = null;
 
   function save(){ localStorage.setItem(LESSON_ID, JSON.stringify(state)); }
   function load(){
@@ -370,7 +483,6 @@
     }catch(e){}
   }
 
-  /* -------------------- HEADER (component) -------------------- */
   function learnedCount(){
     return Object.values(state.learned).filter(Boolean).length;
   }
@@ -378,7 +490,7 @@
   function initHeader(){
     renderLessonHeader({
       mountId: "lessonHeader",
-      title: "2-dars: Sonlar",
+      title: state.lang === "uz" ? "2-dars: Sonlar" : "Lesson 2: Numbers",
       total: 10,
       learned: learnedCount(),
       lang: state.lang,
@@ -394,39 +506,65 @@
     }
   }
 
-  /* -------------------- PANELS -------------------- */
+  function setLang(l){
+    state.lang = l;
+    save();
+    initHeader();
+    updateUI();
+    renderVocab();
+    
+    if(document.getElementById("panel-match").classList.contains("show")){
+      initMatchingGame();
+    }
+    if(document.getElementById("panel-count").classList.contains("show")){
+      startCountingGame();
+    }
+    if(document.getElementById("panel-balloon").classList.contains("show")){
+      startBalloonGame();
+    }
+  }
+
+  function updateUI(){
+    const t = UI[state.lang];
+    document.getElementById("btnLearn").innerText = t.learn;
+    document.getElementById("btnCount").innerText = t.count;
+    document.getElementById("btnMatch").innerText = t.match;
+    document.getElementById("btnBalloon").innerText = t.balloon;
+    document.getElementById("titleLearn").innerText = t.titleLearn;
+    document.getElementById("titleCount").innerText = t.titleCount;
+    document.getElementById("titleMatch").innerText = t.titleMatch;
+    document.getElementById("titleBalloon").innerText = t.titleBalloon;
+    document.getElementById("hintCount").innerText = t.hintCount;
+    document.getElementById("hintBalloon").innerText = t.hintBalloon;
+    document.getElementById("hintDrag").innerText = t.hintDrag;
+    document.getElementById("btnStart").innerText = t.btnStart;
+    document.getElementById("btnStart2").innerText = t.btnStart2;
+    document.getElementById("btnClose").innerText = t.btnClose;
+    document.getElementById("btnClose2").innerText = t.btnClose2;
+    document.getElementById("btnClose3").innerText = t.btnClose3;
+    document.getElementById("btnNew").innerText = t.btnNew;
+  }
+
   function closePanels(){
     document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
+    stopBalloonGame();
     window.scrollTo({top:0, behavior:"smooth"});
   }
 
   function openSection(name){
     document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
+    stopBalloonGame();
 
     const panel = document.getElementById("panel-"+name);
     if(panel) panel.classList.add("show");
 
-    // ✅ Spiele erst starten, wenn Button geklickt wird
     if(name==="match"){ initMatchingGame(); }
     if(name==="count"){ startCountingGame(); }
-    if(name==="order"){ startOrderGame(); }
+    if(name==="balloon"){ startBalloonGame(); }
 
     panel?.scrollIntoView({behavior:"smooth", block:"start"});
   }
 
-  /* -------------------- LANGUAGE -------------------- */
-  function setLang(l){
-    state.lang = l;
-    save();
-    renderVocab();
-
-    // update matching words if panel open
-    if(document.getElementById("panel-match").classList.contains("show")){
-      initMatchingGame();
-    }
-  }
-
-  /* -------------------- UI HELPERS -------------------- */
   function starsText(n){
     n = Math.max(0, Math.min(3, n||0));
     return "★".repeat(n) + "☆".repeat(3-n);
@@ -436,14 +574,13 @@
     const set = (id, done)=>{
       const el = document.getElementById(id);
       el.classList.toggle("done", !!done);
-      el.innerText = done ? "✅ Bajarildi" : "❓";
+      el.innerText = done ? "✅" : "❓";
     };
     set("g1Status", state.games.g1);
     set("g3Status", state.games.g3);
     set("g4Status", state.games.g4);
   }
 
-  /* -------------------- SOUND FEEDBACK -------------------- */
   let audioCtx=null;
   function beepSuccess(){
     try{
@@ -474,18 +611,18 @@
     }catch(e){}
   }
 
-  /* -------------------- VOCAB -------------------- */
   function speakWord(key){
     const it = items.find(x=>x.k===key);
     if(!it) return;
 
     const text = (state.lang==="uz") ? it.uz : it.en;
+    const langCode = (state.lang==="uz") ? "uz-UZ" : "en-US";
 
     try{
       const u = new SpeechSynthesisUtterance(text);
-      u.lang = (state.lang==="uz") ? "uz-UZ" : "en-US";
-      u.rate = 0.95;
-      u.pitch = 1.05;
+      u.lang = langCode;
+      u.rate = 0.9;
+      u.pitch = 1.0;
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(u);
     }catch(e){}
@@ -515,7 +652,6 @@
     }).join("");
   }
 
-  /* -------------------- GAME HELPERS -------------------- */
   function shuffle(arr){
     const a=[...arr];
     for(let i=a.length-1;i>0;i--){
@@ -525,67 +661,179 @@
     return a;
   }
 
-  /* -------------------- GAME 1: Matching -------------------- */
-  let matchesCorrect=0, matchesTotal=0;
-
+  /* ==================== DRAG & DROP MATCHING ==================== */
+  
   function initMatchingGame(){
-    const nCol=document.getElementById("dragNums");
-    const wCol=document.getElementById("dropWords");
+    const nCol = document.getElementById("dragNums");
+    const wCol = document.getElementById("dropWords");
     if(!nCol || !wCol) return;
 
-    nCol.innerHTML=""; wCol.innerHTML="";
+    nCol.innerHTML = "";
+    wCol.innerHTML = "";
+    draggedElement = null;
 
     const pool = shuffle(items).slice(0,5);
-    matchesCorrect=0;
-    matchesTotal=pool.length;
+    matchesCorrect = 0;
+    matchesTotal = pool.length;
 
-    pool.forEach(it=>{
-      const d=document.createElement("div");
-      d.className="dragItem";
-      d.draggable=true;
-      d.innerText=it.n;
-      d.dataset.k=it.k;
-      d.ondragstart = e => e.dataTransfer.setData("text", it.k);
-      nCol.appendChild(d);
+    // Erstelle Drop-Zonen (rechts)
+    const shuffledWords = shuffle([...pool]);
+    shuffledWords.forEach(it => {
+      const dz = document.createElement("div");
+      dz.className = "dropZone";
+      dz.innerText = (state.lang === "uz") ? it.uz : it.en;
+      dz.dataset.k = it.k;
+      dz.dataset.matched = "false";
+      
+      // Desktop Drag Events
+      dz.ondragenter = (e) => {
+        e.preventDefault();
+        if(dz.dataset.matched === "false") dz.classList.add("drag-over");
+      };
+      dz.ondragleave = () => dz.classList.remove("drag-over");
+      dz.ondragover = (e) => e.preventDefault();
+      dz.ondrop = (e) => handleDrop(e, dz);
+      
+      wCol.appendChild(dz);
     });
 
-    shuffle(pool).forEach(it=>{
-      const dz=document.createElement("div");
-      dz.className="dropZone";
-      dz.innerText=(state.lang==="uz")?it.uz:it.en;
-      dz.dataset.k=it.k;
-
-      dz.ondragover = e => { e.preventDefault(); dz.classList.add("over"); };
-      dz.ondragleave = () => dz.classList.remove("over");
-
-      dz.ondrop = e => {
-        const k = e.dataTransfer.getData("text");
-
-        if(k===dz.dataset.k){
-          if(dz.classList.contains("matched")) { dz.classList.remove("over"); return; }
-          dz.classList.add("matched");
-          dz.innerText="✅ " + dz.innerText;
-          matchesCorrect++;
-          beepSuccess();
-
-          if(matchesCorrect===matchesTotal){
-            state.games.g1=true;
-            save();
-            updateBadges();
-          }
-        }else{
-          dz.classList.add("bad");
-          beepFail();
-          setTimeout(()=>dz.classList.remove("bad"), 260);
-        }
-        dz.classList.remove("over");
+    // Erstelle Drag-Elemente (links)
+    pool.forEach(it => {
+      const d = document.createElement("div");
+      d.className = "dragItem";
+      d.innerText = it.n;
+      d.dataset.k = it.k;
+      d.draggable = true;
+      
+      // Desktop
+      d.ondragstart = (e) => {
+        draggedElement = d;
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/plain", it.k);
+        setTimeout(() => d.style.opacity = "0.5", 0);
       };
-
-      wCol.appendChild(dz);
+      d.ondragend = () => {
+        d.style.opacity = "1";
+        draggedElement = null;
+      };
+      
+      // Touch / Mobile
+      d.ontouchstart = (e) => handleTouchStart(e, d);
+      d.ontouchmove = (e) => handleTouchMove(e, d);
+      d.ontouchend = (e) => handleTouchEnd(e, d);
+      
+      nCol.appendChild(d);
     });
   }
 
-  /* -------------------- GAME 3: Counting -------------------- */
+  function handleDrop(e, dropZone) {
+    e.preventDefault();
+    dropZone.classList.remove("drag-over");
+    
+    if(dropZone.dataset.matched === "true") return;
+    
+    const draggedKey = e.dataTransfer.getData("text/plain");
+    checkMatch(draggedKey, dropZone);
+  }
+
+  function checkMatch(key, dropZone) {
+    if(key === dropZone.dataset.k) {
+      // Richtig!
+      dropZone.dataset.matched = "true";
+      dropZone.classList.add("matched");
+      dropZone.innerText = "✅ " + dropZone.innerText;
+      
+      // Finde und markiere das Drag-Element
+      const dragEl = document.querySelector(`.dragItem[data-k="${key}"]`);
+      if(dragEl) dragEl.classList.add("matched");
+      
+      matchesCorrect++;
+      beepSuccess();
+      
+      if(matchesCorrect === matchesTotal) {
+        state.games.g1 = true;
+        save();
+        updateBadges();
+        setTimeout(() => alert(UI[state.lang].wellDone + "! 🎉"), 300);
+      }
+    } else {
+      // Falsch!
+      dropZone.classList.add("bad");
+      beepFail();
+      setTimeout(() => dropZone.classList.remove("bad"), 500);
+    }
+  }
+
+  /* ==================== TOUCH HANDLER ==================== */
+  
+  function handleTouchStart(e, elem) {
+    const touch = e.touches[0];
+    const rect = elem.getBoundingClientRect();
+    touchOffsetX = touch.clientX - rect.left;
+    touchOffsetY = touch.clientY - rect.top;
+    
+    elem.classList.add("dragging");
+    draggedElement = elem;
+    
+    // Positioniere Element unter Finger
+    moveAt(touch.clientX, touch.clientY, elem);
+  }
+
+  function handleTouchMove(e, elem) {
+    e.preventDefault(); // Verhindere Scrollen
+    const touch = e.touches[0];
+    moveAt(touch.clientX, touch.clientY, elem);
+    
+    // Visuelles Feedback für Drop-Zonen
+    const dropZones = document.querySelectorAll(".dropZone");
+    dropZones.forEach(dz => {
+      if(dz.dataset.matched === "true") return;
+      if(isOverElement(touch.clientX, touch.clientY, dz)) {
+        dz.classList.add("drag-over");
+      } else {
+        dz.classList.remove("drag-over");
+      }
+    });
+  }
+
+  function handleTouchEnd(e, elem) {
+    elem.classList.remove("dragging");
+    elem.style.position = "";
+    elem.style.left = "";
+    elem.style.top = "";
+    elem.style.width = "";
+    elem.style.zIndex = "";
+    
+    const touch = e.changedTouches[0];
+    const dropZones = document.querySelectorAll(".dropZone");
+    
+    let dropped = false;
+    dropZones.forEach(dz => {
+      dz.classList.remove("drag-over");
+      if(!dropped && dz.dataset.matched === "false" && isOverElement(touch.clientX, touch.clientY, dz)) {
+        checkMatch(elem.dataset.k, dz);
+        dropped = true;
+      }
+    });
+    
+    draggedElement = null;
+  }
+
+  function moveAt(x, y, elem) {
+    elem.style.position = "fixed";
+    elem.style.left = (x - touchOffsetX) + "px";
+    elem.style.top = (y - touchOffsetY) + "px";
+    elem.style.width = elem.offsetWidth + "px";
+    elem.style.zIndex = "1000";
+  }
+
+  function isOverElement(x, y, elem) {
+    const rect = elem.getBoundingClientRect();
+    return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+  }
+
+  /* ==================== COUNTING GAME ==================== */
+  
   function startCountingGame(){
     const area=document.getElementById("emojiArea");
     const choices=document.getElementById("countChoices");
@@ -607,11 +855,9 @@
         if(opt===target){
           b.classList.add("good");
           beepSuccess();
-
           state.games.g3=true;
           save();
           updateBadges();
-
           setTimeout(startCountingGame, 750);
         }else{
           b.classList.add("bad");
@@ -623,57 +869,79 @@
     });
   }
 
-  /* -------------------- GAME 4: Order -------------------- */
-  let nextOrder=1;
-  function startOrderGame(){
-    const grid=document.getElementById("orderGrid");
-    const task=document.getElementById("orderTask");
-    if(!grid || !task) return;
+  /* ==================== BALLOON GAME ==================== */
+  
+  function stopBalloonGame(){
+    if(balloonInterval){
+      clearInterval(balloonInterval);
+      balloonInterval = null;
+    }
+  }
 
-    nextOrder=1;
-    grid.innerHTML="";
-    task.innerText="1 ni toping...";
+  function startBalloonGame(){
+    stopBalloonGame();
+    const area = document.getElementById("balloonArea");
+    const task = document.getElementById("balloonTask");
+    if(!area || !task) return;
 
-    shuffle(items).forEach(it=>{
-      const b=document.createElement("button");
-      b.className="choiceBtn";
-      b.innerText=it.n;
+    area.innerHTML = "";
+    let balloonScore = 0;
+    const balloonNeeded = 5;
+    
+    const targetItem = items[Math.floor(Math.random() * items.length)];
+    let currentTarget = targetItem.n;
+    task.innerText = UI[state.lang].find + " " + 
+                     ((state.lang === "uz") ? targetItem.uz : targetItem.en);
 
-      b.onclick=()=>{
-        if(it.n===nextOrder){
-          b.classList.add("good");
-          b.disabled=true;
+    balloonInterval = setInterval(() => {
+      const b = document.createElement("div");
+      b.className = "balloon";
+      
+      const randomItem = items[Math.floor(Math.random() * items.length)];
+      b.innerText = randomItem.n;
+      b.dataset.n = randomItem.n;
+      
+      b.style.left = (Math.random() * 75 + 5) + '%';
+      b.style.animationDuration = (4 + Math.random() * 2) + 's';
+
+      b.onclick = () => {
+        if(parseInt(b.dataset.n) === currentTarget){
+          b.classList.add("pop");
           beepSuccess();
-
-          if(nextOrder===10){
-            task.innerText="🎉 Barakalla!";
-            state.games.g4=true;
+          balloonScore++;
+          
+          if(balloonScore >= balloonNeeded){
+            stopBalloonGame();
+            state.games.g4 = true;
             save();
             updateBadges();
-          }else{
-            nextOrder++;
-            task.innerText=`${nextOrder} ni toping...`;
+            task.innerText = "🎉 " + UI[state.lang].wellDone + "!";
+          } else {
+            const newTarget = items[Math.floor(Math.random() * items.length)];
+            currentTarget = newTarget.n;
+            task.innerText = UI[state.lang].find + " " + 
+                             ((state.lang === "uz") ? newTarget.uz : newTarget.en);
           }
-        }else{
-          b.classList.add("bad");
+        } else {
           beepFail();
-          setTimeout(()=>b.classList.remove("bad"), 240);
+          b.style.background = "#ffcccc";
         }
       };
 
-      grid.appendChild(b);
-    });
+      area.appendChild(b);
+      setTimeout(() => b.remove(), 6000);
+    }, 1400);
   }
 
-  /* -------------------- INIT -------------------- */
+  /* ==================== INIT ==================== */
+  
   document.addEventListener("DOMContentLoaded", () => {
     load();
+    updateUI();
     initHeader();
     renderVocab();
     updateBadges();
     refreshHeader();
-
-    // ✅ Panels closed by default (games do NOT run automatically)
   });
 </script>
 
