@@ -2,7 +2,7 @@
 <html lang="uz">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>2-dars: Sonlar (1–10)</title>
 
   <link rel="stylesheet" href="components/header.css">
@@ -21,7 +21,7 @@
       --radius:25px;
     }
 
-    *{box-sizing:border-box; touch-action:manipulation; font-style:normal;}
+    *{box-sizing:border-box; touch-action:manipulation; font-style:normal; margin:0; padding:0;}
     body{
       margin:0;
       font-family:system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -30,40 +30,82 @@
       padding:12px;
       min-height:100vh;
       -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
     }
     .app{
       width:100%;
       max-width:520px;
       margin:0 auto;
+      overflow-x:hidden;
     }
 
-    /* Menü Buttons */
+    /* ===== SPRACH-SWITCHER ===== */
+    .lang-bar{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      margin:10px 0 6px;
+      padding:0 14px;
+    }
+    .lang-btn{
+      padding:8px 20px;
+      border-radius:20px;
+      border:2px solid var(--primary);
+      background:#fff;
+      color:var(--primary);
+      font-weight:800;
+      font-size:16px;
+      cursor:pointer;
+      transition:all 0.2s;
+    }
+    .lang-btn.active{
+      background:var(--primary);
+      color:#fff;
+      box-shadow:0 4px 0 #0047b3;
+    }
+    .lang-btn:active{
+      transform:translateY(2px);
+      box-shadow:0 2px 0 #0047b3;
+    }
+
+    /* ===== MENÜ BUTTONS ===== */
     .menuWrap{
-      margin-top:14px;
+      margin-top:10px;
       background:#F5F2E8;
       border-radius:var(--radius);
       padding:14px;
       box-shadow:0 10px 0 var(--shadowBtn);
+      width:100%;
+      overflow:hidden;
     }
     .menu{
       display:grid;
       grid-template-columns:repeat(2, 1fr);
-      gap:14px;
+      gap:12px;
+      width:100%;
     }
     .menuBtn{
-      height:86px;
+      min-height:86px;
       border-radius:24px;
       border:none;
       cursor:pointer;
       font-weight:800;
-      font-size:24px;
+      font-size:clamp(15px, 4.5vw, 22px);
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:12px;
+      gap:8px;
       background:#fff;
       color:var(--primary);
       box-shadow:0 8px 0 var(--shadowBtn);
+      padding:12px 8px;
+      width:100%;
+      text-align:center;
+      line-height:1.2;
+      word-break:break-word;
+      overflow-wrap:break-word;
+      hyphens:auto;
+      -webkit-hyphens:auto;
     }
     .menuBtn.primary{
       background:var(--primary);
@@ -74,11 +116,14 @@
       transform:translateY(4px);
       box-shadow:0 4px 0 var(--shadowBtn);
     }
-    .menuEmoji{font-size:32px;}
+    .menuEmoji{font-size:clamp(24px, 6vw, 32px); flex-shrink:0;}
 
-    @media(max-width:375px){
-      .menuBtn{font-size:20px;height:78px;}
-      .menuEmoji{font-size:28px;}
+    @media(max-width:360px){
+      .menuBtn{gap:4px; padding:10px 6px; font-size:14px; min-height:70px;}
+      .menuEmoji{font-size:22px;}
+      .menu{gap:8px;}
+      .menuWrap{padding:10px;}
+      .lang-btn{padding:6px 16px; font-size:14px;}
     }
 
     .panel{
@@ -124,16 +169,19 @@
     .learn-info{
       text-align:left;
       flex:1;
+      min-width:0;
     }
     .learn-main{
       font-weight:900;
       font-size:28px;
       color:#2d3436;
+      word-break:break-word;
     }
     .learn-sub{
       color:#636e72;
       font-size:18px;
       margin-top:4px;
+      word-break:break-word;
     }
     .stars{
       margin-top:10px;
@@ -177,6 +225,7 @@
       display:flex;
       flex-direction:column;
       gap:10px;
+      min-width:0;
     }
     .dragItem{
       padding:16px;
@@ -186,10 +235,11 @@
       text-align:center;
       cursor:grab;
       font-weight:900;
-      font-size:28px;
+      font-size:clamp(20px, 5vw, 28px);
       box-shadow:0 8px 18px rgba(0,0,0,0.06);
       touch-action:none;
       position:relative;
+      word-break:break-word;
     }
     .dragItem.dragging{
       position:fixed;
@@ -216,11 +266,12 @@
       text-align:center;
       min-height:60px;
       font-weight:900;
-      font-size:20px;
+      font-size:clamp(16px, 4.5vw, 20px);
       background:#fff;
       display:flex;
       align-items:center;
       justify-content:center;
+      word-break:break-word;
     }
     .dropZone.drag-over{
       background:#EEF2FF;
@@ -252,8 +303,9 @@
       text-align:center;
     }
     .quiz-emoji{
-      font-size:80px;
+      font-size:clamp(50px, 15vw, 80px);
       margin:10px 0;
+      word-break:break-all;
     }
     .choiceRow{
       display:flex;
@@ -289,7 +341,7 @@
       border-color:var(--error);
     }
 
-    /* Balloons - SCHNELLER */
+    /* Balloons */
     #balloonArea{
       position:relative;
       width:100%;
@@ -302,18 +354,18 @@
     }
     .balloon{
       position:absolute;
-      width:70px;
-      height:90px;
+      width:clamp(50px, 15vw, 70px);
+      height:clamp(65px, 20vw, 90px);
       background:rgba(255,255,255,0.95);
       border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:28px;
+      font-size:clamp(20px, 6vw, 28px);
       font-weight:900;
       cursor:pointer;
       box-shadow:0 4px 8px rgba(0,0,0,0.2);
-      animation:floatUp 4s linear forwards; /* Schneller: 4s statt 5s */
+      animation:floatUp 4s linear forwards;
     }
     .balloon::after{
       content:'';
@@ -351,8 +403,9 @@
       padding:16px 24px;
       font-weight:900;
       cursor:pointer;
-      font-size:18px;
+      font-size:clamp(16px, 4vw, 18px);
       box-shadow:0 8px 0 var(--shadowBtn);
+      word-break:break-word;
     }
     .btn:active{
       transform:translateY(4px);
@@ -376,13 +429,15 @@
       text-align:center;
       color:#636e72;
       font-weight:700;
-      font-size:18px;
+      font-size:clamp(16px, 4.5vw, 18px);
       margin:10px 0;
+      word-break:break-word;
     }
     #balloonTask{
-      font-size:26px;
+      font-size:clamp(20px, 6vw, 26px);
       color:var(--primary);
       font-weight:900;
+      word-break:break-word;
     }
 
     .badge{
@@ -401,6 +456,12 @@
 <body>
 
   <div id="lessonHeader"></div>
+
+  <!-- SPRACH-SWITCHER -->
+  <div class="lang-bar" id="langBar">
+    <button class="lang-btn active" id="btnUz" onclick="switchLang('uz')">UZ</button>
+    <button class="lang-btn" id="btnEn" onclick="switchLang('en')">EN</button>
+  </div>
 
   <div class="app">
 
@@ -422,12 +483,12 @@
       </div>
     </div>
 
-    <!-- O'rganish -->
+    <!-- O'rganish / Learn -->
     <div class="panel" id="panel-learn">
       <div class="learn-grid" id="vocabGrid"></div>
     </div>
 
-    <!-- Sanab ko'r -->
+    <!-- Sanab ko'r / Counting -->
     <div class="panel" id="panel-count">
       <div class="quiz-card">
         <p class="hint" id="hintCount">Nechta olma bor?</p>
@@ -441,10 +502,10 @@
       </div>
     </div>
 
-    <!-- Juftini top -->
+    <!-- Juftini top / Matching -->
     <div class="panel" id="panel-match">
       <div style="background:#fff;border-radius:25px;padding:20px;box-shadow:0 10px 0 var(--shadowSoft);">
-        <h2 style="margin:0 0 10px;font-size:22px;">
+        <h2 style="margin:0 0 10px;font-size:clamp(18px, 5vw, 22px);word-break:break-word;">
           🔗 <span id="titleMatch">Juftini top</span>
           <span class="badge" id="g1Status">❓</span>
         </h2>
@@ -464,10 +525,10 @@
       </div>
     </div>
 
-    <!-- Pufakchalar -->
+    <!-- Pufakchalar / Bubbles -->
     <div class="panel" id="panel-balloon">
       <div style="background:#fff;border-radius:25px;padding:20px;box-shadow:0 10px 0 var(--shadowSoft);">
-        <h2 style="margin:0 0 10px;font-size:22px;">
+        <h2 style="margin:0 0 10px;font-size:clamp(18px, 5vw, 22px);word-break:break-word;">
           🫧 <span id="titleBalloon">Pufakchalar</span>
           <span class="badge" id="g4Status">❓</span>
         </h2>
@@ -488,8 +549,9 @@
   </div>
 
 <script>
-  const LESSON_ID = "lesson2_sonlar_v6";
+  const LESSON_ID = "lesson2_sonlar_v9";
 
+  // Vokabeln mit beide Sprachen
   const items = [
     {k:"21", n:1, uz:"bir", en:"one", emoji:"🥇"},
     {k:"22", n:2, uz:"ikki", en:"two", emoji:"🦆"},
@@ -503,6 +565,7 @@
     {k:"30", n:10, uz:"o'n", en:"ten", emoji:"🦶"},
   ];
 
+  // Alle UI-Texte für beide Sprachen
   const UI = {
     uz: {
       learn: "O'rganish", count: "Sanab ko'r", match: "Juftini top", balloon: "Pufakchalar",
@@ -551,17 +614,30 @@
     return Object.values(state.learned).filter(Boolean).length;
   }
 
+  // Hilfsfunktion: Wort in aktueller Sprache holen
+  function getWord(item) {
+    return state.lang === "uz" ? item.uz : item.en;
+  }
+
+  // Hilfsfunktion: Untertitel in aktueller Sprache holen (andere Sprache)
+  function getSubWord(item) {
+    return state.lang === "uz" ? item.en : item.uz;
+  }
+
   function initHeader(){
-    renderLessonHeader({
-      mountId: "lessonHeader",
-      title: state.lang === "uz" ? "2-dars: Sonlar" : "Lesson 2: Numbers",
-      total: 10,
-      learned: learnedCount(),
-      lang: state.lang,
-      homeHref: "index.html",
-      onBookClick: () => openSection("learn"),
-      onLang: (l) => setLang(l)
-    });
+    const title = state.lang === "uz" ? "2-dars: Sonlar" : "Lesson 2: Numbers";
+    if (typeof renderLessonHeader === "function") {
+      renderLessonHeader({
+        mountId: "lessonHeader",
+        title: title,
+        total: 10,
+        learned: learnedCount(),
+        lang: state.lang,
+        homeHref: "index.html",
+        onBookClick: () => openSection("learn"),
+        onLang: (l) => switchLang(l)
+      });
+    }
   }
 
   function refreshHeader(){
@@ -570,13 +646,21 @@
     }
   }
 
-  function setLang(l){
+  /* ===== SPRACHUMSCHALTUNG ===== */
+  function switchLang(l){
     state.lang = l;
     save();
+    
+    // Buttons visuell aktualisieren
+    document.getElementById("btnUz").classList.toggle("active", l === "uz");
+    document.getElementById("btnEn").classList.toggle("active", l === "en");
+    
+    // Alles neu laden
     initHeader();
     updateUI();
     renderVocab();
     
+    // Aktive Spiele neu initialisieren
     if(document.getElementById("panel-match").classList.contains("show")){
       initMatchingGame();
     }
@@ -674,7 +758,7 @@
     const it = items.find(x=>x.k===key);
     if(!it) return;
 
-    const text = (state.lang==="uz") ? it.uz : it.en;
+    const text = getWord(it);  // <-- KORRIGIERT: Nutzt aktuelle Sprache
     const langCode = (state.lang==="uz") ? "uz-UZ" : "en-US";
 
     try{
@@ -699,15 +783,8 @@
     const grid = document.getElementById("vocabGrid");
     
     grid.innerHTML = items.map(it=>{
-      let mainWord, subWord;
-      
-      if(state.lang === "uz"){
-        mainWord = it.uz;
-        subWord = it.en;
-      } else {
-        mainWord = it.en;
-        subWord = it.uz;
-      }
+      const mainWord = getWord(it);      // <-- KORRIGIERT
+      const subWord = getSubWord(it);    // <-- KORRIGIERT
       
       const st = starsText(state.stars[it.k]||0);
       
@@ -736,7 +813,7 @@
     return a;
   }
 
-  /* ==================== DRAG & DROP ==================== */
+  /* ==================== DRAG & DROP (MATCHING) ==================== */
   function initMatchingGame(){
     const nCol = document.getElementById("dragNums");
     const wCol = document.getElementById("dropWords");
@@ -750,12 +827,12 @@
     matchesCorrect = 0;
     matchesTotal = pool.length;
 
-    // Drop-Zonen (Wörter)
+    // Drop-Zonen (Wörter in aktueller Sprache)
     const shuffledWords = shuffle([...pool]);
     shuffledWords.forEach(it => {
       const dz = document.createElement("div");
       dz.className = "dropZone";
-      dz.innerText = (state.lang === "uz") ? it.uz : it.en;
+      dz.innerText = getWord(it);  // <-- KORRIGIERT: Zeigt Wort in aktueller Sprache
       dz.dataset.k = it.k;
       dz.dataset.matched = "false";
       
@@ -770,7 +847,7 @@
       wCol.appendChild(dz);
     });
 
-    // Drag-Elemente (Zahlen mit kleinem Emoji)
+    // Drag-Elemente (Zahlen)
     pool.forEach(it => {
       const d = document.createElement("div");
       d.className = "dragItem";
@@ -891,7 +968,7 @@
     return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
   }
 
-  /* ==================== COUNTING ==================== */
+  /* ==================== COUNTING (ZÄHLEN) ==================== */
   function startCountingGame(){
     const area = document.getElementById("emojiArea");
     const choices = document.getElementById("countChoices");
@@ -926,7 +1003,7 @@
     });
   }
 
-  /* ==================== BALLOONS - SCHNELLER ==================== */
+  /* ==================== BALLOONS (BALLONS) ==================== */
   function stopBalloonGame(){
     if(balloonInterval){
       clearInterval(balloonInterval);
@@ -947,10 +1024,9 @@
     const targetItem = items[Math.floor(Math.random() * items.length)];
     let currentTarget = targetItem.n;
     
-    const targetWord = (state.lang === "uz") ? targetItem.uz : targetItem.en;
+    const targetWord = getWord(targetItem);  // <-- KORRIGIERT: Wort in aktueller Sprache
     task.innerText = UI[state.lang].find + " " + targetWord;
 
-    // SCHNELLER: 800ms statt 1500ms
     balloonInterval = setInterval(() => {
       const b = document.createElement("div");
       b.className = "balloon";
@@ -960,7 +1036,6 @@
       b.dataset.n = randomItem.n;
       
       b.style.left = (Math.random() * 75 + 5) + '%';
-      // Schnellere Animation
       b.style.animationDuration = (3 + Math.random() * 1.5) + 's';
 
       b.onclick = () => {
@@ -978,7 +1053,7 @@
           } else {
             const newTarget = items[Math.floor(Math.random() * items.length)];
             currentTarget = newTarget.n;
-            const newWord = (state.lang === "uz") ? newTarget.uz : newTarget.en;
+            const newWord = getWord(newTarget);  // <-- KORRIGIERT
             task.innerText = UI[state.lang].find + " " + newWord;
           }
         } else {
@@ -988,14 +1063,18 @@
       };
 
       area.appendChild(b);
-      // Schneller entfernen
       setTimeout(() => b.remove(), 4500);
-    }, 800); // 800ms statt 1500ms
+    }, 800);
   }
 
   /* ==================== INIT ==================== */
   document.addEventListener("DOMContentLoaded", () => {
     load();
+    
+    // Setze aktive Sprach-Buttons
+    document.getElementById("btnUz").classList.toggle("active", state.lang === "uz");
+    document.getElementById("btnEn").classList.toggle("active", state.lang === "en");
+    
     updateUI();
     initHeader();
     renderVocab();
