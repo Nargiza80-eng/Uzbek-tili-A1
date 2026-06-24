@@ -30,7 +30,7 @@
       padding:12px;
       min-height:100vh;
       -webkit-font-smoothing:antialiased;
-      overflow-x:hidden; /* Verhindert horizontalen Scroll */
+      overflow-x:hidden;
     }
     .app{
       width:100%;
@@ -39,7 +39,7 @@
       overflow-x:hidden;
     }
 
-    /* ===== MENÜ BUTTONS - KORRIGIERT ===== */
+    /* ===== MENÜ BUTTONS ===== */
     .menuWrap{
       margin-top:14px;
       background:#F5F2E8;
@@ -56,12 +56,12 @@
       width:100%;
     }
     .menuBtn{
-      min-height:86px; /* statt fixed height */
+      min-height:86px;
       border-radius:24px;
       border:none;
       cursor:pointer;
       font-weight:800;
-      font-size:clamp(16px, 4.5vw, 22px); /* Responsive Schrift */
+      font-size:clamp(15px, 4.5vw, 22px);
       display:flex;
       align-items:center;
       justify-content:center;
@@ -69,7 +69,7 @@
       background:#fff;
       color:var(--primary);
       box-shadow:0 8px 0 var(--shadowBtn);
-      padding:12px 8px; /* Padding statt fixed height */
+      padding:12px 8px;
       width:100%;
       text-align:center;
       line-height:1.2;
@@ -89,17 +89,11 @@
     }
     .menuEmoji{font-size:clamp(24px, 6vw, 32px); flex-shrink:0;}
 
-    /* Sehr kleine Bildschirme */
     @media(max-width:360px){
-      .menuBtn{gap:4px; padding:10px 6px; font-size:15px; min-height:70px;}
+      .menuBtn{gap:4px; padding:10px 6px; font-size:14px; min-height:70px;}
       .menuEmoji{font-size:22px;}
       .menu{gap:8px;}
       .menuWrap{padding:10px;}
-    }
-
-    /* Tablets */
-    @media(min-width:768px){
-      .menuBtn{font-size:20px; min-height:90px;}
     }
 
     .panel{
@@ -145,7 +139,7 @@
     .learn-info{
       text-align:left;
       flex:1;
-      min-width:0; /* Verhindert Überlauf */
+      min-width:0;
     }
     .learn-main{
       font-weight:900;
@@ -317,7 +311,7 @@
       border-color:var(--error);
     }
 
-    /* Balloons - SCHNELLER */
+    /* Balloons */
     #balloonArea{
       position:relative;
       width:100%;
@@ -519,7 +513,7 @@
   </div>
 
 <script>
-  const LESSON_ID = "lesson2_sonlar_v7";
+  const LESSON_ID = "lesson2_sonlar_v10";
 
   const items = [
     {k:"21", n:1, uz:"bir", en:"one", emoji:"🥇"},
@@ -582,18 +576,28 @@
     return Object.values(state.learned).filter(Boolean).length;
   }
 
+  function getWord(item) {
+    return state.lang === "uz" ? item.uz : item.en;
+  }
+
+  function getSubWord(item) {
+    return state.lang === "uz" ? item.en : item.uz;
+  }
+
   function initHeader(){
     const title = state.lang === "uz" ? "2-dars: Sonlar" : "Lesson 2: Numbers";
-    renderLessonHeader({
-      mountId: "lessonHeader",
-      title: title,
-      total: 10,
-      learned: learnedCount(),
-      lang: state.lang,
-      homeHref: "index.html",
-      onBookClick: () => openSection("learn"),
-      onLang: (l) => setLang(l)
-    });
+    if (typeof renderLessonHeader === "function") {
+      renderLessonHeader({
+        mountId: "lessonHeader",
+        title: title,
+        total: 10,
+        learned: learnedCount(),
+        lang: state.lang,
+        homeHref: "index.html",
+        onBookClick: () => openSection("learn"),
+        onLang: (l) => switchLang(l)
+      });
+    }
   }
 
   function refreshHeader(){
@@ -602,9 +606,11 @@
     }
   }
 
-  function setLang(l){
+  /* ===== SPRACHUMSCHALTUNG (nur über Header-Buttons) ===== */
+  function switchLang(l){
     state.lang = l;
     save();
+    
     initHeader();
     updateUI();
     renderVocab();
@@ -634,6 +640,8 @@
     document.getElementById("btnClose").innerText = t.btnClose;
     document.getElementById("btnClose2").innerText = t.btnClose2;
     document.getElementById("btnNew").innerText = t.btnNew;
+    document.getElementById("titleMatch").innerText = t.match;       // KORRIGIERT
+    document.getElementById("titleBalloon").innerText = t.balloon;   // KORRIGIERT
   }
 
   function closePanels(){
@@ -706,7 +714,7 @@
     const it = items.find(x=>x.k===key);
     if(!it) return;
 
-    const text = (state.lang==="uz") ? it.uz : it.en;
+    const text = getWord(it);
     const langCode = (state.lang==="uz") ? "uz-UZ" : "en-US";
 
     try{
@@ -731,15 +739,8 @@
     const grid = document.getElementById("vocabGrid");
     
     grid.innerHTML = items.map(it=>{
-      let mainWord, subWord;
-      
-      if(state.lang === "uz"){
-        mainWord = it.uz;
-        subWord = it.en;
-      } else {
-        mainWord = it.en;
-        subWord = it.uz;
-      }
+      const mainWord = getWord(it);
+      const subWord = getSubWord(it);
       
       const st = starsText(state.stars[it.k]||0);
       
@@ -782,12 +783,11 @@
     matchesCorrect = 0;
     matchesTotal = pool.length;
 
-    // Drop-Zonen (Wörter)
     const shuffledWords = shuffle([...pool]);
     shuffledWords.forEach(it => {
       const dz = document.createElement("div");
       dz.className = "dropZone";
-      dz.innerText = (state.lang === "uz") ? it.uz : it.en;
+      dz.innerText = getWord(it);
       dz.dataset.k = it.k;
       dz.dataset.matched = "false";
       
@@ -802,7 +802,6 @@
       wCol.appendChild(dz);
     });
 
-    // Drag-Elemente (Zahlen mit kleinem Emoji)
     pool.forEach(it => {
       const d = document.createElement("div");
       d.className = "dragItem";
@@ -958,7 +957,7 @@
     });
   }
 
-  /* ==================== BALLOONS - SCHNELLER ==================== */
+  /* ==================== BALLOONS ==================== */
   function stopBalloonGame(){
     if(balloonInterval){
       clearInterval(balloonInterval);
@@ -979,10 +978,9 @@
     const targetItem = items[Math.floor(Math.random() * items.length)];
     let currentTarget = targetItem.n;
     
-    const targetWord = (state.lang === "uz") ? targetItem.uz : targetItem.en;
+    const targetWord = getWord(targetItem);
     task.innerText = UI[state.lang].find + " " + targetWord;
 
-    // SCHNELLER: 800ms statt 1500ms
     balloonInterval = setInterval(() => {
       const b = document.createElement("div");
       b.className = "balloon";
@@ -992,7 +990,6 @@
       b.dataset.n = randomItem.n;
       
       b.style.left = (Math.random() * 75 + 5) + '%';
-      // Schnellere Animation
       b.style.animationDuration = (3 + Math.random() * 1.5) + 's';
 
       b.onclick = () => {
@@ -1010,7 +1007,7 @@
           } else {
             const newTarget = items[Math.floor(Math.random() * items.length)];
             currentTarget = newTarget.n;
-            const newWord = (state.lang === "uz") ? newTarget.uz : newTarget.en;
+            const newWord = getWord(newTarget);
             task.innerText = UI[state.lang].find + " " + newWord;
           }
         } else {
@@ -1020,14 +1017,14 @@
       };
 
       area.appendChild(b);
-      // Schneller entfernen
       setTimeout(() => b.remove(), 4500);
-    }, 800); // 800ms statt 1500ms
+    }, 800);
   }
 
   /* ==================== INIT ==================== */
   document.addEventListener("DOMContentLoaded", () => {
     load();
+    
     updateUI();
     initHeader();
     renderVocab();
