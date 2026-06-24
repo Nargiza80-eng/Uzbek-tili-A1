@@ -1,130 +1,1029 @@
-/* components/header.js
-   Renders a complete animated header (sky + sun + clouds + progress + UZ/EN + home/book).
-   Usage:
-     <div id="lessonHeader"></div>
-     <script>renderLessonHeader({ mountId:"lessonHeader", title:"2-dars: Sonlar", total:10, homeHref:"index.html" });</script>
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>2-dars: Sonlar (1–10)</title>
 
-   Then you update progress with:
-     setHeaderProgress({ learned: 3 }); // learned out of total
-*/
+  <link rel="stylesheet" href="components/header.css">
+  <script src="components/header.js" defer></script>
 
-(function(){
-  const DEFAULTS = {
-    mountId: "lessonHeader",
-    title: "Dars",
-    total: 10,
-    learned: 0,
-    homeHref: "index.html",
-    // bookAction: "learn" will scroll to #panel-learn if exists, otherwise do nothing
-    bookTargetId: "panel-learn",
-    lang: "uz",
-    onLangChange: null, // optional callback(lang)
-  };
+  <style>
+    :root{
+      --bg:#eaf6ff;
+      --bg2:#fff2cc;
+      --primary:#0066ff;
+      --success:#00c853;
+      --error:#ff2d55;
+      --sun:#ffcc00;
+      --shadowSoft:#cfe3ff;
+      --shadowBtn:#b8c2cc;
+      --radius:25px;
+    }
 
-  function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+    *{box-sizing:border-box; touch-action:manipulation; font-style:normal; margin:0; padding:0;}
+    body{
+      margin:0;
+      font-family:system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background:linear-gradient(180deg, var(--bg2) 0%, var(--bg) 55%, #fff 100%);
+      color:#2d3436;
+      padding:12px;
+      min-height:100vh;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+    }
+    .app{
+      width:100%;
+      max-width:520px;
+      margin:0 auto;
+      overflow-x:hidden;
+    }
 
-  function scrollToId(id){
-    const el = document.getElementById(id);
-    if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
-  }
+    .menuWrap{
+      margin-top:14px;
+      background:#F5F2E8;
+      border-radius:var(--radius);
+      padding:14px;
+      box-shadow:0 10px 0 var(--shadowBtn);
+      width:100%;
+      overflow:hidden;
+    }
+    .menu{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:12px;
+      width:100%;
+    }
+    .menuBtn{
+      min-height:86px;
+      border-radius:24px;
+      border:none;
+      cursor:pointer;
+      font-weight:800;
+      font-size:clamp(15px, 4.5vw, 22px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      background:#fff;
+      color:var(--primary);
+      box-shadow:0 8px 0 var(--shadowBtn);
+      padding:12px 8px;
+      width:100%;
+      text-align:center;
+      line-height:1.2;
+      word-break:break-word;
+      overflow-wrap:break-word;
+      hyphens:auto;
+      -webkit-hyphens:auto;
+    }
+    .menuBtn.primary{
+      background:var(--primary);
+      color:#fff;
+      box-shadow:0 8px 0 #0047b3;
+    }
+    .menuBtn:active{
+      transform:translateY(4px);
+      box-shadow:0 4px 0 var(--shadowBtn);
+    }
+    .menuEmoji{font-size:clamp(24px, 6vw, 32px); flex-shrink:0;}
 
-  function buildHeaderHTML(opts){
-    const learned = clamp(Number(opts.learned || 0), 0, opts.total);
-    const pct = opts.total ? (learned / opts.total) * 100 : 0;
+    @media(max-width:360px){
+      .menuBtn{gap:4px; padding:10px 6px; font-size:14px; min-height:70px;}
+      .menuEmoji{font-size:22px;}
+      .menu{gap:8px;}
+      .menuWrap{padding:10px;}
+    }
 
-    return `
-      <div class="dono-header" data-total="${opts.total}">
-        <div class="sky">
-          <div class="sun"></div>
-          <div class="cloud c1"></div>
-          <div class="cloud c2"></div>
-          <div class="cloud c3"></div>
-          <div class="sparkle s1"></div>
-          <div class="sparkle s2"></div>
-          <div class="sparkle s3"></div>
-        </div>
+    .panel{
+      margin-top:16px;
+      display:none;
+    }
+    .panel.show{display:block;}
 
-        <div class="content">
-          <div class="top-row">
-            <a class="topIcon" href="${opts.homeHref}" aria-label="Home">🏠</a>
+    .learn-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
+    }
+    .learn-card{
+      background:#fff;
+      border-radius:var(--radius);
+      padding:20px;
+      display:flex;
+      align-items:center;
+      gap:16px;
+      box-shadow:0 8px 0 var(--shadowSoft);
+      border:3px solid #fff;
+    }
+    .numCircle{
+      width:70px;
+      height:70px;
+      border-radius:50%;
+      background:#EEF2FF;
+      color:var(--primary);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:32px;
+      flex-shrink:0;
+      box-shadow:0 4px 0 #dbe4ff;
+    }
+    .numEmoji{
+      font-size:20px;
+      margin-left:4px;
+    }
+    .learn-info{
+      text-align:left;
+      flex:1;
+      min-width:0;
+    }
+    .learn-main{
+      font-weight:900;
+      font-size:28px;
+      color:#2d3436;
+      word-break:break-word;
+    }
+    .learn-sub{
+      color:#636e72;
+      font-size:18px;
+      margin-top:4px;
+      word-break:break-word;
+    }
+    .stars{
+      margin-top:10px;
+      font-weight:900;
+      color:#f39c12;
+      font-size:20px;
+    }
+    .btn-audio{
+      background:var(--sun);
+      border:none;
+      width:70px;
+      height:70px;
+      border-radius:50%;
+      font-size:28px;
+      cursor:pointer;
+      box-shadow:0 6px 0 #cc7a00;
+      flex-shrink:0;
+    }
+    .btn-audio:active{
+      transform:translateY(3px);
+      box-shadow:0 3px 0 #cc7a00;
+    }
 
-            <div class="titleWrap">
-              <h1 class="title" id="hdrTitle">${opts.title}</h1>
-              <div class="sub" id="hdrSub">${learned} / ${opts.total} o‘rganildi</div>
-            </div>
+    @media(max-width:375px){
+      .numCircle{width:60px;height:60px;font-size:28px;}
+      .numEmoji{font-size:16px;}
+      .learn-main{font-size:24px;}
+      .learn-sub{font-size:16px;}
+      .btn-audio{width:60px;height:60px;font-size:24px;}
+    }
 
-            <button class="topIcon" id="hdrBookBtn" aria-label="Book" type="button">📖</button>
-          </div>
+    .matchingBox{
+      display:flex;
+      gap:12px;
+      margin-top:14px;
+      min-height:300px;
+    }
+    .col{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-width:0;
+    }
+    .dragItem{
+      padding:16px;
+      background:#F8FAFC;
+      border:3px solid #E5E7EB;
+      border-radius:18px;
+      text-align:center;
+      cursor:grab;
+      font-weight:900;
+      font-size:clamp(20px, 5vw, 28px);
+      box-shadow:0 8px 18px rgba(0,0,0,0.06);
+      touch-action:none;
+      position:relative;
+      word-break:break-word;
+    }
+    .dragItem.dragging{
+      position:fixed;
+      z-index:1000;
+      opacity:0.9;
+      transform:scale(1.1);
+      box-shadow:0 20px 40px rgba(0,0,0,0.3);
+    }
+    .dragItem.matched{
+      background:var(--success);
+      color:#fff;
+      border-color:var(--success);
+      opacity:0.5;
+      pointer-events:none;
+    }
+    .dragEmoji{
+      font-size:16px;
+      margin-left:4px;
+    }
+    .dropZone{
+      padding:16px;
+      border:3px dashed var(--primary);
+      border-radius:18px;
+      text-align:center;
+      min-height:60px;
+      font-weight:900;
+      font-size:clamp(16px, 4.5vw, 20px);
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      word-break:break-word;
+    }
+    .dropZone.drag-over{
+      background:#EEF2FF;
+      border-style:solid;
+      border-width:4px;
+    }
+    .dropZone.matched{
+      background:var(--success)!important;
+      color:#fff;
+      border-color:var(--success)!important;
+    }
+    .dropZone.bad{
+      animation:shake 0.5s;
+      background:#FEF2F2;
+    }
 
-          <div class="progress-track">
-            <div class="progress-fill" id="hdrFill" style="width:${pct}%"></div>
-          </div>
+    @keyframes shake{
+      0%,100%{transform:translateX(0);}
+      20%,60%{transform:translateX(-10px);}
+      40%,80%{transform:translateX(10px);}
+    }
 
-          <div class="mini" id="hdrMini">${learned} / ${opts.total}</div>
+    .quiz-card{
+      background:#fff;
+      border-radius:30px;
+      padding:28px;
+      box-shadow:0 10px 0 var(--shadowSoft);
+      text-align:center;
+    }
+    .quiz-emoji{
+      font-size:clamp(50px, 15vw, 80px);
+      margin:10px 0;
+      word-break:break-all;
+    }
+    .choiceRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:center;
+      margin-top:20px;
+    }
+    .choiceBtn{
+      padding:16px 24px;
+      border:3px solid #E5E7EB;
+      background:#fff;
+      border-radius:20px;
+      cursor:pointer;
+      font-weight:900;
+      font-size:20px;
+      box-shadow:0 8px 0 #E5E7EB;
+      min-width:80px;
+    }
+    .choiceBtn:active{
+      transform:translateY(4px);
+      box-shadow:0 4px 0 #E5E7EB;
+    }
+    .choiceBtn.good{
+      background:var(--success);
+      color:#fff;
+      border-color:var(--success);
+      box-shadow:0 4px 0 #09725b;
+    }
+    .choiceBtn.bad{
+      background:var(--error);
+      color:#fff;
+      border-color:var(--error);
+    }
 
-          <div class="langRow">
-            <button class="langBtn ${opts.lang==="uz" ? "active" : ""}" id="hdrUZ" type="button">UZ</button>
-            <button class="langBtn ${opts.lang==="en" ? "active" : ""}" id="hdrEN" type="button">EN</button>
-          </div>
+    #balloonArea{
+      position:relative;
+      width:100%;
+      height:350px;
+      background:linear-gradient(#3b82f6, #0ea5ff);
+      border-radius:30px;
+      border:8px solid #fff;
+      overflow:hidden;
+      margin-top:10px;
+    }
+    .balloon{
+      position:absolute;
+      width:clamp(50px, 15vw, 70px);
+      height:clamp(65px, 20vw, 90px);
+      background:rgba(255,255,255,0.95);
+      border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:clamp(20px, 6vw, 28px);
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 4px 8px rgba(0,0,0,0.2);
+      animation:floatUp 4s linear forwards;
+    }
+    .balloon::after{
+      content:'';
+      position:absolute;
+      bottom:-15px;
+      left:50%;
+      width:2px;
+      height:15px;
+      background:rgba(255,255,255,0.6);
+      transform:translateX(-50%);
+    }
+    @keyframes floatUp{
+      0%{transform:translateY(400px);}
+      100%{transform:translateY(-100px);}
+    }
+    .balloon.pop{
+      animation:pop 0.3s forwards;
+    }
+    @keyframes pop{
+      0%{transform:scale(1);}
+      50%{transform:scale(1.3);}
+      100%{transform:scale(0);opacity:0;}
+    }
+
+    .btnRow{
+      margin-top:20px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .btn{
+      border:none;
+      border-radius:20px;
+      padding:16px 24px;
+      font-weight:900;
+      cursor:pointer;
+      font-size:clamp(16px, 4vw, 18px);
+      box-shadow:0 8px 0 var(--shadowBtn);
+      word-break:break-word;
+    }
+    .btn:active{
+      transform:translateY(4px);
+      box-shadow:0 4px 0 var(--shadowBtn);
+    }
+    .btn.primary{
+      background:var(--primary);
+      color:#fff;
+      box-shadow:0 8px 0 #0047b3;
+    }
+    .btn.primary:active{
+      box-shadow:0 4px 0 #0047b3;
+    }
+    .btn.soft{
+      background:#fff;
+      color:var(--primary);
+      border:3px solid #E5E7EB;
+    }
+
+    .hint{
+      text-align:center;
+      color:#636e72;
+      font-weight:700;
+      font-size:clamp(16px, 4.5vw, 18px);
+      margin:10px 0;
+      word-break:break-word;
+    }
+    #balloonTask{
+      font-size:clamp(20px, 6vw, 26px);
+      color:var(--primary);
+      font-weight:900;
+      word-break:break-word;
+    }
+
+    .badge{
+      font-size:14px;
+      font-weight:900;
+      padding:6px 12px;
+      border-radius:999px;
+      background:#EEF2FF;
+      color:var(--primary);
+      margin-left:10px;
+    }
+    .badge.done{background:#ECFDF5;color:var(--success);}
+  </style>
+</head>
+
+<body>
+
+  <div id="lessonHeader"></div>
+
+  <div class="app">
+
+    <!-- Menü -->
+    <div class="menuWrap">
+      <div class="menu">
+        <button class="menuBtn primary" onclick="openSection('learn')">
+          <span class="menuEmoji">📖</span><span id="btnLearn">O'rganish</span>
+        </button>
+        <button class="menuBtn" onclick="openSection('count')">
+          <span class="menuEmoji">🍎</span><span id="btnCount">Sanab ko'r</span>
+        </button>
+        <button class="menuBtn" onclick="openSection('match')">
+          <span class="menuEmoji">🔗</span><span id="btnMatch">Juftini top</span>
+        </button>
+        <button class="menuBtn" onclick="openSection('balloon')">
+          <span class="menuEmoji">🫧</span><span id="btnBalloon">Pufakchalar</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- O'rganish -->
+    <div class="panel" id="panel-learn">
+      <div class="learn-grid" id="vocabGrid"></div>
+    </div>
+
+    <!-- Sanab ko'r -->
+    <div class="panel" id="panel-count">
+      <div class="quiz-card">
+        <p class="hint" id="hintCount">Nechta olma bor?</p>
+        <div class="quiz-emoji" id="emojiArea"></div>
+        <div class="choiceRow" id="countChoices"></div>
+        <div class="btnRow">
+          <button class="btn primary" onclick="startCountingGame()">
+            <span id="btnStart">Boshlash</span> ▶
+          </button>
         </div>
       </div>
-    `;
+    </div>
+
+    <!-- Juftini top -->
+    <div class="panel" id="panel-match">
+      <div style="background:#fff;border-radius:25px;padding:20px;box-shadow:0 10px 0 var(--shadowSoft);">
+        <h2 style="margin:0 0 10px;font-size:clamp(18px, 5vw, 22px);word-break:break-word;">
+          🔗 <span id="titleMatch">Juftini top</span>
+          <span class="badge" id="g1Status">❓</span>
+        </h2>
+        <p class="hint" id="hintDrag">Raqamni ushlab so'zga olib boring</p>
+        <div class="matchingBox">
+          <div class="col" id="dragNums"></div>
+          <div class="col" id="dropWords"></div>
+        </div>
+        <div class="btnRow">
+          <button class="btn primary" onclick="initMatchingGame()">
+            <span id="btnNew">Yangilash</span> 🔄
+          </button>
+          <button class="btn soft" onclick="closePanels()">
+            <span id="btnClose">Yopish</span> ✖
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pufakchalar -->
+    <div class="panel" id="panel-balloon">
+      <div style="background:#fff;border-radius:25px;padding:20px;box-shadow:0 10px 0 var(--shadowSoft);">
+        <h2 style="margin:0 0 10px;font-size:clamp(18px, 5vw, 22px);word-break:break-word;">
+          🫧 <span id="titleBalloon">Pufakchalar</span>
+          <span class="badge" id="g4Status">❓</span>
+        </h2>
+        <p class="hint" id="hintBalloon">To'g'ri raqamni top!</p>
+        <div id="balloonTask">5</div>
+        <div id="balloonArea"></div>
+        <div class="btnRow">
+          <button class="btn primary" onclick="startBalloonGame()">
+            <span id="btnStart2">Boshlash</span> ▶
+          </button>
+          <button class="btn soft" onclick="closePanels()">
+            <span id="btnClose2">Yopish</span> ✖
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+  const LESSON_ID = "lesson2_sonlar_v11";
+
+  const items = [
+    {k:"21", n:1, uz:"bir", en:"one", emoji:"🥇"},
+    {k:"22", n:2, uz:"ikki", en:"two", emoji:"🦆"},
+    {k:"23", n:3, uz:"uch", en:"three", emoji:"🐱"},
+    {k:"24", n:4, uz:"to'rt", en:"four", emoji:"🍀"},
+    {k:"25", n:5, uz:"besh", en:"five", emoji:"⭐"},
+    {k:"26", n:6, uz:"olti", en:"six", emoji:"🐝"},
+    {k:"27", n:7, uz:"yetti", en:"seven", emoji:"🌈"},
+    {k:"28", n:8, uz:"sakkiz", en:"eight", emoji:"🎱"},
+    {k:"29", n:9, uz:"to'qqiz", en:"nine", emoji:"🎈"},
+    {k:"30", n:10, uz:"o'n", en:"ten", emoji:"🦶"},
+  ];
+
+  const UI = {
+    uz: {
+      learn: "O'rganish", count: "Sanab ko'r", match: "Juftini top", balloon: "Pufakchalar",
+      hintCount: "Nechta olma bor?", hintDrag: "Raqamni ushlab so'zga olib boring",
+      hintBalloon: "To'g'ri raqamni top!", btnStart: "Boshlash", btnStart2: "Boshlash",
+      btnClose: "Yopish", btnClose2: "Yopish", btnNew: "Yangilash",
+      find: "Top:", wellDone: "Barakalla", apples: "olma"
+    },
+    en: {
+      learn: "Learn", count: "Counting", match: "Matching", balloon: "Bubbles",
+      hintCount: "How many apples?", hintDrag: "Drag number to word",
+      hintBalloon: "Find the correct number!", btnStart: "Start", btnStart2: "Start",
+      btnClose: "Close", btnClose2: "Close", btnNew: "New Game",
+      find: "Find:", wellDone: "Well done", apples: "apples"
+    }
+  };
+
+  let state = {
+    lang: "uz",
+    stars: {},
+    learned: {},
+    games: { g1:false, g3:false, g4:false }
+  };
+
+  let draggedElement = null;
+  let touchOffsetX = 0;
+  let touchOffsetY = 0;
+  let matchesCorrect = 0;
+  let matchesTotal = 0;
+  let balloonInterval = null;
+
+  function save(){ localStorage.setItem(LESSON_ID, JSON.stringify(state)); }
+  function load(){
+    const raw = localStorage.getItem(LESSON_ID);
+    if(!raw) return;
+    try{
+      const s = JSON.parse(raw);
+      state.lang = s.lang || "uz";
+      state.stars = s.stars || {};
+      state.learned = s.learned || {};
+      state.games = s.games || {g1:false,g3:false,g4:false};
+    }catch(e){}
   }
 
-  function attachHeaderEvents(root, opts){
-    const bookBtn = root.querySelector("#hdrBookBtn");
-    const uzBtn = root.querySelector("#hdrUZ");
-    const enBtn = root.querySelector("#hdrEN");
+  function learnedCount(){
+    return Object.values(state.learned).filter(Boolean).length;
+  }
 
-    if(bookBtn){
-      bookBtn.addEventListener("click", () => {
-        if(opts.bookTargetId) scrollToId(opts.bookTargetId);
+  function getWord(item) {
+    return state.lang === "uz" ? item.uz : item.en;
+  }
+
+  function getSubWord(item) {
+    return state.lang === "uz" ? item.en : item.uz;
+  }
+
+  function initHeader(){
+    const title = state.lang === "uz" ? "2-dars: Sonlar" : "Lesson 2: Numbers";
+    if (typeof renderLessonHeader === "function") {
+      renderLessonHeader({
+        mountId: "lessonHeader",
+        title: title,
+        total: 10,
+        learned: learnedCount(),
+        lang: state.lang,
+        homeHref: "index.html",
+        onBookClick: () => openSection("learn"),
+        onLang: (l) => switchLang(l)
       });
     }
+  }
 
-    const setLangUI = (lang) => {
-      uzBtn?.classList.toggle("active", lang==="uz");
-      enBtn?.classList.toggle("active", lang==="en");
+  function refreshHeader(){
+    if (typeof setHeaderProgress === "function") {
+      setHeaderProgress({ 
+        learned: learnedCount(), 
+        total: 10,
+        lang: state.lang
+      });
+    }
+  }
+
+  function switchLang(l){
+    state.lang = l;
+    save();
+    
+    initHeader();
+    updateUI();
+    renderVocab();
+    
+    if(document.getElementById("panel-match").classList.contains("show")){
+      initMatchingGame();
+    }
+    if(document.getElementById("panel-count").classList.contains("show")){
+      startCountingGame();
+    }
+    if(document.getElementById("panel-balloon").classList.contains("show")){
+      startBalloonGame();
+    }
+  }
+
+  function updateUI(){
+    const t = UI[state.lang];
+    document.getElementById("btnLearn").innerText = t.learn;
+    document.getElementById("btnCount").innerText = t.count;
+    document.getElementById("btnMatch").innerText = t.match;
+    document.getElementById("btnBalloon").innerText = t.balloon;
+    document.getElementById("hintCount").innerText = t.hintCount;
+    document.getElementById("hintDrag").innerText = t.hintDrag;
+    document.getElementById("hintBalloon").innerText = t.hintBalloon;
+    document.getElementById("btnStart").innerText = t.btnStart;
+    document.getElementById("btnStart2").innerText = t.btnStart2;
+    document.getElementById("btnClose").innerText = t.btnClose;
+    document.getElementById("btnClose2").innerText = t.btnClose2;
+    document.getElementById("btnNew").innerText = t.btnNew;
+    document.getElementById("titleMatch").innerText = t.match;
+    document.getElementById("titleBalloon").innerText = t.balloon;
+  }
+
+  function closePanels(){
+    document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
+    stopBalloonGame();
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function openSection(name){
+    document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
+    stopBalloonGame();
+
+    const panel = document.getElementById("panel-"+name);
+    if(panel) panel.classList.add("show");
+
+    if(name==="match") initMatchingGame();
+    if(name==="count") startCountingGame();
+    if(name==="balloon") startBalloonGame();
+
+    panel?.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  function starsText(n){
+    n = Math.max(0, Math.min(3, n||0));
+    return "★".repeat(n) + "☆".repeat(3-n);
+  }
+
+  function updateBadges(){
+    const set = (id, done)=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.classList.toggle("done", !!done);
+      el.innerText = done ? "✅" : "❓";
     };
+    set("g1Status", state.games.g1);
+    set("g4Status", state.games.g4);
+  }
 
-    uzBtn?.addEventListener("click", () => {
-      setLangUI("uz");
-      if(typeof opts.onLangChange === "function") opts.onLangChange("uz");
+  let audioCtx=null;
+  function beepSuccess(){
+    try{
+      if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+      const t=audioCtx.currentTime, o=audioCtx.createOscillator(), g=audioCtx.createGain();
+      o.connect(g); g.connect(audioCtx.destination);
+      o.type="triangle";
+      o.frequency.setValueAtTime(520,t);
+      o.frequency.exponentialRampToValueAtTime(880,t+0.12);
+      g.gain.setValueAtTime(0.0001,t);
+      g.gain.exponentialRampToValueAtTime(0.25,t+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+0.16);
+      o.start(t); o.stop(t+0.18);
+    }catch(e){}
+  }
+  function beepFail(){
+    try{
+      if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+      const t=audioCtx.currentTime, o=audioCtx.createOscillator(), g=audioCtx.createGain();
+      o.connect(g); g.connect(audioCtx.destination);
+      o.type="sawtooth";
+      o.frequency.setValueAtTime(220,t);
+      o.frequency.exponentialRampToValueAtTime(140,t+0.14);
+      g.gain.setValueAtTime(0.0001,t);
+      g.gain.exponentialRampToValueAtTime(0.22,t+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+0.16);
+      o.start(t); o.stop(t+0.18);
+    }catch(e){}
+  }
+
+  function speakWord(key){
+    const it = items.find(x=>x.k===key);
+    if(!it) return;
+
+    const text = getWord(it);
+    const langCode = (state.lang==="uz") ? "uz-UZ" : "en-US";
+
+    try{
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = langCode;
+      u.rate = 0.9;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(u);
+    }catch(e){}
+
+    state.learned[key]=true;
+    state.stars[key]=Math.min(3,(state.stars[key]||0)+1);
+    beepSuccess();
+    save();
+
+    renderVocab();
+    refreshHeader();
+  }
+
+  function renderVocab(){
+    const grid = document.getElementById("vocabGrid");
+    
+    grid.innerHTML = items.map(it=>{
+      const mainWord = getWord(it);
+      const subWord = getSubWord(it);
+      
+      const st = starsText(state.stars[it.k]||0);
+      
+      return `
+        <div class="learn-card">
+          <div class="numCircle">
+            ${it.n}<span class="numEmoji">${it.emoji}</span>
+          </div>
+          <div class="learn-info">
+            <div class="learn-main">${mainWord}</div>
+            <div class="learn-sub">${subWord}</div>
+            <div class="stars">${st}</div>
+          </div>
+          <button class="btn-audio" onclick="speakWord('${it.k}')">🔊</button>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function shuffle(arr){
+    const a=[...arr];
+    for(let i=a.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [a[i],a[j]]=[a[j],a[i]];
+    }
+    return a;
+  }
+
+  function initMatchingGame(){
+    const nCol = document.getElementById("dragNums");
+    const wCol = document.getElementById("dropWords");
+    if(!nCol || !wCol) return;
+
+    nCol.innerHTML = "";
+    wCol.innerHTML = "";
+    draggedElement = null;
+
+    const pool = shuffle(items).slice(0,5);
+    matchesCorrect = 0;
+    matchesTotal = pool.length;
+
+    const shuffledWords = shuffle([...pool]);
+    shuffledWords.forEach(it => {
+      const dz = document.createElement("div");
+      dz.className = "dropZone";
+      dz.innerText = getWord(it);
+      dz.dataset.k = it.k;
+      dz.dataset.matched = "false";
+      
+      dz.ondragenter = (e) => {
+        e.preventDefault();
+        if(dz.dataset.matched === "false") dz.classList.add("drag-over");
+      };
+      dz.ondragleave = () => dz.classList.remove("drag-over");
+      dz.ondragover = (e) => e.preventDefault();
+      dz.ondrop = (e) => handleDrop(e, dz);
+      
+      wCol.appendChild(dz);
     });
 
-    enBtn?.addEventListener("click", () => {
-      setLangUI("en");
-      if(typeof opts.onLangChange === "function") opts.onLangChange("en");
+    pool.forEach(it => {
+      const d = document.createElement("div");
+      d.className = "dragItem";
+      d.innerHTML = `${it.n}<span class="dragEmoji">${it.emoji}</span>`;
+      d.dataset.k = it.k;
+      d.draggable = true;
+      
+      d.ondragstart = (e) => {
+        draggedElement = d;
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/plain", it.k);
+        setTimeout(() => d.style.opacity = "0.5", 0);
+      };
+      d.ondragend = () => {
+        d.style.opacity = "1";
+        draggedElement = null;
+      };
+      
+      d.ontouchstart = (e) => handleTouchStart(e, d);
+      d.ontouchmove = (e) => handleTouchMove(e, d);
+      d.ontouchend = (e) => handleTouchEnd(e, d);
+      
+      nCol.appendChild(d);
     });
   }
 
-  // PUBLIC: render header
-  window.renderLessonHeader = function(options){
-    const opts = {...DEFAULTS, ...(options||{})};
-    const mount = document.getElementById(opts.mountId);
-    if(!mount){
-      console.warn("renderLessonHeader(): mount element not found:", opts.mountId);
-      return;
+  function handleDrop(e, dropZone) {
+    e.preventDefault();
+    dropZone.classList.remove("drag-over");
+    if(dropZone.dataset.matched === "true") return;
+    
+    const draggedKey = e.dataTransfer.getData("text/plain");
+    checkMatch(draggedKey, dropZone);
+  }
+
+  function checkMatch(key, dropZone) {
+    if(key === dropZone.dataset.k) {
+      dropZone.dataset.matched = "true";
+      dropZone.classList.add("matched");
+      dropZone.innerText = "✅ " + dropZone.innerText;
+      
+      const dragEl = document.querySelector(`.dragItem[data-k="${key}"]`);
+      if(dragEl) dragEl.classList.add("matched");
+      
+      matchesCorrect++;
+      beepSuccess();
+      
+      if(matchesCorrect === matchesTotal) {
+        state.games.g1 = true;
+        save();
+        updateBadges();
+        setTimeout(() => alert(UI[state.lang].wellDone + "! 🎉"), 300);
+      }
+    } else {
+      dropZone.classList.add("bad");
+      beepFail();
+      setTimeout(() => dropZone.classList.remove("bad"), 500);
     }
-    mount.innerHTML = buildHeaderHTML(opts);
-    attachHeaderEvents(mount, opts);
-  };
+  }
 
-  // PUBLIC: update progress text + bar (call from your lesson logic)
-  window.setHeaderProgress = function({ learned, total } = {}){
-    const header = document.querySelector(".dono-header");
-    if(!header) return;
+  function handleTouchStart(e, elem) {
+    const touch = e.touches[0];
+    const rect = elem.getBoundingClientRect();
+    touchOffsetX = touch.clientX - rect.left;
+    touchOffsetY = touch.clientY - rect.top;
+    
+    elem.classList.add("dragging");
+    draggedElement = elem;
+    moveAt(touch.clientX, touch.clientY, elem);
+  }
 
-    const t = total ?? Number(header.getAttribute("data-total") || 10);
-    const l = clamp(Number(learned ?? 0), 0, t);
-    const pct = t ? (l / t) * 100 : 0;
+  function handleTouchMove(e, elem) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    moveAt(touch.clientX, touch.clientY, elem);
+    
+    document.querySelectorAll(".dropZone").forEach(dz => {
+      if(dz.dataset.matched === "true") return;
+      if(isOver(touch.clientX, touch.clientY, dz)) {
+        dz.classList.add("drag-over");
+      } else {
+        dz.classList.remove("drag-over");
+      }
+    });
+  }
 
-    const sub = header.querySelector("#hdrSub");
-    const mini = header.querySelector("#hdrMini");
-    const fill = header.querySelector("#hdrFill");
+  function handleTouchEnd(e, elem) {
+    elem.classList.remove("dragging");
+    elem.style.position = "";
+    elem.style.left = "";
+    elem.style.top = "";
+    elem.style.width = "";
+    
+    const touch = e.changedTouches[0];
+    let dropped = false;
+    
+    document.querySelectorAll(".dropZone").forEach(dz => {
+      dz.classList.remove("drag-over");
+      if(!dropped && dz.dataset.matched === "false" && isOver(touch.clientX, touch.clientY, dz)) {
+        checkMatch(elem.dataset.k, dz);
+        dropped = true;
+      }
+    });
+    
+    draggedElement = null;
+  }
 
-    if(sub) sub.textContent = `${l} / ${t} o‘rganildi`;
-    if(mini) mini.textContent = `${l} / ${t}`;
-    if(fill) fill.style.width = pct + "%";
-  };
-})();
+  function moveAt(x, y, elem) {
+    elem.style.position = "fixed";
+    elem.style.left = (x - touchOffsetX) + "px";
+    elem.style.top = (y - touchOffsetY) + "px";
+    elem.style.width = elem.offsetWidth + "px";
+  }
+
+  function isOver(x, y, elem) {
+    const rect = elem.getBoundingClientRect();
+    return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+  }
+
+  function startCountingGame(){
+    const area = document.getElementById("emojiArea");
+    const choices = document.getElementById("countChoices");
+    if(!area || !choices) return;
+
+    choices.innerHTML = "";
+    const target = Math.floor(Math.random() * 10) + 1;
+    area.innerText = "🍎".repeat(target);
+
+    const opts = new Set([target]);
+    while(opts.size < 4) opts.add(Math.floor(Math.random() * 10) + 1);
+
+    shuffle([...opts]).forEach(opt => {
+      const b = document.createElement("button");
+      b.className = "choiceBtn";
+      b.innerText = opt;
+      b.onclick = () => {
+        if(opt === target){
+          b.classList.add("good");
+          beepSuccess();
+          state.games.g3 = true;
+          save();
+          updateBadges();
+          setTimeout(startCountingGame, 750);
+        } else {
+          b.classList.add("bad");
+          beepFail();
+          setTimeout(() => b.classList.remove("bad"), 240);
+        }
+      };
+      choices.appendChild(b);
+    });
+  }
+
+  function stopBalloonGame(){
+    if(balloonInterval){
+      clearInterval(balloonInterval);
+      balloonInterval = null;
+    }
+  }
+
+  function startBalloonGame(){
+    stopBalloonGame();
+    const area = document.getElementById("balloonArea");
+    const task = document.getElementById("balloonTask");
+    if(!area || !task) return;
+
+    area.innerHTML = "";
+    let balloonScore = 0;
+    const needed = 5;
+    
+    const targetItem = items[Math.floor(Math.random() * items.length)];
+    let currentTarget = targetItem.n;
+    
+    const targetWord = getWord(targetItem);
+    task.innerText = UI[state.lang].find + " " + targetWord;
+
+    balloonInterval = setInterval(() => {
+      const b = document.createElement("div");
+      b.className = "balloon";
+      
+      const randomItem = items[Math.floor(Math.random() * items.length)];
+      b.innerText = randomItem.n;
+      b.dataset.n = randomItem.n;
+      
+      b.style.left = (Math.random() * 75 + 5) + '%';
+      b.style.animationDuration = (3 + Math.random() * 1.5) + 's';
+
+      b.onclick = () => {
+        if(parseInt(b.dataset.n) === currentTarget){
+          b.classList.add("pop");
+          beepSuccess();
+          balloonScore++;
+          
+          if(balloonScore >= needed){
+            stopBalloonGame();
+            state.games.g4 = true;
+            save();
+            updateBadges();
+            task.innerText = "🎉 " + UI[state.lang].wellDone + "!";
+          } else {
+            const newTarget = items[Math.floor(Math.random() * items.length)];
+            currentTarget = newTarget.n;
+            const newWord = getWord(newTarget);
+            task.innerText = UI[state.lang].find + " " + newWord;
+          }
+        } else {
+          beepFail();
+          b.style.background = "#ffcccc";
+        }
+      };
+
+      area.appendChild(b);
+      setTimeout(() => b.remove(), 4500);
+    }, 800);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    load();
+    
+    updateUI();
+    initHeader();
+    renderVocab();
+    updateBadges();
+    refreshHeader();
+  });
+</script>
+
+</body>
+</html>
