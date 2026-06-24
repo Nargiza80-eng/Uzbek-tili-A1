@@ -30,7 +30,7 @@
       padding:12px;
       min-height:100vh;
       -webkit-font-smoothing:antialiased;
-      overflow-x:hidden; /* Verhindert horizontalen Scroll */
+      overflow-x:hidden;
     }
     .app{
       width:100%;
@@ -39,9 +39,38 @@
       overflow-x:hidden;
     }
 
-    /* ===== MENÜ BUTTONS - KORRIGIERT ===== */
+    /* ===== SPRACH-SWITCHER ===== */
+    .lang-bar{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      margin:10px 0 6px;
+      padding:0 14px;
+    }
+    .lang-btn{
+      padding:8px 20px;
+      border-radius:20px;
+      border:2px solid var(--primary);
+      background:#fff;
+      color:var(--primary);
+      font-weight:800;
+      font-size:16px;
+      cursor:pointer;
+      transition:all 0.2s;
+    }
+    .lang-btn.active{
+      background:var(--primary);
+      color:#fff;
+      box-shadow:0 4px 0 #0047b3;
+    }
+    .lang-btn:active{
+      transform:translateY(2px);
+      box-shadow:0 2px 0 #0047b3;
+    }
+
+    /* ===== MENÜ BUTTONS ===== */
     .menuWrap{
-      margin-top:14px;
+      margin-top:10px;
       background:#F5F2E8;
       border-radius:var(--radius);
       padding:14px;
@@ -56,12 +85,12 @@
       width:100%;
     }
     .menuBtn{
-      min-height:86px; /* statt fixed height */
+      min-height:86px;
       border-radius:24px;
       border:none;
       cursor:pointer;
       font-weight:800;
-      font-size:clamp(16px, 4.5vw, 22px); /* Responsive Schrift */
+      font-size:clamp(15px, 4.5vw, 22px);
       display:flex;
       align-items:center;
       justify-content:center;
@@ -69,7 +98,7 @@
       background:#fff;
       color:var(--primary);
       box-shadow:0 8px 0 var(--shadowBtn);
-      padding:12px 8px; /* Padding statt fixed height */
+      padding:12px 8px;
       width:100%;
       text-align:center;
       line-height:1.2;
@@ -89,17 +118,12 @@
     }
     .menuEmoji{font-size:clamp(24px, 6vw, 32px); flex-shrink:0;}
 
-    /* Sehr kleine Bildschirme */
     @media(max-width:360px){
-      .menuBtn{gap:4px; padding:10px 6px; font-size:15px; min-height:70px;}
+      .menuBtn{gap:4px; padding:10px 6px; font-size:14px; min-height:70px;}
       .menuEmoji{font-size:22px;}
       .menu{gap:8px;}
       .menuWrap{padding:10px;}
-    }
-
-    /* Tablets */
-    @media(min-width:768px){
-      .menuBtn{font-size:20px; min-height:90px;}
+      .lang-btn{padding:6px 16px; font-size:14px;}
     }
 
     .panel{
@@ -145,7 +169,7 @@
     .learn-info{
       text-align:left;
       flex:1;
-      min-width:0; /* Verhindert Überlauf */
+      min-width:0;
     }
     .learn-main{
       font-weight:900;
@@ -317,7 +341,7 @@
       border-color:var(--error);
     }
 
-    /* Balloons - SCHNELLER */
+    /* Balloons */
     #balloonArea{
       position:relative;
       width:100%;
@@ -433,6 +457,12 @@
 
   <div id="lessonHeader"></div>
 
+  <!-- SPRACH-SWITCHER -->
+  <div class="lang-bar" id="langBar">
+    <button class="lang-btn active" id="btnUz" onclick="switchLang('uz')">UZ</button>
+    <button class="lang-btn" id="btnEn" onclick="switchLang('en')">EN</button>
+  </div>
+
   <div class="app">
 
     <!-- Menü -->
@@ -453,12 +483,12 @@
       </div>
     </div>
 
-    <!-- O'rganish -->
+    <!-- O'rganish / Learn -->
     <div class="panel" id="panel-learn">
       <div class="learn-grid" id="vocabGrid"></div>
     </div>
 
-    <!-- Sanab ko'r -->
+    <!-- Sanab ko'r / Counting -->
     <div class="panel" id="panel-count">
       <div class="quiz-card">
         <p class="hint" id="hintCount">Nechta olma bor?</p>
@@ -472,7 +502,7 @@
       </div>
     </div>
 
-    <!-- Juftini top -->
+    <!-- Juftini top / Matching -->
     <div class="panel" id="panel-match">
       <div style="background:#fff;border-radius:25px;padding:20px;box-shadow:0 10px 0 var(--shadowSoft);">
         <h2 style="margin:0 0 10px;font-size:clamp(18px, 5vw, 22px);word-break:break-word;">
@@ -495,7 +525,7 @@
       </div>
     </div>
 
-    <!-- Pufakchalar -->
+    <!-- Pufakchalar / Bubbles -->
     <div class="panel" id="panel-balloon">
       <div style="background:#fff;border-radius:25px;padding:20px;box-shadow:0 10px 0 var(--shadowSoft);">
         <h2 style="margin:0 0 10px;font-size:clamp(18px, 5vw, 22px);word-break:break-word;">
@@ -519,8 +549,9 @@
   </div>
 
 <script>
-  const LESSON_ID = "lesson2_sonlar_v7";
+  const LESSON_ID = "lesson2_sonlar_v9";
 
+  // Vokabeln mit beide Sprachen
   const items = [
     {k:"21", n:1, uz:"bir", en:"one", emoji:"🥇"},
     {k:"22", n:2, uz:"ikki", en:"two", emoji:"🦆"},
@@ -534,6 +565,7 @@
     {k:"30", n:10, uz:"o'n", en:"ten", emoji:"🦶"},
   ];
 
+  // Alle UI-Texte für beide Sprachen
   const UI = {
     uz: {
       learn: "O'rganish", count: "Sanab ko'r", match: "Juftini top", balloon: "Pufakchalar",
@@ -582,18 +614,30 @@
     return Object.values(state.learned).filter(Boolean).length;
   }
 
+  // Hilfsfunktion: Wort in aktueller Sprache holen
+  function getWord(item) {
+    return state.lang === "uz" ? item.uz : item.en;
+  }
+
+  // Hilfsfunktion: Untertitel in aktueller Sprache holen (andere Sprache)
+  function getSubWord(item) {
+    return state.lang === "uz" ? item.en : item.uz;
+  }
+
   function initHeader(){
     const title = state.lang === "uz" ? "2-dars: Sonlar" : "Lesson 2: Numbers";
-    renderLessonHeader({
-      mountId: "lessonHeader",
-      title: title,
-      total: 10,
-      learned: learnedCount(),
-      lang: state.lang,
-      homeHref: "index.html",
-      onBookClick: () => openSection("learn"),
-      onLang: (l) => setLang(l)
-    });
+    if (typeof renderLessonHeader === "function") {
+      renderLessonHeader({
+        mountId: "lessonHeader",
+        title: title,
+        total: 10,
+        learned: learnedCount(),
+        lang: state.lang,
+        homeHref: "index.html",
+        onBookClick: () => openSection("learn"),
+        onLang: (l) => switchLang(l)
+      });
+    }
   }
 
   function refreshHeader(){
@@ -602,13 +646,21 @@
     }
   }
 
-  function setLang(l){
+  /* ===== SPRACHUMSCHALTUNG ===== */
+  function switchLang(l){
     state.lang = l;
     save();
+    
+    // Buttons visuell aktualisieren
+    document.getElementById("btnUz").classList.toggle("active", l === "uz");
+    document.getElementById("btnEn").classList.toggle("active", l === "en");
+    
+    // Alles neu laden
     initHeader();
     updateUI();
     renderVocab();
     
+    // Aktive Spiele neu initialisieren
     if(document.getElementById("panel-match").classList.contains("show")){
       initMatchingGame();
     }
@@ -706,7 +758,7 @@
     const it = items.find(x=>x.k===key);
     if(!it) return;
 
-    const text = (state.lang==="uz") ? it.uz : it.en;
+    const text = getWord(it);  // <-- KORRIGIERT: Nutzt aktuelle Sprache
     const langCode = (state.lang==="uz") ? "uz-UZ" : "en-US";
 
     try{
@@ -731,15 +783,8 @@
     const grid = document.getElementById("vocabGrid");
     
     grid.innerHTML = items.map(it=>{
-      let mainWord, subWord;
-      
-      if(state.lang === "uz"){
-        mainWord = it.uz;
-        subWord = it.en;
-      } else {
-        mainWord = it.en;
-        subWord = it.uz;
-      }
+      const mainWord = getWord(it);      // <-- KORRIGIERT
+      const subWord = getSubWord(it);    // <-- KORRIGIERT
       
       const st = starsText(state.stars[it.k]||0);
       
@@ -768,7 +813,7 @@
     return a;
   }
 
-  /* ==================== DRAG & DROP ==================== */
+  /* ==================== DRAG & DROP (MATCHING) ==================== */
   function initMatchingGame(){
     const nCol = document.getElementById("dragNums");
     const wCol = document.getElementById("dropWords");
@@ -782,12 +827,12 @@
     matchesCorrect = 0;
     matchesTotal = pool.length;
 
-    // Drop-Zonen (Wörter)
+    // Drop-Zonen (Wörter in aktueller Sprache)
     const shuffledWords = shuffle([...pool]);
     shuffledWords.forEach(it => {
       const dz = document.createElement("div");
       dz.className = "dropZone";
-      dz.innerText = (state.lang === "uz") ? it.uz : it.en;
+      dz.innerText = getWord(it);  // <-- KORRIGIERT: Zeigt Wort in aktueller Sprache
       dz.dataset.k = it.k;
       dz.dataset.matched = "false";
       
@@ -802,7 +847,7 @@
       wCol.appendChild(dz);
     });
 
-    // Drag-Elemente (Zahlen mit kleinem Emoji)
+    // Drag-Elemente (Zahlen)
     pool.forEach(it => {
       const d = document.createElement("div");
       d.className = "dragItem";
@@ -923,7 +968,7 @@
     return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
   }
 
-  /* ==================== COUNTING ==================== */
+  /* ==================== COUNTING (ZÄHLEN) ==================== */
   function startCountingGame(){
     const area = document.getElementById("emojiArea");
     const choices = document.getElementById("countChoices");
@@ -958,7 +1003,7 @@
     });
   }
 
-  /* ==================== BALLOONS - SCHNELLER ==================== */
+  /* ==================== BALLOONS (BALLONS) ==================== */
   function stopBalloonGame(){
     if(balloonInterval){
       clearInterval(balloonInterval);
@@ -979,10 +1024,9 @@
     const targetItem = items[Math.floor(Math.random() * items.length)];
     let currentTarget = targetItem.n;
     
-    const targetWord = (state.lang === "uz") ? targetItem.uz : targetItem.en;
+    const targetWord = getWord(targetItem);  // <-- KORRIGIERT: Wort in aktueller Sprache
     task.innerText = UI[state.lang].find + " " + targetWord;
 
-    // SCHNELLER: 800ms statt 1500ms
     balloonInterval = setInterval(() => {
       const b = document.createElement("div");
       b.className = "balloon";
@@ -992,7 +1036,6 @@
       b.dataset.n = randomItem.n;
       
       b.style.left = (Math.random() * 75 + 5) + '%';
-      // Schnellere Animation
       b.style.animationDuration = (3 + Math.random() * 1.5) + 's';
 
       b.onclick = () => {
@@ -1010,7 +1053,7 @@
           } else {
             const newTarget = items[Math.floor(Math.random() * items.length)];
             currentTarget = newTarget.n;
-            const newWord = (state.lang === "uz") ? newTarget.uz : newTarget.en;
+            const newWord = getWord(newTarget);  // <-- KORRIGIERT
             task.innerText = UI[state.lang].find + " " + newWord;
           }
         } else {
@@ -1020,14 +1063,18 @@
       };
 
       area.appendChild(b);
-      // Schneller entfernen
       setTimeout(() => b.remove(), 4500);
-    }, 800); // 800ms statt 1500ms
+    }, 800);
   }
 
   /* ==================== INIT ==================== */
   document.addEventListener("DOMContentLoaded", () => {
     load();
+    
+    // Setze aktive Sprach-Buttons
+    document.getElementById("btnUz").classList.toggle("active", state.lang === "uz");
+    document.getElementById("btnEn").classList.toggle("active", state.lang === "en");
+    
     updateUI();
     initHeader();
     renderVocab();
@@ -1038,5 +1085,3 @@
 
 </body>
 </html>
-
-
