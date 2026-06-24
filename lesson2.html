@@ -39,38 +39,9 @@
       overflow-x:hidden;
     }
 
-    /* ===== SPRACH-SWITCHER ===== */
-    .lang-bar{
-      display:flex;
-      justify-content:center;
-      gap:10px;
-      margin:10px 0 6px;
-      padding:0 14px;
-    }
-    .lang-btn{
-      padding:8px 20px;
-      border-radius:20px;
-      border:2px solid var(--primary);
-      background:#fff;
-      color:var(--primary);
-      font-weight:800;
-      font-size:16px;
-      cursor:pointer;
-      transition:all 0.2s;
-    }
-    .lang-btn.active{
-      background:var(--primary);
-      color:#fff;
-      box-shadow:0 4px 0 #0047b3;
-    }
-    .lang-btn:active{
-      transform:translateY(2px);
-      box-shadow:0 2px 0 #0047b3;
-    }
-
     /* ===== MENÜ BUTTONS ===== */
     .menuWrap{
-      margin-top:10px;
+      margin-top:14px;
       background:#F5F2E8;
       border-radius:var(--radius);
       padding:14px;
@@ -123,7 +94,6 @@
       .menuEmoji{font-size:22px;}
       .menu{gap:8px;}
       .menuWrap{padding:10px;}
-      .lang-btn{padding:6px 16px; font-size:14px;}
     }
 
     .panel{
@@ -457,12 +427,6 @@
 
   <div id="lessonHeader"></div>
 
-  <!-- SPRACH-SWITCHER -->
-  <div class="lang-bar" id="langBar">
-    <button class="lang-btn active" id="btnUz" onclick="switchLang('uz')">UZ</button>
-    <button class="lang-btn" id="btnEn" onclick="switchLang('en')">EN</button>
-  </div>
-
   <div class="app">
 
     <!-- Menü -->
@@ -483,12 +447,12 @@
       </div>
     </div>
 
-    <!-- O'rganish / Learn -->
+    <!-- O'rganish -->
     <div class="panel" id="panel-learn">
       <div class="learn-grid" id="vocabGrid"></div>
     </div>
 
-    <!-- Sanab ko'r / Counting -->
+    <!-- Sanab ko'r -->
     <div class="panel" id="panel-count">
       <div class="quiz-card">
         <p class="hint" id="hintCount">Nechta olma bor?</p>
@@ -502,7 +466,7 @@
       </div>
     </div>
 
-    <!-- Juftini top / Matching -->
+    <!-- Juftini top -->
     <div class="panel" id="panel-match">
       <div style="background:#fff;border-radius:25px;padding:20px;box-shadow:0 10px 0 var(--shadowSoft);">
         <h2 style="margin:0 0 10px;font-size:clamp(18px, 5vw, 22px);word-break:break-word;">
@@ -525,7 +489,7 @@
       </div>
     </div>
 
-    <!-- Pufakchalar / Bubbles -->
+    <!-- Pufakchalar -->
     <div class="panel" id="panel-balloon">
       <div style="background:#fff;border-radius:25px;padding:20px;box-shadow:0 10px 0 var(--shadowSoft);">
         <h2 style="margin:0 0 10px;font-size:clamp(18px, 5vw, 22px);word-break:break-word;">
@@ -549,9 +513,8 @@
   </div>
 
 <script>
-  const LESSON_ID = "lesson2_sonlar_v9";
+  const LESSON_ID = "lesson2_sonlar_v10";
 
-  // Vokabeln mit beide Sprachen
   const items = [
     {k:"21", n:1, uz:"bir", en:"one", emoji:"🥇"},
     {k:"22", n:2, uz:"ikki", en:"two", emoji:"🦆"},
@@ -565,7 +528,6 @@
     {k:"30", n:10, uz:"o'n", en:"ten", emoji:"🦶"},
   ];
 
-  // Alle UI-Texte für beide Sprachen
   const UI = {
     uz: {
       learn: "O'rganish", count: "Sanab ko'r", match: "Juftini top", balloon: "Pufakchalar",
@@ -614,12 +576,10 @@
     return Object.values(state.learned).filter(Boolean).length;
   }
 
-  // Hilfsfunktion: Wort in aktueller Sprache holen
   function getWord(item) {
     return state.lang === "uz" ? item.uz : item.en;
   }
 
-  // Hilfsfunktion: Untertitel in aktueller Sprache holen (andere Sprache)
   function getSubWord(item) {
     return state.lang === "uz" ? item.en : item.uz;
   }
@@ -646,21 +606,15 @@
     }
   }
 
-  /* ===== SPRACHUMSCHALTUNG ===== */
+  /* ===== SPRACHUMSCHALTUNG (nur über Header-Buttons) ===== */
   function switchLang(l){
     state.lang = l;
     save();
     
-    // Buttons visuell aktualisieren
-    document.getElementById("btnUz").classList.toggle("active", l === "uz");
-    document.getElementById("btnEn").classList.toggle("active", l === "en");
-    
-    // Alles neu laden
     initHeader();
     updateUI();
     renderVocab();
     
-    // Aktive Spiele neu initialisieren
     if(document.getElementById("panel-match").classList.contains("show")){
       initMatchingGame();
     }
@@ -686,6 +640,8 @@
     document.getElementById("btnClose").innerText = t.btnClose;
     document.getElementById("btnClose2").innerText = t.btnClose2;
     document.getElementById("btnNew").innerText = t.btnNew;
+    document.getElementById("titleMatch").innerText = t.match;       // KORRIGIERT
+    document.getElementById("titleBalloon").innerText = t.balloon;   // KORRIGIERT
   }
 
   function closePanels(){
@@ -758,7 +714,7 @@
     const it = items.find(x=>x.k===key);
     if(!it) return;
 
-    const text = getWord(it);  // <-- KORRIGIERT: Nutzt aktuelle Sprache
+    const text = getWord(it);
     const langCode = (state.lang==="uz") ? "uz-UZ" : "en-US";
 
     try{
@@ -783,8 +739,8 @@
     const grid = document.getElementById("vocabGrid");
     
     grid.innerHTML = items.map(it=>{
-      const mainWord = getWord(it);      // <-- KORRIGIERT
-      const subWord = getSubWord(it);    // <-- KORRIGIERT
+      const mainWord = getWord(it);
+      const subWord = getSubWord(it);
       
       const st = starsText(state.stars[it.k]||0);
       
@@ -813,7 +769,7 @@
     return a;
   }
 
-  /* ==================== DRAG & DROP (MATCHING) ==================== */
+  /* ==================== DRAG & DROP ==================== */
   function initMatchingGame(){
     const nCol = document.getElementById("dragNums");
     const wCol = document.getElementById("dropWords");
@@ -827,12 +783,11 @@
     matchesCorrect = 0;
     matchesTotal = pool.length;
 
-    // Drop-Zonen (Wörter in aktueller Sprache)
     const shuffledWords = shuffle([...pool]);
     shuffledWords.forEach(it => {
       const dz = document.createElement("div");
       dz.className = "dropZone";
-      dz.innerText = getWord(it);  // <-- KORRIGIERT: Zeigt Wort in aktueller Sprache
+      dz.innerText = getWord(it);
       dz.dataset.k = it.k;
       dz.dataset.matched = "false";
       
@@ -847,7 +802,6 @@
       wCol.appendChild(dz);
     });
 
-    // Drag-Elemente (Zahlen)
     pool.forEach(it => {
       const d = document.createElement("div");
       d.className = "dragItem";
@@ -968,7 +922,7 @@
     return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
   }
 
-  /* ==================== COUNTING (ZÄHLEN) ==================== */
+  /* ==================== COUNTING ==================== */
   function startCountingGame(){
     const area = document.getElementById("emojiArea");
     const choices = document.getElementById("countChoices");
@@ -1003,7 +957,7 @@
     });
   }
 
-  /* ==================== BALLOONS (BALLONS) ==================== */
+  /* ==================== BALLOONS ==================== */
   function stopBalloonGame(){
     if(balloonInterval){
       clearInterval(balloonInterval);
@@ -1024,7 +978,7 @@
     const targetItem = items[Math.floor(Math.random() * items.length)];
     let currentTarget = targetItem.n;
     
-    const targetWord = getWord(targetItem);  // <-- KORRIGIERT: Wort in aktueller Sprache
+    const targetWord = getWord(targetItem);
     task.innerText = UI[state.lang].find + " " + targetWord;
 
     balloonInterval = setInterval(() => {
@@ -1053,7 +1007,7 @@
           } else {
             const newTarget = items[Math.floor(Math.random() * items.length)];
             currentTarget = newTarget.n;
-            const newWord = getWord(newTarget);  // <-- KORRIGIERT
+            const newWord = getWord(newTarget);
             task.innerText = UI[state.lang].find + " " + newWord;
           }
         } else {
@@ -1070,10 +1024,6 @@
   /* ==================== INIT ==================== */
   document.addEventListener("DOMContentLoaded", () => {
     load();
-    
-    // Setze aktive Sprach-Buttons
-    document.getElementById("btnUz").classList.toggle("active", state.lang === "uz");
-    document.getElementById("btnEn").classList.toggle("active", state.lang === "en");
     
     updateUI();
     initHeader();
