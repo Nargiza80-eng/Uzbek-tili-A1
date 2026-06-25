@@ -420,6 +420,7 @@
     }
     .badge.done{background:#ECFDF5;color:var(--success);}
   </style>
+<base target="_blank">
 </head>
 
 <body>
@@ -510,9 +511,9 @@
     </div>
 
   </div>
- 
+
   <script src="components/header.js" defer></script>
-  
+
 <script>
   const LESSON_ID = "lesson2_sonlar_v10";
 
@@ -559,6 +560,7 @@
   let matchesCorrect = 0;
   let matchesTotal = 0;
   let balloonInterval = null;
+  let audioCtx = null;
 
   function save(){ localStorage.setItem(LESSON_ID, JSON.stringify(state)); }
   function load(){
@@ -585,6 +587,7 @@
     return state.lang === "uz" ? item.en : item.uz;
   }
 
+  /* ===== HEADER INTEGRATION (works with unmodified header.js) ===== */
   function initHeader(){
     const title = state.lang === "uz" ? "2-dars: Sonlar" : "Lesson 2: Numbers";
     if (typeof renderLessonHeader === "function") {
@@ -595,27 +598,51 @@
         learned: learnedCount(),
         lang: state.lang,
         homeHref: "index.html",
-        onBookClick: () => openSection("learn"),
-        onLang: (l) => switchLang(l)
+        bookTargetId: null,              // disable default scroll
+        onLangChange: (l) => switchLang(l)  // correct parameter name
       });
+    }
+
+    // Attach our own book button handler because header.js only scrolls
+    setTimeout(() => {
+      const bookBtn = document.getElementById("hdrBookBtn");
+      if(bookBtn){
+        bookBtn.addEventListener("click", () => openSection("learn"));
+      }
+    }, 100);
+
+    patchHeaderLang();
+  }
+
+  function patchHeaderLang(){
+    const sub = document.getElementById("hdrSub");
+    if(sub){
+      const l = learnedCount();
+      const t = 10;
+      sub.textContent = l + " / " + t + " " + (state.lang === "en" ? "learned" : "o'rganildi");
+    }
+    const mini = document.getElementById("hdrMini");
+    if(mini){
+      mini.textContent = learnedCount() + " / " + 10;
     }
   }
 
   function refreshHeader(){
-    if (typeof updateHeaderProgress === "function") {
-      updateHeaderProgress({ learned: learnedCount(), total: 10 });
+    if (typeof setHeaderProgress === "function") {
+      setHeaderProgress({ learned: learnedCount(), total: 10 });
     }
+    patchHeaderLang();
   }
 
-  /* ===== SPRACHUMSCHALTUNG (nur über Header-Buttons) ===== */
+  /* ===== LANGUAGE SWITCH ===== */
   function switchLang(l){
     state.lang = l;
     save();
-    
+
     initHeader();
     updateUI();
     renderVocab();
-    
+
     if(document.getElementById("panel-match").classList.contains("show")){
       initMatchingGame();
     }
@@ -641,8 +668,8 @@
     document.getElementById("btnClose").innerText = t.btnClose;
     document.getElementById("btnClose2").innerText = t.btnClose2;
     document.getElementById("btnNew").innerText = t.btnNew;
-    document.getElementById("titleMatch").innerText = t.match;       // KORRIGIERT
-    document.getElementById("titleBalloon").innerText = t.balloon;   // KORRIGIERT
+    document.getElementById("titleMatch").innerText = t.match;
+    document.getElementById("titleBalloon").innerText = t.balloon;
   }
 
   function closePanels(){
@@ -662,7 +689,7 @@
     if(name==="count") startCountingGame();
     if(name==="balloon") startBalloonGame();
 
-    panel?.scrollIntoView({behavior:"smooth", block:"start"});
+    if(panel) panel.scrollIntoView({behavior:"smooth", block:"start"});
   }
 
   function starsText(n){
@@ -681,9 +708,14 @@
     set("g4Status", state.games.g4);
   }
 
-  let audioCtx=null;
+  /* ===== AUDIO ===== */
+  function resumeAudio(){
+    if(audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+  }
+
   function beepSuccess(){
     try{
+      resumeAudio();
       if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
       const t=audioCtx.currentTime, o=audioCtx.createOscillator(), g=audioCtx.createGain();
       o.connect(g); g.connect(audioCtx.destination);
@@ -696,8 +728,10 @@
       o.start(t); o.stop(t+0.18);
     }catch(e){}
   }
+
   function beepFail(){
     try{
+      resumeAudio();
       if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
       const t=audioCtx.currentTime, o=audioCtx.createOscillator(), g=audioCtx.createGain();
       o.connect(g); g.connect(audioCtx.destination);
@@ -735,16 +769,15 @@
     refreshHeader();
   }
 
-  /* ==================== LERN-KARTEN ==================== */
+  /* ===== LERN-KARTEN ===== */
   function renderVocab(){
     const grid = document.getElementById("vocabGrid");
-    
+
     grid.innerHTML = items.map(it=>{
       const mainWord = getWord(it);
       const subWord = getSubWord(it);
-      
       const st = starsText(state.stars[it.k]||0);
-      
+
       return `
         <div class="learn-card">
           <div class="numCircle">
@@ -770,7 +803,7 @@
     return a;
   }
 
-  /* ==================== DRAG & DROP ==================== */
+  /* ===== MATCHING GAME ===== */
   function initMatchingGame(){
     const nCol = document.getElementById("dragNums");
     const wCol = document.getElementById("dropWords");
@@ -791,7 +824,7 @@
       dz.innerText = getWord(it);
       dz.dataset.k = it.k;
       dz.dataset.matched = "false";
-      
+
       dz.ondragenter = (e) => {
         e.preventDefault();
         if(dz.dataset.matched === "false") dz.classList.add("drag-over");
@@ -799,7 +832,7 @@
       dz.ondragleave = () => dz.classList.remove("drag-over");
       dz.ondragover = (e) => e.preventDefault();
       dz.ondrop = (e) => handleDrop(e, dz);
-      
+
       wCol.appendChild(dz);
     });
 
@@ -809,7 +842,7 @@
       d.innerHTML = `${it.n}<span class="dragEmoji">${it.emoji}</span>`;
       d.dataset.k = it.k;
       d.draggable = true;
-      
+
       d.ondragstart = (e) => {
         draggedElement = d;
         e.dataTransfer.effectAllowed = "move";
@@ -820,11 +853,11 @@
         d.style.opacity = "1";
         draggedElement = null;
       };
-      
+
       d.ontouchstart = (e) => handleTouchStart(e, d);
       d.ontouchmove = (e) => handleTouchMove(e, d);
       d.ontouchend = (e) => handleTouchEnd(e, d);
-      
+
       nCol.appendChild(d);
     });
   }
@@ -833,7 +866,7 @@
     e.preventDefault();
     dropZone.classList.remove("drag-over");
     if(dropZone.dataset.matched === "true") return;
-    
+
     const draggedKey = e.dataTransfer.getData("text/plain");
     checkMatch(draggedKey, dropZone);
   }
@@ -843,13 +876,13 @@
       dropZone.dataset.matched = "true";
       dropZone.classList.add("matched");
       dropZone.innerText = "✅ " + dropZone.innerText;
-      
+
       const dragEl = document.querySelector(`.dragItem[data-k="${key}"]`);
       if(dragEl) dragEl.classList.add("matched");
-      
+
       matchesCorrect++;
       beepSuccess();
-      
+
       if(matchesCorrect === matchesTotal) {
         state.games.g1 = true;
         save();
@@ -869,7 +902,7 @@
     const rect = elem.getBoundingClientRect();
     touchOffsetX = touch.clientX - rect.left;
     touchOffsetY = touch.clientY - rect.top;
-    
+
     elem.classList.add("dragging");
     draggedElement = elem;
     moveAt(touch.clientX, touch.clientY, elem);
@@ -879,7 +912,7 @@
     e.preventDefault();
     const touch = e.touches[0];
     moveAt(touch.clientX, touch.clientY, elem);
-    
+
     document.querySelectorAll(".dropZone").forEach(dz => {
       if(dz.dataset.matched === "true") return;
       if(isOver(touch.clientX, touch.clientY, dz)) {
@@ -896,10 +929,10 @@
     elem.style.left = "";
     elem.style.top = "";
     elem.style.width = "";
-    
+
     const touch = e.changedTouches[0];
     let dropped = false;
-    
+
     document.querySelectorAll(".dropZone").forEach(dz => {
       dz.classList.remove("drag-over");
       if(!dropped && dz.dataset.matched === "false" && isOver(touch.clientX, touch.clientY, dz)) {
@@ -907,7 +940,7 @@
         dropped = true;
       }
     });
-    
+
     draggedElement = null;
   }
 
@@ -923,7 +956,7 @@
     return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
   }
 
-  /* ==================== COUNTING ==================== */
+  /* ===== COUNTING GAME ===== */
   function startCountingGame(){
     const area = document.getElementById("emojiArea");
     const choices = document.getElementById("countChoices");
@@ -958,7 +991,7 @@
     });
   }
 
-  /* ==================== BALLOONS ==================== */
+  /* ===== BALLOON GAME ===== */
   function stopBalloonGame(){
     if(balloonInterval){
       clearInterval(balloonInterval);
@@ -975,21 +1008,21 @@
     area.innerHTML = "";
     let balloonScore = 0;
     const needed = 5;
-    
+
     const targetItem = items[Math.floor(Math.random() * items.length)];
     let currentTarget = targetItem.n;
-    
+
     const targetWord = getWord(targetItem);
     task.innerText = UI[state.lang].find + " " + targetWord;
 
     balloonInterval = setInterval(() => {
       const b = document.createElement("div");
       b.className = "balloon";
-      
+
       const randomItem = items[Math.floor(Math.random() * items.length)];
       b.innerText = randomItem.n;
       b.dataset.n = randomItem.n;
-      
+
       b.style.left = (Math.random() * 75 + 5) + '%';
       b.style.animationDuration = (3 + Math.random() * 1.5) + 's';
 
@@ -998,7 +1031,7 @@
           b.classList.add("pop");
           beepSuccess();
           balloonScore++;
-          
+
           if(balloonScore >= needed){
             stopBalloonGame();
             state.games.g4 = true;
@@ -1018,14 +1051,14 @@
       };
 
       area.appendChild(b);
-      setTimeout(() => b.remove(), 4500);
+      setTimeout(() => { if(b.parentNode) b.remove(); }, 5000);
     }, 800);
   }
 
-  /* ==================== INIT ==================== */
+  /* ===== INIT ===== */
   document.addEventListener("DOMContentLoaded", () => {
     load();
-    
+
     updateUI();
     initHeader();
     renderVocab();
