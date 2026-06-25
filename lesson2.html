@@ -512,7 +512,7 @@
 
   </div>
 
-  <script src="components/header.js" defer></script>
+  <script src="components/header.js"></script>
 
 <script>
   const LESSON_ID = "lesson2_sonlar_v10";
@@ -587,7 +587,7 @@
     return state.lang === "uz" ? item.en : item.uz;
   }
 
-  /* ===== HEADER INTEGRATION (works with unmodified header.js) ===== */
+  /* ===== HEADER (exakt wie Lesson 1) ===== */
   function initHeader(){
     const title = state.lang === "uz" ? "2-dars: Sonlar" : "Lesson 2: Numbers";
     if (typeof renderLessonHeader === "function") {
@@ -598,32 +598,9 @@
         learned: learnedCount(),
         lang: state.lang,
         homeHref: "index.html",
-        bookTargetId: null,              // disable default scroll
-        onLangChange: (l) => switchLang(l)  // correct parameter name
+        bookTargetId: "panel-learn",
+        onLangChange: (l) => setLang(l)
       });
-    }
-
-    // Attach our own book button handler because header.js only scrolls
-    setTimeout(() => {
-      const bookBtn = document.getElementById("hdrBookBtn");
-      if(bookBtn){
-        bookBtn.addEventListener("click", () => openSection("learn"));
-      }
-    }, 100);
-
-    patchHeaderLang();
-  }
-
-  function patchHeaderLang(){
-    const sub = document.getElementById("hdrSub");
-    if(sub){
-      const l = learnedCount();
-      const t = 10;
-      sub.textContent = l + " / " + t + " " + (state.lang === "en" ? "learned" : "o'rganildi");
-    }
-    const mini = document.getElementById("hdrMini");
-    if(mini){
-      mini.textContent = learnedCount() + " / " + 10;
     }
   }
 
@@ -631,14 +608,12 @@
     if (typeof setHeaderProgress === "function") {
       setHeaderProgress({ learned: learnedCount(), total: 10 });
     }
-    patchHeaderLang();
   }
 
-  /* ===== LANGUAGE SWITCH ===== */
-  function switchLang(l){
+  /* ===== LANGUAGE SWITCH (exakt wie Lesson 1) ===== */
+  function setLang(l){
     state.lang = l;
     save();
-
     initHeader();
     updateUI();
     renderVocab();
@@ -1058,7 +1033,6 @@
   /* ===== INIT ===== */
   document.addEventListener("DOMContentLoaded", () => {
     load();
-
     updateUI();
     initHeader();
     renderVocab();
