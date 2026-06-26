@@ -2,275 +2,273 @@
 <html lang="uz">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3-dars – Hayvonlar</title>
-<style>
- :root{
-  --headerGrad1:#FFDEE9;
-  --headerGrad2:#B5FFFC;
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>3-dars: Hayvonlar</title>
 
-  --blue:#2F6BFF;
-  --blueDark:#1E40AF;
+  <link rel="stylesheet" href="components/header.css">
 
-  --ink:#0F172A;
-  --muted:#475569;
+  <style>
+    :root{
+      --bg:#eaf6ff;
+      --bg2:#fff2cc;
+      --primary:#0066ff;
+      --success:#00c853;
+      --sun:#ffcc00;
+      --shadowSoft:#cfe3ff;
+      --shadowBtn:#b8c2cc;
+      --radius:25px;
+    }
 
-  --track:#E5E7EB;
-}
+    *{box-sizing:border-box; touch-action:manipulation; font-style:normal; margin:0; padding:0;}
+    body{
+      margin:0;
+      font-family:system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background:linear-gradient(180deg, var(--bg2) 0%, var(--bg) 55%, #fff 100%);
+      color:#2d3436;
+      padding:12px;
+      min-height:100vh;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+    }
+    .app{
+      width:100%;
+      max-width:520px;
+      margin:0 auto;
+      overflow-x:hidden;
+    }
 
-.top{
-  background:linear-gradient(135deg,var(--headerGrad1),var(--headerGrad2));
-  border-radius:30px;
-  box-shadow:0 16px 34px rgba(0,0,0,0.10);
-  padding:18px 16px 16px;
-  margin-bottom:16px;
-}
+    .learn-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
+    }
+    .learn-card{
+      background:#fff;
+      border-radius:var(--radius);
+      padding:20px;
+      display:flex;
+      align-items:center;
+      gap:16px;
+      box-shadow:0 8px 0 var(--shadowSoft);
+      border:3px solid #fff;
+    }
+    .learn-emoji{
+      font-size:52px;
+      width:70px;
+      text-align:center;
+      flex-shrink:0;
+    }
+    .learn-info{
+      text-align:left;
+      flex:1;
+      min-width:0;
+    }
+    .learn-main{
+      font-weight:900;
+      font-size:24px;
+      color:#2d3436;
+      word-break:break-word;
+    }
+    .learn-sub{
+      color:#636e72;
+      font-size:16px;
+      margin-top:2px;
+      word-break:break-word;
+    }
+    .learn-pr{
+      color:#888;
+      font-size:13px;
+      margin-top:2px;
+      font-weight:700;
+    }
+    .stars{
+      margin-top:6px;
+      font-weight:900;
+      color:#f39c12;
+      font-size:18px;
+    }
+    .btn-audio{
+      background:var(--sun);
+      border:none;
+      width:56px;
+      height:56px;
+      border-radius:50%;
+      font-size:24px;
+      cursor:pointer;
+      box-shadow:0 6px 0 #cc7a00;
+      flex-shrink:0;
+    }
+    .btn-audio:active{
+      transform:translateY(3px);
+      box-shadow:0 3px 0 #cc7a00;
+    }
 
-.titleRow{
-  display:grid;
-  grid-template-columns:72px 1fr 72px;
-  align-items:center;
-}
-
-.iconBtn{
-  font-size:46px;
-  background:none;
-  border:none;
-  cursor:pointer;
-}
-
-.titleWrap{
-  text-align:center;
-}
-
-.title{
-  margin:0;
-  font-size:30px;
-  font-weight:1000;
-  color:var(--ink);
-}
-
-.subtitle{
-  margin-top:4px;
-  font-size:18px;
-  font-weight:900;
-  color:var(--muted);
-}
-
-.track{
-  margin-top:10px;
-  height:16px;
-  background:var(--track);
-  border-radius:999px;
-  overflow:hidden;
-}
-
-.fill{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,#22C55E,#4ADE80,#34D399);
-  transition:width .35s ease;
-}
-
-.progressText{
-  text-align:center;
-  font-weight:1000;
-  font-size:18px;
-  margin-top:6px;
-}
-
-.langRow{
-  display:flex;
-  justify-content:center;
-  gap:14px;
-  margin-top:10px;
-}
-
-.langBtn{
-  width:130px;
-  padding:10px 0;
-  border:none;
-  border-radius:999px;
-  font-weight:1000;
-  font-size:18px;
-  background:#E5E7EB;
-  color:var(--blueDark);
-  cursor:pointer;
-}
-
-.langBtn.active{
-  background:var(--blue);
-  color:white;
-  box-shadow: inset 0 -6px 0 rgba(0,0,0,0.18);
-}
+    @media(max-width:375px){
+      .learn-emoji{font-size:44px; width:60px;}
+      .learn-main{font-size:20px;}
+      .learn-sub{font-size:14px;}
+      .btn-audio{width:48px; height:48px; font-size:20px;}
+    }
   </style>
-  
-<div class="top">
-  <div class="titleRow">
-
-    <!-- 🏠 LEFT -->
-    <button class="iconBtn" onclick="goHome()">🏠</button>
-
-    <!-- TITLE -->
-    <div class="titleWrap">
-      <h1 class="title">2-dars: Sonlar</h1>
-      <div class="subtitle">Birga o‘rganamiz 😊</div>
-    </div>
-
-    <!-- 📖 RIGHT -->
-    <button class="iconBtn" onclick="openLearn()">📖</button>
-
-  </div>
-
-  <!-- Progress -->
-  <div class="track">
-    <div class="fill" id="progressFill"></div>
-  </div>
-
-  <div class="progressText" id="progressText">0 / 10</div>
-
-  <!-- UZ / EN -->
-  <div class="langRow">
-    <button id="btn-uz" class="langBtn active" onclick="setLang('uz')">UZ</button>
-    <button id="btn-en" class="langBtn" onclick="setLang('en')">EN</button>
-  </div>
-</div>
-  
-  <script>
-    let currentLang = "uz";
-    function setLang(lang){
-      currentLang = lang;
-      document.querySelectorAll('.uz').forEach(e => e.style.display = (lang==='uz')?'block':'none');
-      document.querySelectorAll('.en').forEach(e => e.style.display = (lang==='en')?'block':'none');
-      document.getElementById('btn-uz').classList.toggle('active', lang==='uz');
-      document.getElementById('btn-en').classList.toggle('active', lang==='en');
-    }
-    function play(key){
-      const id = (currentLang === "en") ? ("en_" + key) : ("uz_" + key);
-      const a = document.getElementById(id);
-      if(!a){ alert("Audio topilmadi: " + id); return; }
-      a.currentTime = 0;
-      const p = a.play();
-      if(p && typeof p.catch === "function"){ p.catch(()=>alert("Audio o‘ynamadi. Fayl nomi/papka tekshiring.")); }
-    }
-    function goHome(){
-  window.location.href = "index.html";
-}
-
-function setLang(lang){
-  state.lang = lang;
-
-  document.getElementById("btn-uz").classList.toggle("active", lang==="uz");
-  document.getElementById("btn-en").classList.toggle("active", lang==="en");
-
-  saveState();
-  renderAll();
-}
-
-function updateHeaderProgress(done,total){
-  document.getElementById("progressText").innerText = `${done} / ${total}`;
-  document.getElementById("progressFill").style.width = (done/total*100)+"%";
-}
-
-function openLearn(){
-  openSection("learn");
-}
-  </script>
+<base target="_blank">
 </head>
 
-<body onload="setLang('uz')">
+<body>
+
+  <div id="lessonHeader"></div>
+
   <div class="app">
-    <div class="top">
-      <div class="headRow">
-        <div>
-          <h1>🐾 3-dars: Hayvonlar</h1>
-          <div class="sub">Hayvonlarni aytamiz! 😊</div>
-        </div>
-        <div class="langSwitch">
-          <button id="btn-uz" class="langBtn active" onclick="setLang('uz')">UZ</button>
-          <button id="btn-en" class="langBtn" onclick="setLang('en')">EN</button>
-        </div>
-      </div>
+    <div class="learn-grid" id="vocabGrid"></div>
+  </div>
 
-      <div class="grid">
-        <!-- cat -->
-        <div class="card">
-          <div class="emoji">🐱</div>
-          <div class="uz">Mushuk</div>
-          <div class="en">Cat</div>
-          <div class="pr">mu-SHUK</div>
-          <button class="audioBtn" onclick="play('cat')">▶ Tinglash</button>
-          <audio id="uz_cat" src="a/cat.mp3" preload="none" playsinline></audio>
-          <audio id="en_cat" src="en/cat.mp3" preload="none" playsinline></audio>
-        </div>
+  <script src="components/header.js" defer></script>
 
-        <!-- dog -->
-        <div class="card">
-          <div class="emoji">🐶</div>
-          <div class="uz">It</div>
-          <div class="en">Dog</div>
-          <div class="pr">it</div>
-          <button class="audioBtn" onclick="play('dog')">▶ Tinglash</button>
-          <audio id="uz_dog" src="a/dog.mp3" preload="none" playsinline></audio>
-          <audio id="en_dog" src="en/dog.mp3" preload="none" playsinline></audio>
-        </div>
+<script>
+  const LESSON_ID = "lesson3_hayvonlar_v1";
 
-        <!-- bird -->
-        <div class="card">
-          <div class="emoji">🐦</div>
-          <div class="uz">Qush</div>
-          <div class="en">Bird</div>
-          <div class="pr">qush</div>
-          <button class="audioBtn" onclick="play('bird')">▶ Tinglash</button>
-          <audio id="uz_bird" src="a/bird.mp3" preload="none" playsinline></audio>
-          <audio id="en_bird" src="en/bird.mp3" preload="none" playsinline></audio>
-        </div>
+  const data = [
+    {key:"cat",    emoji:"🐱", uz:"Mushuk", en:"Cat",    pr:"mu-SHUK"},
+    {key:"dog",    emoji:"🐶", uz:"It",     en:"Dog",    pr:"it"},
+    {key:"bird",   emoji:"🐦", uz:"Qush",   en:"Bird",   pr:"qush"},
+    {key:"fish",   emoji:"🐟", uz:"Baliq",  en:"Fish",   pr:"ba-LIQ"},
+    {key:"horse",  emoji:"🐴", uz:"Ot",     en:"Horse",  pr:"ot"},
+    {key:"cow",    emoji:"🐮", uz:"Sigir",  en:"Cow",    pr:"si-GIR"},
+    {key:"rabbit", emoji:"🐰", uz:"Quyon",  en:"Rabbit", pr:"qu-YON"},
+    {key:"lion",   emoji:"🦁", uz:"Sher",   en:"Lion",   pr:"sher"},
+  ];
 
-        <!-- fish -->
-        <div class="card">
-          <div class="emoji">🐟</div>
-          <div class="uz">Baliq</div>
-          <div class="en">Fish</div>
-          <div class="pr">ba-LIQ</div>
-          <button class="audioBtn" onclick="play('fish')">▶ Tinglash</button>
-          <audio id="uz_fish" src="a/fish.mp3" preload="none" playsinline></audio>
-          <audio id="en_fish" src="en/fish.mp3" preload="none" playsinline></audio>
-        </div>
+  const UI = {
+    uz: { title: "3-dars: Hayvonlar", subtitle: "Hayvonlarni aytamiz! 😊" },
+    en: { title: "Lesson 3: Animals", subtitle: "Let's say animals! 😊" }
+  };
 
-        <!-- horse -->
-        <div class="card">
-          <div class="emoji">🐴</div>
-          <div class="uz">Ot</div>
-          <div class="en">Horse</div>
-          <div class="pr">ot</div>
-          <button class="audioBtn" onclick="play('horse')">▶ Tinglash</button>
-          <audio id="uz_horse" src="a/horse.mp3" preload="none" playsinline></audio>
-          <audio id="en_horse" src="en/horse.mp3" preload="none" playsinline></audio>
-        </div>
+  let state = {
+    lang: "uz",
+    stars: {},
+    learned: {}
+  };
 
-        <!-- cow -->
-        <div class="card">
-          <div class="emoji">🐮</div>
-          <div class="uz">Sigir</div>
-          <div class="en">Cow</div>
-          <div class="pr">si-GIR</div>
-          <button class="audioBtn" onclick="play('cow')">▶ Tinglash</button>
-          <audio id="uz_cow" src="a/cow.mp3" preload="none" playsinline></audio>
-          <audio id="en_cow" src="en/cow.mp3" preload="none" playsinline></audio>
-        </div>
+  function save(){ localStorage.setItem(LESSON_ID, JSON.stringify(state)); }
+  function load(){
+    const raw = localStorage.getItem(LESSON_ID);
+    if(!raw) return;
+    try{
+      const s = JSON.parse(raw);
+      state.lang = s.lang || "uz";
+      state.stars = s.stars || {};
+      state.learned = s.learned || {};
+    }catch(e){}
+  }
 
-        <!-- rabbit -->
-        <div class="card">
-          <div class="emoji">🐰</div>
-          <div class="uz">Quyon</div>
-          <div class="en">Rabbit</div>
-          <div class="pr">qu-YON</div>
-          <button class="audioBtn" onclick="play('rabbit')">▶ Tinglash</button>
-          <audio id="uz_rabbit" src="a/rabbit.mp3" preload="none" playsinline></audio>
-          <audio id="en_rabbit" src="en/rabbit.mp3" preload="none" playsinline></audio>
-        </div>
+  function learnedCount(){
+    return Object.values(state.learned).filter(Boolean).length;
+  }
 
-        <!-- lion -->
-        <div class="card">
-          <div class="emoji">🦁</div>
-          <
+  function getWord(item) {
+    return state.lang === "uz" ? item.uz : item.en;
+  }
+
+  function getSubWord(item) {
+    return state.lang === "uz" ? item.en : item.uz;
+  }
+
+  function audioPath(key){
+    return state.lang === "en" ? "en/" + key + ".mp3" : "a/" + key + ".mp3";
+  }
+
+  function initHeader(){
+    const title = state.lang === "uz" ? UI.uz.title : UI.en.title;
+    if (typeof renderLessonHeader === "function") {
+      renderLessonHeader({
+        mountId: "lessonHeader",
+        title: title,
+        total: data.length,
+        learned: learnedCount(),
+        lang: state.lang,
+        homeHref: "index.html",
+        bookTargetId: null,
+        onLangChange: (l) => setLang(l)
+      });
+    }
+  }
+
+  function refreshHeader(){
+    if (typeof setHeaderProgress === "function") {
+      setHeaderProgress({ learned: learnedCount(), total: data.length });
+    }
+  }
+
+  function setLang(l){
+    state.lang = l;
+    save();
+    initHeader();
+    renderVocab();
+  }
+
+  function starsText(n){
+    n = Math.max(0, Math.min(3, n||0));
+    return "★".repeat(n) + "☆".repeat(3-n);
+  }
+
+  let currentAudio = null;
+  function stopAudio(){
+    try{
+      if(currentAudio){ currentAudio.pause(); currentAudio.currentTime = 0; }
+    }catch(e){}
+    currentAudio = null;
+  }
+
+  function playAudio(key){
+    stopAudio();
+    const a = new Audio(audioPath(key));
+    currentAudio = a;
+    a.play().catch(()=>{});
+    return a;
+  }
+
+  function speakWord(key){
+    const item = data.find(x=>x.key===key);
+    if(!item) return;
+
+    playAudio(key);
+
+    state.learned[key] = true;
+    state.stars[key] = Math.min(3, (state.stars[key]||0) + 1);
+    save();
+
+    renderVocab();
+    refreshHeader();
+  }
+
+  function renderVocab(){
+    const grid = document.getElementById("vocabGrid");
+    grid.innerHTML = data.map(item => {
+      const main = getWord(item);
+      const sub = getSubWord(item);
+      const st = starsText(state.stars[item.key]||0);
+
+      return `
+        <div class="learn-card">
+          <div class="learn-emoji">${item.emoji}</div>
+          <div class="learn-info">
+            <div class="learn-main">${main}</div>
+            <div class="learn-sub">${sub}</div>
+            <div class="learn-pr">${item.pr}</div>
+            <div class="stars">${st}</div>
+          </div>
+          <button class="btn-audio" onclick="speakWord('${item.key}')">🔊</button>
+        </div>
+      `;
+    }).join("");
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    load();
+    initHeader();
+    renderVocab();
+    refreshHeader();
+  });
+</script>
+
+</body>
+</html>
