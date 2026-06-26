@@ -3,16 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>3-dars: Hayvonlar</title>
-
-  <link rel="stylesheet" href="components/header.css">
-
+  <title>3-dars: Hayvonlar</title> 
+  <link rel="stylesheet" href="components/header.css"> 
   <style>
     :root{
       --bg:#eaf6ff;
       --bg2:#fff2cc;
       --primary:#0066ff;
       --success:#00c853;
+      --danger:#ff3333;
       --sun:#ffcc00;
       --shadowSoft:#cfe3ff;
       --shadowBtn:#b8c2cc;
@@ -37,6 +36,45 @@
       overflow-x:hidden;
     }
 
+    /* Tab Navigation */
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .tab-btn {
+      background: #fff;
+      border: 3px solid #fff;
+      padding: 12px;
+      border-radius: var(--radius);
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 6px 0 var(--shadowSoft);
+      transition: all 0.1s ease;
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 6px 0 #0044aa;
+    }
+    .tab-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 3px 0 var(--shadowSoft);
+    }
+    .tab-btn.active:active {
+      box-shadow: 0 3px 0 #0044aa;
+    }
+
+    .view-section {
+      display: none;
+    }
+    .view-section.active {
+      display: block;
+    }
+
+    /* Vokabel-Grid */
     .learn-grid{
       display:grid;
       grid-template-columns:1fr;
@@ -103,11 +141,71 @@
       box-shadow:0 3px 0 #cc7a00;
     }
 
+    /* Quiz-Stile */
+    .quiz-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 8px 0 var(--shadowSoft);
+      border: 3px solid #fff;
+    }
+    .quiz-question {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .quiz-opt-btn {
+      background: #f0f7ff;
+      border: 3px solid var(--shadowSoft);
+      border-radius: var(--radius);
+      padding: 20px 10px;
+      font-size: 40px; /* Grosser Emoji-Fokus für Kinder */
+      cursor: pointer;
+      box-shadow: 0 6px 0 var(--shadowSoft);
+    }
+    .quiz-opt-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 3px 0 var(--shadowSoft);
+    }
+    .quiz-opt-btn.correct {
+      background: var(--success) !important;
+      border-color: var(--success);
+      color: white;
+    }
+    .quiz-opt-btn.wrong {
+      background: var(--danger) !important;
+      border-color: var(--danger);
+      color: white;
+    }
+    .quiz-audio-repeat {
+      background: var(--sun);
+      border: none;
+      padding: 12px 24px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: var(--radius);
+      cursor: pointer;
+      box-shadow: 0 6px 0 #cc7a00;
+      margin-bottom: 12px;
+    }
+    .quiz-audio-repeat:active {
+      transform: translateY(3px);
+      box-shadow: 0 3px 0 #cc7a00;
+    }
+
     @media(max-width:375px){
       .learn-emoji{font-size:44px; width:60px;}
       .learn-main{font-size:20px;}
       .learn-sub{font-size:14px;}
       .btn-audio{width:48px; height:48px; font-size:20px;}
+      .quiz-opt-btn { font-size: 32px; padding: 15px 5px; }
     }
   </style>
 <base target="_blank">
@@ -116,13 +214,30 @@
 <body>
 
   <div id="lessonHeader"></div>
-
+  
   <div class="app">
-    <div class="learn-grid" id="vocabGrid"></div>
+    <!-- Tab Umschalter -->
+    <div class="tabs">
+      <button class="tab-btn active" id="tabLearn" onclick="switchView('learn')">📖 O'rganish / Learn</button>
+      <button class="tab-btn" id="tabQuiz" onclick="switchView('quiz')">🎯 O'yin / Game</button>
+    </div>
+
+    <!-- Sektion 1: Vokabeltrainer -->
+    <div id="sectionLearn" class="view-section active">
+      <div class="learn-grid" id="vocabGrid"></div>
+    </div>
+
+    <!-- Sektion 2: Quiz Spiel -->
+    <div id="sectionQuiz" class="view-section">
+      <div class="quiz-card">
+        <div class="quiz-question" id="quizQuestion">Eshiting va toping!</div>
+        <button class="quiz-audio-repeat" onclick="playQuizAudio()">🔊 Qayta eshitish</button>
+        <div class="quiz-options" id="quizOptions"></div>
+      </div>
+    </div>
   </div>
 
-  <script src="components/header.js" defer></script>
-
+<script src="components/header.js" defer></script>
 <script>
   const LESSON_ID = "lesson3_hayvonlar_v1";
 
@@ -138,8 +253,8 @@
   ];
 
   const UI = {
-    uz: { title: "3-dars: Hayvonlar", subtitle: "Hayvonlarni aytamiz! 😊" },
-    en: { title: "Lesson 3: Animals", subtitle: "Let's say animals! 😊" }
+    uz: { title: "3-dars: Hayvonlar", quizQuestion: "Rasmini toping:" },
+    en: { title: "Lesson 3: Animals", quizQuestion: "Find the animal:" }
   };
 
   let state = {
@@ -147,6 +262,8 @@
     stars: {},
     learned: {}
   };
+
+  let currentQuizItem = null;
 
   function save(){ localStorage.setItem(LESSON_ID, JSON.stringify(state)); }
   function load(){
@@ -203,6 +320,9 @@
     save();
     initHeader();
     renderVocab();
+    if(document.getElementById("sectionQuiz").classList.contains("active")) {
+      initQuiz();
+    }
   }
 
   function starsText(n){
@@ -262,13 +382,7 @@
     }).join("");
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    load();
-    initHeader();
-    renderVocab();
-    refreshHeader();
-  });
-</script>
-
-</body>
-</html>
+  /* View Switcher Logic */
+  function switchView(view) {
+    stopAudio();
+    document.getElementById("tabLearn").classList.toggle("active", view === "learn");
