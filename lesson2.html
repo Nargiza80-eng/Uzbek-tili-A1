@@ -425,7 +425,42 @@
 
 <body>
 
-  <div id="lessonHeader"></div>
+  <!-- HEADER (wie Lesson 3/4 – direkt im HTML, kein header.js) -->
+  <div class="dono-header" data-total="10" data-lang="uz">
+    <div class="sky">
+      <div class="sun"></div>
+      <div class="cloud c1"></div>
+      <div class="cloud c2"></div>
+      <div class="cloud c3"></div>
+      <div class="sparkle s1"></div>
+      <div class="sparkle s2"></div>
+      <div class="sparkle s3"></div>
+    </div>
+
+    <div class="content">
+      <div class="top-row">
+        <button class="topIcon" onclick="goHome()" aria-label="Home" type="button">🏠</button>
+
+        <div class="titleWrap">
+          <h1 class="title" id="hdrTitle">2-dars: Sonlar</h1>
+          <div class="sub" id="hdrSub">0 / 10 o‘rganildi</div>
+        </div>
+
+        <button class="topIcon" onclick="openLearn()" aria-label="Book" type="button">📖</button>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress-fill" id="hdrFill" style="width:0%"></div>
+      </div>
+
+      <div class="mini" id="hdrMini">0 / 10</div>
+
+      <div class="langRow">
+        <button class="langBtn active" id="btnUZ" onclick="switchLang('uz')" type="button">UZ</button>
+        <button class="langBtn" id="btnEN" onclick="switchLang('en')" type="button">EN</button>
+      </div>
+    </div>
+  </div>
 
   <div class="app">
 
@@ -433,10 +468,10 @@
     <div class="menuWrap">
       <div class="menu">
         <button class="menuBtn primary" onclick="openSection('learn')">
-          <span class="menuEmoji">📖</span><span id="btnLearn">O'rganish</span>
+          <span class="menuEmoji">📖</span><span id="btnLearn">O‘rganish</span>
         </button>
         <button class="menuBtn" onclick="openSection('count')">
-          <span class="menuEmoji">🍎</span><span id="btnCount">Sanab ko'r</span>
+          <span class="menuEmoji">🍎</span><span id="btnCount">Sanab ko‘r</span>
         </button>
         <button class="menuBtn" onclick="openSection('match')">
           <span class="menuEmoji">🔗</span><span id="btnMatch">Juftini top</span>
@@ -447,12 +482,12 @@
       </div>
     </div>
 
-    <!-- O'rganish -->
+    <!-- O‘rganish -->
     <div class="panel" id="panel-learn">
       <div class="learn-grid" id="vocabGrid"></div>
     </div>
 
-    <!-- Sanab ko'r -->
+    <!-- Sanab ko‘r -->
     <div class="panel" id="panel-count">
       <div class="quiz-card">
         <p class="hint" id="hintCount">Nechta olma bor?</p>
@@ -473,7 +508,7 @@
           🔗 <span id="titleMatch">Juftini top</span>
           <span class="badge" id="g1Status">❓</span>
         </h2>
-        <p class="hint" id="hintDrag">Raqamni ushlab so'zga olib boring</p>
+        <p class="hint" id="hintDrag">Raqamni ushlab so‘zga olib boring</p>
         <div class="matchingBox">
           <div class="col" id="dragNums"></div>
           <div class="col" id="dropWords"></div>
@@ -496,7 +531,7 @@
           🫧 <span id="titleBalloon">Pufakchalar</span>
           <span class="badge" id="g4Status">❓</span>
         </h2>
-        <p class="hint" id="hintBalloon">To'g'ri raqamni top!</p>
+        <p class="hint" id="hintBalloon">To‘g‘ri raqamni top!</p>
         <div id="balloonTask">5</div>
         <div id="balloonArea"></div>
         <div class="btnRow">
@@ -512,8 +547,6 @@
 
   </div>
 
-  <script src="components/header.js"></script>
-
 <script>
   const LESSON_ID = "lesson2_sonlar_v10";
 
@@ -521,20 +554,20 @@
     {k:"21", n:1, uz:"bir", en:"one", emoji:"🥇"},
     {k:"22", n:2, uz:"ikki", en:"two", emoji:"🦆"},
     {k:"23", n:3, uz:"uch", en:"three", emoji:"🐱"},
-    {k:"24", n:4, uz:"to'rt", en:"four", emoji:"🍀"},
+    {k:"24", n:4, uz:"to‘rt", en:"four", emoji:"🍀"},
     {k:"25", n:5, uz:"besh", en:"five", emoji:"⭐"},
     {k:"26", n:6, uz:"olti", en:"six", emoji:"🐝"},
     {k:"27", n:7, uz:"yetti", en:"seven", emoji:"🌈"},
     {k:"28", n:8, uz:"sakkiz", en:"eight", emoji:"🎱"},
-    {k:"29", n:9, uz:"to'qqiz", en:"nine", emoji:"🎈"},
-    {k:"30", n:10, uz:"o'n", en:"ten", emoji:"🦶"},
+    {k:"29", n:9, uz:"to‘qqiz", en:"nine", emoji:"🎈"},
+    {k:"30", n:10, uz:"o‘n", en:"ten", emoji:"🦶"},
   ];
 
   const UI = {
     uz: {
-      learn: "O'rganish", count: "Sanab ko'r", match: "Juftini top", balloon: "Pufakchalar",
-      hintCount: "Nechta olma bor?", hintDrag: "Raqamni ushlab so'zga olib boring",
-      hintBalloon: "To'g'ri raqamni top!", btnStart: "Boshlash", btnStart2: "Boshlash",
+      learn: "O‘rganish", count: "Sanab ko‘r", match: "Juftini top", balloon: "Pufakchalar",
+      hintCount: "Nechta olma bor?", hintDrag: "Raqamni ushlab so‘zga olib boring",
+      hintBalloon: "To‘g‘ri raqamni top!", btnStart: "Boshlash", btnStart2: "Boshlash",
       btnClose: "Yopish", btnClose2: "Yopish", btnNew: "Yangilash",
       find: "Top:", wellDone: "Barakalla", apples: "olma"
     },
@@ -587,34 +620,35 @@
     return state.lang === "uz" ? item.en : item.uz;
   }
 
-  /* ===== HEADER (exakt wie Lesson 1) ===== */
-  function initHeader(){
-    const title = state.lang === "uz" ? "2-dars: Sonlar" : "Lesson 2: Numbers";
-    if (typeof renderLessonHeader === "function") {
-      renderLessonHeader({
-        mountId: "lessonHeader",
-        title: title,
-        total: 10,
-        learned: learnedCount(),
-        lang: state.lang,
-        homeHref: "index.html",
-        bookTargetId: "panel-learn",
-        onLangChange: (l) => setLang(l)
-      });
-    }
+  /* ===== HEADER (eingebaut, kein header.js) ===== */
+  function goHome(){
+    window.location.href = "index.html";
   }
 
-  function refreshHeader(){
-    if (typeof setHeaderProgress === "function") {
-      setHeaderProgress({ learned: learnedCount(), total: 10 });
-    }
+  function openLearn(){
+    openSection('learn');
   }
 
-  /* ===== LANGUAGE SWITCH (exakt wie Lesson 1) ===== */
-  function setLang(l){
+  function updateHeader(){
+    const l = learnedCount();
+    const t = 10;
+    const pct = t ? (l / t) * 100 : 0;
+    const subText = state.lang === "en" ? "learned" : "o‘rganildi";
+
+    document.getElementById('hdrFill').style.width = pct + '%';
+    document.getElementById('hdrSub').textContent = l + ' / ' + t + ' ' + subText;
+    document.getElementById('hdrMini').textContent = l + ' / ' + t;
+    document.getElementById('hdrTitle').textContent = state.lang === 'uz' ? '2-dars: Sonlar' : 'Lesson 2: Numbers';
+
+    document.getElementById('btnUZ').classList.toggle('active', state.lang === 'uz');
+    document.getElementById('btnEN').classList.toggle('active', state.lang === 'en');
+  }
+
+  /* ===== LANGUAGE SWITCH ===== */
+  function switchLang(l){
     state.lang = l;
     save();
-    initHeader();
+    updateHeader();
     updateUI();
     renderVocab();
 
@@ -741,7 +775,7 @@
     save();
 
     renderVocab();
-    refreshHeader();
+    updateHeader();
   }
 
   /* ===== LERN-KARTEN ===== */
@@ -1034,10 +1068,9 @@
   document.addEventListener("DOMContentLoaded", () => {
     load();
     updateUI();
-    initHeader();
+    updateHeader();
     renderVocab();
     updateBadges();
-    refreshHeader();
   });
 </script>
 
