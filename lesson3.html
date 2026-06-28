@@ -284,6 +284,7 @@
 </style>
 
 <base target="_blank">
+<base target="_blank">
 </head>
 
 <body>
@@ -1140,6 +1141,17 @@
     updateProgress();
     checkAllCompleted();
   })();
+
+  // Fix: Home-Button im gleichen Tab öffnen (header.js generiert <a target="_blank">)
+  setTimeout(() => {
+    const homeLink = document.querySelector('a[aria-label="Home"]');
+    if(homeLink){
+      homeLink.addEventListener('click', function(e){
+        e.preventDefault();
+        window.location.href = "index.html";
+      });
+    }
+  }, 100);
 </script>
 
 </body>
