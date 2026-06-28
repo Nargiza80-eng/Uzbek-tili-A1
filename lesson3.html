@@ -13,6 +13,7 @@
       --bg2:#fff2cc;
       --primary:#0066ff;
       --success:#00c853;
+      --error:#ff2d55;
       --sun:#ffcc00;
       --shadowSoft:#cfe3ff;
       --shadowBtn:#b8c2cc;
@@ -37,6 +38,67 @@
       overflow-x:hidden;
     }
 
+    /* ===== MENÜ ===== */
+    .menuWrap{
+      margin-top:14px;
+      background:#F5F2E8;
+      border-radius:var(--radius);
+      padding:14px;
+      box-shadow:0 10px 0 var(--shadowBtn);
+      width:100%;
+      overflow:hidden;
+    }
+    .menu{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:12px;
+      width:100%;
+    }
+    .menuBtn{
+      min-height:70px;
+      border-radius:20px;
+      border:none;
+      cursor:pointer;
+      font-weight:800;
+      font-size:clamp(14px, 4vw, 18px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      background:#fff;
+      color:var(--primary);
+      box-shadow:0 8px 0 var(--shadowBtn);
+      padding:10px 6px;
+      width:100%;
+      text-align:center;
+      line-height:1.2;
+      word-break:break-word;
+    }
+    .menuBtn.primary{
+      background:var(--primary);
+      color:#fff;
+      box-shadow:0 8px 0 #0047b3;
+    }
+    .menuBtn:active{
+      transform:translateY(4px);
+      box-shadow:0 4px 0 var(--shadowBtn);
+    }
+    .menuEmoji{font-size:clamp(22px, 5vw, 28px); flex-shrink:0;}
+
+    @media(max-width:360px){
+      .menuBtn{gap:4px; padding:8px 4px; font-size:13px; min-height:60px;}
+      .menuEmoji{font-size:20px;}
+      .menu{gap:8px;}
+      .menuWrap{padding:10px;}
+    }
+
+    .panel{
+      margin-top:16px;
+      display:none;
+    }
+    .panel.show{display:block;}
+
+    /* ===== LERN-KARTEN ===== */
     .learn-grid{
       display:grid;
       grid-template-columns:1fr;
@@ -109,6 +171,250 @@
       .learn-sub{font-size:14px;}
       .btn-audio{width:48px; height:48px; font-size:20px;}
     }
+
+    /* ===== QUIZ ===== */
+    .quiz-card{
+      background:#fff;
+      border-radius:30px;
+      padding:28px;
+      box-shadow:0 10px 0 var(--shadowSoft);
+      text-align:center;
+    }
+    .quiz-emoji{
+      font-size:clamp(60px, 18vw, 100px);
+      margin:10px 0;
+    }
+    .choiceRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:center;
+      margin-top:20px;
+    }
+    .choiceBtn{
+      padding:14px 20px;
+      border:3px solid #E5E7EB;
+      background:#fff;
+      border-radius:18px;
+      cursor:pointer;
+      font-weight:900;
+      font-size:18px;
+      box-shadow:0 8px 0 #E5E7EB;
+      min-width:100px;
+    }
+    .choiceBtn:active{
+      transform:translateY(4px);
+      box-shadow:0 4px 0 #E5E7EB;
+    }
+    .choiceBtn.good{
+      background:var(--success);
+      color:#fff;
+      border-color:var(--success);
+      box-shadow:0 4px 0 #09725b;
+    }
+    .choiceBtn.bad{
+      background:var(--error);
+      color:#fff;
+      border-color:var(--error);
+    }
+
+    /* ===== MEMORY ===== */
+    .memory-grid{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:10px;
+    }
+    .memory-card{
+      aspect-ratio:1;
+      background:var(--primary);
+      border-radius:18px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:28px;
+      color:#fff;
+      cursor:pointer;
+      box-shadow:0 6px 0 #0047b3;
+      user-select:none;
+      font-weight:800;
+    }
+    .memory-card.flipped{
+      background:#fff;
+      color:#2d3436;
+      box-shadow:0 6px 0 var(--shadowBtn);
+      border:3px solid #E5E7EB;
+    }
+    .memory-card.matched{
+      visibility:hidden;
+    }
+    .mem-stats{
+      text-align:center;
+      font-weight:800;
+      font-size:16px;
+      margin-bottom:10px;
+    }
+
+    @media(max-width:375px){
+      .memory-card{font-size:22px;}
+    }
+
+    /* ===== BALLOONS ===== */
+    #balloonArea{
+      position:relative;
+      width:100%;
+      height:350px;
+      background:linear-gradient(#3b82f6, #0ea5ff);
+      border-radius:30px;
+      border:8px solid #fff;
+      overflow:hidden;
+      margin-top:10px;
+    }
+    .balloon{
+      position:absolute;
+      width:clamp(60px, 18vw, 80px);
+      height:clamp(70px, 22vw, 95px);
+      background:rgba(255,255,255,0.95);
+      border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:clamp(14px, 4vw, 18px);
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 4px 8px rgba(0,0,0,0.2);
+      animation:floatUp 4s linear forwards;
+      text-align:center;
+      padding:4px;
+      word-break:break-word;
+      line-height:1.1;
+    }
+    .balloon::after{
+      content:'';
+      position:absolute;
+      bottom:-15px;
+      left:50%;
+      width:2px;
+      height:15px;
+      background:rgba(255,255,255,0.6);
+      transform:translateX(-50%);
+    }
+    @keyframes floatUp{
+      0%{transform:translateY(400px);}
+      100%{transform:translateY(-100px);}
+    }
+    .balloon.pop{
+      animation:pop 0.3s forwards;
+    }
+    @keyframes pop{
+      0%{transform:scale(1);}
+      50%{transform:scale(1.3);}
+      100%{transform:scale(0);opacity:0;}
+    }
+
+    /* ===== LETTERS ===== */
+    .letters-card{
+      background:#fff;
+      border-radius:30px;
+      padding:24px;
+      box-shadow:0 10px 0 var(--shadowSoft);
+      text-align:center;
+    }
+    .letters-target{
+      font-size:clamp(40px, 12vw, 60px);
+      margin:10px 0;
+    }
+    .letters-word{
+      font-size:clamp(24px, 7vw, 36px);
+      font-weight:900;
+      color:var(--primary);
+      margin:10px 0;
+      min-height:50px;
+      letter-spacing:4px;
+    }
+    .letters-pool{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:center;
+      margin-top:20px;
+    }
+    .letter-btn{
+      width:50px;
+      height:50px;
+      border:3px solid #E5E7EB;
+      background:#fff;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:900;
+      font-size:22px;
+      box-shadow:0 6px 0 #E5E7EB;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .letter-btn:active{
+      transform:translateY(3px);
+      box-shadow:0 3px 0 #E5E7EB;
+    }
+    .letter-btn.used{
+      opacity:0.3;
+      pointer-events:none;
+      background:#eee;
+    }
+    .letter-btn.good{
+      background:var(--success);
+      color:#fff;
+      border-color:var(--success);
+    }
+
+    /* ===== COMMON ===== */
+    .btnRow{
+      margin-top:20px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .btn{
+      border:none;
+      border-radius:20px;
+      padding:14px 22px;
+      font-weight:900;
+      cursor:pointer;
+      font-size:clamp(15px, 4vw, 17px);
+      box-shadow:0 8px 0 var(--shadowBtn);
+    }
+    .btn:active{
+      transform:translateY(4px);
+      box-shadow:0 4px 0 var(--shadowBtn);
+    }
+    .btn.primary{
+      background:var(--primary);
+      color:#fff;
+      box-shadow:0 8px 0 #0047b3;
+    }
+    .btn.soft{
+      background:#fff;
+      color:var(--primary);
+      border:3px solid #E5E7EB;
+    }
+    .hint{
+      text-align:center;
+      color:#636e72;
+      font-weight:700;
+      font-size:clamp(15px, 4.5vw, 17px);
+      margin:10px 0;
+    }
+    .badge{
+      font-size:14px;
+      font-weight:900;
+      padding:6px 12px;
+      border-radius:999px;
+      background:#EEF2FF;
+      color:var(--primary);
+      margin-left:10px;
+    }
+    .badge.done{background:#ECFDF5;color:var(--success);}
   </style>
 <base target="_blank">
 </head>
@@ -118,13 +424,116 @@
   <div id="lessonHeader"></div>
 
   <div class="app">
-    <div class="learn-grid" id="vocabGrid"></div>
+
+    <!-- Menü -->
+    <div class="menuWrap">
+      <div class="menu">
+        <button class="menuBtn primary" onclick="openSection('learn')">
+          <span class="menuEmoji">📚</span><span id="btnLearn">O'rganish</span>
+        </button>
+        <button class="menuBtn" onclick="openSection('quiz')">
+          <span class="menuEmoji">🎯</span><span id="btnQuiz">Test</span>
+        </button>
+        <button class="menuBtn" onclick="openSection('memory')">
+          <span class="menuEmoji">🧩</span><span id="btnMemory">Xotira</span>
+        </button>
+        <button class="menuBtn" onclick="openSection('balloon')">
+          <span class="menuEmoji">🎈</span><span id="btnBalloon">Pufakchalar</span>
+        </button>
+        <button class="menuBtn" onclick="openSection('letters')">
+          <span class="menuEmoji">✍️</span><span id="btnLetters">Harflar</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 📚 Lernen -->
+    <div class="panel" id="panel-learn">
+      <div class="learn-grid" id="vocabGrid"></div>
+    </div>
+
+    <!-- 🎯 Quiz -->
+    <div class="panel" id="panel-quiz">
+      <div class="quiz-card">
+        <p class="hint" id="hintQuiz">Qaysi hayvon?</p>
+        <div class="quiz-emoji" id="quizEmoji">🐱</div>
+        <div class="choiceRow" id="quizChoices"></div>
+        <div class="btnRow">
+          <button class="btn primary" onclick="startQuiz()">
+            <span id="btnStartQuiz">Boshlash</span> ▶
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🧩 Memory -->
+    <div class="panel" id="panel-memory">
+      <div style="background:#fff;border-radius:25px;padding:20px;box-shadow:0 10px 0 var(--shadowSoft);">
+        <h2 style="margin:0 0 10px;font-size:clamp(18px, 5vw, 22px);">
+          🧩 <span id="titleMemory">Xotira</span>
+          <span class="badge" id="gMemoryStatus">❓</span>
+        </h2>
+        <div class="mem-stats" id="memStats">Urinishlar: 0</div>
+        <div class="memory-grid" id="memoryGrid"></div>
+        <div class="btnRow">
+          <button class="btn primary" onclick="initMemory()">
+            <span id="btnNewMem">Yangilash</span> 🔄
+          </button>
+          <button class="btn soft" onclick="closePanels()">
+            <span id="btnCloseMem">Yopish</span> ✖
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🎈 Ballons -->
+    <div class="panel" id="panel-balloon">
+      <div style="background:#fff;border-radius:25px;padding:20px;box-shadow:0 10px 0 var(--shadowSoft);">
+        <h2 style="margin:0 0 10px;font-size:clamp(18px, 5vw, 22px);">
+          🎈 <span id="titleBalloon">Pufakchalar</span>
+          <span class="badge" id="gBalloonStatus">❓</span>
+        </h2>
+        <p class="hint" id="hintBalloon">To'g'ri so'zni top!</p>
+        <div id="balloonTask" style="font-size:clamp(20px,6vw,26px);color:var(--primary);font-weight:900;text-align:center;margin:10px 0;">🐱</div>
+        <div id="balloonArea"></div>
+        <div class="btnRow">
+          <button class="btn primary" onclick="startBalloonGame()">
+            <span id="btnStartBalloon">Boshlash</span> ▶
+          </button>
+          <button class="btn soft" onclick="closePanels()">
+            <span id="btnCloseBalloon">Yopish</span> ✖
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✍️ Buchstaben -->
+    <div class="panel" id="panel-letters">
+      <div class="letters-card">
+        <h2 style="margin:0 0 10px;font-size:clamp(18px, 5vw, 22px);">
+          ✍️ <span id="titleLetters">Harflar</span>
+          <span class="badge" id="gLettersStatus">❓</span>
+        </h2>
+        <p class="hint" id="hintLetters">So'zni harflar bilan yig'ing</p>
+        <div class="letters-target" id="lettersTarget">🐱</div>
+        <div class="letters-word" id="lettersWord"></div>
+        <div class="letters-pool" id="lettersPool"></div>
+        <div class="btnRow">
+          <button class="btn primary" onclick="startLettersGame()">
+            <span id="btnStartLetters">Boshlash</span> ▶
+          </button>
+          <button class="btn soft" onclick="closePanels()">
+            <span id="btnCloseLetters">Yopish</span> ✖
+          </button>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script src="components/header.js" defer></script>
 
 <script>
-  const LESSON_ID = "lesson3_hayvonlar_v1";
+  const LESSON_ID = "lesson3_hayvonlar_v2";
 
   const data = [
     {key:"cat",    emoji:"🐱", uz:"Mushuk", en:"Cat",    pr:"mu-SHUK"},
@@ -138,15 +547,38 @@
   ];
 
   const UI = {
-    uz: { title: "3-dars: Hayvonlar", subtitle: "Hayvonlarni aytamiz! 😊" },
-    en: { title: "Lesson 3: Animals", subtitle: "Let's say animals! 😊" }
+    uz: {
+      learn: "O'rganish", quiz: "Test", memory: "Xotira", balloon: "Pufakchalar", letters: "Harflar",
+      hintQuiz: "Qaysi hayvon?", hintBalloon: "To'g'ri so'zni top!", hintLetters: "So'zni harflar bilan yig'ing",
+      btnStart: "Boshlash", btnStart2: "Boshlash", btnStart3: "Boshlash", btnStart4: "Boshlash",
+      btnClose: "Yopish", btnClose2: "Yopish", btnClose3: "Yopish", btnClose4: "Yopish",
+      btnNew: "Yangilash", btnNew2: "Yangilash",
+      moves: "Urinishlar", wellDone: "Barakalla", find: "Top:",
+      titleQuiz: "Test", titleMemory: "Xotira", titleBalloon: "Pufakchalar", titleLetters: "Harflar"
+    },
+    en: {
+      learn: "Learn", quiz: "Quiz", memory: "Memory", balloon: "Balloons", letters: "Letters",
+      hintQuiz: "Which animal?", hintBalloon: "Find the correct word!", hintLetters: "Build the word with letters",
+      btnStart: "Start", btnStart2: "Start", btnStart3: "Start", btnStart4: "Start",
+      btnClose: "Close", btnClose2: "Close", btnClose3: "Close", btnClose4: "Close",
+      btnNew: "New Game", btnNew2: "New Game",
+      moves: "Moves", wellDone: "Well done", find: "Find:",
+      titleQuiz: "Quiz", titleMemory: "Memory", titleBalloon: "Balloons", titleLetters: "Letters"
+    }
   };
 
   let state = {
     lang: "uz",
     stars: {},
-    learned: {}
+    learned: {},
+    games: { quiz:false, memory:false, balloon:false, letters:false }
   };
+
+  let audioCtx = null;
+  let balloonInterval = null;
+  let memoryFlipped = [];
+  let memoryMoves = 0;
+  let memoryMatches = 0;
 
   function save(){ localStorage.setItem(LESSON_ID, JSON.stringify(state)); }
   function load(){
@@ -157,6 +589,7 @@
       state.lang = s.lang || "uz";
       state.stars = s.stars || {};
       state.learned = s.learned || {};
+      state.games = s.games || {quiz:false,memory:false,balloon:false,letters:false};
     }catch(e){}
   }
 
@@ -176,8 +609,9 @@
     return state.lang === "en" ? "en/" + key + ".mp3" : "a/" + key + ".mp3";
   }
 
+  /* ===== HEADER (exakt wie Lesson 1) ===== */
   function initHeader(){
-    const title = state.lang === "uz" ? UI.uz.title : UI.en.title;
+    const title = state.lang === "uz" ? "3-dars: Hayvonlar" : "Lesson 3: Animals";
     if (typeof renderLessonHeader === "function") {
       renderLessonHeader({
         mountId: "lessonHeader",
@@ -202,7 +636,51 @@
     state.lang = l;
     save();
     initHeader();
+    updateUI();
     renderVocab();
+  }
+
+  function updateUI(){
+    const t = UI[state.lang];
+    document.getElementById("btnLearn").innerText = t.learn;
+    document.getElementById("btnQuiz").innerText = t.quiz;
+    document.getElementById("btnMemory").innerText = t.memory;
+    document.getElementById("btnBalloon").innerText = t.balloon;
+    document.getElementById("btnLetters").innerText = t.letters;
+    document.getElementById("hintQuiz").innerText = t.hintQuiz;
+    document.getElementById("hintBalloon").innerText = t.hintBalloon;
+    document.getElementById("hintLetters").innerText = t.hintLetters;
+    document.getElementById("btnStartQuiz").innerText = t.btnStart;
+    document.getElementById("btnStartBalloon").innerText = t.btnStart2;
+    document.getElementById("btnStartLetters").innerText = t.btnStart3;
+    document.getElementById("btnNewMem").innerText = t.btnNew;
+    document.getElementById("btnCloseMem").innerText = t.btnClose;
+    document.getElementById("btnCloseBalloon").innerText = t.btnClose2;
+    document.getElementById("btnCloseLetters").innerText = t.btnClose3;
+    document.getElementById("titleMemory").innerText = t.titleMemory;
+    document.getElementById("titleBalloon").innerText = t.titleBalloon;
+    document.getElementById("titleLetters").innerText = t.titleLetters;
+  }
+
+  function closePanels(){
+    document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
+    stopBalloonGame();
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function openSection(name){
+    document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
+    stopBalloonGame();
+
+    const panel = document.getElementById("panel-"+name);
+    if(panel) panel.classList.add("show");
+
+    if(name==="quiz") startQuiz();
+    if(name==="memory") initMemory();
+    if(name==="balloon") startBalloonGame();
+    if(name==="letters") startLettersGame();
+
+    if(panel) panel.scrollIntoView({behavior:"smooth", block:"start"});
   }
 
   function starsText(n){
@@ -210,11 +688,58 @@
     return "★".repeat(n) + "☆".repeat(3-n);
   }
 
+  function updateBadges(){
+    const set = (id, done)=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.classList.toggle("done", !!done);
+      el.innerText = done ? "✅" : "❓";
+    };
+    set("gMemoryStatus", state.games.memory);
+    set("gBalloonStatus", state.games.balloon);
+    set("gLettersStatus", state.games.letters);
+  }
+
+  /* ===== AUDIO ===== */
+  function resumeAudio(){
+    if(audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+  }
+
+  function beepSuccess(){
+    try{
+      resumeAudio();
+      if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+      const t=audioCtx.currentTime, o=audioCtx.createOscillator(), g=audioCtx.createGain();
+      o.connect(g); g.connect(audioCtx.destination);
+      o.type="triangle";
+      o.frequency.setValueAtTime(520,t);
+      o.frequency.exponentialRampToValueAtTime(880,t+0.12);
+      g.gain.setValueAtTime(0.0001,t);
+      g.gain.exponentialRampToValueAtTime(0.25,t+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+0.16);
+      o.start(t); o.stop(t+0.18);
+    }catch(e){}
+  }
+
+  function beepFail(){
+    try{
+      resumeAudio();
+      if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+      const t=audioCtx.currentTime, o=audioCtx.createOscillator(), g=audioCtx.createGain();
+      o.connect(g); g.connect(audioCtx.destination);
+      o.type="sawtooth";
+      o.frequency.setValueAtTime(220,t);
+      o.frequency.exponentialRampToValueAtTime(140,t+0.14);
+      g.gain.setValueAtTime(0.0001,t);
+      g.gain.exponentialRampToValueAtTime(0.22,t+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+0.16);
+      o.start(t); o.stop(t+0.18);
+    }catch(e){}
+  }
+
   let currentAudio = null;
   function stopAudio(){
-    try{
-      if(currentAudio){ currentAudio.pause(); currentAudio.currentTime = 0; }
-    }catch(e){}
+    try{ if(currentAudio){ currentAudio.pause(); currentAudio.currentTime = 0; } }catch(e){}
     currentAudio = null;
   }
 
@@ -229,24 +754,21 @@
   function speakWord(key){
     const item = data.find(x=>x.key===key);
     if(!item) return;
-
     playAudio(key);
-
     state.learned[key] = true;
     state.stars[key] = Math.min(3, (state.stars[key]||0) + 1);
     save();
-
     renderVocab();
     refreshHeader();
   }
 
+  /* ===== LERN-KARTEN ===== */
   function renderVocab(){
     const grid = document.getElementById("vocabGrid");
     grid.innerHTML = data.map(item => {
       const main = getWord(item);
       const sub = getSubWord(item);
       const st = starsText(state.stars[item.key]||0);
-
       return `
         <div class="learn-card">
           <div class="learn-emoji">${item.emoji}</div>
@@ -262,10 +784,230 @@
     }).join("");
   }
 
+  function shuffle(arr){
+    const a=[...arr];
+    for(let i=a.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [a[i],a[j]]=[a[j],a[i]];
+    }
+    return a;
+  }
+
+  /* ===== QUIZ ===== */
+  function startQuiz(){
+    const emojiArea = document.getElementById("quizEmoji");
+    const choices = document.getElementById("quizChoices");
+    if(!emojiArea || !choices) return;
+
+    choices.innerHTML = "";
+    const target = data[Math.floor(Math.random() * data.length)];
+    emojiArea.innerText = target.emoji;
+
+    const pool = new Set([target]);
+    while(pool.size < 4) pool.add(data[Math.floor(Math.random() * data.length)]);
+
+    shuffle([...pool]).forEach(item => {
+      const b = document.createElement("button");
+      b.className = "choiceBtn";
+      b.innerText = getWord(item);
+      b.onclick = () => {
+        if(item.key === target.key){
+          b.classList.add("good");
+          beepSuccess();
+          state.games.quiz = true;
+          save();
+          updateBadges();
+          setTimeout(startQuiz, 750);
+        } else {
+          b.classList.add("bad");
+          beepFail();
+          setTimeout(() => b.classList.remove("bad"), 500);
+        }
+      };
+      choices.appendChild(b);
+    });
+  }
+
+  /* ===== MEMORY ===== */
+  function initMemory(){
+    const grid = document.getElementById("memoryGrid");
+    grid.innerHTML = "";
+    memoryFlipped = [];
+    memoryMoves = 0;
+    memoryMatches = 0;
+    document.getElementById("memStats").innerText = (UI[state.lang].moves || "Urinishlar") + ": 0";
+
+    let cards = [];
+    data.forEach(item => {
+      cards.push({ id: item.key, val: item.emoji, type: "emoji" });
+      cards.push({ id: item.key, val: getWord(item), type: "word" });
+    });
+    cards = shuffle(cards);
+
+    cards.forEach((c, idx) => {
+      const div = document.createElement("div");
+      div.className = "memory-card";
+      div.innerText = "❓";
+      div.dataset.idx = idx;
+      div.dataset.id = c.id;
+      div.dataset.val = c.val;
+
+      div.onclick = () => {
+        if(memoryFlipped.length < 2 && !div.classList.contains("flipped") && !div.classList.contains("matched")){
+          div.classList.add("flipped");
+          div.innerText = c.val;
+          memoryFlipped.push({ div, id: c.id });
+
+          if(memoryFlipped.length === 2){
+            memoryMoves++;
+            document.getElementById("memStats").innerText = (UI[state.lang].moves || "Urinishlar") + ": " + memoryMoves;
+
+            setTimeout(() => {
+              if(memoryFlipped[0].id === memoryFlipped[1].id){
+                memoryFlipped.forEach(f => f.div.classList.add("matched"));
+                memoryMatches++;
+                beepSuccess();
+                if(memoryMatches === data.length){
+                  state.games.memory = true;
+                  save();
+                  updateBadges();
+                  setTimeout(() => alert(UI[state.lang].wellDone + "! 🎉"), 300);
+                }
+              } else {
+                beepFail();
+                memoryFlipped.forEach(f => {
+                  f.div.classList.remove("flipped");
+                  f.div.innerText = "❓";
+                });
+              }
+              memoryFlipped = [];
+            }, 800);
+          }
+        }
+      };
+
+      grid.appendChild(div);
+    });
+  }
+
+  /* ===== BALLOONS ===== */
+  function stopBalloonGame(){
+    if(balloonInterval){
+      clearInterval(balloonInterval);
+      balloonInterval = null;
+    }
+  }
+
+  function startBalloonGame(){
+    stopBalloonGame();
+    const area = document.getElementById("balloonArea");
+    const task = document.getElementById("balloonTask");
+    if(!area || !task) return;
+
+    area.innerHTML = "";
+    let score = 0;
+    const needed = 5;
+
+    let targetItem = data[Math.floor(Math.random() * data.length)];
+    task.innerText = targetItem.emoji;
+
+    balloonInterval = setInterval(() => {
+      const b = document.createElement("div");
+      b.className = "balloon";
+
+      const randomItem = data[Math.floor(Math.random() * data.length)];
+      b.innerText = getWord(randomItem);
+      b.dataset.key = randomItem.key;
+
+      b.style.left = (Math.random() * 70 + 5) + '%';
+      b.style.animationDuration = (3 + Math.random() * 1.5) + 's';
+
+      b.onclick = () => {
+        if(randomItem.key === targetItem.key){
+          b.classList.add("pop");
+          beepSuccess();
+          score++;
+          if(score >= needed){
+            stopBalloonGame();
+            state.games.balloon = true;
+            save();
+            updateBadges();
+            task.innerText = "🎉 " + UI[state.lang].wellDone + "!";
+          } else {
+            targetItem = data[Math.floor(Math.random() * data.length)];
+            task.innerText = targetItem.emoji;
+          }
+        } else {
+          beepFail();
+          b.style.background = "#ffcccc";
+        }
+      };
+
+      area.appendChild(b);
+      setTimeout(() => { if(b.parentNode) b.remove(); }, 5000);
+    }, 1000);
+  }
+
+  /* ===== LETTERS ===== */
+  let lettersTarget = null;
+  let lettersBuilt = "";
+
+  function startLettersGame(){
+    const targetArea = document.getElementById("lettersTarget");
+    const wordArea = document.getElementById("lettersWord");
+    const pool = document.getElementById("lettersPool");
+    if(!targetArea || !wordArea || !pool) return;
+
+    lettersTarget = data[Math.floor(Math.random() * data.length)];
+    lettersBuilt = "";
+    targetArea.innerText = lettersTarget.emoji;
+    wordArea.innerText = "_".repeat(getWord(lettersTarget).length);
+    pool.innerHTML = "";
+
+    const word = getWord(lettersTarget);
+    let letters = word.split("");
+    letters = shuffle(letters);
+
+    letters.forEach(ch => {
+      const b = document.createElement("button");
+      b.className = "letter-btn";
+      b.innerText = ch;
+      b.onclick = () => {
+        if(b.classList.contains("used")) return;
+        lettersBuilt += ch;
+        wordArea.innerText = lettersBuilt + "_".repeat(word.length - lettersBuilt.length);
+        b.classList.add("used");
+
+        if(lettersBuilt === word){
+          wordArea.innerText = word;
+          beepSuccess();
+          state.games.letters = true;
+          save();
+          updateBadges();
+          setTimeout(() => {
+            alert(UI[state.lang].wellDone + "! 🎉");
+            startLettersGame();
+          }, 400);
+        } else if(!word.startsWith(lettersBuilt)){
+          beepFail();
+          setTimeout(() => {
+            lettersBuilt = "";
+            wordArea.innerText = "_".repeat(word.length);
+            pool.querySelectorAll(".letter-btn").forEach(btn => btn.classList.remove("used"));
+          }, 600);
+        }
+      };
+      pool.appendChild(b);
+    });
+  }
+
+  /* ===== INIT ===== */
   document.addEventListener("DOMContentLoaded", () => {
     load();
+    updateUI();
     initHeader();
     renderVocab();
+    updateBadges();
     refreshHeader();
   });
 </script>
