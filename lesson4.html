@@ -32,10 +32,6 @@
       --rBig:25px;
       --r:22px;
       --pad:16px;
-
-      --skyBlueTop:#93C5FD;
-      --skyBlueMid:#BFDBFE;
-      --skyWarm:#FFE7B3;
     }
 
     *{box-sizing:border-box;}
@@ -204,7 +200,156 @@
     .dropZone.bad{background:#FEF2F2;border-color:#FECACA;}
     .dropZone.matched{background:var(--good)!important;color:#fff;border-color:var(--good)!important;}
 
-    #emojiArea{font-size:80px;letter-spacing:8px;margin:16px 0;text-align:center;min-height:100px;}
+    /* ====== BALLOON GAME STYLES ====== */
+    #balloonArea{
+      position: relative;
+      width: 100%;
+      height: 55vh;
+      min-height: 320px;
+      background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 50%, #FFF8E7 100%);
+      border-radius: var(--rBig);
+      border: 6px solid white;
+      overflow: hidden;
+      margin-top: 10px;
+      box-shadow: inset 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .cloud{
+      position: absolute;
+      font-size: 40px;
+      opacity: 0.6;
+      pointer-events: none;
+      animation: cloudFloat 8s ease-in-out infinite;
+    }
+    @keyframes cloudFloat {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(20px); }
+    }
+    .balloon{
+      position: absolute;
+      width: 72px;
+      height: 90px;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 1000;
+      color: white;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      cursor: pointer;
+      user-select: none;
+      animation: balloonRise 3.5s linear forwards;
+      box-shadow: inset -6px -6px 12px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.2);
+      border: 3px solid rgba(255,255,255,0.4);
+    }
+    .balloon::after{
+      content: '';
+      position: absolute;
+      bottom: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 14px;
+      background: rgba(0,0,0,0.3);
+    }
+    .balloon.popped{
+      animation: popBurst 0.25s ease-out forwards !important;
+      pointer-events: none;
+    }
+    @keyframes balloonRise {
+      0% { transform: translateY(55vh) rotate(-3deg); }
+      100% { transform: translateY(-120px) rotate(3deg); }
+    }
+    @keyframes popBurst {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.7; }
+      100% { transform: scale(0); opacity: 0; }
+    }
+    .balloon-shine{
+      position: absolute;
+      top: 10px;
+      left: 12px;
+      width: 18px;
+      height: 22px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    #balloonTask{
+      text-align: center;
+      font-size: 20px;
+      font-weight: 1000;
+      color: var(--ink);
+      margin-bottom: 8px;
+      padding: 10px 16px;
+      background: white;
+      border-radius: 18px;
+      box-shadow: var(--shadowSoft);
+    }
+    #balloonScore{
+      text-align: center;
+      margin-top: 10px;
+      font-weight: 900;
+      font-size: 18px;
+      color: var(--muted);
+    }
+
+    /* ====== CELEBRATION OVERLAY ====== */
+    .celebrate-overlay{
+      display:none;
+      position:fixed; inset:0;
+      background: rgba(0,0,0,0.75);
+      z-index: 2000;
+      align-items:center; justify-content:center;
+      padding: 16px;
+    }
+    .celebrate-overlay.show{ display:flex; }
+    .celebrate-card{
+      width: 100%;
+      max-width: 520px;
+      background: white;
+      border-radius: 30px;
+      padding: 22px;
+      text-align:center;
+      box-shadow: 0 14px 0 rgba(0,0,0,0.12);
+      position: relative;
+      overflow: hidden;
+      border: 6px solid #fff;
+    }
+    .celebrate-emoji{ font-size: 60px; }
+    .celebrate-title{ font-size: 24px; font-weight: 800; margin-top: 6px; }
+    .celebrate-text{ color:#374151; font-weight: 700; margin-top: 8px; font-size: 15px; }
+    .celebrate-btn{
+      margin-top: 14px;
+      width: 100%;
+      padding: 12px;
+      border-radius: 18px;
+      border: none;
+      background: var(--good);
+      color: white;
+      font-weight: 800;
+      font-size: 17px;
+      cursor: pointer;
+      box-shadow: 0 6px 0 #09725b;
+    }
+    .celebrate-btn:active{ transform: translateY(3px); box-shadow: 0 3px 0 #09725b; }
+    .confetti{
+      position:absolute; inset:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .dot{
+      position:absolute;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      opacity: 0.95;
+      animation: fall 2.2s linear forwards;
+    }
+    @keyframes fall{
+      0%{ transform: translateY(-20px) rotate(0deg); }
+      100%{ transform: translateY(560px) rotate(360deg); opacity: 0.9; }
+    }
+
     .choiceRow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px;}
     .choiceBtn{
       padding:14px 18px;border:2px solid #E5E7EB;background:#fff;border-radius:20px;cursor:pointer;
@@ -241,6 +386,17 @@
 </head>
 <body>
 
+<!-- CELEBRATION OVERLAY -->
+<div class="celebrate-overlay" id="celebrateOverlay">
+  <div class="celebrate-card">
+    <div class="confetti" id="confetti"></div>
+    <div class="celebrate-emoji" id="celebrateEmoji">🎉</div>
+    <div class="celebrate-title" id="celebrateTitle">Barakalla!</div>
+    <div class="celebrate-text" id="celebrateText">Zo'r!</div>
+    <button class="celebrate-btn" onclick="closeCelebrate()">OK ✅</button>
+  </div>
+</div>
+
 <div class="app">
 
   <div class="top">
@@ -265,7 +421,7 @@
       <div class="menu">
         <button class="menuBtn primary" onclick="openSection('learn')"><span class="menuEmoji">📘</span><span id="menuLearn">O'rganish</span></button>
         <button class="menuBtn" onclick="openSection('match')"><span class="menuEmoji">🔗</span><span id="menuMatch">Juftini top</span></button>
-        <button class="menuBtn" onclick="openSection('guess')"><span class="menuEmoji">🎨</span><span id="menuGuess">Rangni top</span></button>
+        <button class="menuBtn" onclick="openSection('balloon')"><span class="menuEmoji">🎈</span><span id="menuBalloon">Shariklar</span></button>
         <button class="menuBtn" onclick="openSection('name')"><span class="menuEmoji">🔤</span><span id="menuName">Rangni tanla</span></button>
       </div>
     </div>
@@ -291,15 +447,19 @@
     </div>
   </div>
 
-  <!-- GUESS -->
-  <div class="panel" id="panel-guess">
-    <div class="panelTitle"><span id="panelTitleGuess">🎨 Rangni top</span> <span class="badge" id="g3Status">❓</span></div>
-    <p class="hint" id="guessHint">Bu narsa qanday rangda?</p>
-    <div id="emojiArea"></div>
-    <div class="choiceRow" id="guessChoices"></div>
+  <!-- ====== BALLOON SPIEL ====== -->
+  <div class="panel" id="panel-balloon">
+    <div class="panelTitle"><span id="panelTitleBalloon">🎈 Shariklar</span> <span class="badge" id="gBalloonStatus">❓</span></div>
+    <div id="balloonTask">Top: qizil</div>
+    <div id="balloonArea">
+      <div class="cloud" style="top:8%;left:8%;">☁️</div>
+      <div class="cloud" style="top:15%;right:12%;animation-delay:-3s;">☁️</div>
+      <div class="cloud" style="top:35%;left:65%;animation-delay:-5s;font-size:28px;">☁️</div>
+    </div>
+    <div id="balloonScore">⭐ 0 / 10</div>
     <div class="btnRow">
-      <button class="btn primary" onclick="startGuessGame()" id="btnStart1">▶ Boshlash</button>
-      <button class="btn soft" onclick="closePanels()" id="btnClose2">✖ Yopish</button>
+      <button class="btn primary" onclick="startBalloonGame()" id="btnBalloonStart">▶ Boshlash</button>
+      <button class="btn soft" onclick="stopBalloonGame();closePanels();" id="btnCloseBalloon">✖ Yopish</button>
     </div>
   </div>
 
@@ -309,6 +469,7 @@
     <p class="hint" id="nameTask">To'g'ri nomni tanlang</p>
     <div class="colorPreview" id="namePreview"></div>
     <div class="choiceRow" id="nameGrid"></div>
+    <div id="nameProgress" style="text-align:center;margin-top:10px;font-weight:900;font-size:16px;color:var(--muted);">0 / 10</div>
     <div class="btnRow">
       <button class="btn primary" onclick="startNameGame()" id="btnStart2">▶ Boshlash</button>
       <button class="btn soft" onclick="closePanels()" id="btnClose3">✖ Yopish</button>
@@ -321,7 +482,7 @@
   const LESSON_ID = "lesson4_ranglar_v1";
 
   // ==========================================
-  // VOLLSTAENDIGES UI-TEXT-SYSTEM (uz/en)
+  // UI-TEXT-SYSTEM (uz/en)
   // ==========================================
   const UI = {
     uz: {
@@ -329,72 +490,99 @@
       learned: "o'rganildi",
       menuLearn: "O'rganish",
       menuMatch: "Juftini top",
-      menuGuess: "Rangni top",
+      menuBalloon: "Shariklar",
       menuName: "Rangni tanla",
       panelLearn: "📘 O'rganish",
       panelMatch: "🔗 Juftini top",
-      panelGuess: "🎨 Rangni top",
+      panelBalloon: "🎈 Shariklar",
       panelName: "🔤 Rangni tanla",
       hintMatch: "Rangni uning nomiga bog'lang",
-      hintGuess: "Bu narsa qanday rangda?",
       hintName: "To'g'ri nomni tanlang",
+      balloonTaskPrefix: "Top: ",
+      balloonScoreLabel: "⭐",
+      balloonOf: " / 10",
+      nameProgress: " / 10",
       btnRefresh: "🔄 Yangilash",
       btnStart: "▶ Boshlash",
       btnClose: "✖ Yopish",
       badgeDone: "✅ Bajarildi",
       badgeUnknown: "❓",
-      matchedPrefix: "✅ "
+      matchedPrefix: "✅ ",
+      balloonStart: "▶ Boshlash",
+      // Celebrations - alle 4 Spiele
+      matchWinTitle: "Zo'r! 🔗",
+      matchWinText: "Siz barcha juftlarni topdingiz!",
+      matchWinEmoji: "🎉",
+      balloonWinTitle: "Ajoyib! 🎈",
+      balloonWinText: "Siz barcha 10 rangni topdingiz!",
+      balloonWinEmoji: "🎉",
+      nameWinTitle: "Barakalla! 🌟",
+      nameWinText: "Siz barcha 10 rangni bilasiz!",
+      nameWinEmoji: "🏆",
+      learnWinTitle: "Ajoyib! 📘",
+      learnWinText: "Siz barcha 10 rangni o'rganib oldingiz!",
+      learnWinEmoji: "📚",
+      allDoneTitle: "HAMMASI TUGADI! 🎉👏",
+      allDoneText: "Siz 4-dars va hamma o'yinlarni tugatdingiz! YAY! 🎊",
+      okBtn: "OK ✅"
     },
     en: {
       title: "Lesson 4: Colors",
       learned: "learned",
       menuLearn: "Learn",
       menuMatch: "Find the Pair",
-      menuGuess: "Guess the Color",
+      menuBalloon: "Balloons",
       menuName: "Pick the Name",
       panelLearn: "📘 Learn",
       panelMatch: "🔗 Find the Pair",
-      panelGuess: "🎨 Guess the Color",
+      panelBalloon: "🎈 Balloons",
       panelName: "🔤 Pick the Name",
       hintMatch: "Match the color to its name",
-      hintGuess: "What color is this?",
       hintName: "Pick the correct name",
+      balloonTaskPrefix: "Tap: ",
+      balloonScoreLabel: "⭐",
+      balloonOf: " / 10",
+      nameProgress: " / 10",
       btnRefresh: "🔄 Refresh",
       btnStart: "▶ Start",
       btnClose: "✖ Close",
       badgeDone: "✅ Done",
       badgeUnknown: "❓",
-      matchedPrefix: "✅ "
+      matchedPrefix: "✅ ",
+      balloonStart: "▶ Start",
+      // Celebrations - all 4 games
+      matchWinTitle: "Great! 🔗",
+      matchWinText: "You matched all pairs!",
+      matchWinEmoji: "🎉",
+      balloonWinTitle: "Amazing! 🎈",
+      balloonWinText: "You found all 10 colors!",
+      balloonWinEmoji: "🎉",
+      nameWinTitle: "Well Done! 🌟",
+      nameWinText: "You know all 10 colors!",
+      nameWinEmoji: "🏆",
+      learnWinTitle: "Excellent! 📘",
+      learnWinText: "You learned all 10 colors!",
+      learnWinEmoji: "📚",
+      allDoneTitle: "ALL DONE! 🎉👏",
+      allDoneText: "You finished Lesson 4 and all games! YAY! 🎊",
+      okBtn: "OK ✅"
     }
   };
 
   const items = [
-    {k:"red",    hex:"#EF4444", emoji:"🔴", uz:"qizil",    en:"red"},
-    {k:"yellow", hex:"#EAB308", emoji:"🟡", uz:"sariq",    en:"yellow"},
-    {k:"green",  hex:"#22C55E", emoji:"🟢", uz:"yashil",   en:"green"},
-    {k:"blue",   hex:"#3B82F6", emoji:"🔵", uz:"ko'k",     en:"blue"},
-    {k:"pink",   hex:"#EC4899", emoji:"🩷", uz:"pushti",   en:"pink"},
-    {k:"black",  hex:"#1F2937", emoji:"⚫", uz:"qora",     en:"black"},
-    {k:"white",  hex:"#F3F4F6", emoji:"⚪", uz:"oq",       en:"white"},
-    {k:"brown",  hex:"#92400E", emoji:"🟤", uz:"jigarrang",en:"brown"},
+    {k:"red",    hex:"#EF4444", emoji:"🔴", uz:"qizil",     en:"red"},
+    {k:"yellow", hex:"#EAB308", emoji:"🟡", uz:"sariq",     en:"yellow"},
+    {k:"green",  hex:"#22C55E", emoji:"🟢", uz:"yashil",    en:"green"},
+    {k:"blue",   hex:"#3B82F6", emoji:"🔵", uz:"ko'k",      en:"blue"},
+    {k:"pink",   hex:"#EC4899", emoji:"🩷", uz:"pushti",    en:"pink"},
+    {k:"black",  hex:"#1F2937", emoji:"⚫", uz:"qora",      en:"black"},
+    {k:"white",  hex:"#F3F4F6", emoji:"⚪", uz:"oq",        en:"white"},
+    {k:"brown",  hex:"#92400E", emoji:"🟤", uz:"jigarrang", en:"brown"},
     {k:"orange", hex:"#F97316", emoji:"🟠", uz:"to'q sariq",en:"orange"},
-    {k:"gray",   hex:"#9CA3AF", emoji:"⚪", uz:"kulrang",  en:"gray"},
+    {k:"gray",   hex:"#9CA3AF", emoji:"⚪", uz:"kulrang",   en:"gray"},
   ];
 
-  const objects = [
-    {emoji:"🍎", colorKey:"red"},
-    {emoji:"🍌", colorKey:"yellow"},
-    {emoji:"🥦", colorKey:"green"},
-    {emoji:"🫐", colorKey:"blue"},
-    {emoji:"🌸", colorKey:"pink"},
-    {emoji:"🐧", colorKey:"black"},
-    {emoji:"☁️", colorKey:"white"},
-    {emoji:"🐻", colorKey:"brown"},
-    {emoji:"🥕", colorKey:"orange"},
-    {emoji:"🐘", colorKey:"gray"},
-  ];
-
-  let state = { lang:"uz", stars:{}, learned:{}, games:{g1:false,g3:false,g4:false} };
+  let state = { lang:"uz", stars:{}, learned:{}, games:{g1:false,gBalloon:false,g4:false} };
 
   function save(){ localStorage.setItem(LESSON_ID, JSON.stringify(state)); }
   function load(){
@@ -405,7 +593,8 @@
       state.lang = s.lang || "uz";
       state.stars = s.stars || {};
       state.learned = s.learned || {};
-      state.games = s.games || {g1:false,g3:false,g4:false};
+      state.games = s.games || {g1:false,gBalloon:false,g4:false};
+      state.learnCelebrated = s.learnCelebrated || false;
     }catch(e){}
   }
 
@@ -422,56 +611,44 @@
     if(panel) panel.classList.add("show");
 
     if(name==="match") initMatchingGame();
-    if(name==="guess") startGuessGame();
+    if(name==="balloon") startBalloonGame();
     if(name==="name") startNameGame();
 
     panel?.scrollIntoView({behavior:"smooth", block:"start"});
   }
 
-  // ==========================================
-  // T() Hilfsfunktion: gibt Text in aktueller Sprache zurueck
-  // ==========================================
   function T(key) {
     return (UI[state.lang] && UI[state.lang][key]) ? UI[state.lang][key] : UI.uz[key];
   }
 
-  // ==========================================
-  // ALLE UI-TEXTE AKTUALISIEREN
-  // ==========================================
   function updateAllTexts() {
     const learnedCount = Object.values(state.learned).filter(Boolean).length;
 
-    // Titel & Progress
     document.getElementById("titleText").innerText  = T("title");
     document.getElementById("progLabel").innerText  = `${learnedCount} / 10 ${T("learned")}`;
     document.getElementById("progMini").innerText   = `${learnedCount} / 10`;
 
-    // Menu Buttons
-    document.getElementById("menuLearn").innerText = T("menuLearn");
-    document.getElementById("menuMatch").innerText = T("menuMatch");
-    document.getElementById("menuGuess").innerText = T("menuGuess");
-    document.getElementById("menuName").innerText  = T("menuName");
+    document.getElementById("menuLearn").innerText    = T("menuLearn");
+    document.getElementById("menuMatch").innerText    = T("menuMatch");
+    document.getElementById("menuBalloon").innerText  = T("menuBalloon");
+    document.getElementById("menuName").innerText     = T("menuName");
 
-    // Panel Titel
-    document.getElementById("panelTitleLearn").innerText = T("panelLearn");
-    document.getElementById("panelTitleMatch").innerText = T("panelMatch");
-    document.getElementById("panelTitleGuess").innerText = T("panelGuess");
-    document.getElementById("panelTitleName").innerText  = T("panelName");
+    document.getElementById("panelTitleLearn").innerText   = T("panelLearn");
+    document.getElementById("panelTitleMatch").innerText   = T("panelMatch");
+    document.getElementById("panelTitleBalloon").innerText = T("panelBalloon");
+    document.getElementById("panelTitleName").innerText    = T("panelName");
 
-    // Hinweise
     document.getElementById("hintMatch").innerText = T("hintMatch");
-    document.getElementById("guessHint").innerText = T("hintGuess");
     document.getElementById("nameTask").innerText  = T("hintName");
 
-    // Buttons
-    document.getElementById("btnRefresh").innerText = T("btnRefresh");
-    document.getElementById("btnStart1").innerText  = T("btnStart");
-    document.getElementById("btnStart2").innerText  = T("btnStart");
-    document.getElementById("btnClose1").innerText  = T("btnClose");
-    document.getElementById("btnClose2").innerText  = T("btnClose");
-    document.getElementById("btnClose3").innerText  = T("btnClose");
+    document.getElementById("btnRefresh").innerText       = T("btnRefresh");
+    document.getElementById("btnStart2").innerText        = T("btnStart");
+    document.getElementById("btnBalloonStart").innerText  = T("balloonStart");
+    document.getElementById("btnClose1").innerText        = T("btnClose");
+    document.getElementById("btnCloseBalloon").innerText  = T("btnClose");
+    document.getElementById("btnClose3").innerText        = T("btnClose");
 
-    // Badges
+    updateBalloonTask();
     updateBadges();
   }
 
@@ -480,16 +657,10 @@
     document.getElementById("btn-uz").classList.toggle("active", l==="uz");
     document.getElementById("btn-en").classList.toggle("active", l==="en");
     save();
-
-    // Alle Texte aktualisieren
     updateAllTexts();
-
-    // Vokabeln neu rendern (Sprache wechseln)
     renderVocab();
-
-    // Offene Spiele neu starten mit neuer Sprache
     if(document.getElementById("panel-match").classList.contains("show")) initMatchingGame();
-    if(document.getElementById("panel-guess").classList.contains("show")) startGuessGame();
+    if(document.getElementById("panel-balloon").classList.contains("show")) { stopBalloonGame(); startBalloonGame(); }
     if(document.getElementById("panel-name").classList.contains("show")) startNameGame();
   }
 
@@ -513,7 +684,7 @@
       el.innerText = done ? T("badgeDone") : T("badgeUnknown");
     };
     setBadge("g1Status", state.games.g1);
-    setBadge("g3Status", state.games.g3);
+    setBadge("gBalloonStatus", state.games.gBalloon);
     setBadge("g4Status", state.games.g4);
   }
 
@@ -549,7 +720,6 @@
     const it=items.find(x=>x.k===key);
     if(!it) return;
     const text = (state.lang==="uz") ? it.uz : it.en;
-
     try{
       const u=new SpeechSynthesisUtterance(text);
       u.lang = (state.lang==="uz") ? "uz-UZ" : "en-US";
@@ -557,13 +727,20 @@
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(u);
     }catch(e){}
-
     state.learned[key]=true;
     state.stars[key]=Math.min(3,(state.stars[key]||0)+1);
     beepSuccess();
     save();
     renderVocab();
     updateProgress();
+
+    // Celebration wenn alle 10 Farben gelernt (noch nicht gezeigt)
+    const learnedCount = Object.values(state.learned).filter(Boolean).length;
+    if(learnedCount === 10 && !state.learnCelebrated){
+      state.learnCelebrated = true;
+      save();
+      celebrate("learnWinTitle", "learnWinText", "learnWinEmoji");
+    }
   }
 
   function renderVocab(){
@@ -584,14 +761,13 @@
 
   function shuffle(arr){
     const a=[...arr];
-    for(let i=a.length-1;i>0;i--){
-      const j=Math.floor(Math.random()*(i+1));
-      [a[i],a[j]]=[a[j],a[i]];
-    }
+    for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
     return a;
   }
 
-  // ============ JUFTINI TOP (Matching) ============
+  // ==========================================
+  // JUFTINI TOP (Matching)
+  // ==========================================
   let matchesCorrect=0, matchesTotal=0;
   function initMatchingGame(){
     const cCol=document.getElementById("dragColors");
@@ -614,110 +790,219 @@
     shuffle(pool).forEach(it=>{
       const dz=document.createElement("div");
       dz.className="dropZone";
-      // DYNAMISCH: Farbname in aktueller Sprache
       dz.innerText = (state.lang==="uz") ? it.uz : it.en;
       dz.dataset.k=it.k;
-
       dz.ondragover=e=>{e.preventDefault(); dz.classList.add("over");};
       dz.ondrop=e=>{
         const k=e.dataTransfer.getData("text");
         if(k===dz.dataset.k){
           if(dz.classList.contains("matched")){ dz.classList.remove("over"); return; }
           dz.classList.add("matched");
-          // DYNAMISCH: Matched-Praefix in aktueller Sprache
           dz.innerText = T("matchedPrefix") + dz.innerText.replace(T("matchedPrefix"), "");
           matchesCorrect++; beepSuccess();
           if(matchesCorrect===matchesTotal){
             state.games.g1=true; save(); updateBadges();
+            celebrate("matchWinTitle", "matchWinText", "matchWinEmoji");
           }
-        }else{
-          dz.classList.add("bad"); beepFail();
-          setTimeout(()=>dz.classList.remove("bad"), 260);
-        }
+        }else{ dz.classList.add("bad"); beepFail(); setTimeout(()=>dz.classList.remove("bad"), 260); }
         dz.classList.remove("over");
       };
-
       nCol.appendChild(dz);
     });
   }
 
-  // ============ RANGNI TOP (Guess the color of an object) ============
-  function startGuessGame(){
-    const area=document.getElementById("emojiArea");
-    const choices=document.getElementById("guessChoices");
-    const hint=document.getElementById("guessHint");
-    if(!area || !choices) return;
+  // ==========================================
+  // CELEBRATION OVERLAY
+  // ==========================================
+  function celebrate(titleKey, textKey, emojiKey){
+    document.getElementById("celebrateEmoji").innerText = T(emojiKey);
+    document.getElementById("celebrateTitle").innerText = T(titleKey);
+    document.getElementById("celebrateText").innerText = T(textKey);
 
-    choices.innerHTML="";
-    const obj = objects[Math.floor(Math.random()*objects.length)];
-    const target = items.find(x=>x.k===obj.colorKey);
-    area.innerText = obj.emoji;
-    // DYNAMISCH: Hinweis in aktueller Sprache
-    hint.innerText = T("hintGuess");
-
-    const opts = new Set([target.k]);
-    while(opts.size < 4){
-      const r = items[Math.floor(Math.random()*items.length)];
-      opts.add(r.k);
+    const conf = document.getElementById("confetti");
+    conf.innerHTML = "";
+    const colors = ["#F59E0B","#EF4444","#10B981","#3B82F6","#A855F7","#F97316"];
+    for(let i=0;i<75;i++){
+      const d = document.createElement("div");
+      d.className = "dot";
+      d.style.left = (Math.random()*100) + "%";
+      d.style.top  = (-30 - Math.random()*220) + "px";
+      d.style.background = colors[Math.floor(Math.random()*colors.length)];
+      d.style.animationDelay = (Math.random()*0.25) + "s";
+      d.style.animationDuration = (1.6 + Math.random()*1.1) + "s";
+      conf.appendChild(d);
     }
-
-    shuffle([...opts]).forEach(optKey=>{
-      const optItem = items.find(x=>x.k===optKey);
-      const b=document.createElement("button");
-      b.className="choiceBtn";
-      // DYNAMISCH: Farbname in aktueller Sprache
-      b.innerText = (state.lang==="uz") ? optItem.uz : optItem.en;
-      b.style.borderColor = optItem.hex;
-      b.style.background = optItem.hex + "18";
-
-      b.onclick=()=>{
-        if(optKey===target.k){
-          b.classList.add("good"); b.style.background="var(--good)"; b.style.borderColor="var(--good)";
-          beepSuccess();
-          state.games.g3=true; save(); updateBadges();
-          setTimeout(startGuessGame, 900);
-        }else{
-          b.classList.add("bad"); b.style.background="var(--bad)"; b.style.borderColor="var(--bad)";
-          beepFail();
-          setTimeout(()=>{ b.classList.remove("bad"); b.style.background=optItem.hex+"18"; b.style.borderColor=optItem.hex; }, 350);
-        }
-      };
-      choices.appendChild(b);
-    });
+    document.getElementById("celebrateOverlay").classList.add("show");
+    beepSuccess();
   }
 
-  // ============ RANGNI TANLA (Name the color) ============
+  function closeCelebrate(){
+    document.getElementById("celebrateOverlay").classList.remove("show");
+  }
+
+  // ==========================================
+  // BALLOON SPIEL - Alle 10 Farben + Celebration
+  // ==========================================
+  let balloonInt = null;
+  let balloonTarget = null;
+  let balloonScore = 0;
+  let balloonOrder = [];
+  let balloonIdx = 0;
+
+  function stopBalloonGame(){
+    if(balloonInt){ clearInterval(balloonInt); balloonInt = null; }
+    const area = document.getElementById("balloonArea");
+    if(area){ area.querySelectorAll(".balloon").forEach(b=>b.remove()); }
+  }
+
+  function updateBalloonTask(){
+    if(!balloonTarget) return;
+    const word = (state.lang === "uz") ? balloonTarget.uz : balloonTarget.en;
+    document.getElementById("balloonTask").innerText = T("balloonTaskPrefix") + word;
+  }
+
+  function updateBalloonScore(){
+    document.getElementById("balloonScore").innerText = T("balloonScoreLabel") + " " + balloonScore + T("balloonOf");
+  }
+
+  function finishBalloonGame(){
+    stopBalloonGame();
+    state.games.gBalloon = true;
+    save();
+    updateBadges();
+    celebrate("balloonWinTitle", "balloonWinText", "balloonWinEmoji");
+  }
+
+  function startBalloonGame(){
+    stopBalloonGame();
+
+    // Alle 10 Farben in zufaelliger Reihenfolge
+    balloonOrder = shuffle(items.map(x=>x.k));
+    balloonIdx = 0;
+    balloonScore = 0;
+    updateBalloonScore();
+
+    balloonTarget = items.find(x=>x.k===balloonOrder[balloonIdx]);
+    updateBalloonTask();
+
+    document.getElementById("balloonArea").querySelectorAll(".balloon").forEach(b=>b.remove());
+
+    // SCHNELLER: 650ms statt 1400ms, Ballons steigen in 3.5s
+    balloonInt = setInterval(() => {
+      const item = items[Math.floor(Math.random()*items.length)];
+
+      const b = document.createElement("div");
+      b.className = "balloon";
+      b.style.background = item.hex;
+      b.dataset.k = item.k;
+      b.style.left = (Math.random() * 72 + 4) + "%";
+
+      const shine = document.createElement("div");
+      shine.className = "balloon-shine";
+      b.appendChild(shine);
+
+      b.style.animationDuration = (2.8 + Math.random() * 1.5) + "s";
+
+      b.onpointerdown = () => {
+        if(b.classList.contains("popped")) return;
+
+        if(item.k === balloonTarget.k){
+          b.classList.add("popped");
+          b.innerHTML = "⭐";
+          b.style.background = "var(--good)";
+          b.style.borderColor = "var(--good)";
+          beepSuccess();
+
+          balloonIdx++;
+          balloonScore++;
+          updateBalloonScore();
+
+          if(balloonIdx >= balloonOrder.length){
+            finishBalloonGame();
+          } else {
+            balloonTarget = items.find(x=>x.k===balloonOrder[balloonIdx]);
+            setTimeout(()=>updateBalloonTask(), 300);
+          }
+        } else {
+          b.classList.add("popped");
+          b.innerHTML = "💥";
+          b.style.background = "var(--bad)";
+          b.style.borderColor = "var(--bad)";
+          beepFail();
+        }
+      };
+
+      document.getElementById("balloonArea").appendChild(b);
+      setTimeout(()=>{ if(b.parentNode) b.remove(); }, 5500);
+    }, 650);
+  }
+
+  // ==========================================
+  // PICK THE NAME - Alle 10 Farben + Celebration
+  // ==========================================
+  let nameOrder = [];
+  let nameIdx = 0;
+
+  function updateNameProgress(){
+    document.getElementById("nameProgress").innerText = nameIdx + T("nameProgress");
+  }
+
+  function finishNameGame(){
+    state.games.g4 = true;
+    save();
+    updateBadges();
+    celebrate("nameWinTitle", "nameWinText", "nameWinEmoji");
+  }
+
   function startNameGame(){
     const grid=document.getElementById("nameGrid");
     const task=document.getElementById("nameTask");
     const preview=document.getElementById("namePreview");
     if(!grid || !task || !preview) return;
 
+    // Alle 10 Farben in zufaelliger Reihenfolge
+    if(nameIdx === 0){
+      nameOrder = shuffle(items.map(x=>x.k));
+    }
+
+    if(nameIdx >= nameOrder.length){
+      // Alle fertig - neustarten
+      nameIdx = 0;
+      nameOrder = shuffle(items.map(x=>x.k));
+    }
+
+    updateNameProgress();
     grid.innerHTML="";
-    // DYNAMISCH: Hinweis in aktueller Sprache
     task.innerText = T("hintName");
 
-    const target = items[Math.floor(Math.random()*items.length)];
+    const target = items.find(x=>x.k===nameOrder[nameIdx]);
     preview.style.background = target.hex;
 
     const opts = new Set([target.k]);
-    while(opts.size < 4){
-      const r = items[Math.floor(Math.random()*items.length)];
-      opts.add(r.k);
-    }
+    while(opts.size < 4){ opts.add(items[Math.floor(Math.random()*items.length)].k); }
 
     shuffle([...opts]).forEach(optKey=>{
       const optItem = items.find(x=>x.k===optKey);
       const b=document.createElement("button");
       b.className="choiceBtn";
-      // DYNAMISCH: Farbname in aktueller Sprache
       b.innerText = (state.lang==="uz") ? optItem.uz : optItem.en;
-
       b.onclick=()=>{
         if(optKey===target.k){
           b.classList.add("good"); beepSuccess();
-          state.games.g4=true; save(); updateBadges();
-          setTimeout(startNameGame, 700);
+          nameIdx++;
+          updateNameProgress();
+
+          if(nameIdx >= nameOrder.length){
+            grid.innerHTML="";
+            preview.style.background = "#E5E7EB";
+            finishNameGame();
+          } else {
+            setTimeout(()=>{
+              if(document.getElementById("panel-name").classList.contains("show")){
+                startNameGame();
+              }
+            }, 500);
+          }
         }else{
           b.classList.add("bad"); beepFail();
           setTimeout(()=>b.classList.remove("bad"), 300);
@@ -731,10 +1016,7 @@
     load();
     document.getElementById("btn-uz").classList.toggle("active", state.lang==="uz");
     document.getElementById("btn-en").classList.toggle("active", state.lang==="en");
-
-    // ALLE Texte beim Start setzen
     updateAllTexts();
-
     renderVocab();
     updateProgress();
   })();
