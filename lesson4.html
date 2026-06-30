@@ -29,7 +29,7 @@
 
       --shadow:0 16px 34px rgba(0,0,0,0.10);
       --shadowSoft:0 10px 22px rgba(0,0,0,0.10);
-      --rBig:30px;
+      --rBig:25px;
       --r:22px;
       --pad:16px;
 
@@ -44,9 +44,9 @@
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       background:var(--bg);
       color:var(--ink);
-      padding:14px;
+      padding:12px;
     }
-    .app{max-width:900px;margin:0 auto;}
+    .app{max-width:520px;margin:0 auto;}
 
     .top{
       background:var(--panel);
@@ -72,10 +72,10 @@
     .iconBox:active{transform:scale(0.97);}
     .titleWrap{ text-align:center; min-width:0; }
     .title{
-      margin:0;font-size:34px;font-weight:900;
+      margin:0;font-size:22px;font-weight:900;
       white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
-    .sub{ margin-top:6px;color:var(--muted);font-weight:900;font-size:18px; }
+    .sub{ margin-top:6px;color:var(--muted);font-weight:900;font-size:14px; }
 
     .track{
       margin:14px 4px 0;height:18px;background:#E5E7EB;
@@ -96,8 +96,8 @@
       display:flex;justify-content:center;gap:18px;margin-top:12px;
     }
     .langBtn{
-      width:160px;padding:14px 0;border:none;cursor:pointer;border-radius:999px;
-      font-weight:1000;font-size:20px;box-shadow:var(--shadowSoft);
+      width:140px;padding:12px 0;border:none;cursor:pointer;border-radius:999px;
+      font-weight:1000;font-size:16px;box-shadow:var(--shadowSoft);
       background:#E5E7EB;color:var(--blueDark);
     }
     .langBtn.active{
@@ -107,7 +107,7 @@
 
     .menuWrap{
       margin-top:14px;background:#F8ECFF;border-radius:var(--rBig);
-      padding:14px;box-shadow:var(--shadowSoft);
+      padding:12px;box-shadow:var(--shadowSoft);
     }
     .menu{
       display:grid;
@@ -115,8 +115,8 @@
       gap:14px;
     }
     .menuBtn{
-      height:86px;border-radius:24px;border:none;cursor:pointer;
-      font-weight:1000;font-size:28px;
+      height:70px;border-radius:18px;border:none;cursor:pointer;
+      font-weight:1000;font-size:20px;
       display:flex;align-items:center;justify-content:center;gap:14px;
       box-shadow:var(--shadowSoft);background:#fff;color:var(--blue);
       user-select:none;
@@ -139,27 +139,44 @@
     }
 
     .grid{
-      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;
+      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;
     }
     @media(max-width:560px){
       .grid{grid-template-columns:1fr;}
-      .title{font-size:30px;}
-      .menuBtn{font-size:24px;height:82px;}
-      .langBtn{width:140px;}
+      .title{font-size:20px;}
+      .menuBtn{font-size:18px;height:64px;}
+      .langBtn{width:120px;}
       .iconBox{font-size:44px;}
     }
+    @media screen and (max-width: 375px) {
+      body { padding: 8px; }
+      .menuBtn { font-size: 16px; height: 58px; }
+      .menuEmoji { font-size: 24px; }
+      .title { font-size: 18px; }
+      .sub { font-size: 13px; }
+      .iconBox { font-size: 40px; width: 56px; height: 56px; }
+      .colorCircle { width: 60px; height: 60px; font-size: 32px; }
+      .word { font-size: 20px; }
+      .langBtn { width: 110px; font-size: 14px; padding: 10px 0; }
+    }
+    @media screen and (min-width: 414px) {
+      .menuBtn { font-size: 18px; padding: 16px 12px; height: 74px; }
+      .colorCircle { width: 74px; height: 74px; font-size: 40px; }
+      .word { font-size: 24px; }
+    }
+
     .card{
       background:#fff;border-radius:var(--rBig);box-shadow:var(--shadowSoft);
-      padding:14px;position:relative;min-height:160px;overflow:hidden;
+      padding:16px;position:relative;min-height:140px;overflow:hidden;
       display:flex;flex-direction:column;align-items:center;justify-content:center;
     }
     .colorCircle{
-      width:80px;height:80px;border-radius:50%;
+      width:70px;height:70px;border-radius:50%;
       display:flex;align-items:center;justify-content:center;
-      font-size:40px;box-shadow:0 6px 18px rgba(0,0,0,0.15);
+      font-size:36px;box-shadow:0 6px 18px rgba(0,0,0,0.15);
       border:4px solid white;
     }
-    .word{font-size:28px;font-weight:1000;margin-top:12px;}
+    .word{font-size:22px;font-weight:1000;margin-top:12px;}
     .stars{margin-top:10px;font-size:18px;font-weight:1000;letter-spacing:2px;color:var(--gold);min-height:22px;}
     .speaker{
       position:absolute;right:14px;top:14px;width:56px;height:56px;border-radius:50%;
@@ -174,14 +191,14 @@
     .matchingBox{display:flex;gap:12px;margin-top:14px;}
     .col{flex:1;display:flex;flex-direction:column;gap:10px;}
     .dragItem{
-      padding:14px;background:#F8FAFC;border:2px solid #E5E7EB;border-radius:18px;text-align:center;
+      padding:12px;background:#F8FAFC;border:2px solid #E5E7EB;border-radius:18px;text-align:center;
       cursor:grab;font-weight:1000;box-shadow:0 8px 18px rgba(0,0,0,0.06);user-select:none;
-      font-size:32px;
+      font-size:20px;
     }
     .dropZone{
-      padding:14px;border:2px dashed var(--blue);border-radius:18px;text-align:center;min-height:22px;font-weight:1000;
+      padding:12px;border:2px dashed var(--blue);border-radius:18px;text-align:center;min-height:22px;font-weight:1000;
       background:#fff;transition:.2s;box-shadow:0 8px 18px rgba(0,0,0,0.06);user-select:none;
-      font-size:20px;
+      font-size:16px;
     }
     .dropZone.over{background:#EEF2FF;}
     .dropZone.bad{background:#FEF2F2;border-color:#FECACA;}
@@ -190,8 +207,8 @@
     #emojiArea{font-size:80px;letter-spacing:8px;margin:16px 0;text-align:center;min-height:100px;}
     .choiceRow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px;}
     .choiceBtn{
-      padding:14px 22px;border:2px solid #E5E7EB;background:#fff;border-radius:18px;cursor:pointer;
-      font-weight:1000;font-size:18px;box-shadow:0 8px 18px rgba(0,0,0,0.06);
+      padding:14px 18px;border:2px solid #E5E7EB;background:#fff;border-radius:20px;cursor:pointer;
+      font-weight:1000;font-size:16px;box-shadow:0 8px 18px rgba(0,0,0,0.06);
       min-width:88px;text-align:center;
     }
     .choiceBtn.good{background:var(--good);color:#fff;border-color:var(--good);}
@@ -220,6 +237,7 @@
       box-shadow:0 10px 30px rgba(0,0,0,0.15);border:6px solid white;
     }
   </style>
+<base target="_blank">
 </head>
 <body>
 
@@ -245,51 +263,55 @@
 
     <div class="menuWrap">
       <div class="menu">
-        <button class="menuBtn primary" onclick="openSection('learn')"><span class="menuEmoji">📘</span>O'rganish</button>
-        <button class="menuBtn" onclick="openSection('match')"><span class="menuEmoji">🔗</span>Juftini top</button>
-        <button class="menuBtn" onclick="openSection('guess')"><span class="menuEmoji">🎨</span>Rangni top</button>
-        <button class="menuBtn" onclick="openSection('name')"><span class="menuEmoji">🔤</span>Rangni tanla</button>
+        <button class="menuBtn primary" onclick="openSection('learn')"><span class="menuEmoji">📘</span><span id="menuLearn">O'rganish</span></button>
+        <button class="menuBtn" onclick="openSection('match')"><span class="menuEmoji">🔗</span><span id="menuMatch">Juftini top</span></button>
+        <button class="menuBtn" onclick="openSection('guess')"><span class="menuEmoji">🎨</span><span id="menuGuess">Rangni top</span></button>
+        <button class="menuBtn" onclick="openSection('name')"><span class="menuEmoji">🔤</span><span id="menuName">Rangni tanla</span></button>
       </div>
     </div>
   </div>
 
+  <!-- LEARN -->
   <div class="panel" id="panel-learn">
-    <div class="panelTitle">📘 O'rganish</div>
+    <div class="panelTitle" id="panelTitleLearn">📘 O'rganish</div>
     <div class="grid" id="vocabGrid"></div>
   </div>
 
+  <!-- MATCH -->
   <div class="panel" id="panel-match">
-    <div class="panelTitle">🔗 Juftini top <span class="badge" id="g1Status">❓</span></div>
-    <p class="hint">Rangni uning nomiga bog'lang</p>
+    <div class="panelTitle"><span id="panelTitleMatch">🔗 Juftini top</span> <span class="badge" id="g1Status">❓</span></div>
+    <p class="hint" id="hintMatch">Rangni uning nomiga bog'lang</p>
     <div class="matchingBox">
       <div class="col" id="dragColors"></div>
       <div class="col" id="dropNames"></div>
     </div>
     <div class="btnRow">
-      <button class="btn primary" onclick="initMatchingGame()">Yangilash 🔄</button>
-      <button class="btn soft" onclick="closePanels()">Yopish ✖</button>
+      <button class="btn primary" onclick="initMatchingGame()" id="btnRefresh">🔄 Yangilash</button>
+      <button class="btn soft" onclick="closePanels()" id="btnClose1">✖ Yopish</button>
     </div>
   </div>
 
+  <!-- GUESS -->
   <div class="panel" id="panel-guess">
-    <div class="panelTitle">🎨 Rangni top <span class="badge" id="g3Status">❓</span></div>
+    <div class="panelTitle"><span id="panelTitleGuess">🎨 Rangni top</span> <span class="badge" id="g3Status">❓</span></div>
     <p class="hint" id="guessHint">Bu narsa qanday rangda?</p>
     <div id="emojiArea"></div>
     <div class="choiceRow" id="guessChoices"></div>
     <div class="btnRow">
-      <button class="btn primary" onclick="startGuessGame()">Boshlash ▶</button>
-      <button class="btn soft" onclick="closePanels()">Yopish ✖</button>
+      <button class="btn primary" onclick="startGuessGame()" id="btnStart1">▶ Boshlash</button>
+      <button class="btn soft" onclick="closePanels()" id="btnClose2">✖ Yopish</button>
     </div>
   </div>
 
+  <!-- NAME -->
   <div class="panel" id="panel-name">
-    <div class="panelTitle">🔤 Rangni tanla <span class="badge" id="g4Status">❓</span></div>
+    <div class="panelTitle"><span id="panelTitleName">🔤 Rangni tanla</span> <span class="badge" id="g4Status">❓</span></div>
     <p class="hint" id="nameTask">To'g'ri nomni tanlang</p>
     <div class="colorPreview" id="namePreview"></div>
     <div class="choiceRow" id="nameGrid"></div>
     <div class="btnRow">
-      <button class="btn primary" onclick="startNameGame()">Boshlash ▶</button>
-      <button class="btn soft" onclick="closePanels()">Yopish ✖</button>
+      <button class="btn primary" onclick="startNameGame()" id="btnStart2">▶ Boshlash</button>
+      <button class="btn soft" onclick="closePanels()" id="btnClose3">✖ Yopish</button>
     </div>
   </div>
 
@@ -298,7 +320,54 @@
 <script>
   const LESSON_ID = "lesson4_ranglar_v1";
 
-  // 10 Farben
+  // ==========================================
+  // VOLLSTAENDIGES UI-TEXT-SYSTEM (uz/en)
+  // ==========================================
+  const UI = {
+    uz: {
+      title: "4-dars: Ranglar",
+      learned: "o'rganildi",
+      menuLearn: "O'rganish",
+      menuMatch: "Juftini top",
+      menuGuess: "Rangni top",
+      menuName: "Rangni tanla",
+      panelLearn: "📘 O'rganish",
+      panelMatch: "🔗 Juftini top",
+      panelGuess: "🎨 Rangni top",
+      panelName: "🔤 Rangni tanla",
+      hintMatch: "Rangni uning nomiga bog'lang",
+      hintGuess: "Bu narsa qanday rangda?",
+      hintName: "To'g'ri nomni tanlang",
+      btnRefresh: "🔄 Yangilash",
+      btnStart: "▶ Boshlash",
+      btnClose: "✖ Yopish",
+      badgeDone: "✅ Bajarildi",
+      badgeUnknown: "❓",
+      matchedPrefix: "✅ "
+    },
+    en: {
+      title: "Lesson 4: Colors",
+      learned: "learned",
+      menuLearn: "Learn",
+      menuMatch: "Find the Pair",
+      menuGuess: "Guess the Color",
+      menuName: "Pick the Name",
+      panelLearn: "📘 Learn",
+      panelMatch: "🔗 Find the Pair",
+      panelGuess: "🎨 Guess the Color",
+      panelName: "🔤 Pick the Name",
+      hintMatch: "Match the color to its name",
+      hintGuess: "What color is this?",
+      hintName: "Pick the correct name",
+      btnRefresh: "🔄 Refresh",
+      btnStart: "▶ Start",
+      btnClose: "✖ Close",
+      badgeDone: "✅ Done",
+      badgeUnknown: "❓",
+      matchedPrefix: "✅ "
+    }
+  };
+
   const items = [
     {k:"red",    hex:"#EF4444", emoji:"🔴", uz:"qizil",    en:"red"},
     {k:"yellow", hex:"#EAB308", emoji:"🟡", uz:"sariq",    en:"yellow"},
@@ -312,7 +381,6 @@
     {k:"gray",   hex:"#9CA3AF", emoji:"⚪", uz:"kulrang",  en:"gray"},
   ];
 
-  // Objekte für "Rangni top" Spiel (Objekt -> Farbe)
   const objects = [
     {emoji:"🍎", colorKey:"red"},
     {emoji:"🍌", colorKey:"yellow"},
@@ -360,12 +428,66 @@
     panel?.scrollIntoView({behavior:"smooth", block:"start"});
   }
 
+  // ==========================================
+  // T() Hilfsfunktion: gibt Text in aktueller Sprache zurueck
+  // ==========================================
+  function T(key) {
+    return (UI[state.lang] && UI[state.lang][key]) ? UI[state.lang][key] : UI.uz[key];
+  }
+
+  // ==========================================
+  // ALLE UI-TEXTE AKTUALISIEREN
+  // ==========================================
+  function updateAllTexts() {
+    const learnedCount = Object.values(state.learned).filter(Boolean).length;
+
+    // Titel & Progress
+    document.getElementById("titleText").innerText  = T("title");
+    document.getElementById("progLabel").innerText  = `${learnedCount} / 10 ${T("learned")}`;
+    document.getElementById("progMini").innerText   = `${learnedCount} / 10`;
+
+    // Menu Buttons
+    document.getElementById("menuLearn").innerText = T("menuLearn");
+    document.getElementById("menuMatch").innerText = T("menuMatch");
+    document.getElementById("menuGuess").innerText = T("menuGuess");
+    document.getElementById("menuName").innerText  = T("menuName");
+
+    // Panel Titel
+    document.getElementById("panelTitleLearn").innerText = T("panelLearn");
+    document.getElementById("panelTitleMatch").innerText = T("panelMatch");
+    document.getElementById("panelTitleGuess").innerText = T("panelGuess");
+    document.getElementById("panelTitleName").innerText  = T("panelName");
+
+    // Hinweise
+    document.getElementById("hintMatch").innerText = T("hintMatch");
+    document.getElementById("guessHint").innerText = T("hintGuess");
+    document.getElementById("nameTask").innerText  = T("hintName");
+
+    // Buttons
+    document.getElementById("btnRefresh").innerText = T("btnRefresh");
+    document.getElementById("btnStart1").innerText  = T("btnStart");
+    document.getElementById("btnStart2").innerText  = T("btnStart");
+    document.getElementById("btnClose1").innerText  = T("btnClose");
+    document.getElementById("btnClose2").innerText  = T("btnClose");
+    document.getElementById("btnClose3").innerText  = T("btnClose");
+
+    // Badges
+    updateBadges();
+  }
+
   function setLang(l){
     state.lang=l;
     document.getElementById("btn-uz").classList.toggle("active", l==="uz");
     document.getElementById("btn-en").classList.toggle("active", l==="en");
     save();
+
+    // Alle Texte aktualisieren
+    updateAllTexts();
+
+    // Vokabeln neu rendern (Sprache wechseln)
     renderVocab();
+
+    // Offene Spiele neu starten mit neuer Sprache
     if(document.getElementById("panel-match").classList.contains("show")) initMatchingGame();
     if(document.getElementById("panel-guess").classList.contains("show")) startGuessGame();
     if(document.getElementById("panel-name").classList.contains("show")) startNameGame();
@@ -378,21 +500,21 @@
 
   function updateProgress(){
     const learnedCount = Object.values(state.learned).filter(Boolean).length;
-    document.getElementById("progLabel").innerText = `${learnedCount} / 10 o'rganildi`;
+    document.getElementById("progLabel").innerText = `${learnedCount} / 10 ${T("learned")}`;
     document.getElementById("progMini").innerText  = `${learnedCount} / 10`;
     document.getElementById("progFill").style.width = (learnedCount*10)+"%";
   }
 
   function updateBadges(){
-    const set = (id, done)=>{
+    const setBadge = (id, done)=>{
       const el=document.getElementById(id);
       if(!el) return;
       el.classList.toggle("done", !!done);
-      el.innerText = done ? "✅ Bajarildi" : "❓";
+      el.innerText = done ? T("badgeDone") : T("badgeUnknown");
     };
-    set("g1Status", state.games.g1);
-    set("g3Status", state.games.g3);
-    set("g4Status", state.games.g4);
+    setBadge("g1Status", state.games.g1);
+    setBadge("g3Status", state.games.g3);
+    setBadge("g4Status", state.games.g4);
   }
 
   let audioCtx=null;
@@ -492,7 +614,8 @@
     shuffle(pool).forEach(it=>{
       const dz=document.createElement("div");
       dz.className="dropZone";
-      dz.innerText=(state.lang==="uz") ? it.uz : it.en;
+      // DYNAMISCH: Farbname in aktueller Sprache
+      dz.innerText = (state.lang==="uz") ? it.uz : it.en;
       dz.dataset.k=it.k;
 
       dz.ondragover=e=>{e.preventDefault(); dz.classList.add("over");};
@@ -501,7 +624,8 @@
         if(k===dz.dataset.k){
           if(dz.classList.contains("matched")){ dz.classList.remove("over"); return; }
           dz.classList.add("matched");
-          dz.innerText="✅ "+dz.innerText;
+          // DYNAMISCH: Matched-Praefix in aktueller Sprache
+          dz.innerText = T("matchedPrefix") + dz.innerText.replace(T("matchedPrefix"), "");
           matchesCorrect++; beepSuccess();
           if(matchesCorrect===matchesTotal){
             state.games.g1=true; save(); updateBadges();
@@ -528,7 +652,8 @@
     const obj = objects[Math.floor(Math.random()*objects.length)];
     const target = items.find(x=>x.k===obj.colorKey);
     area.innerText = obj.emoji;
-    hint.innerText = (state.lang==="uz") ? "Bu narsa qanday rangda?" : "What color is this?";
+    // DYNAMISCH: Hinweis in aktueller Sprache
+    hint.innerText = T("hintGuess");
 
     const opts = new Set([target.k]);
     while(opts.size < 4){
@@ -540,6 +665,7 @@
       const optItem = items.find(x=>x.k===optKey);
       const b=document.createElement("button");
       b.className="choiceBtn";
+      // DYNAMISCH: Farbname in aktueller Sprache
       b.innerText = (state.lang==="uz") ? optItem.uz : optItem.en;
       b.style.borderColor = optItem.hex;
       b.style.background = optItem.hex + "18";
@@ -568,7 +694,8 @@
     if(!grid || !task || !preview) return;
 
     grid.innerHTML="";
-    task.innerText = (state.lang==="uz") ? "To'g'ri nomni tanlang" : "Pick the correct name";
+    // DYNAMISCH: Hinweis in aktueller Sprache
+    task.innerText = T("hintName");
 
     const target = items[Math.floor(Math.random()*items.length)];
     preview.style.background = target.hex;
@@ -583,6 +710,7 @@
       const optItem = items.find(x=>x.k===optKey);
       const b=document.createElement("button");
       b.className="choiceBtn";
+      // DYNAMISCH: Farbname in aktueller Sprache
       b.innerText = (state.lang==="uz") ? optItem.uz : optItem.en;
 
       b.onclick=()=>{
@@ -604,10 +732,11 @@
     document.getElementById("btn-uz").classList.toggle("active", state.lang==="uz");
     document.getElementById("btn-en").classList.toggle("active", state.lang==="en");
 
-    document.getElementById("titleText").innerText = (state.lang==="uz") ? "4-dars: Ranglar" : "Lesson 4: Colors";
+    // ALLE Texte beim Start setzen
+    updateAllTexts();
+
     renderVocab();
     updateProgress();
-    updateBadges();
   })();
 </script>
 </body>
