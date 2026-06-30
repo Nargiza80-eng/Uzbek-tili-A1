@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>4-dars</title>
+  <title>4-dars: Ranglar</title>
 
   <link rel="stylesheet" href="components/header.css">
   <script src="components/header.js" defer></script>
 
   <style>
     :root{
-      /* 🎨 Farben pro Lektion (fröhlich) */
       --bg:#FFF3FB;
       --panel:#FFFFFF;
       --ink:#1F2937;
@@ -34,7 +33,6 @@
       --r:22px;
       --pad:16px;
 
-      /* Sky (für header.css) */
       --skyBlueTop:#93C5FD;
       --skyBlueMid:#BFDBFE;
       --skyWarm:#FFE7B3;
@@ -56,7 +54,7 @@
       box-shadow:var(--shadow);
       padding:var(--pad);
       overflow:hidden;
-      position:relative; /* wichtig für sky */
+      position:relative;
     }
 
     .titleRow{
@@ -153,20 +151,21 @@
     .card{
       background:#fff;border-radius:var(--rBig);box-shadow:var(--shadowSoft);
       padding:14px;position:relative;min-height:160px;overflow:hidden;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
     }
-    .numCircle{
-      width:54px;height:54px;border-radius:50%;
-      background:#EEF2FF;color:var(--blueDark);
+    .colorCircle{
+      width:80px;height:80px;border-radius:50%;
       display:flex;align-items:center;justify-content:center;
-      font-weight:1000;font-size:22px;
+      font-size:40px;box-shadow:0 6px 18px rgba(0,0,0,0.15);
+      border:4px solid white;
     }
     .word{font-size:28px;font-weight:1000;margin-top:12px;}
     .stars{margin-top:10px;font-size:18px;font-weight:1000;letter-spacing:2px;color:var(--gold);min-height:22px;}
     .speaker{
-      position:absolute;right:14px;top:54px;width:86px;height:86px;border-radius:50%;
+      position:absolute;right:14px;top:14px;width:56px;height:56px;border-radius:50%;
       border:none;cursor:pointer;background:var(--yellow);
-      box-shadow: inset 0 -10px 0 rgba(0,0,0,0.14), var(--shadowSoft);
-      display:flex;align-items:center;justify-content:center;font-size:34px;
+      box-shadow: inset 0 -6px 0 rgba(0,0,0,0.14), var(--shadowSoft);
+      display:flex;align-items:center;justify-content:center;font-size:24px;
     }
     .speaker:active{transform:scale(0.95);}
 
@@ -177,16 +176,18 @@
     .dragItem{
       padding:14px;background:#F8FAFC;border:2px solid #E5E7EB;border-radius:18px;text-align:center;
       cursor:grab;font-weight:1000;box-shadow:0 8px 18px rgba(0,0,0,0.06);user-select:none;
+      font-size:32px;
     }
     .dropZone{
       padding:14px;border:2px dashed var(--blue);border-radius:18px;text-align:center;min-height:22px;font-weight:1000;
       background:#fff;transition:.2s;box-shadow:0 8px 18px rgba(0,0,0,0.06);user-select:none;
+      font-size:20px;
     }
     .dropZone.over{background:#EEF2FF;}
     .dropZone.bad{background:#FEF2F2;border-color:#FECACA;}
     .dropZone.matched{background:var(--good)!important;color:#fff;border-color:var(--good)!important;}
 
-    #emojiArea{font-size:42px;letter-spacing:8px;margin:16px 0;text-align:center;min-height:64px;}
+    #emojiArea{font-size:80px;letter-spacing:8px;margin:16px 0;text-align:center;min-height:100px;}
     .choiceRow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px;}
     .choiceBtn{
       padding:14px 22px;border:2px solid #E5E7EB;background:#fff;border-radius:18px;cursor:pointer;
@@ -213,6 +214,11 @@
       font-size:14px;font-weight:1000;padding:6px 12px;border-radius:999px;background:#EEF2FF;color:var(--blueDark);
     }
     .badge.done{background:#ECFDF5;color:var(--good);}
+
+    .colorPreview{
+      width:120px;height:120px;border-radius:50%;margin:0 auto 16px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.15);border:6px solid white;
+    }
   </style>
 </head>
 <body>
@@ -223,7 +229,7 @@
     <div class="titleRow">
       <button class="iconBox" title="Bosh sahifa" onclick="goHome()">🏠</button>
       <div class="titleWrap">
-        <h1 class="title" id="titleText">4-dars</h1>
+        <h1 class="title" id="titleText">4-dars: Ranglar</h1>
         <div class="sub" id="progLabel">0 / 10 o'rganildi</div>
       </div>
       <button class="iconBox" title="Dars kitob" onclick="openSection('learn')">📖</button>
@@ -239,45 +245,25 @@
 
     <div class="menuWrap">
       <div class="menu">
-        <button class="menuBtn primary" onclick="openSection('learn')"><span class="menuEmoji">📘</span>O‘rganish</button>
-        <button class="menuBtn" onclick="openSection('order')"><span class="menuEmoji">🧩</span>Tartib</button>
-        <button class="menuBtn" onclick="openSection('count')"><span class="menuEmoji">🍬</span>Sanab ko‘r</button>
+        <button class="menuBtn primary" onclick="openSection('learn')"><span class="menuEmoji">📘</span>O'rganish</button>
         <button class="menuBtn" onclick="openSection('match')"><span class="menuEmoji">🔗</span>Juftini top</button>
+        <button class="menuBtn" onclick="openSection('guess')"><span class="menuEmoji">🎨</span>Rangni top</button>
+        <button class="menuBtn" onclick="openSection('name')"><span class="menuEmoji">🔤</span>Rangni tanla</button>
       </div>
     </div>
   </div>
 
   <div class="panel" id="panel-learn">
-    <div class="panelTitle">📘 O‘rganish</div>
+    <div class="panelTitle">📘 O'rganish</div>
     <div class="grid" id="vocabGrid"></div>
-  </div>
-
-  <div class="panel" id="panel-order">
-    <div class="panelTitle">🧩 Tartib <span class="badge" id="g4Status">❓</span></div>
-    <p id="orderTask" class="hint">Tartib bilan bosing</p>
-    <div class="choiceRow" id="orderGrid"></div>
-    <div class="btnRow">
-      <button class="btn primary" onclick="startOrderGame()">Boshlash ▶</button>
-      <button class="btn soft" onclick="closePanels()">Yopish ✖</button>
-    </div>
-  </div>
-
-  <div class="panel" id="panel-count">
-    <div class="panelTitle">🍬 Sanab ko‘r <span class="badge" id="g3Status">❓</span></div>
-    <p class="hint">Nechta shirinlik bor?</p>
-    <div id="emojiArea"></div>
-    <div class="choiceRow" id="countChoices"></div>
-    <div class="btnRow">
-      <button class="btn primary" onclick="startCountingGame()">Boshlash ▶</button>
-      <button class="btn soft" onclick="closePanels()">Yopish ✖</button>
-    </div>
   </div>
 
   <div class="panel" id="panel-match">
     <div class="panelTitle">🔗 Juftini top <span class="badge" id="g1Status">❓</span></div>
+    <p class="hint">Rangni uning nomiga bog'lang</p>
     <div class="matchingBox">
-      <div class="col" id="dragNums"></div>
-      <div class="col" id="dropWords"></div>
+      <div class="col" id="dragColors"></div>
+      <div class="col" id="dropNames"></div>
     </div>
     <div class="btnRow">
       <button class="btn primary" onclick="initMatchingGame()">Yangilash 🔄</button>
@@ -285,23 +271,59 @@
     </div>
   </div>
 
+  <div class="panel" id="panel-guess">
+    <div class="panelTitle">🎨 Rangni top <span class="badge" id="g3Status">❓</span></div>
+    <p class="hint" id="guessHint">Bu narsa qanday rangda?</p>
+    <div id="emojiArea"></div>
+    <div class="choiceRow" id="guessChoices"></div>
+    <div class="btnRow">
+      <button class="btn primary" onclick="startGuessGame()">Boshlash ▶</button>
+      <button class="btn soft" onclick="closePanels()">Yopish ✖</button>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-name">
+    <div class="panelTitle">🔤 Rangni tanla <span class="badge" id="g4Status">❓</span></div>
+    <p class="hint" id="nameTask">To'g'ri nomni tanlang</p>
+    <div class="colorPreview" id="namePreview"></div>
+    <div class="choiceRow" id="nameGrid"></div>
+    <div class="btnRow">
+      <button class="btn primary" onclick="startNameGame()">Boshlash ▶</button>
+      <button class="btn soft" onclick="closePanels()">Yopish ✖</button>
+    </div>
+  </div>
+
 </div>
 
 <script>
-  const LESSON_ID = "lesson4_template_v1";
+  const LESSON_ID = "lesson4_ranglar_v1";
 
-  // ✅ HIER NUR DIESE LISTE PRO LEKTION ANPASSEN (10 Einträge)
+  // 10 Farben
   const items = [
-    {k:"1",  n:1,  uz:"bir",     en:"one"},
-    {k:"2",  n:2,  uz:"ikki",    en:"two"},
-    {k:"3",  n:3,  uz:"uch",     en:"three"},
-    {k:"4",  n:4,  uz:"to'rt",   en:"four"},
-    {k:"5",  n:5,  uz:"besh",    en:"five"},
-    {k:"6",  n:6,  uz:"olti",    en:"six"},
-    {k:"7",  n:7,  uz:"yetti",   en:"seven"},
-    {k:"8",  n:8,  uz:"sakkiz",  en:"eight"},
-    {k:"9",  n:9,  uz:"to'qqiz", en:"nine"},
-    {k:"10", n:10, uz:"o'n",     en:"ten"},
+    {k:"red",    hex:"#EF4444", emoji:"🔴", uz:"qizil",    en:"red"},
+    {k:"yellow", hex:"#EAB308", emoji:"🟡", uz:"sariq",    en:"yellow"},
+    {k:"green",  hex:"#22C55E", emoji:"🟢", uz:"yashil",   en:"green"},
+    {k:"blue",   hex:"#3B82F6", emoji:"🔵", uz:"ko'k",     en:"blue"},
+    {k:"pink",   hex:"#EC4899", emoji:"🩷", uz:"pushti",   en:"pink"},
+    {k:"black",  hex:"#1F2937", emoji:"⚫", uz:"qora",     en:"black"},
+    {k:"white",  hex:"#F3F4F6", emoji:"⚪", uz:"oq",       en:"white"},
+    {k:"brown",  hex:"#92400E", emoji:"🟤", uz:"jigarrang",en:"brown"},
+    {k:"orange", hex:"#F97316", emoji:"🟠", uz:"to'q sariq",en:"orange"},
+    {k:"gray",   hex:"#9CA3AF", emoji:"⚪", uz:"kulrang",  en:"gray"},
+  ];
+
+  // Objekte für "Rangni top" Spiel (Objekt -> Farbe)
+  const objects = [
+    {emoji:"🍎", colorKey:"red"},
+    {emoji:"🍌", colorKey:"yellow"},
+    {emoji:"🥦", colorKey:"green"},
+    {emoji:"🫐", colorKey:"blue"},
+    {emoji:"🌸", colorKey:"pink"},
+    {emoji:"🐧", colorKey:"black"},
+    {emoji:"☁️", colorKey:"white"},
+    {emoji:"🐻", colorKey:"brown"},
+    {emoji:"🥕", colorKey:"orange"},
+    {emoji:"🐘", colorKey:"gray"},
   ];
 
   let state = { lang:"uz", stars:{}, learned:{}, games:{g1:false,g3:false,g4:false} };
@@ -332,8 +354,8 @@
     if(panel) panel.classList.add("show");
 
     if(name==="match") initMatchingGame();
-    if(name==="count") startCountingGame();
-    if(name==="order") startOrderGame();
+    if(name==="guess") startGuessGame();
+    if(name==="name") startNameGame();
 
     panel?.scrollIntoView({behavior:"smooth", block:"start"});
   }
@@ -345,6 +367,8 @@
     save();
     renderVocab();
     if(document.getElementById("panel-match").classList.contains("show")) initMatchingGame();
+    if(document.getElementById("panel-guess").classList.contains("show")) startGuessGame();
+    if(document.getElementById("panel-name").classList.contains("show")) startNameGame();
   }
 
   function starsText(n){
@@ -362,6 +386,7 @@
   function updateBadges(){
     const set = (id, done)=>{
       const el=document.getElementById(id);
+      if(!el) return;
       el.classList.toggle("done", !!done);
       el.innerText = done ? "✅ Bajarildi" : "❓";
     };
@@ -426,7 +451,7 @@
       const st=starsText(state.stars[it.k]||0);
       return `
         <div class="card">
-          <div class="numCircle">${it.n}</div>
+          <div class="colorCircle" style="background:${it.hex}">${it.emoji}</div>
           <div class="word">${word}</div>
           <button class="speaker" onclick="speakWord('${it.k}')" aria-label="speak">🔊</button>
           <div class="stars">${st}</div>
@@ -444,21 +469,24 @@
     return a;
   }
 
+  // ============ JUFTINI TOP (Matching) ============
   let matchesCorrect=0, matchesTotal=0;
   function initMatchingGame(){
-    const nCol=document.getElementById("dragNums");
-    const wCol=document.getElementById("dropWords");
-    if(!nCol || !wCol) return;
-    nCol.innerHTML=""; wCol.innerHTML="";
+    const cCol=document.getElementById("dragColors");
+    const nCol=document.getElementById("dropNames");
+    if(!cCol || !nCol) return;
+    cCol.innerHTML=""; nCol.innerHTML="";
 
     const pool = shuffle(items).slice(0,5);
     matchesCorrect=0; matchesTotal=pool.length;
 
     pool.forEach(it=>{
       const d=document.createElement("div");
-      d.className="dragItem"; d.draggable=true; d.innerText=it.n; d.dataset.k=it.k;
+      d.className="dragItem"; d.draggable=true; d.innerText=it.emoji; d.dataset.k=it.k;
+      d.style.background = it.hex + "22";
+      d.style.borderColor = it.hex;
       d.ondragstart=e=>e.dataTransfer.setData("text", it.k);
-      nCol.appendChild(d);
+      cCol.appendChild(d);
     });
 
     shuffle(pool).forEach(it=>{
@@ -485,64 +513,86 @@
         dz.classList.remove("over");
       };
 
-      wCol.appendChild(dz);
+      nCol.appendChild(dz);
     });
   }
 
-  function startCountingGame(){
+  // ============ RANGNI TOP (Guess the color of an object) ============
+  function startGuessGame(){
     const area=document.getElementById("emojiArea");
-    const choices=document.getElementById("countChoices");
+    const choices=document.getElementById("guessChoices");
+    const hint=document.getElementById("guessHint");
     if(!area || !choices) return;
 
     choices.innerHTML="";
-    const target=Math.floor(Math.random()*10)+1;
-    area.innerText="🍬".repeat(target);
+    const obj = objects[Math.floor(Math.random()*objects.length)];
+    const target = items.find(x=>x.k===obj.colorKey);
+    area.innerText = obj.emoji;
+    hint.innerText = (state.lang==="uz") ? "Bu narsa qanday rangda?" : "What color is this?";
 
-    const opts=new Set([target]);
-    while(opts.size<4) opts.add(Math.floor(Math.random()*10)+1);
+    const opts = new Set([target.k]);
+    while(opts.size < 4){
+      const r = items[Math.floor(Math.random()*items.length)];
+      opts.add(r.k);
+    }
 
-    shuffle([...opts]).forEach(opt=>{
+    shuffle([...opts]).forEach(optKey=>{
+      const optItem = items.find(x=>x.k===optKey);
       const b=document.createElement("button");
-      b.className="choiceBtn"; b.innerText=opt;
+      b.className="choiceBtn";
+      b.innerText = (state.lang==="uz") ? optItem.uz : optItem.en;
+      b.style.borderColor = optItem.hex;
+      b.style.background = optItem.hex + "18";
+
       b.onclick=()=>{
-        if(opt===target){
-          b.classList.add("good"); beepSuccess();
+        if(optKey===target.k){
+          b.classList.add("good"); b.style.background="var(--good)"; b.style.borderColor="var(--good)";
+          beepSuccess();
           state.games.g3=true; save(); updateBadges();
-          setTimeout(startCountingGame, 750);
+          setTimeout(startGuessGame, 900);
         }else{
-          b.classList.add("bad"); beepFail();
-          setTimeout(()=>b.classList.remove("bad"), 240);
+          b.classList.add("bad"); b.style.background="var(--bad)"; b.style.borderColor="var(--bad)";
+          beepFail();
+          setTimeout(()=>{ b.classList.remove("bad"); b.style.background=optItem.hex+"18"; b.style.borderColor=optItem.hex; }, 350);
         }
       };
       choices.appendChild(b);
     });
   }
 
-  let nextOrder=1;
-  function startOrderGame(){
-    const grid=document.getElementById("orderGrid");
-    const task=document.getElementById("orderTask");
-    if(!grid || !task) return;
+  // ============ RANGNI TANLA (Name the color) ============
+  function startNameGame(){
+    const grid=document.getElementById("nameGrid");
+    const task=document.getElementById("nameTask");
+    const preview=document.getElementById("namePreview");
+    if(!grid || !task || !preview) return;
 
-    nextOrder=1;
     grid.innerHTML="";
-    task.innerText="1 ni toping...";
+    task.innerText = (state.lang==="uz") ? "To'g'ri nomni tanlang" : "Pick the correct name";
 
-    shuffle(items).forEach(it=>{
+    const target = items[Math.floor(Math.random()*items.length)];
+    preview.style.background = target.hex;
+
+    const opts = new Set([target.k]);
+    while(opts.size < 4){
+      const r = items[Math.floor(Math.random()*items.length)];
+      opts.add(r.k);
+    }
+
+    shuffle([...opts]).forEach(optKey=>{
+      const optItem = items.find(x=>x.k===optKey);
       const b=document.createElement("button");
-      b.className="choiceBtn"; b.innerText=it.n;
+      b.className="choiceBtn";
+      b.innerText = (state.lang==="uz") ? optItem.uz : optItem.en;
+
       b.onclick=()=>{
-        if(it.n===nextOrder){
-          b.classList.add("good"); b.disabled=true; beepSuccess();
-          if(nextOrder===10){
-            task.innerText="🎉 Barakalla!";
-            state.games.g4=true; save(); updateBadges();
-          }else{
-            nextOrder++; task.innerText=`${nextOrder} ni toping...`;
-          }
+        if(optKey===target.k){
+          b.classList.add("good"); beepSuccess();
+          state.games.g4=true; save(); updateBadges();
+          setTimeout(startNameGame, 700);
         }else{
           b.classList.add("bad"); beepFail();
-          setTimeout(()=>b.classList.remove("bad"), 240);
+          setTimeout(()=>b.classList.remove("bad"), 300);
         }
       };
       grid.appendChild(b);
@@ -554,8 +604,7 @@
     document.getElementById("btn-uz").classList.toggle("active", state.lang==="uz");
     document.getElementById("btn-en").classList.toggle("active", state.lang==="en");
 
-    // Titel:
-    document.getElementById("titleText").innerText = "4-dars";
+    document.getElementById("titleText").innerText = (state.lang==="uz") ? "4-dars: Ranglar" : "Lesson 4: Colors";
     renderVocab();
     updateProgress();
     updateBadges();
