@@ -825,7 +825,7 @@
           </div>
           <div class="content">
             <div class="top-row">
-              <a class="topIcon" href="${opts.homeHref}" aria-label="Home">&#127968;</a>
+              <button class="topIcon" id="hdrHomeBtn" aria-label="Home" type="button">&#127968;</button>
               <div class="titleWrap">
                 <h1 class="title" id="hdrTitle">${opts.title}</h1>
                 <div class="sub" id="hdrSub">${learned} / ${opts.total} ${opts.learnedText || "o'rganildi"}</div>
@@ -845,9 +845,15 @@
       `;
     }
     function attachHeaderEvents(root, opts){
+      const homeBtn = root.querySelector("#hdrHomeBtn");
       const bookBtn = root.querySelector("#hdrBookBtn");
       const uzBtn = root.querySelector("#hdrUZ");
       const enBtn = root.querySelector("#hdrEN");
+      if(homeBtn){
+        homeBtn.addEventListener("click", () => {
+          if(opts.homeHref) window.location.href = opts.homeHref;
+        });
+      }
       if(bookBtn){
         bookBtn.addEventListener("click", () => {
           if(opts.bookTargetId) scrollToId(opts.bookTargetId);
@@ -1811,15 +1817,6 @@ function updateHeaderProgress(){
     syncGlobalLearnedFromStars();
   })();
 
-  setTimeout(() => {
-    const homeLink = document.querySelector('a[aria-label="Home"]');
-    if(homeLink){
-      homeLink.addEventListener('click', function(e){
-        e.preventDefault();
-        window.location.href = "index.html";
-      });
-    }
-  }, 100);
 </script>
 </body>
 </html>
