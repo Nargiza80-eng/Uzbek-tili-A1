@@ -5,8 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>4-dars: Ranglar</title>
 
+  <!-- NEU: Header CSS einbinden -->
   <link rel="stylesheet" href="components/header.css">
-  <script src="components/header.js" defer></script>
+
+  <!-- NEU: Header JavaScript einbinden -->
+  <script src="components/header.js"></script>
 
   <style>
     :root{
@@ -349,6 +352,28 @@
       0%{ transform: translateY(-20px) rotate(0deg); }
       100%{ transform: translateY(560px) rotate(360deg); opacity: 0.9; }
     }
+    .album-overlay{
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+      z-index: 1000; justify-content: center; align-items: center;
+    }
+    .album-content{
+      background: white; padding: 26px; border-radius: 30px;
+      text-align: center; width: 85%; max-width: 420px;
+    }
+    .sticker-grid{
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 10px; margin-top: 14px;
+    }
+    .sticker-slot{
+      width: 84px; height: 84px; background: #eee; border-radius: 50%;
+      display: inline-flex; justify-content: center; align-items: center;
+      font-size: 42px; opacity: 0.2; filter: grayscale(1);
+      border: 2px dashed #bbb;
+    }
+    .sticker-slot.unlocked{
+      opacity: 1; filter: none; background: #fff9e6;
+      border: 3px solid var(--gold);
+    }
 
     .choiceRow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px;}
     .choiceBtn{
@@ -459,26 +484,27 @@
   </div>
 </div>
 
+  <!-- Album Overlay -->
+  <div id="albumOverlay" class="album-overlay" onclick="toggleAlbum()">
+    <div class="album-content" onclick="event.stopPropagation()">
+      <h3 id="albumTitle" style="margin-top:0;">Mening Stikerlarim</h3>
+      <div class="sticker-grid">
+        <div id="stk_1" class="sticker-slot">🐰</div>
+        <div id="stk_2" class="sticker-slot">🐻</div>
+        <div id="stk_3" class="sticker-slot">🦁</div>
+        <div id="stk_4" class="sticker-slot">🐠</div>
+      </div>
+      <br>
+      <button class="mode-btn" onclick="toggleAlbum()" id="closeAlbumBtn">Yopish</button>
+    </div>
+  </div>
+
+<!-- ANIMATED HEADER (Lesson 1 style with sun, clouds, sparkles) -->
+<div id="lessonHeader"></div>
+
 <div class="app">
 
   <div class="top">
-    <div class="titleRow">
-      <button class="iconBox" title="Bosh sahifa" onclick="goHome()">🏠</button>
-      <div class="titleWrap">
-        <h1 class="title" id="titleText">4-dars: Ranglar</h1>
-        <div class="sub" id="progLabel">0 / 10 o'rganildi</div>
-      </div>
-      <button class="iconBox" title="Dars kitob" onclick="openSection('learn')">📖</button>
-    </div>
-
-    <div class="track"><div class="fill" id="progFill"></div></div>
-    <div class="progMini" id="progMini">0 / 10</div>
-
-    <div class="langRow">
-      <button id="btn-uz" class="langBtn active" onclick="setLang('uz')">UZ</button>
-      <button id="btn-en" class="langBtn" onclick="setLang('en')">EN</button>
-    </div>
-
     <div class="menuWrap">
       <div class="menu">
         <button class="menuBtn primary" onclick="openSection('learn')"><span class="menuEmoji">📘</span><span id="menuLearn">O'rganish</span></button>
@@ -635,6 +661,8 @@
       learnWinEmoji: "📚",
       allDoneTitle: "HAMMASI TUGADI! 🎉👏",
       allDoneText: "Siz 4-dars va hamma o'yinlarni tugatdingiz! YAY! 🎊",
+      album: "Mening Stikerlarim",
+      close: "Yopish",
       okBtn: "OK ✅"
     },
     en: {
@@ -690,6 +718,8 @@
       learnWinEmoji: "📚",
       allDoneTitle: "ALL DONE! 🎉👏",
       allDoneText: "You finished Lesson 4 and all games! YAY! 🎊",
+      album: "My Stickers",
+      close: "Close",
       okBtn: "OK ✅"
     }
   };
@@ -721,6 +751,66 @@
       state.games = s.games || {g1:false,gBalloon:false,gAks:false,gCham:false};
       state.learnCelebrated = s.learnCelebrated || false;
     }catch(e){}
+  }
+
+  const GLOBAL_LEARNED_KEY = "learned";
+  function getGlobalLearnedSet(){
+    try { return new Set(JSON.parse(localStorage.getItem(GLOBAL_LEARNED_KEY) || "[]")); }
+    catch { return new Set(); }
+  }
+  function markGlobalLearned(wordKey){
+    const learned = getGlobalLearnedSet();
+    const gKey = "L4_" + wordKey;
+    if(!learned.has(gKey)){
+      learned.add(gKey);
+      localStorage.setItem(GLOBAL_LEARNED_KEY, JSON.stringify([...learned]));
+    }
+  }
+  function syncGlobalLearnedFromStars(){
+    const st = loadStars();
+    for(const item of items){
+      if((st[item.k] || 0) > 0) markGlobalLearned(item.k);
+    }
+  }
+
+  function unlockNextLessonFlag(){
+    localStorage.setItem("lesson5_unlocked", "true");
+  }
+
+  function checkAllCompleted(){
+    const matchDone = state.games.g1;
+    const balloonDone = state.games.gBalloon;
+    const aksDone = state.games.gAks;
+    const chamDone = state.games.gCham;
+
+    if(matchDone && balloonDone && aksDone && chamDone){
+      const ALL_DONE_KEY = LESSON_ID + "_all_done";
+      if(localStorage.getItem(ALL_DONE_KEY) !== "1"){
+        localStorage.setItem(ALL_DONE_KEY, "1");
+        unlockNextLessonFlag();
+        celebrate("allDoneTitle", "allDoneText", "🏆");
+      }
+      return true;
+    }
+    return false;
+  }
+
+  function unlockSticker(id){
+    let earned = JSON.parse(localStorage.getItem("stickers") || "[]");
+    if(!earned.includes(id)){
+      earned.push(id);
+      localStorage.setItem("stickers", JSON.stringify(earned));
+    }
+  }
+
+  function toggleAlbum(){
+    const album = document.getElementById('albumOverlay');
+    album.style.display = (album.style.display === 'flex') ? 'none' : 'flex';
+    const earned = JSON.parse(localStorage.getItem("stickers") || "[]");
+    earned.forEach(id => {
+      const el = document.getElementById('stk_' + id);
+      if(el) el.classList.add('unlocked');
+    });
   }
 
   function goHome(){ window.location.href="index.html"; }
@@ -793,14 +883,27 @@
     document.getElementById("btnStartCham").innerText     = T("btnStartCham");
     document.getElementById("btnCloseCham").innerText     = T("btnCloseCham");
 
+    const albumTitle = document.getElementById("albumTitle");
+    if(albumTitle) albumTitle.innerText = T("album");
+    const closeAlbumBtn = document.getElementById("closeAlbumBtn");
+    if(closeAlbumBtn) closeAlbumBtn.innerText = T("close");
+
     updateBalloonTask();
     updateBadges();
   }
 
   function setLang(l){
     state.lang=l;
-    document.getElementById("btn-uz").classList.toggle("active", l==="uz");
-    document.getElementById("btn-en").classList.toggle("active", l==="en");
+    
+    const uzBtn = document.getElementById('hdrUZ');
+    const enBtn = document.getElementById('hdrEN');
+    if (uzBtn) uzBtn.classList.toggle('active', l === 'uz');
+    if (enBtn) enBtn.classList.toggle('active', l === 'en');
+    
+    const T = UI[l];
+    const hdrTitle = document.getElementById('hdrTitle');
+    if (hdrTitle) hdrTitle.innerText = T.title;
+    
     save();
     updateAllTexts();
     renderVocab();
@@ -817,9 +920,7 @@
 
   function updateProgress(){
     const learnedCount = Object.values(state.learned).filter(Boolean).length;
-    document.getElementById("progLabel").innerText = `${learnedCount} / 10 ${T("learned")}`;
-    document.getElementById("progMini").innerText  = `${learnedCount} / 10`;
-    document.getElementById("progFill").style.width = (learnedCount*10)+"%";
+    updateHeaderProgress();
   }
 
   function updateBadges(){
@@ -949,7 +1050,9 @@
           matchesCorrect++; beepSuccess();
           if(matchesCorrect===matchesTotal){
             state.games.g1=true; save(); updateBadges();
+            unlockSticker(1);
             celebrate("matchWinTitle", "matchWinText", "matchWinEmoji");
+            checkAllCompleted();
           }
         }else{ dz.classList.add("bad"); beepFail(); setTimeout(()=>dz.classList.remove("bad"), 260); }
         dz.classList.remove("over");
@@ -1017,7 +1120,9 @@
     state.games.gBalloon = true;
     save();
     updateBadges();
+    unlockSticker(2);
     celebrate("balloonWinTitle", "balloonWinText", "balloonWinEmoji");
+    checkAllCompleted();
   }
 
   function startBalloonGame(){
@@ -1168,7 +1273,9 @@ function finishAksGame(){
   state.games.gAks = true;
   save();
   updateBadges();
+  unlockSticker(3);
   celebrate("aksWinTitle", "aksWinText", "aksWinEmoji");
+  checkAllCompleted();
   stopAksMic();
 }
 
@@ -1300,7 +1407,9 @@ function nextChameleonRound(){
     state.games.gCham = true;
     save();
     updateBadges();
+    unlockSticker(4);
     celebrate("chamWinTitle", "chamWinText", "chamWinEmoji");
+    checkAllCompleted();
     return;
   }
 
@@ -1371,14 +1480,54 @@ function updateChamScore(){
   document.getElementById("chameleonScore").innerText = "⭐ " + chamScore + " / " + CHAM_WIN;
 }
 
+// ==========================================
+// HEADER (Lesson 1 style)
+// ==========================================
+function initHeader(){
+  if(typeof renderLessonHeader !== 'function'){
+    console.warn('header.js not loaded yet');
+    return;
+  }
+  renderLessonHeader({
+    mountId: "lessonHeader",
+    title: UI[state.lang].title,
+    total: items.length,
+    learned: Object.values(state.learned).filter(Boolean).length,
+    homeHref: "index.html",
+    lang: state.lang,
+    onLangChange: (lang) => setLang(lang),
+    bookTargetId: "albumOverlay"
+  });
+  document.getElementById('albumOverlay').style.display = 'none';
+}
+
+function updateHeaderProgress(){
+  if(typeof setHeaderProgress === 'function'){
+    setHeaderProgress({
+      learned: Object.values(state.learned).filter(Boolean).length,
+      total: items.length
+    });
+  }
+}
+
   (function init(){
     load();
-    document.getElementById("btn-uz").classList.toggle("active", state.lang==="uz");
-    document.getElementById("btn-en").classList.toggle("active", state.lang==="en");
+    initHeader();
     updateAllTexts();
     renderVocab();
     updateProgress();
+    syncGlobalLearnedFromStars();
   })();
+
+  setTimeout(() => {
+    const homeLink = document.querySelector('a[aria-label="Home"]');
+    if(homeLink){
+      homeLink.addEventListener('click', function(e){
+        e.preventDefault();
+        window.location.href = "index.html";
+      });
+    }
+  }, 100);
 </script>
 </body>
 </html>
