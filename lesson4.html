@@ -377,10 +377,72 @@
     }
     .badge.done{background:#ECFDF5;color:var(--good);}
 
-    .colorPreview{
-      width:120px;height:120px;border-radius:50%;margin:0 auto 16px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.15);border:6px solid white;
+    /* ====== AKS-SADO ====== */
+    .aks-card{
+      background:white;border-radius:30px;padding:20px;
+      box-shadow:0 10px 0 var(--shadowSoft);text-align:center;
     }
+    .aks-emoji{font-size:80px;margin:0 0 10px;}
+    .aks-word{font-size:28px;font-weight:900;color:var(--primary);margin-bottom:12px;}
+    .aks-audio-btn{
+      width:100%;padding:14px;margin:8px 0;border-radius:20px;
+      border:3px solid var(--yellow);background:var(--yellow);font-size:16px;
+      font-weight:900;cursor:pointer;box-shadow:0 5px 0 #cc7a00;color:var(--ink);
+    }
+    .aks-audio-btn:active{transform:translateY(2px);box-shadow:none;}
+    .aks-mic-row{display:flex;justify-content:center;margin:16px 0;}
+    .aks-mic-btn{
+      width:100px;height:100px;border-radius:50%;border:none;
+      background:#ff4757;color:white;font-size:44px;cursor:pointer;
+      box-shadow:0 10px 0 #b33939;touch-action:manipulation;
+    }
+    .aks-mic-btn:active{transform:translateY(6px);box-shadow:0 4px 0 #b33939;}
+    .aks-mic-btn.listening{background:#22c55e;box-shadow:0 4px 0 #15803d;transform:translateY(6px);}
+    .aks-hint{font-weight:700;color:#334155;font-size:14px;margin-top:10px;}
+    .aks-speech-line{
+      margin-top:10px;padding:10px;border-radius:18px;background:#fff;
+      border:3px dashed #d0d7de;font-weight:700;color:#111827;min-height:20px;font-size:15px;
+    }
+    .aks-speech-line.ok{border-color:#86efac;background:#ecfdf5;}
+    .aks-speech-line.bad{border-color:#fecaca;background:#fef2f2;}
+    .aks-progress{font-size:16px;font-weight:800;color:var(--primary);margin-top:14px;}
+    .aks-tries{font-size:14px;font-weight:700;color:var(--muted);margin-top:6px;}
+
+    /* ====== CHAMELEON GAME ====== */
+    .chameleon-game{
+      background:#e8f5e9;border-radius:var(--rBig);padding:16px;margin-top:14px;
+      box-shadow:var(--shadowSoft);
+    }
+    .chameleon-box{
+      width:140px;height:140px;border-radius:50%;border:5px solid #fff;
+      box-shadow:0 5px 15px rgba(0,0,0,0.2);margin:0 auto 20px;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      transition:background-color 0.4s ease, transform 0.1s ease;
+      background:#ef5350;
+    }
+    .chameleon-box.happy{transform:scale(1.1);}
+    .chameleon-box.shake{animation:shake 0.5s ease;}
+    .chameleon-emoji{font-size:50px;line-height:1;}
+    .chameleon-color-text{
+      font-size:16px;font-weight:900;background:rgba(255,255,255,0.8);
+      padding:4px 10px;border-radius:10px;margin-top:4px;text-transform:uppercase;
+    }
+    .chameleon-flies{
+      display:flex;justify-content:center;gap:20px;flex-wrap:wrap;
+      margin:20px 0;min-height:80px;
+    }
+    .chameleon-fly{
+      width:60px;height:60px;border-radius:50%;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;font-size:28px;
+      border:3px solid white;box-shadow:0 4px 10px rgba(0,0,0,0.15);
+      transition:transform 0.2s ease;animation:flyFloat 2s ease-in-out infinite alternate;
+    }
+    .chameleon-fly:hover{transform:scale(1.15);}
+    .chameleon-fly:active{transform:scale(0.95);}
+    .chameleon-fly.pop{transform:scale(1.5);opacity:0;transition:all 0.3s ease;}
+    @keyframes flyFloat{0%{transform:translateY(0px);}100%{transform:translateY(-10px);}}
+    @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}}
+    .chameleon-score{text-align:center;font-weight:900;font-size:18px;color:var(--primary);margin-top:10px;}
   </style>
 <base target="_blank">
 </head>
@@ -421,8 +483,9 @@
       <div class="menu">
         <button class="menuBtn primary" onclick="openSection('learn')"><span class="menuEmoji">📘</span><span id="menuLearn">O'rganish</span></button>
         <button class="menuBtn" onclick="openSection('match')"><span class="menuEmoji">🔗</span><span id="menuMatch">Juftini top</span></button>
-        <button class="menuBtn" onclick="openSection('balloon')"><span class="menuEmoji">🎈</span><span id="menuBalloon">Pufakchalar</span></button>
-        <button class="menuBtn" onclick="openSection('name')"><span class="menuEmoji">🔤</span><span id="menuName">Rangni tanla</span></button>
+        <button class="menuBtn" onclick="openSection('balloon')"><span class="menuEmoji">🎈</span><span id="menuBalloon">Shariklar</span></button>
+        <button class="menuBtn" onclick="openSection('aks')"><span class="menuEmoji">🎤</span><span id="menuAks">Aks-sado</span></button>
+        <button class="menuBtn" onclick="openSection('chameleon')"><span class="menuEmoji">🦎</span><span id="menuChameleon">Chameleon</span></button>
       </div>
     </div>
   </div>
@@ -463,16 +526,50 @@
     </div>
   </div>
 
-  <!-- NAME -->
-  <div class="panel" id="panel-name">
-    <div class="panelTitle"><span id="panelTitleName">🔤 Rangni tanla</span> <span class="badge" id="g4Status">❓</span></div>
-    <p class="hint" id="nameTask">To'g'ri nomni tanlang</p>
-    <div class="colorPreview" id="namePreview"></div>
-    <div class="choiceRow" id="nameGrid"></div>
-    <div id="nameProgress" style="text-align:center;margin-top:10px;font-weight:900;font-size:16px;color:var(--muted);">0 / 10</div>
+  <!-- AKS-SADO -->
+  <div class="panel" id="panel-aks">
+    <div class="panelTitle"><span id="panelTitleAks">🔊 Aks-sado</span> <span class="badge" id="gAksStatus">❓</span></div>
+    <p class="hint" id="hintAks">Eshit → ayt → tekshir!</p>
+
+    <div class="aks-card">
+      <div class="aks-emoji" id="aksEmoji">🔴</div>
+      <div class="aks-word" id="aksWord">qizil</div>
+      <button class="aks-audio-btn" onclick="playAksAudio()">🔊 Eshitish</button>
+
+      <div class="aks-mic-row">
+        <button class="aks-mic-btn" id="aksMicBtn"
+          onpointerdown="startAksMic()" onpointerup="stopAksMic()" onpointercancel="stopAksMic()">
+          🎤
+        </button>
+      </div>
+
+      <div class="aks-hint" id="aksHintText">🔊 Eshit → 🎤 ayt → ✅ tekshir!</div>
+      <div class="aks-speech-line" id="aksSpeechLine">🎤 ...</div>
+      <div class="aks-progress" id="aksProgress">⭐ 0 / 8</div>
+      <div class="aks-tries" id="aksTries">🔄 Urinish: 0 / 3</div>
+    </div>
+
     <div class="btnRow">
-      <button class="btn primary" onclick="startNameGame()" id="btnStart2">▶ Boshlash</button>
-      <button class="btn soft" onclick="closePanels()" id="btnClose3">✖ Yopish</button>
+      <button class="btn primary" onclick="startAksGame()" id="btnStartAks">▶ Boshlash</button>
+      <button class="btn soft" onclick="closePanels()" id="btnCloseAks">✖ Yopish</button>
+    </div>
+  </div>
+
+  <!-- CHAMELEON -->
+  <div class="panel" id="panel-chameleon">
+    <div class="panelTitle"><span id="panelTitleChameleon">🦎 Chameleon</span> <span class="badge" id="gChamStatus">❓</span></div>
+    <p class="hint" id="hintChameleon">To'g'ri rangli parvoni top!</p>
+    <div class="chameleon-game">
+      <div class="chameleon-box" id="chameleonBox">
+        <div class="chameleon-emoji">🦎</div>
+        <div class="chameleon-color-text" id="chameleonColorText">Qizil</div>
+      </div>
+      <div class="chameleon-flies" id="chameleonFlies"></div>
+      <div class="chameleon-score" id="chameleonScore">⭐ 0 / 8</div>
+    </div>
+    <div class="btnRow">
+      <button class="btn primary" onclick="startChameleonGame()" id="btnStartCham">▶ Boshlash</button>
+      <button class="btn soft" onclick="closePanels()" id="btnCloseCham">✖ Yopish</button>
     </div>
   </div>
 
@@ -491,17 +588,18 @@
       menuLearn: "O'rganish",
       menuMatch: "Juftini top",
       menuBalloon: "Shariklar",
-      menuName: "Rangni tanla",
+      menuAks: "Aks-sado",
+      menuChameleon: "Chameleon",
       panelLearn: "📘 O'rganish",
       panelMatch: "🔗 Juftini top",
       panelBalloon: "🎈 Shariklar",
-      panelName: "🔤 Rangni tanla",
+      panelAks: "🔊 Aks-sado",
       hintMatch: "Rangni uning nomiga bog'lang",
-      hintName: "To'g'ri nomni tanlang",
+      hintAks: "Eshit → ayt → tekshir!",
       balloonTaskPrefix: "Top: ",
       balloonScoreLabel: "⭐",
       balloonOf: " / 10",
-      nameProgress: " / 10",
+      aksProgressOf: " / 8",
       btnRefresh: "🔄 Yangilash",
       btnStart: "▶ Boshlash",
       btnClose: "✖ Yopish",
@@ -516,9 +614,22 @@
       balloonWinTitle: "Ajoyib! 🎈",
       balloonWinText: "Siz barcha 10 rangni topdingiz!",
       balloonWinEmoji: "🎉",
-      nameWinTitle: "Barakalla! 🌟",
-      nameWinText: "Siz barcha 10 rangni bilasiz!",
-      nameWinEmoji: "🏆",
+      aksWinTitle: "Ajoyib! 🎤",
+      aksWinText: "Siz barcha 8 rangni aytib o'rganib oldingiz!",
+      aksWinEmoji: "🏆",
+      aksListen: "🔊 Eshitish",
+      aksHintText: "🔁 Eshit → ayt → tekshir!",
+      aksSayAgain: "❌ Xato. Yana urinib ko'r!",
+      aksMicNotSupported: "⚠️ Mikrofon yo'q. Chrome ishlating.",
+      btnStartAks: "▶ Boshlash",
+      btnCloseAks: "✖ Yopish",
+      panelChameleon: "🦎 Chameleon",
+      hintChameleon: "To'g'ri rangli parvoni top!",
+      chamWinTitle: "Ajoyib! 🦎",
+      chamWinText: "Siz barcha 8 rangni o'rganib oldingiz!",
+      chamWinEmoji: "🏆",
+      btnStartCham: "▶ Boshlash",
+      btnCloseCham: "✖ Yopish",
       learnWinTitle: "Ajoyib! 📘",
       learnWinText: "Siz barcha 10 rangni o'rganib oldingiz!",
       learnWinEmoji: "📚",
@@ -532,17 +643,18 @@
       menuLearn: "Learn",
       menuMatch: "Find the Pair",
       menuBalloon: "Balloons",
-      menuName: "Pick the Name",
+      menuAks: "Echo",
+      menuChameleon: "Chameleon",
       panelLearn: "📘 Learn",
       panelMatch: "🔗 Find the Pair",
       panelBalloon: "🎈 Balloons",
-      panelName: "🔤 Pick the Name",
+      panelAks: "🔊 Echo",
       hintMatch: "Match the color to its name",
-      hintName: "Pick the correct name",
+      hintAks: "Listen → say → check!",
       balloonTaskPrefix: "Tap: ",
       balloonScoreLabel: "⭐",
       balloonOf: " / 10",
-      nameProgress: " / 10",
+      aksProgressOf: " / 8",
       btnRefresh: "🔄 Refresh",
       btnStart: "▶ Start",
       btnClose: "✖ Close",
@@ -557,9 +669,22 @@
       balloonWinTitle: "Amazing! 🎈",
       balloonWinText: "You found all 10 colors!",
       balloonWinEmoji: "🎉",
-      nameWinTitle: "Well Done! 🌟",
-      nameWinText: "You know all 10 colors!",
-      nameWinEmoji: "🏆",
+      aksWinTitle: "Great! 🎤",
+      aksWinText: "You said all 8 colors correctly!",
+      aksWinEmoji: "🏆",
+      aksListen: "🔊 Listen",
+      aksHintText: "🔁 Listen → say → check!",
+      aksSayAgain: "❌ Not quite. Try again!",
+      aksMicNotSupported: "⚠️ Mic not supported. Use Chrome.",
+      btnStartAks: "▶ Start",
+      btnCloseAks: "✖ Close",
+      panelChameleon: "🦎 Chameleon",
+      hintChameleon: "Find the correct colored fly!",
+      chamWinTitle: "Great! 🦎",
+      chamWinText: "You learned all 8 colors!",
+      chamWinEmoji: "🏆",
+      btnStartCham: "▶ Start",
+      btnCloseCham: "✖ Close",
       learnWinTitle: "Excellent! 📘",
       learnWinText: "You learned all 10 colors!",
       learnWinEmoji: "📚",
@@ -582,7 +707,7 @@
     {k:"gray",   hex:"#9CA3AF", emoji:"⚪", uz:"kulrang",   en:"gray"},
   ];
 
-  let state = { lang:"uz", stars:{}, learned:{}, games:{g1:false,gBalloon:false,g4:false} };
+  let state = { lang:"uz", stars:{}, learned:{}, games:{g1:false,gBalloon:false,gAks:false,gCham:false} };
 
   function save(){ localStorage.setItem(LESSON_ID, JSON.stringify(state)); }
   function load(){
@@ -593,7 +718,7 @@
       state.lang = s.lang || "uz";
       state.stars = s.stars || {};
       state.learned = s.learned || {};
-      state.games = s.games || {g1:false,gBalloon:false,g4:false};
+      state.games = s.games || {g1:false,gBalloon:false,gAks:false,gCham:false};
       state.learnCelebrated = s.learnCelebrated || false;
     }catch(e){}
   }
@@ -607,12 +732,23 @@
 
   function openSection(name){
     document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
+
+    // Menu button highlighting - swap .primary class
+    document.querySelectorAll(".menuBtn").forEach(b=>b.classList.remove("primary"));
+    const sectionMap = {"learn":0, "match":1, "balloon":2, "aks":3, "chameleon":4};
+    const idx = sectionMap[name];
+    if(idx !== undefined){
+      const buttons = document.querySelectorAll(".menuBtn");
+      if(buttons[idx]) buttons[idx].classList.add("primary");
+    }
+
     const panel = document.getElementById("panel-"+name);
     if(panel) panel.classList.add("show");
 
     if(name==="match") initMatchingGame();
     if(name==="balloon") startBalloonGame();
-    if(name==="name") startNameGame();
+    if(name==="aks") startAksGame();
+    if(name==="chameleon") startChameleonGame();
 
     panel?.scrollIntoView({behavior:"smooth", block:"start"});
   }
@@ -631,22 +767,31 @@
     document.getElementById("menuLearn").innerText    = T("menuLearn");
     document.getElementById("menuMatch").innerText    = T("menuMatch");
     document.getElementById("menuBalloon").innerText  = T("menuBalloon");
-    document.getElementById("menuName").innerText     = T("menuName");
+    document.getElementById("menuAks").innerText     = T("menuAks");
+    document.getElementById("menuChameleon").innerText = T("menuChameleon");
 
     document.getElementById("panelTitleLearn").innerText   = T("panelLearn");
     document.getElementById("panelTitleMatch").innerText   = T("panelMatch");
     document.getElementById("panelTitleBalloon").innerText = T("panelBalloon");
-    document.getElementById("panelTitleName").innerText    = T("panelName");
+    document.getElementById("panelTitleAks").innerText     = T("panelAks");
+    document.getElementById("panelTitleChameleon").innerText = T("panelChameleon");
 
     document.getElementById("hintMatch").innerText = T("hintMatch");
-    document.getElementById("nameTask").innerText  = T("hintName");
+    document.getElementById("hintAks").innerText   = T("hintAks");
+    document.getElementById("hintChameleon").innerText = T("hintChameleon");
+
+    document.getElementById("aksHintText").innerText = T("aksHintText");
+    const aksAudioBtn = document.querySelector(".aks-audio-btn");
+    if(aksAudioBtn) aksAudioBtn.innerText = T("aksListen");
+    document.getElementById("btnStartAks").innerText  = T("btnStartAks");
+    document.getElementById("btnCloseAks").innerText  = T("btnCloseAks");
 
     document.getElementById("btnRefresh").innerText       = T("btnRefresh");
-    document.getElementById("btnStart2").innerText        = T("btnStart");
     document.getElementById("btnBalloonStart").innerText  = T("balloonStart");
     document.getElementById("btnClose1").innerText        = T("btnClose");
     document.getElementById("btnCloseBalloon").innerText  = T("btnClose");
-    document.getElementById("btnClose3").innerText        = T("btnClose");
+    document.getElementById("btnStartCham").innerText     = T("btnStartCham");
+    document.getElementById("btnCloseCham").innerText     = T("btnCloseCham");
 
     updateBalloonTask();
     updateBadges();
@@ -661,7 +806,8 @@
     renderVocab();
     if(document.getElementById("panel-match").classList.contains("show")) initMatchingGame();
     if(document.getElementById("panel-balloon").classList.contains("show")) { stopBalloonGame(); startBalloonGame(); }
-    if(document.getElementById("panel-name").classList.contains("show")) startNameGame();
+    if(document.getElementById("panel-aks").classList.contains("show")) startAksGame();
+    if(document.getElementById("panel-chameleon").classList.contains("show")) startChameleonGame();
   }
 
   function starsText(n){
@@ -685,7 +831,8 @@
     };
     setBadge("g1Status", state.games.g1);
     setBadge("gBalloonStatus", state.games.gBalloon);
-    setBadge("g4Status", state.games.g4);
+    setBadge("gAksStatus", state.games.gAks);
+    setBadge("gChamStatus", state.games.gCham);
   }
 
   let audioCtx=null;
@@ -937,80 +1084,292 @@
     }, 650);
   }
 
-  // ==========================================
-  // PICK THE NAME - Alle 10 Farben + Celebration
-  // ==========================================
-  let nameOrder = [];
-  let nameIdx = 0;
+// ==========================================
+// AKS-SADO (Echo)
+// ==========================================
+let aksOrder = [];
+let aksIdx = 0;
+let aksTries = 0;
+let aksRecognition = null;
+let aksListening = false;
+let aksTimer = null;
 
-  function updateNameProgress(){
-    document.getElementById("nameProgress").innerText = nameIdx + T("nameProgress");
+function startAksGame(){
+  aksOrder = shuffle(items.map(x => x.k));
+  aksIdx = 0;
+  aksTries = 0;
+  clearTimeout(aksTimer);
+  updateAksProgress();
+  updateAksTries();
+  setAksSpeechLine("🎙️ ...", "");
+  nextAksRound();
+}
+
+function nextAksRound(){
+  if(aksIdx >= aksOrder.length){
+    finishAksGame();
+    return;
+  }
+  const item = items.find(x => x.k === aksOrder[aksIdx]);
+  if(!item) return;
+
+  document.getElementById("aksEmoji").innerText = item.emoji;
+  const word = (state.lang === "uz") ? item.uz : item.en;
+  document.getElementById("aksWord").innerText = word;
+  setTimeout(() => playAksAudio(), 300);
+}
+
+function currentAksItem(){
+  if(aksIdx < 0 || aksIdx >= aksOrder.length) return null;
+  return items.find(x => x.k === aksOrder[aksIdx]) || null;
+}
+
+function playAksAudio(){
+  const item = currentAksItem();
+  if(!item) return;
+  playAudio(item.key, 0.9);
+}
+
+function playAudio(key, vol){
+  const it = items.find(x => x.k === key);
+  if(!it) return;
+  const text = (state.lang === "uz") ? it.uz : it.en;
+  try{
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = (state.lang === "uz") ? "uz-UZ" : "en-US";
+    u.rate = 0.95; u.pitch = 1.05; u.volume = vol || 1;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+function updateAksProgress(){
+  const el = document.getElementById("aksProgress");
+  if(!el) return;
+  el.innerText = "⭐ " + Math.min(aksIdx + 1, items.length) + T("aksProgressOf");
+}
+
+function updateAksTries(){
+  const el = document.getElementById("aksTries");
+  if(el) el.innerText = "🔄 " + (state.lang === "uz" ? "Urinish" : "Tries") + ": " + aksTries + " / 3";
+}
+
+function setAksSpeechLine(text, st){
+  const el = document.getElementById("aksSpeechLine");
+  el.className = "aks-speech-line" + (st === "ok" ? " ok" : st === "bad" ? " bad" : "");
+  el.innerText = text;
+}
+
+function normalizeText(s){
+  return (s || "").toLowerCase().replace(/[''`]/g, "'").replace(/\s+/g, " ").trim();
+}
+
+function finishAksGame(){
+  state.games.gAks = true;
+  save();
+  updateBadges();
+  celebrate("aksWinTitle", "aksWinText", "aksWinEmoji");
+  stopAksMic();
+}
+
+function goNextAksWord(reasonText){
+  clearTimeout(aksTimer);
+  aksIdx++;
+  aksTries = 0;
+  updateAksProgress();
+  updateAksTries();
+
+  if(aksIdx >= aksOrder.length){
+    finishAksGame();
+    return;
   }
 
-  function finishNameGame(){
-    state.games.g4 = true;
+  if(reasonText) setAksSpeechLine(reasonText, "bad");
+
+  aksTimer = setTimeout(() => {
+    setAksSpeechLine("🎙️ ...", "");
+    nextAksRound();
+  }, reasonText ? 1200 : 650);
+}
+
+function startAksMic(){
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if(!SpeechRecognition){
+    aksTries++;
+    updateAksTries();
+    setAksSpeechLine(T("aksMicNotSupported"), "bad");
+    beepFail();
+    if(aksTries >= 3){
+      goNextAksWord((state.lang === "en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
+    }
+    return;
+  }
+
+  if(aksListening) return;
+
+  aksRecognition = new SpeechRecognition();
+  aksRecognition.lang = (state.lang === "en") ? "en-US" : "uz-UZ";
+  aksRecognition.interimResults = false;
+  aksRecognition.maxAlternatives = 3;
+
+  aksListening = true;
+  document.getElementById("aksMicBtn").classList.add("listening");
+  setAksSpeechLine("🎙️ ...", "");
+
+  aksRecognition.onresult = (event) => {
+    const item = currentAksItem();
+    if(!item) return;
+
+    const target = normalizeText((state.lang === "en") ? item.en : item.uz);
+    const transcript = normalizeText(event.results[0][0].transcript);
+
+    const ok = transcript === target || transcript.includes(target) || target.includes(transcript);
+
+    if(ok){
+      setAksSpeechLine("✅ " + transcript, "ok");
+      beepSuccess();
+      goNextAksWord();
+    } else {
+      aksTries++;
+      updateAksTries();
+      setAksSpeechLine(T("aksSayAgain") + " (" + transcript + ")", "bad");
+      beepFail();
+      if(aksTries >= 3){
+        goNextAksWord((state.lang === "en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
+      }
+    }
+  };
+
+  aksRecognition.onerror = () => {
+    aksTries++;
+    updateAksTries();
+    setAksSpeechLine(T("aksSayAgain"), "bad");
+    beepFail();
+    if(aksTries >= 3){
+      goNextAksWord((state.lang === "en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
+    }
+  };
+
+  aksRecognition.onend = () => {
+    aksListening = false;
+    document.getElementById("aksMicBtn").classList.remove("listening");
+  };
+
+  aksRecognition.start();
+}
+
+function stopAksMic(){
+  try{ if(aksRecognition) aksRecognition.stop(); }catch(e){}
+  aksRecognition = null;
+  aksListening = false;
+  const btn = document.getElementById("aksMicBtn");
+  if(btn) btn.classList.remove("listening");
+}
+
+// ==========================================
+// CHAMELEON GAME
+// ==========================================
+let chamScore = 0;
+let chamOrder = [];
+let chamIdx = 0;
+let chamTarget = null;
+const CHAM_WIN = 8;
+
+const chamColors = [
+  { id: 'red',    hex: '#EF4444', emoji: '🔴', en: 'Red',    uz: 'qizil' },
+  { id: 'yellow', hex: '#EAB308', emoji: '🟡', en: 'Yellow', uz: 'sariq' },
+  { id: 'green',  hex: '#22C55E', emoji: '🟢', en: 'Green',  uz: 'yashil' },
+  { id: 'blue',   hex: '#3B82F6', emoji: '🔵', en: 'Blue',   uz: "ko'k" },
+  { id: 'pink',   hex: '#EC4899', emoji: '🩷', en: 'Pink',   uz: 'pushti' },
+  { id: 'orange', hex: '#F97316', emoji: '🟠', en: 'Orange', uz: "to'q sariq" },
+  { id: 'purple', hex: '#A855F7', emoji: '🟣', en: 'Purple', uz: 'binafsha' },
+  { id: 'black',  hex: '#1F2937', emoji: '⚫', en: 'Black',  uz: 'qora' }
+];
+
+function startChameleonGame(){
+  chamScore = 0;
+  chamIdx = 0;
+  chamOrder = shuffle([...chamColors]).slice(0, CHAM_WIN);
+  updateChamScore();
+  nextChameleonRound();
+}
+
+function nextChameleonRound(){
+  if(chamIdx >= chamOrder.length){
+    state.games.gCham = true;
     save();
     updateBadges();
-    celebrate("nameWinTitle", "nameWinText", "nameWinEmoji");
+    celebrate("chamWinTitle", "chamWinText", "chamWinEmoji");
+    return;
   }
 
-  function startNameGame(){
-    const grid=document.getElementById("nameGrid");
-    const task=document.getElementById("nameTask");
-    const preview=document.getElementById("namePreview");
-    if(!grid || !task || !preview) return;
+  chamTarget = chamOrder[chamIdx];
 
-    // Alle 10 Farben in zufaelliger Reihenfolge
-    if(nameIdx === 0){
-      nameOrder = shuffle(items.map(x=>x.k));
-    }
+  const box = document.getElementById("chameleonBox");
+  box.style.backgroundColor = chamTarget.hex;
+  box.classList.remove("happy", "shake");
+  document.getElementById("chameleonColorText").innerText = chamTarget[state.lang];
 
-    if(nameIdx >= nameOrder.length){
-      // Alle fertig - neustarten
-      nameIdx = 0;
-      nameOrder = shuffle(items.map(x=>x.k));
-    }
+  const fliesContainer = document.getElementById("chameleonFlies");
+  fliesContainer.innerHTML = "";
 
-    updateNameProgress();
-    grid.innerHTML="";
-    task.innerText = T("hintName");
-
-    const target = items.find(x=>x.k===nameOrder[nameIdx]);
-    preview.style.background = target.hex;
-
-    const opts = new Set([target.k]);
-    while(opts.size < 4){ opts.add(items[Math.floor(Math.random()*items.length)].k); }
-
-    shuffle([...opts]).forEach(optKey=>{
-      const optItem = items.find(x=>x.k===optKey);
-      const b=document.createElement("button");
-      b.className="choiceBtn";
-      b.innerText = (state.lang==="uz") ? optItem.uz : optItem.en;
-      b.onclick=()=>{
-        if(optKey===target.k){
-          b.classList.add("good"); beepSuccess();
-          nameIdx++;
-          updateNameProgress();
-
-          if(nameIdx >= nameOrder.length){
-            grid.innerHTML="";
-            preview.style.background = "#E5E7EB";
-            finishNameGame();
-          } else {
-            setTimeout(()=>{
-              if(document.getElementById("panel-name").classList.contains("show")){
-                startNameGame();
-              }
-            }, 500);
-          }
-        }else{
-          b.classList.add("bad"); beepFail();
-          setTimeout(()=>b.classList.remove("bad"), 300);
-        }
-      };
-      grid.appendChild(b);
-    });
+  const roundColors = [chamTarget];
+  while(roundColors.length < 3){
+    const c = chamColors[Math.floor(Math.random() * chamColors.length)];
+    if(!roundColors.includes(c)) roundColors.push(c);
   }
+
+  shuffle(roundColors).forEach(color => {
+    const fly = document.createElement("div");
+    fly.className = "chameleon-fly";
+    fly.style.backgroundColor = color.hex;
+    fly.innerHTML = "🪰";
+    fly.dataset.id = color.id;
+
+    const handleTap = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if(fly.dataset.popped) return;
+      fly.dataset.popped = "true";
+
+      if(color.id === chamTarget.id){
+        fly.classList.add("pop");
+        fly.innerHTML = "⭐";
+        box.classList.add("happy");
+        beepSuccess();
+        chamScore++;
+        chamIdx++;
+        updateChamScore();
+        setTimeout(() => {
+          box.classList.remove("happy");
+          nextChameleonRound();
+        }, 600);
+      } else {
+        fly.style.background = "#ffcccc";
+        fly.innerHTML = "❌";
+        box.classList.add("shake");
+        beepFail();
+        setTimeout(() => {
+          box.classList.remove("shake");
+          fly.style.backgroundColor = color.hex;
+          fly.innerHTML = "🪰";
+          fly.dataset.popped = "";
+        }, 500);
+      }
+    };
+
+    fly.addEventListener("click", handleTap);
+    fly.addEventListener("touchstart", handleTap, {passive: false});
+    fly.addEventListener("pointerdown", handleTap);
+
+    fliesContainer.appendChild(fly);
+  });
+}
+
+function updateChamScore(){
+  document.getElementById("chameleonScore").innerText = "⭐ " + chamScore + " / " + CHAM_WIN;
+}
 
   (function init(){
     load();
