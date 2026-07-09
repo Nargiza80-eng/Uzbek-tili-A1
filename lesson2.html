@@ -944,12 +944,11 @@
     const l = learnedCount();
     const t = 10;
     const pct = t ? (l / t) * 100 : 0;
-    const subText = state.lang === "en" ? "learned" : "o'rganildi";
 
     document.getElementById('hdrFill').style.width = pct + '%';
-    document.getElementById('hdrSub').textContent = l + ' / ' + t;
-    document.getElementById('hdrMini').textContent = l + ' / ' + t;
     document.getElementById('hdrTitle').textContent = state.lang === 'uz' ? 'Sonlar' : 'Numbers';
+    document.getElementById('hdrSub').textContent = state.lang === 'uz' ? '2-dars' : 'Lesson 2';
+    document.getElementById('hdrMini').textContent = l + ' / ' + t;
 
     document.getElementById('btnUZ').classList.toggle('active', state.lang === 'uz');
     document.getElementById('btnEN').classList.toggle('active', state.lang === 'en');
