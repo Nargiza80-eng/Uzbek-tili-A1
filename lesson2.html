@@ -716,8 +716,8 @@
         <button class="topIcon" onclick="goHome()" aria-label="Home" type="button">🏠</button>
 
         <div class="titleWrap">
-          <h1 class="title" id="hdrTitle">2-dars: Sonlar</h1>
-          <div class="sub" id="hdrSub">0 / 10</div>
+          <h1 class="title" id="hdrTitle">Sonlar</h1>
+          <div class="sub" id="hdrSub">2-dars</div>
         </div>
 
         <button class="topIcon" onclick="openLearn()" aria-label="Book" type="button">📖</button>
@@ -949,7 +949,7 @@
     document.getElementById('hdrFill').style.width = pct + '%';
     document.getElementById('hdrSub').textContent = l + ' / ' + t;
     document.getElementById('hdrMini').textContent = l + ' / ' + t;
-    document.getElementById('hdrTitle').textContent = state.lang === 'uz' ? '2-dars: Sonlar' : 'Lesson 2: Numbers';
+    document.getElementById('hdrTitle').textContent = state.lang === 'uz' ? 'Sonlar' : 'Numbers';
 
     document.getElementById('btnUZ').classList.toggle('active', state.lang === 'uz');
     document.getElementById('btnEN').classList.toggle('active', state.lang === 'en');
