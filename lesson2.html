@@ -553,6 +553,21 @@
       color:#fff;
       border-color:var(--error);
     }
+    .option-btn{
+      padding:12px 20px;
+      border:3px solid #f39c12;
+      background:var(--sun);
+      border-radius:18px;
+      cursor:pointer;
+      font-weight:900;
+      font-size:18px;
+      box-shadow:0 6px 0 #cc7a00;
+      margin:8px 0;
+    }
+    .option-btn:active{
+      transform:translateY(3px);
+      box-shadow:0 3px 0 #cc7a00;
+    }
 
     /* Balloons */
     #balloonArea{
@@ -734,6 +749,9 @@
         <button class="menuBtn" onclick="openSection('balloon')">
           <span class="menuEmoji">💥</span><span id="btnBalloon">Pufakchalar</span>
         </button>
+        <button class="menuBtn" onclick="openSection('quiz')">
+          <span class="menuEmoji">🎯</span><span id="btnQuiz">Test</span>
+        </button>
       </div>
     </div>
 
@@ -800,6 +818,30 @@
       </div>
     </div>
 
+    <!-- Test -->
+    <div class="panel" id="panel-quiz">
+      <div style="background:#fff;border-radius:25px;padding:20px;box-shadow:0 10px 0 var(--shadowSoft);">
+        <h2 style="margin:0 0 10px;font-size:clamp(18px, 5vw, 22px);word-break:break-word;">
+          🎯 <span id="titleQuiz">Test</span>
+          <span class="badge" id="g5Status">❓</span>
+        </h2>
+        <p class="hint" id="hintQuiz">To'g'ri javobni tanlang!</p>
+        <div class="quiz-card">
+          <div id="quizEmoji" class="quiz-emoji">🥇</div>
+          <h2 id="quizQuestion" style="margin: 6px 0 8px; font-size: 28px;">bir</h2>
+          <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="playCurrentQuizAudio()">
+            🔊 <span id="listenQuizText">Eshitish</span>
+          </button>
+          <div id="quizChoices"></div>
+          <div class="btnRow">
+            <button class="btn soft" onclick="closePanels()">
+              <span id="btnCloseQuiz">Yopish</span> ✖
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 <script>
@@ -820,20 +862,28 @@
 
   const UI = {
     uz: {
-      learn: "O'rganish", count: "Sanab ko'r", match: "Juftini top", balloon: "Pufakchalar",
+      learn: "O'rganish", count: "Sanab ko'r", match: "Juftini top", balloon: "Pufakchalar", quiz: "Test",
       hintCount: "Nechta olma bor?", hintDrag: "Raqamni ushlab so'zga olib boring",
       hintBalloon: "To'g'ri raqamni top!", btnStart: "Boshlash", btnStart2: "Boshlash",
       btnClose: "Yopish", btnClose2: "Yopish", btnNew: "Yangilash",
       find: "Top:", wellDone: "Barakalla", apples: "olma",
-      wellDoneTitle: "Zo'r! 🎉", wellDoneText: "Siz o'yinni yutdingiz!"
+      wellDoneTitle: "Zo'r! 🎉", wellDoneText: "Siz o'yinni yutdingiz!",
+      listenQuiz: "Eshitish", closeQuiz: "Yopish",
+      quizHint: "To'g'ri javobni tanlang!",
+      quizWinTitle: "Ajoyib! 🎉",
+      quizWinText: "Test tugadi! Barakalla!"
     },
     en: {
-      learn: "Learn", count: "Counting", match: "Matching", balloon: "Bubbles",
+      learn: "Learn", count: "Counting", match: "Matching", balloon: "Bubbles", quiz: "Quiz",
       hintCount: "How many apples?", hintDrag: "Drag number to word",
       hintBalloon: "Find the correct number!", btnStart: "Start", btnStart2: "Start",
       btnClose: "Close", btnClose2: "Close", btnNew: "New Game",
       find: "Find:", wellDone: "Well done", apples: "apples",
-      wellDoneTitle: "Great! 🎉", wellDoneText: "You won the game!"
+      wellDoneTitle: "Great! 🎉", wellDoneText: "You won the game!",
+      listenQuiz: "Listen", closeQuiz: "Close",
+      quizHint: "Choose the correct answer!",
+      quizWinTitle: "Excellent! 🎉",
+      quizWinText: "Quiz complete! Well done!"
     }
   };
 
@@ -936,6 +986,10 @@
     document.getElementById("btnNew").innerText = t.btnNew;
     document.getElementById("titleMatch").innerText = t.match;
     document.getElementById("titleBalloon").innerText = t.balloon;
+    document.getElementById("titleQuiz").innerText = t.quiz;
+    document.getElementById("hintQuiz").innerText = t.quizHint;
+    document.getElementById("listenQuizText").innerText = t.listenQuiz;
+    document.getElementById("btnCloseQuiz").innerText = t.closeQuiz;
   }
 
   function closePanels(){
@@ -950,7 +1004,7 @@
 
     // Menu button highlighting
     document.querySelectorAll(".menuBtn").forEach(btn=>btn.classList.remove("primary"));
-    const sectionMap = {"learn":0, "count":1, "match":2, "balloon":3};
+    const sectionMap = {"learn":0, "count":1, "match":2, "balloon":3, "quiz":4};
     const idx = sectionMap[name];
     if(idx !== undefined){
       const buttons = document.querySelectorAll(".menuBtn");
@@ -963,6 +1017,7 @@
     if(name==="match") initMatchingGame();
     if(name==="count") startCountingGame();
     if(name==="balloon") startBalloonGame();
+    if(name==="quiz") startQuizGame();
 
     if(panel) panel.scrollIntoView({behavior:"smooth", block:"start"});
   }
@@ -1017,6 +1072,7 @@
     };
     set("g1Status", state.games.g1);
     set("g4Status", state.games.g4);
+    set("g5Status", quizDone.length >= items.length);
   }
 
   /* ===== AUDIO ===== */
@@ -1480,6 +1536,107 @@
       area.appendChild(b);
       setTimeout(() => { if(b.parentNode && !b.dataset.popped) b.remove(); }, 4500);
     }, 700);
+  }
+
+  /* ===== QUIZ GAME ===== */
+  let quizCurrentIndex = 0;
+  let quizDone = [];
+  const QUIZ_DONE_KEY = "lesson2_quiz_done_v1";
+
+  function loadQuizDone(){
+    try { return JSON.parse(localStorage.getItem(QUIZ_DONE_KEY) || "[]"); }
+    catch { return []; }
+  }
+  function saveQuizDone(arr){ localStorage.setItem(QUIZ_DONE_KEY, JSON.stringify(arr)); }
+
+  function playCurrentQuizAudio(){
+    const item = items[quizCurrentIndex];
+    if(item) speakWord(item.k);
+  }
+
+  function startQuizGame(){
+    quizDone = loadQuizDone();
+    quizCurrentIndex = 0;
+
+    // Find first not-done item
+    while(quizCurrentIndex < items.length && quizDone.includes(items[quizCurrentIndex].k)){
+      quizCurrentIndex++;
+    }
+
+    if(quizCurrentIndex >= items.length){
+      // All done - show completion
+      const T = UI[state.lang];
+      celebrate("quizWinTitle", "quizWinText", "wellDoneEmoji");
+      document.getElementById("quizChoices").innerHTML =
+        '<button class="btn primary" onclick="resetQuiz()">🔁 ' + (state.lang==="uz"?"Qayta boshlash":"Restart") + '</button>';
+      return;
+    }
+
+    renderQuizQuestion();
+  }
+
+  function renderQuizQuestion(){
+    const item = items[quizCurrentIndex];
+    const T = UI[state.lang];
+
+    // Show emoji and ask for the word
+    document.getElementById("quizEmoji").innerText = item.emoji;
+
+    // Question: show emoji, ask for the OTHER language word
+    const questionWord = state.lang === "uz" ? item.uz : item.en;
+    const askForWord = state.lang === "uz" ? item.en : item.uz;
+    document.getElementById("quizQuestion").innerText = item.n + " - " + askForWord;
+
+    // Create 3 choices: correct + 2 random wrong
+    const correct = getWord(item);  // the word in current language
+    const allWords = items.map(x => getWord(x));
+    const wrongChoices = shuffle(allWords.filter(w => w !== correct)).slice(0, 2);
+    const choices = shuffle([correct, ...wrongChoices]);
+
+    const box = document.getElementById("quizChoices");
+    box.innerHTML = "";
+
+    choices.forEach(choice => {
+      const btn = document.createElement("button");
+      btn.className = "choiceBtn";
+      btn.innerText = choice;
+      btn.onclick = () => {
+        if(choice === correct){
+          btn.classList.add("good");
+          beepSuccess();
+
+          // Mark as learned
+          state.learned[item.k] = true;
+          state.stars[item.k] = Math.min(3, (state.stars[item.k] || 0) + 1);
+
+          // Add to quiz done
+          if(!quizDone.includes(item.k)){
+            quizDone.push(item.k);
+            saveQuizDone(quizDone);
+          }
+
+          save();
+          updateHeader();
+          renderVocab();
+
+          setTimeout(() => {
+            quizCurrentIndex++;
+            startQuizGame();
+          }, 500);
+        } else {
+          btn.classList.add("bad");
+          beepFail();
+          setTimeout(() => btn.classList.remove("bad"), 600);
+        }
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function resetQuiz(){
+    saveQuizDone([]);
+    quizCurrentIndex = 0;
+    startQuizGame();
   }
 
   /* ===== INIT ===== */
