@@ -1133,6 +1133,7 @@
     const it = items.find(x=>x.k===key);
     if(!it) return;
 
+    const text = getWord(it);
     const path = buildAudioPath(key);
     if(path) tryPlayAudio(path, 0, text);
 
