@@ -718,8 +718,9 @@
     LESSONS.forEach((L, idx) => {
       const isDone = Array.from(learned).filter(k => k.startsWith("L" + L.id + "_")).length >= 5;
       const c = COLORS[idx % COLORS.length];
-      const el = document.createElement("a");
-      el.href = L.file;
+      const el = document.createElement("div");
+      el.style.cursor = "pointer";
+      el.onclick = function() {window.location.href = L.file; };
       el.className = "tile" + (isDone ? " done" : "");
       el.style.background = `linear-gradient(180deg, ${c.bg}, rgba(255,255,255,.92))`;
       el.style.setProperty("--soft", c.soft);
