@@ -147,7 +147,23 @@
       0%,100% { transform: scale(0.85); opacity: 0.6; }
       50%     { transform: scale(1.15); opacity: 1; }
     }
+    /* TABLET / GROSSES HANDY: Karten untereinander, mittlere Grösse */
+    @media (min-width: 561px) and (max-width: 767px) {
+      .tile { padding: 18px 14px; gap: 10px; min-height: 100px; }
+      .icon { width: 56px; height: 56px; font-size: 44px; }
+      .title { font-size: 24px; }
+      .tagRight { min-width: 50px; }
+      .tagRight .main { font-size: 16px; }
+      .tagRight .sub { font-size: 13px; }
+    }
+    /* HANDY: Lesson Karten kleiner */
     @media (max-width: 560px) {
+      .tile { padding: 16px 12px; gap: 8px; min-height: 90px; border-radius: 24px; }
+      .icon { width: 48px; height: 48px; font-size: 40px; }
+      .title { font-size: 20px; letter-spacing: -0.3px; }
+      .tagRight { min-width: 40px; gap: 2px; }
+      .tagRight .main { font-size: 14px; }
+      .tagRight .sub { font-size: 12px; }
       .dono-header .title { font-size: 42px !important; letter-spacing: 1px;
         text-shadow: 0 2px 6px rgba(255,255,255,0.9), 0 0 16px rgba(255,255,255,0.7);
       }
@@ -192,17 +208,17 @@
       -webkit-tap-highlight-color: transparent; cursor: pointer;
       background: rgba(255,255,255,.97);
       display: flex; flex-direction: row; align-items: center;
-      justify-content: space-between; gap: 16px;
+      justify-content: space-between; gap: 10px;
       min-height: 120px; transition: transform 0.2s, box-shadow 0.2s;
     }
     .tile:active{ transform: translateY(2px); box-shadow: 0 12px 28px rgba(2,6,23,.12); }
     .icon{
-      flex-shrink: 0; width: 72px; height: 72px;
+      flex-shrink: 0; width: 60px; height: 60px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 56px; line-height: 1; z-index: 2;
+      font-size: 48px; line-height: 1; z-index: 2;
     }
     .title{
-      flex: 1; min-width: 0; font-size: 32px; font-weight: 1000;
+      flex: 1; min-width: 0; font-size: 26px; font-weight: 1000;
       line-height: 1.1; letter-spacing: -0.5px;
       white-space: normal; overflow: visible;
       text-align: left; z-index: 2; color: #0f172a;
@@ -210,10 +226,10 @@
     .tagRight{
       flex-shrink: 0; display: flex; flex-direction: column;
       align-items: flex-end; justify-content: center;
-      gap: 4px; z-index: 2; min-width: 70px;
+      gap: 4px; z-index: 2; min-width: 50px;
     }
-    .tagRight .main{ font-size: 20px; font-weight: 1000; letter-spacing: 0.5px; white-space: nowrap; }
-    .tagRight .sub{ font-size: 16px; font-weight: 900; letter-spacing: 0.2px; color: rgba(15,23,42,.60); white-space: nowrap; }
+    .tagRight .main{ font-size: 18px; font-weight: 1000; letter-spacing: 0.5px; white-space: nowrap; }
+    .tagRight .sub{ font-size: 14px; font-weight: 900; letter-spacing: 0.2px; color: rgba(15,23,42,.60); white-space: nowrap; }
     .tagRight.open{ color: #065f46; }
     .tile::after{
       content: ""; position: absolute; left: 20px; right: 20px; bottom: 12px;
