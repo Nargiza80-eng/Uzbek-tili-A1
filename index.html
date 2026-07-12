@@ -4,13 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Dono Bola! Learn Uzbek</title>
-
+  <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
   <style>
     *{box-sizing:border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
-    
     body{
       margin:0;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -21,23 +19,15 @@
       min-height:100vh;
       min-height: 100dvh;
       overflow-x:hidden;
-
       background:
         linear-gradient(180deg, rgba(223,247,240,.92), rgba(234,246,255,.92)),
         url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27720%27%20height%3D%27720%27%20viewBox%3D%270%200%20720%20720%27%3E%3Crect%20width%3D%27720%27%20height%3D%27720%27%20fill%3D%27%23f7fbff%27/%3E%3Cg%20opacity%3D%270.22%27%3E%3Cg%20transform%3D%27translate(40%2C40)%27%3E%3Cpath%20d%3D%27M120%200%20L160%2040%20L120%2080%20L80%2040%20Z%27%20fill%3D%27%230ea5a4%27/%3E%3Cpath%20d%3D%27M120%20110%20L170%20160%20L120%20210%20L70%20160%20Z%27%20fill%3D%27%2322c55e%27/%3E%3Cpath%20d%3D%27M120%20240%20L160%20280%20L120%20320%20L80%20280%20Z%27%20fill%3D%27%23f59e0b%27/%3E%3Cpath%20d%3D%27M0%20120%20L40%20160%20L0%20200%20L-40%20160%20Z%27%20fill%3D%27%2314b8a6%27/%3E%3Cpath%20d%3D%27M240%20120%20L280%20160%20L240%20200%20L200%20160%20Z%27%20fill%3D%27%2310b981%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
       background-size: cover, 720px 720px;
       background-attachment: fixed, fixed;
-      
       overscroll-behavior: none;
       -webkit-overflow-scrolling: touch;
     }
-
-    .app{
-      max-width: 100%;
-      margin:0 auto;
-      width: 100%;
-    }
-
+    .app{ max-width: 100%; margin:0 auto; width: 100%; }
     .top{
       background:rgba(255,255,255,.92);
       border:1px solid rgba(15,23,42,.12);
@@ -50,456 +40,204 @@
       overflow:hidden;
       width: 100%;
     }
-
-    /* ============ HEADER ============ */
+    /* HEADER */
     .dono-header {
-      width: 100%;
-      max-width: 100%;
-      margin: 0 auto 16px;
-      border-radius: 28px;
-      background: #ffffff;
+      width: 100%; max-width: 100%; margin: 0 auto 16px;
+      border-radius: 28px; background: #ffffff;
       box-shadow: 0 14px 0 rgba(0,0,0,0.08);
-      border: 4px solid #fff;
-      overflow: hidden;
-      position: relative;
+      border: 4px solid #fff; overflow: hidden; position: relative;
     }
-
-    .dono-header .content {
-      position: relative;
-      z-index: 2;
-      padding: 16px;
-    }
-
-    .dono-header .top-row {
-      display: grid;
-      grid-template-columns: 64px 1fr 64px;
-      align-items: center;
-      gap: 12px;
-    }
-
+    .dono-header .content { position: relative; z-index: 2; padding: 16px; }
+    .dono-header .top-row { display: grid; grid-template-columns: 64px 1fr 64px; align-items: center; gap: 12px; }
     .dono-header .topIcon {
-      width: 60px;
-      height: 60px;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 36px;
-      line-height: 1;
-      user-select: none;
-      text-decoration: none;
+      width: 60px; height: 60px; border: none; background: transparent;
+      cursor: pointer; border-radius: 16px; display: flex;
+      align-items: center; justify-content: center; font-size: 36px;
+      line-height: 1; user-select: none; text-decoration: none;
     }
     .dono-header .topIcon:active { transform: translateY(2px) scale(0.98); }
-
-    .dono-header .titleWrap {
-      min-width: 0;
-      text-align: center;
-    }
+    .dono-header .titleWrap { min-width: 0; text-align: center; }
     .dono-header .title {
-      margin: 0;
-      font-size: 32px;
-      font-weight: 1000;
-      letter-spacing: 0.2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      margin: 0; font-size: 38px; font-weight: 1000; letter-spacing: 0.5px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
       color: #1f2937;
+      text-shadow: 0 2px 4px rgba(255,255,255,0.8), 0 0 12px rgba(255,255,255,0.6);
     }
     .dono-header .sub {
-      margin-top: 6px;
-      font-size: 18px;
-      font-weight: 1000;
-      color: rgba(31,41,55,0.65);
+      margin-top: 8px; font-size: 20px; font-weight: 1000;
+      color: rgba(31,41,55,0.70);
+      text-shadow: 0 1px 3px rgba(255,255,255,0.7);
     }
-
     .dono-header .progress-track {
-      height: 16px;
-      background: rgba(255,255,255,0.65);
-      border-radius: 999px;
-      overflow: hidden;
-      margin: 12px 4px 0;
+      height: 16px; background: rgba(255,255,255,0.65);
+      border-radius: 999px; overflow: hidden; margin: 12px 4px 0;
       box-shadow: inset 0 2px 0 rgba(0,0,0,0.06);
       border: 2px solid rgba(255,255,255,0.7);
     }
     .dono-header .progress-fill {
-      height: 100%;
-      width: 0%;
-      border-radius: 999px;
+      height: 100%; width: 0%; border-radius: 999px;
       background: linear-gradient(90deg, #22c55e, #34d399);
       transition: width 0.45s ease;
     }
-
     .dono-header .mini {
-      text-align: center;
-      margin-top: 10px;
-      font-size: 18px;
-      font-weight: 1000;
-      color: #111827;
+      text-align: center; margin-top: 10px; font-size: 18px;
+      font-weight: 1000; color: #111827;
     }
-
     .dono-header .langRow {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      margin-top: 12px;
+      display: flex; justify-content: center; gap: 16px; margin-top: 12px;
     }
-
     .dono-header .langBtn {
-      width: 100px;
-      padding: 10px 0;
-      font-size: 16px;
-      font-weight: 1000;
-      border: none;
-      border-radius: 999px;
-      cursor: pointer;
-      background: rgba(255,255,255,0.70);
-      color: #1e4ed8;
+      width: 100px; padding: 10px 0; font-size: 16px; font-weight: 1000;
+      border: none; border-radius: 999px; cursor: pointer;
+      background: rgba(255,255,255,0.70); color: #1e4ed8;
       box-shadow: 0 10px 20px rgba(0,0,0,0.10);
     }
     .dono-header .langBtn.active {
-      background: #2f6bff;
-      color: #fff;
+      background: #2f6bff; color: #fff;
       box-shadow: inset 0 -8px 0 rgba(0,0,0,0.18), 0 10px 20px rgba(0,0,0,0.10);
     }
-
     .dono-header .sky {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
       background:
         radial-gradient(circle at 18% 12%, rgba(255, 214, 102, 0.78) 0%, rgba(255, 214, 102, 0.0) 58%),
         linear-gradient(180deg, #7DD3FC 0%, #A5F3FC 45%, #FFF6E8 100%);
     }
-
     .dono-header .sun {
-      position: absolute;
-      left: -20px;
-      top: -25px;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
+      position: absolute; left: -20px; top: -25px;
+      width: 100px; height: 100px; border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, #FFF7C2 0%, #FFD400 45%, #FFB300 100%);
       box-shadow: 0 18px 35px rgba(255,179,0,0.35);
       animation: sunBob 4s ease-in-out infinite;
     }
-
     @keyframes sunBob {
       0%, 100% { transform: translateY(0) rotate(0deg); }
       50%      { transform: translateY(6px) rotate(1.5deg); }
     }
-
     .dono-header .sun::before {
-      content: "";
-      position: absolute;
-      inset: -40px;
-      border-radius: 50%;
+      content: ""; position: absolute; inset: -40px; border-radius: 50%;
       background: repeating-conic-gradient(from -10deg, rgba(255,214,0,0.0) 0deg 10deg, rgba(255,214,0,0.32) 10deg 14deg);
-      opacity: 0.65;
-      animation: raysSpin 18s linear infinite;
+      opacity: 0.65; animation: raysSpin 18s linear infinite;
     }
-    @keyframes raysSpin {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-
+    @keyframes raysSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     .dono-header .cloud {
-      position: absolute;
-      width: 120px;
-      height: 40px;
-      background: rgba(255,255,255,0.90);
-      border-radius: 999px;
+      position: absolute; width: 120px; height: 40px;
+      background: rgba(255,255,255,0.90); border-radius: 999px;
       filter: drop-shadow(0 10px 12px rgba(0,0,0,0.08));
     }
-    .dono-header .cloud::before,
-    .dono-header .cloud::after {
-      content: "";
-      position: absolute;
-      background: rgba(255,255,255,0.90);
-      border-radius: 50%;
+    .dono-header .cloud::before, .dono-header .cloud::after {
+      content: ""; position: absolute; background: rgba(255,255,255,0.90); border-radius: 50%;
     }
     .dono-header .cloud::before { width: 50px; height: 50px; left: 15px; top: -20px; }
     .dono-header .cloud::after { width: 65px; height: 65px; left: 45px; top: -30px; }
-
     .dono-header .c1 { top: 18px; left: 90px; opacity: 0.95; animation: cloudMove1 70s linear infinite; }
     .dono-header .c2 { top: 60px; left:  15px; opacity: 0.85; transform: scale(0.9);  animation: cloudMove2 95s linear infinite; }
     .dono-header .c3 { top: 35px; left: 300px; opacity: 0.80; transform: scale(1.05); animation: cloudMove3 120s linear infinite; }
-
     @keyframes cloudMove1 { from { transform: translateX(-320px); } to { transform: translateX(1000px); } }
     @keyframes cloudMove2 { from { transform: translateX(900px) scale(0.9); } to { transform: translateX(-340px) scale(0.9); } }
     @keyframes cloudMove3 { from { transform: translateX(-640px) scale(1.05); } to { transform: translateX(800px) scale(1.05); } }
-
     .dono-header .sparkle{
-      position:absolute;
-      width: 8px;
-      height: 8px;
-      border-radius:50%;
-      background: rgba(255,255,255,0.9);
-      box-shadow: 0 0 0 4px rgba(255,255,255,0.25);
+      position:absolute; width: 8px; height: 8px; border-radius:50%;
+      background: rgba(255,255,255,0.9); box-shadow: 0 0 0 4px rgba(255,255,255,0.25);
       animation: twinkle 3.2s ease-in-out infinite;
     }
     .dono-header .s1 { top: 20px; right: 80px; animation-delay: 0.2s; }
     .dono-header .s2 { top: 50px; right:  50px; animation-delay: 1.1s; }
     .dono-header .s3 { top: 28px; right: 130px; animation-delay: 1.9s; }
-
     @keyframes twinkle{
       0%,100% { transform: scale(0.85); opacity: 0.6; }
       50%     { transform: scale(1.15); opacity: 1; }
     }
-
-    /* Begrüßung */
-    .header-greeting {
-      text-align: center;
-      margin: 16px 0 12px;
-      font-size: 26px;
-      font-weight: 1000;
-      line-height: 1.3;
+    @media (max-width: 560px) {
+      .dono-header .title { font-size: 42px !important; letter-spacing: 1px;
+        text-shadow: 0 2px 6px rgba(255,255,255,0.9), 0 0 16px rgba(255,255,255,0.7);
+      }
+      .dono-header .sub { font-size: 18px; }
+      .dono-header .top-row { grid-template-columns: 52px 1fr 52px; gap: 6px; }
+      .dono-header .topIcon { width: 48px; height: 48px; font-size: 28px; }
+      .dono-header .langBtn { width: 90px; padding: 8px 0; font-size: 14px; }
     }
-    
-    .header-greeting .name { 
-      color: #065f46;
-      cursor: pointer;
-      border-bottom: 2px dashed #065f46;
-      transition: all 0.2s;
-      display: inline-block;
-      padding: 0 4px;
+    .header-greeting {
+      text-align: center; margin: 16px 0 12px;
+      font-size: 26px; font-weight: 1000; line-height: 1.3;
+    }
+    .header-greeting .name {
+      color: #065f46; cursor: pointer; border-bottom: 2px dashed #065f46;
+      transition: all 0.2s; display: inline-block; padding: 0 4px;
     }
     .header-greeting .name:active { transform: scale(0.95); }
-
-    /* Premium Banner */
-    .premium-banner {
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
-      border-radius: 20px;
-      padding: 16px;
-      margin: 12px 0;
-      text-align: center;
-      box-shadow: 0 8px 0 rgba(245, 158, 11, 0.3);
-    }
-    
-    .premium-banner h3 {
-      margin: 0 0 8px 0;
-      font-size: 20px;
-      color: #fff;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    
-    .premium-banner p {
-      margin: 0 0 12px 0;
-      color: rgba(255,255,255,0.95);
-      font-size: 14px;
-    }
-    
-    .buy-btn {
-      background: #fff;
-      color: #f59e0b;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 999px;
-      font-weight: 1000;
-      font-size: 16px;
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-      -webkit-appearance: none;
-    }
-    .buy-btn:active { transform: translateY(2px); }
-
-    /* ============ LESSON GRID ============ */
     .grid{
-      margin-top: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      position: relative;
-      padding-left: 28px;
+      margin-top: 16px; display: flex; flex-direction: column;
+      gap: 16px; position: relative; padding-left: 28px;
     }
-    
-    /* Timeline */
     .grid::before{
-      content: "";
-      position: absolute;
-      left: 8px;
-      top: 10px;
-      bottom: 10px;
-      width: 10px;
-      border-radius: 999px;
-      background: linear-gradient(180deg,
-        rgba(34,197,94,.55),
-        rgba(59,130,246,.45),
-        rgba(245,158,11,.45)
-      );
+      content: ""; position: absolute; left: 8px; top: 10px; bottom: 10px;
+      width: 10px; border-radius: 999px;
+      background: linear-gradient(180deg, rgba(34,197,94,.55), rgba(59,130,246,.45), rgba(245,158,11,.45));
       border: 2px solid rgba(15,23,42,.10);
       box-shadow: 0 18px 40px rgba(2,6,23,.12);
     }
-
     .stepDot{
-      position: absolute;
-      left: -24px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.98);
-      border: 3px solid rgba(15,23,42,.22);
-      box-shadow: 0 16px 34px rgba(2,6,23,.12);
-      z-index: 2;
+      position: absolute; left: -24px; top: 50%; transform: translateY(-50%);
+      width: 32px; height: 32px; border-radius: 999px;
+      background: rgba(255,255,255,.98); border: 3px solid rgba(15,23,42,.22);
+      box-shadow: 0 16px 34px rgba(2,6,23,.12); z-index: 2;
     }
-    
-    .tile.done .stepDot{
-      border-color: rgba(34,197,94,.70); 
-      background: rgba(34,197,94,.25);
-    }
-    
-    .tile.current .stepDot{
-      border-color: rgba(245,158,11,.80); 
-      background: rgba(245,158,11,.25);
-    }
-
-    /* TILE - Wie im Foto: Groß, abgerundet, schöne Schrift */
+    .tile.done .stepDot{ border-color: rgba(34,197,94,.70); background: rgba(34,197,94,.25); }
+    .tile.current .stepDot{ border-color: rgba(245,158,11,.80); background: rgba(245,158,11,.25); }
     .tile{
-      border: 2px solid rgba(15,23,42,.10);
-      border-radius: 32px; /* Sehr abgerundet wie im Foto */
-      box-shadow: 0 18px 38px rgba(2,6,23,.14);
-      padding: 24px 20px; /* Viel Padding wie im Foto */
-      text-decoration: none;
-      color: inherit;
-      position: relative;
-      overflow: hidden;
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-      cursor: pointer;
+      border: 2px solid rgba(15,23,42,.10); border-radius: 32px;
+      box-shadow: 0 18px 38px rgba(2,6,23,.14); padding: 24px 20px;
+      text-decoration: none; color: inherit; position: relative;
+      overflow: hidden; touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent; cursor: pointer;
       background: rgba(255,255,255,.97);
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      min-height: 120px; /* Höhere Karten */
-      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex; flex-direction: row; align-items: center;
+      justify-content: space-between; gap: 16px;
+      min-height: 120px; transition: transform 0.2s, box-shadow 0.2s;
     }
-    
-    .tile:active{
-      transform: translateY(2px);
-      box-shadow: 0 12px 28px rgba(2,6,23,.12);
-    }
-    
-    .tile.locked{
-      opacity: 0.6;
-      filter: grayscale(0.5);
-      cursor: not-allowed;
-    }
-
+    .tile:active{ transform: translateY(2px); box-shadow: 0 12px 28px rgba(2,6,23,.12); }
     .icon{
-      flex-shrink: 0;
-      width: 72px; /* Größere Icons */
-      height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 56px; /* Größere Emojis */
-      line-height: 1;
-      z-index: 2;
+      flex-shrink: 0; width: 72px; height: 72px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 56px; line-height: 1; z-index: 2;
     }
-
-    /* Titel: Groß, fett, keine Umbrüche */
     .title{
-      flex: 1;
-      min-width: 0;
-      font-size: 32px; /* Große Schrift wie im Foto */
-      font-weight: 1000; /* Extra fett */
-      line-height: 1.1;
-      letter-spacing: -0.5px;
-      white-space: nowrap; /* Kein Umbruch */
-      overflow: hidden;
-      text-overflow: ellipsis; /* "..." wenn zu lang */
-      text-align: left;
-      z-index: 2;
-      color: #0f172a;
+      flex: 1; min-width: 0; font-size: 32px; font-weight: 1000;
+      line-height: 1.1; letter-spacing: -0.5px;
+      white-space: normal; overflow: visible;
+      text-align: left; z-index: 2; color: #0f172a;
     }
-
     .tagRight{
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      justify-content: center;
-      gap: 4px;
-      z-index: 2;
-      min-width: 70px;
+      flex-shrink: 0; display: flex; flex-direction: column;
+      align-items: flex-end; justify-content: center;
+      gap: 4px; z-index: 2; min-width: 70px;
     }
-    
-    .tagRight .main{
-      font-size: 20px; /* Größer */
-      font-weight: 1000;
-      letter-spacing: 0.5px;
-      white-space: nowrap;
-    }
-    
-    .tagRight .sub{
-      font-size: 16px; /* Größer */
-      font-weight: 900;
-      letter-spacing: 0.2px;
-      color: rgba(15,23,42,.60);
-      white-space: nowrap;
-    }
-
+    .tagRight .main{ font-size: 20px; font-weight: 1000; letter-spacing: 0.5px; white-space: nowrap; }
+    .tagRight .sub{ font-size: 16px; font-weight: 900; letter-spacing: 0.2px; color: rgba(15,23,42,.60); white-space: nowrap; }
     .tagRight.open{ color: #065f46; }
-    .tagRight.lock{ color: rgba(15,23,42,.70); }
-    .tagRight.free{ color: #22c55e; }
-
-    /* Unterer Schatten/Balken wie im Foto */
     .tile::after{
-      content: "";
-      position: absolute;
-      left: 20px;
-      right: 20px;
-      bottom: 12px;
-      height: 14px;
-      border-radius: 999px;
+      content: ""; position: absolute; left: 20px; right: 20px; bottom: 12px;
+      height: 14px; border-radius: 999px;
       background: var(--soft, rgba(0,0,0,.06));
-      border: 1px solid rgba(15,23,42,.06);
-      opacity: 0.95;
-      z-index: 0;
+      border: 1px solid rgba(15,23,42,.06); opacity: 0.95; z-index: 0;
     }
-
-    /* Toast */
     .toast{
-      position: fixed;
-      left: 50%;
+      position: fixed; left: 50%;
       bottom: calc(18px + env(safe-area-inset-bottom));
       transform: translateX(-50%) translateY(10px);
-      background: rgba(255,255,255,.94);
-      border: 1px solid rgba(15,23,42,.12);
-      box-shadow: 0 18px 40px rgba(2,6,23,.18);
-      border-radius: 999px;
-      padding: 12px 20px;
-      font-weight: 1000;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .22s ease, transform .22s ease;
-      z-index: 20000;
-      max-width: 90vw;
-      text-align: center;
-      font-size: 15px;
-      white-space: nowrap;
+      background: rgba(255,255,255,.94); border: 1px solid rgba(15,23,42,.12);
+      box-shadow: 0 18px 40px rgba(2,6,23,.18); border-radius: 999px;
+      padding: 12px 20px; font-weight: 1000; opacity: 0;
+      pointer-events: none; transition: opacity .22s ease, transform .22s ease;
+      z-index: 20000; max-width: 90vw; text-align: center;
+      font-size: 15px; white-space: nowrap;
     }
-    
     .toast.show{
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
+      opacity: 1; transform: translateX(-50%) translateY(0);
     }
-
-    /* Gates */
     .gate{
-      position: fixed;
-      inset: 0;
-      z-index: 10000;
-      display: none;
-      align-items: center;
-      justify-content: center;
+      position: fixed; inset: 0; z-index: 10000; display: none;
+      align-items: center; justify-content: center;
       padding: 16px;
       padding-top: calc(16px + env(safe-area-inset-top));
       padding-bottom: calc(16px + env(safe-area-inset-bottom));
@@ -510,142 +248,116 @@
       backdrop-filter: blur(10px) saturate(1.1);
       -webkit-backdrop-filter: blur(10px) saturate(1.1);
     }
-    
     .gate.show{ display: flex; }
-
     .gateCard{
-      width: min(400px, 92vw);
-      max-height: 90vh;
-      overflow-y: auto;
-      background: rgba(255,255,255,.92);
-      border: 1px solid rgba(255,255,255,.35);
-      border-radius: 24px;
-      box-shadow: 0 22px 70px rgba(2,6,23,.35);
-      padding: 24px;
-      text-align: center;
+      width: min(400px, 92vw); max-height: 90vh; overflow-y: auto;
+      background: rgba(255,255,255,.92); border: 1px solid rgba(255,255,255,.35);
+      border-radius: 24px; box-shadow: 0 22px 70px rgba(2,6,23,.35);
+      padding: 24px; text-align: center;
       transform: translateY(16px) scale(.98);
-      opacity: 0;
-      transition: transform .22s ease, opacity .22s ease;
+      opacity: 0; transition: transform .22s ease, opacity .22s ease;
     }
-    
-    .gate.show .gateCard{
-      transform: translateY(0) scale(1);
-      opacity: 1;
-    }
-
-    .gateTitle{
-      font-size: 22px;
-      font-weight: 1000;
-      margin: 6px 0;
-    }
-    
-    .gateText{
-      margin: 0 0 12px;
-      font-weight: 900;
-      font-size: 15px;
-      color: rgba(15,23,42,.82);
-      line-height: 1.35;
-    }
-
+    .gate.show .gateCard{ transform: translateY(0) scale(1); opacity: 1; }
+    .gateTitle{ font-size: 22px; font-weight: 1000; margin: 6px 0; }
+    .gateText{ margin: 0 0 12px; font-weight: 900; font-size: 15px; color: rgba(15,23,42,.82); line-height: 1.35; }
     .nameInput{
-      width: 100%;
-      max-width: 320px;
-      padding: 14px 16px;
-      border-radius: 16px;
-      border: 1px solid rgba(15,23,42,.18);
-      font-weight: 1000;
-      font-size: 18px;
-      outline: none;
-      background: rgba(255,255,255,.95);
-      -webkit-appearance: none;
+      width: 100%; max-width: 320px; padding: 14px 16px;
+      border-radius: 16px; border: 1px solid rgba(15,23,42,.18);
+      font-weight: 1000; font-size: 18px; outline: none;
+      background: rgba(255,255,255,.95); -webkit-appearance: none;
     }
-    
-    .nameInput:focus{
-      border-color: rgba(59,130,246,.55);
-      box-shadow: 0 0 0 6px rgba(59,130,246,.18);
-    }
-
+    .nameInput:focus{ border-color: rgba(59,130,246,.55); box-shadow: 0 0 0 6px rgba(59,130,246,.18); }
     .gateBtn{
-      width: 100%;
-      max-width: 320px;
-      margin-top: 10px;
-      padding: 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(5,46,27,.10);
+      width: 100%; max-width: 320px; margin-top: 10px; padding: 14px;
+      border-radius: 16px; border: 1px solid rgba(5,46,27,.10);
       background: linear-gradient(180deg, #34d399, #22c55e);
-      color: #052e1b;
-      font-weight: 1000;
-      cursor: pointer;
-      font-size: 17px;
-      -webkit-appearance: none;
+      color: #052e1b; font-weight: 1000; cursor: pointer;
+      font-size: 17px; -webkit-appearance: none;
     }
-    
-    .gateBtn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+    .gateBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .gateBtn.secondary { background: #e5e7eb; color: #374151; }
+    /* DICTIONARY */
+    .dict-overlay {
+      display: none; position: fixed; inset: 0; z-index: 10000;
+      background: rgba(2,6,23,.55); backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px); padding: 16px;
+      padding-top: calc(16px + env(safe-area-inset-top));
+      padding-bottom: calc(16px + env(safe-area-inset-bottom));
     }
-    
-    .gateBtn.secondary {
-      background: #e5e7eb;
-      color: #374151;
+    .dict-overlay.show { display: flex; align-items: center; justify-content: center; }
+    .dict-card {
+      width: min(460px, 95vw); max-height: 85vh; background: rgba(255,255,255,.96);
+      border-radius: 28px; box-shadow: 0 22px 70px rgba(2,6,23,.35);
+      padding: 24px; display: flex; flex-direction: column; overflow: hidden;
     }
-
-    /* Desktop: Mehr Spalten */
+    .dict-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-shrink: 0; }
+    .dict-title { font-size: 24px; font-weight: 1000; margin: 0; }
+    .dict-close { width: 44px; height: 44px; border-radius: 50%; border: none; background: #f1f5f9; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .dict-close:active { transform: scale(0.95); background: #e2e8f0; }
+    .dict-count { font-size: 14px; font-weight: 900; color: rgba(15,23,42,.55); margin-bottom: 12px; flex-shrink: 0; }
+    .dict-scroll { overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; }
+    .dict-lesson-group { margin-bottom: 16px; }
+    .dict-lesson-title { font-size: 15px; font-weight: 1000; color: #fff; background: linear-gradient(135deg, #3b82f6, #8b5cf6); padding: 8px 14px; border-radius: 14px; margin-bottom: 8px; display: inline-block; }
+    .dict-row { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 14px; background: rgba(241,245,249,.8); margin-bottom: 6px; font-size: 16px; }
+    .dict-emoji { font-size: 28px; line-height: 1; flex-shrink: 0; }
+    .dict-uz { font-weight: 1000; color: #0f172a; min-width: 80px; }
+    .dict-en { font-weight: 900; color: rgba(15,23,42,.55); }
+    .dict-empty { text-align: center; padding: 40px 20px; color: rgba(15,23,42,.5); font-weight: 900; font-size: 16px; }
+    .dict-filter-row { display: flex; gap: 8px; margin-bottom: 12px; flex-shrink: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .dict-filter-btn { padding: 8px 16px; border-radius: 999px; border: none; background: #f1f5f9; font-weight: 900; font-size: 13px; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+    .dict-filter-btn.active { background: #3b82f6; color: #fff; }
     @media (min-width: 768px) {
       body { padding: 24px; }
       .app { max-width: 800px; }
-      
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        padding-left: 0;
-      }
-      
-      .grid::before,
-      .stepDot { display: none; }
-      
-      .tile {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 32px 24px;
-        min-height: 200px;
-        gap: 16px;
-      }
-      
-      .icon {
-        width: 90px;
-        height: 90px;
-        font-size: 72px;
-      }
-      
-      .title {
-        font-size: 36px;
-        text-align: center;
-        white-space: normal;
-      }
-      
-      .tagRight {
-        align-items: center;
-      }
-      
+      .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding-left: 0; }
+      .grid::before, .stepDot { display: none; }
+      .tile { flex-direction: column; align-items: center; text-align: center; padding: 32px 24px; min-height: 200px; gap: 16px; }
+      .icon { width: 90px; height: 90px; font-size: 72px; }
+      .title { font-size: 36px; text-align: center; white-space: normal; }
+      .tagRight { align-items: center; }
       .tagRight .main { font-size: 22px; }
       .tagRight .sub { font-size: 18px; }
     }
-
     @media (min-width: 1200px) {
       .app { max-width: 1000px; }
       .grid { grid-template-columns: repeat(3, 1fr); }
     }
   </style>
+<base target="_blank">
 </head>
-
 <body>
   <div class="app">
     <div class="top">
-
-      <div id="mainHeader"></div>
+      <!-- HEADER -->
+      <div class="dono-header" data-total="93">
+        <div class="sky">
+          <div class="sun"></div>
+          <div class="cloud c1"></div>
+          <div class="cloud c2"></div>
+          <div class="cloud c3"></div>
+          <div class="sparkle s1"></div>
+          <div class="sparkle s2"></div>
+          <div class="sparkle s3"></div>
+        </div>
+        <div class="content">
+          <div class="top-row">
+            <button class="topIcon" onclick="goHome()" aria-label="Home" type="button">🏠</button>
+            <div class="titleWrap">
+              <h1 class="title" id="hdrTitle">🌿 Dono Bola</h1>
+              <div class="sub" id="hdrSub"></div>
+            </div>
+            <button class="topIcon" onclick="openDictionary()" aria-label="Dictionary" type="button">📖</button>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="hdrFill" style="width:0%"></div>
+          </div>
+          <div class="mini" id="hdrMini">0 / 93</div>
+          <div class="langRow">
+            <button class="langBtn active" id="hdrUZ" onclick="switchLang('uz')" type="button">UZ</button>
+            <button class="langBtn" id="hdrEN" onclick="switchLang('en')" type="button">EN</button>
+          </div>
+        </div>
+      </div>
 
       <div class="header-greeting" id="greetingText">
         <span id="helloWord">Hello,</span>
@@ -653,19 +365,13 @@
         <span>✨</span>
       </div>
 
-      <div class="premium-banner" id="premiumBanner" style="display:none;">
-        <h3 id="premiumTitle">🔓 Unlock All Lessons</h3>
-        <p id="premiumText">Get lessons 2-10 for only $4.99</p>
-        <button class="buy-btn" id="buyBtn" onclick="handleBuyClick()">Buy Now - $4.99</button>
-      </div>
-
       <div class="grid" id="lessonGrid"></div>
-
     </div>
   </div>
 
   <div class="toast" id="toast"></div>
 
+  <!-- Name Gate -->
   <div class="gate" id="nameGate">
     <div class="gateCard" role="dialog" aria-modal="true">
       <div style="font-size: 40px; line-height:1;">🧒✨</div>
@@ -677,493 +383,459 @@
     </div>
   </div>
 
-  <div class="gate" id="purchaseGate">
-    <div class="gateCard" role="dialog" aria-modal="true">
-      <div style="font-size: 40px; line-height:1;">🔓✨</div>
-      <div class="gateTitle" id="purchaseTitle">Premium Required</div>
-      <p class="gateText" id="purchaseText">
-        Unlock lessons 2-10 for $4.99<br>
-        One-time purchase, forever yours!
-      </p>
-      <button class="gateBtn" id="purchaseBuyBtn" onclick="handleBuyClick()">Buy - $4.99</button>
-      <button class="gateBtn secondary" onclick="closePurchaseGate()">Maybe Later</button>
+  <!-- Dictionary -->
+  <div class="dict-overlay" id="dictOverlay" onclick="if(event.target===this)closeDictionary()">
+    <div class="dict-card">
+      <div class="dict-header">
+        <h3 class="dict-title">📖 My Words</h3>
+        <button class="dict-close" onclick="closeDictionary()">✖</button>
+      </div>
+      <div class="dict-count" id="dictCount"></div>
+      <div class="dict-filter-row" id="dictFilters"></div>
+      <div class="dict-scroll" id="dictContent"></div>
     </div>
   </div>
 
-  <script>
-    /* Header Component */
-    (function(){
-      const DEFAULTS = {
-        mountId: "mainHeader",
-        title: "🌿 Dono Bola",
-        total: 93,
-        learned: 0,
-        homeHref: "index.html",
-        bookTargetId: null,
-        lang: "en",
-        onLangChange: null,
-      };
+<script>
+  /* ===== HEADER COMPONENT ===== */
+  (function(){
+    const DEFAULTS = {
+      mountId: "mainHeader",
+      title: "🌿 Dono Bola",
+      total: 93,
+      learned: 0,
+      lang: "en",
+      onLangChange: null,
+    };
+    function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
 
-      function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
-
-      function buildHeaderHTML(opts){
-        const learned = clamp(Number(opts.learned || 0), 0, opts.total);
-        const pct = opts.total ? (learned / opts.total) * 100 : 0;
-        const isUz = opts.lang === "uz";
-
-        return `
-          <div class="dono-header" data-total="${opts.total}">
-            <div class="sky">
-              <div class="sun"></div>
-              <div class="cloud c1"></div>
-              <div class="cloud c2"></div>
-              <div class="cloud c3"></div>
-              <div class="sparkle s1"></div>
-              <div class="sparkle s2"></div>
-              <div class="sparkle s3"></div>
+    function buildHeaderHTML(opts){
+      const learned = clamp(Number(opts.learned || 0), 0, opts.total);
+      const pct = opts.total ? (learned / opts.total) * 100 : 0;
+      return `
+        <div class="dono-header" data-total="${opts.total}">
+          <div class="sky">
+            <div class="sun"></div>
+            <div class="cloud c1"></div>
+            <div class="cloud c2"></div>
+            <div class="cloud c3"></div>
+            <div class="sparkle s1"></div>
+            <div class="sparkle s2"></div>
+            <div class="sparkle s3"></div>
+          </div>
+          <div class="content">
+            <div class="top-row">
+              <button class="topIcon" onclick="goHome()" aria-label="Home" type="button">🏠</button>
+              <div class="titleWrap">
+                <h1 class="title" id="hdrTitle">${opts.title}</h1>
+                <div class="sub" id="hdrSub"></div>
+              </div>
+              <button class="topIcon" onclick="openDictionary()" aria-label="Dictionary" type="button">📖</button>
             </div>
-
-            <div class="content">
-              <div class="top-row">
-                <a class="topIcon" href="${opts.homeHref}" aria-label="Home">🏠</a>
-
-                <div class="titleWrap">
-                  <h1 class="title" id="hdrTitle">${opts.title}</h1>
-                  <div class="sub" id="hdrSub">${learned} / ${opts.total} ${isUz ? "o'rganildi" : "learned"}</div>
-                </div>
-
-                <button class="topIcon" id="hdrBookBtn" aria-label="Book" type="button">📖</button>
-              </div>
-
-              <div class="progress-track">
-                <div class="progress-fill" id="hdrFill" style="width:${pct}%"></div>
-              </div>
-
-              <div class="mini" id="hdrMini">${learned} / ${opts.total}</div>
-
-              <div class="langRow">
-                <button class="langBtn ${opts.lang==="uz" ? "active" : ""}" id="hdrUZ" type="button">UZ</button>
-                <button class="langBtn ${opts.lang==="en" ? "active" : ""}" id="hdrEN" type="button">EN</button>
-              </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="hdrFill" style="width:${pct}%"></div>
+            </div>
+            <div class="mini" id="hdrMini">${learned} / ${opts.total}</div>
+            <div class="langRow">
+              <button class="langBtn ${opts.lang==="uz" ? "active" : ""}" id="hdrUZ" type="button">UZ</button>
+              <button class="langBtn ${opts.lang==="en" ? "active" : ""}" id="hdrEN" type="button">EN</button>
             </div>
           </div>
-        `;
-      }
+        </div>
+      `;
+    }
 
-      function attachHeaderEvents(root, opts){
-        const bookBtn = root.querySelector("#hdrBookBtn");
-        const uzBtn = root.querySelector("#hdrUZ");
-        const enBtn = root.querySelector("#hdrEN");
-
-        if(bookBtn){
-          bookBtn.addEventListener("click", () => {
-            showToast(opts.lang === "uz" ? "Wörterbuch kommt bald!" : "Dictionary coming soon!");
-          });
-        }
-
-        const setLangUI = (lang) => {
-          uzBtn?.classList.toggle("active", lang==="uz");
-          enBtn?.classList.toggle("active", lang==="en");
-          const sub = root.querySelector("#hdrSub");
-          const learned = clamp(Number(opts.learned || 0), 0, opts.total);
-          if(sub) sub.textContent = `${learned} / ${opts.total} ${lang==="uz" ? "o'rganildi" : "learned"}`;
-        };
-
-        uzBtn?.addEventListener("click", () => {
-          setLangUI("uz");
-          if(typeof opts.onLangChange === "function") opts.onLangChange("uz");
-        });
-
-        enBtn?.addEventListener("click", () => {
-          setLangUI("en");
-          if(typeof opts.onLangChange === "function") opts.onLangChange("en");
-        });
-      }
-
-      window.renderLessonHeader = function(options){
-        const opts = {...DEFAULTS, ...(options||{})};
-        const mount = document.getElementById(opts.mountId);
-        if(!mount){
-          console.warn("renderLessonHeader(): mount element not found:", opts.mountId);
-          return;
-        }
-        mount.innerHTML = buildHeaderHTML(opts);
-        attachHeaderEvents(mount, opts);
+    function attachHeaderEvents(root, opts){
+      const uzBtn = root.querySelector("#hdrUZ");
+      const enBtn = root.querySelector("#hdrEN");
+      const setLangUI = (lang) => {
+        uzBtn?.classList.toggle("active", lang==="uz");
+        enBtn?.classList.toggle("active", lang==="en");
       };
-
-      window.setHeaderProgress = function({ learned, total } = {}){
-        const header = document.querySelector(".dono-header");
-        if(!header) return;
-
-        const t = total ?? Number(header.getAttribute("data-total") || 93);
-        const l = clamp(Number(learned ?? 0), 0, t);
-        const pct = t ? (l / t) * 100 : 0;
-        const lang = document.querySelector("#hdrUZ")?.classList.contains("active") ? "uz" : "en";
-
-        const sub = header.querySelector("#hdrSub");
-        const mini = header.querySelector("#hdrMini");
-        const fill = header.querySelector("#hdrFill");
-
-        if(sub) sub.textContent = `${l} / ${t} ${lang==="uz" ? "o'rganildi" : "learned"}`;
-        if(mini) mini.textContent = `${l} / ${t}`;
-        if(fill) fill.style.width = pct + "%";
-      };
-    })();
-  </script>
-
-  <script>
-    // === KONFIGURATION ===
-    const CONFIG = {
-      PRODUCT_ID: "premium_unlock_all",
-      PRICE: "$4.99",
-      FREE_LESSONS: [1],
-      TOTAL_LESSONS: 10,
-      TOTAL_WORDS: 93
-    };
-
-    // === STORAGE KEYS ===
-    const STORAGE = {
-      PREMIUM: "premium_unlocked_v1",
-      CHILD_NAME: "childName",
-      LANG: "ui_lang",
-      LEARNED: "learned"
-    };
-
-    // === TEXT ÜBERSETZUNGEN ===
-    const UI_TEXT = {
-      en: {
-        langBtn: "UZ",
-        helloWord: "Hello,",
-        friendFallback: "Friend!",
-        freeLabel: "FREE",
-        openLabel: "OPEN",
-        lockedLabel: "LOCKED",
-        lessonLabel: (id) => `Lesson ${id}`,
-        premiumTitle: "🔓 Unlock All Lessons",
-        premiumText: `Get lessons 2-10 for only ${CONFIG.PRICE}`,
-        buyNow: `Buy Now - ${CONFIG.PRICE}`,
-        purchaseTitle: "Premium Required",
-        purchaseText: `Unlock lessons 2-10 for ${CONFIG.PRICE}<br>One-time purchase, forever yours!`,
-        nameGateTitle: "What's your name?",
-        nameGateText: "Type your name ✍️",
-        namePlaceholder: "Example: Ali",
-        startBtn: "Start 🚀",
-        changeNameTitle: "Change Name",
-        changeNameText: "Enter a new name ✍️",
-        saveBtn: "Save 💾",
-        purchaseSuccess: "✅ Premium activated! Enjoy all lessons!",
-        purchaseError: "❌ Purchase failed. Please try again.",
-        restoring: "Restoring purchases...",
-        processing: "Processing..."
-      },
-      uz: {
-        langBtn: "ENG",
-        helloWord: "Salom,",
-        friendFallback: "Do'st!",
-        freeLabel: "BEPUL",
-        openLabel: "OCHIQ",
-        lockedLabel: "QULFLANGAN",
-        lessonLabel: (id) => `${id}-dars`,
-        premiumTitle: "🔓 Barcha Darslarni Ochish",
-        premiumText: `2-10 darslar faqat ${CONFIG.PRICE}`,
-        buyNow: `Sotib olish - ${CONFIG.PRICE}`,
-        purchaseTitle: "Premium Kerak",
-        purchaseText: `${CONFIG.PRICE} evaziga 2-10 darslarni oching<br>Bir marta to'lov, umrbod sizniki!`,
-        nameGateTitle: "Isming nima?",
-        nameGateText: "Ismingni yoz ✍️",
-        namePlaceholder: "Masalan: Ali",
-        startBtn: "Boshlaymiz! 🚀",
-        changeNameTitle: "Ismni O'zgartirish",
-        changeNameText: "Yangi ism kiriting ✍️",
-        saveBtn: "Saqlash 💾",
-        purchaseSuccess: "✅ Premium faollashdi! Barcha darslardan foydalaning!",
-        purchaseError: "❌ Xatolik yuz berdi. Qayta urinib ko'ring.",
-        restoring: "Xaridlar tiklanmoqda...",
-        processing: "Jarayonda..."
-      }
-    };
-
-    // === STATE ===
-    let currentLang = "en";
-    let isPurchasing = false;
-    let isChangingName = false;
-
-    // === HILFSFUNKTIONEN ===
-    function getLang() {
-      const saved = localStorage.getItem(STORAGE.LANG);
-      return saved === "uz" ? "uz" : "en";
-    }
-
-    function setLang(lang) {
-      currentLang = lang;
-      localStorage.setItem(STORAGE.LANG, lang);
-    }
-
-    function T() {
-      return UI_TEXT[currentLang];
-    }
-
-    function isPremium() {
-      return localStorage.getItem(STORAGE.PREMIUM) === "true";
-    }
-
-    function setPremium(value) {
-      localStorage.setItem(STORAGE.PREMIUM, value ? "true" : "false");
-      updateUI();
-    }
-
-    function getLearnedSet() {
-      try {
-        return new Set(JSON.parse(localStorage.getItem(STORAGE.LEARNED) || "[]"));
-      } catch {
-        return new Set();
-      }
-    }
-
-    function normalizeName(s) {
-      return (s || "").trim().replace(/\s+/g, " ").slice(0, 18);
-    }
-
-    function showToast(msg, duration = 2500) {
-      const t = document.getElementById("toast");
-      t.textContent = msg;
-      t.classList.add("show");
-      clearTimeout(showToast._tm);
-      showToast._tm = setTimeout(() => t.classList.remove("show"), duration);
-    }
-
-    function changeName() {
-      isChangingName = true;
-      showNameGate(true);
-    }
-
-    async function handleBuyClick() {
-      if (isPurchasing) return;
-      
-      const tt = T();
-      isPurchasing = true;
-      showToast(tt.processing);
-      
-      setTimeout(() => {
-        setPremium(true);
-        showToast(tt.purchaseSuccess, 3000);
-        closePurchaseGate();
-        isPurchasing = false;
-      }, 1500);
-    }
-
-    function updateUI() {
-      const tt = T();
-      const premium = isPremium();
-      const learned = getLearnedSet().size;
-      
-      if (typeof setHeaderProgress === 'function') {
-        setHeaderProgress({ learned: learned, total: CONFIG.TOTAL_WORDS });
-      }
-      
-      const banner = document.getElementById("premiumBanner");
-      if (banner) {
-        banner.style.display = premium ? "none" : "block";
-        document.getElementById("premiumTitle").innerText = tt.premiumTitle;
-        document.getElementById("premiumText").innerText = tt.premiumText;
-        document.getElementById("buyBtn").innerText = tt.buyNow;
-      }
-      
-      renderLessons();
-    }
-
-    function renderLessons() {
-      const tt = T();
-      const learned = getLearnedSet();
-      const premium = isPremium();
-      
-      const grid = document.getElementById("lessonGrid");
-      grid.innerHTML = "";
-      
-      const LESSONS = [
-        { id: 1, file: "lesson1.html", icon: "👋", en: "Greetings", uz: "Salomlashuv" },
-        { id: 2, file: "lesson2.html", icon: "🔢", en: "Numbers", uz: "Sonlar" },
-        { id: 3, file: "lesson3.html", icon: "🐾", en: "Animals", uz: "Hayvonlar" },
-        { id: 4, file: "lesson4.html", icon: "🎨", en: "Colors", uz: "Ranglar" },
-        { id: 5, file: "lesson5.html", icon: "🍎", en: "Fruits", uz: "Mevalar" },
-        { id: 6, file: "lesson6.html", icon: "🥕", en: "Vegetables", uz: "Sabzavot" },
-        { id: 7, file: "lesson7.html", icon: "🏠", en: "Home", uz: "Uy" },
-        { id: 8, file: "lesson8.html", icon: "👕", en: "Clothes", uz: "Kiyim" },
-        { id: 9, file: "lesson9.html", icon: "🚗", en: "Transport", uz: "Transport" },
-        { id: 10, file: "lesson10.html", icon: "🌙", en: "Daily routine", uz: "Kun tartibi" }
-      ];
-      
-      const COLORS = [
-        { bg: "rgba(251, 113, 133, .42)", soft: "rgba(251, 113, 133, .18)" },
-        { bg: "rgba(251, 146,  60, .45)", soft: "rgba(251, 146,  60, .18)" },
-        { bg: "rgba(250, 204,  21, .45)", soft: "rgba(250, 204,  21, .18)" },
-        { bg: "rgba( 34, 197,  94, .38)", soft: "rgba( 34, 197,  94, .16)" },
-        { bg: "rgba( 20, 184, 166, .40)", soft: "rgba( 20, 184, 166, .16)" },
-        { bg: "rgba( 59, 130, 246, .40)", soft: "rgba( 59, 130, 246, .16)" },
-        { bg: "rgba( 99, 102, 241, .42)", soft: "rgba( 99, 102, 241, .16)" },
-        { bg: "rgba(168,  85, 247, .40)", soft: "rgba(168,  85, 247, .16)" },
-        { bg: "rgba(236,  72, 153, .38)", soft: "rgba(236,  72, 153, .16)" },
-        { bg: "rgba(100, 116, 139, .34)", soft: "rgba(100, 116, 139, .14)" }
-      ];
-      
-      let current = 1;
-      for (let i = 1; i <= LESSONS.length; i++) {
-        const completed = Array.from(learned).filter(k => k.startsWith("L" + i + "_")).length >= 5;
-        if (!completed) {
-          current = i;
-          break;
-        }
-      }
-      
-      LESSONS.forEach((L, idx) => {
-        const isFree = CONFIG.FREE_LESSONS.includes(L.id);
-        const isLocked = !isFree && !premium;
-        const isDone = Array.from(learned).filter(k => k.startsWith("L" + L.id + "_")).length >= 5;
-        const isCurrent = (L.id === current);
-        
-        const c = COLORS[idx % COLORS.length];
-        
-        const el = document.createElement(isLocked ? "div" : "a");
-        if (!isLocked) {
-          el.href = L.file;
-        }
-        
-        el.className = "tile" + 
-          (isDone ? " done" : "") + 
-          (isCurrent ? " current" : "") +
-          (isLocked ? " locked" : "");
-        
-        el.style.background = `linear-gradient(180deg, ${c.bg}, rgba(255,255,255,.92))`;
-        el.style.setProperty("--soft", c.soft);
-        
-        if (isLocked) {
-          el.onclick = (e) => {
-            e.preventDefault();
-            openPurchaseGate();
-          };
-        }
-        
-        const label = isLocked ? '🔒' : isFree ? tt.freeLabel : isDone ? '✅' : tt.openLabel;
-        
-        el.innerHTML = `
-          <div class="stepDot"></div>
-          <div class="icon">${L.icon}</div>
-          <div class="title">${currentLang === "uz" ? L.uz : L.en}</div>
-          <div class="tagRight ${isLocked ? 'lock' : isFree ? 'free' : 'open'}">
-            <span class="main">${label}</span>
-            <span class="sub">${tt.lessonLabel(L.id)}</span>
-          </div>
-        `;
-        
-        grid.appendChild(el);
+      uzBtn?.addEventListener("click", () => {
+        setLangUI("uz");
+        if(typeof opts.onLangChange === "function") opts.onLangChange("uz");
+      });
+      enBtn?.addEventListener("click", () => {
+        setLangUI("en");
+        if(typeof opts.onLangChange === "function") opts.onLangChange("en");
       });
     }
 
-    function openPurchaseGate() {
-      const tt = T();
-      document.getElementById("purchaseTitle").innerText = tt.purchaseTitle;
-      document.getElementById("purchaseText").innerHTML = tt.purchaseText;
-      document.getElementById("purchaseBuyBtn").innerText = tt.buyNow;
-      document.getElementById("purchaseGate").classList.add("show");
-    }
+    window.renderLessonHeader = function(options){
+      const opts = {...DEFAULTS, ...(options||{})};
+      const mount = document.getElementById(opts.mountId);
+      if(!mount) return;
+      mount.innerHTML = buildHeaderHTML(opts);
+      attachHeaderEvents(mount, opts);
+    };
 
-    function closePurchaseGate() {
-      document.getElementById("purchaseGate").classList.remove("show");
-    }
+    window.setHeaderProgress = function({ learned, total } = {}){
+      const header = document.querySelector(".dono-header");
+      if(!header) return;
+      const t = total ?? Number(header.getAttribute("data-total") || 93);
+      const l = Math.max(0, Math.min(Number(learned ?? 0), t));
+      const pct = t ? (l / t) * 100 : 0;
+      const mini = header.querySelector("#hdrMini");
+      const fill = header.querySelector("#hdrFill");
+      if(mini) mini.textContent = `${l} / ${t}`;
+      if(fill) fill.style.width = pct + "%";
+    };
+  })();
 
-    function showNameGate(isChange = false) {
-      const tt = T();
-      const gate = document.getElementById("nameGate");
-      gate.classList.add("show");
-      
-      document.getElementById("nameGateTitle").innerText = isChange ? tt.changeNameTitle : tt.nameGateTitle;
-      document.getElementById("nameGateText").innerText = isChange ? tt.changeNameText : tt.nameGateText;
-      
-      const input = document.getElementById("nameInput");
-      const btn = document.getElementById("startBtn");
-      
-      input.placeholder = tt.namePlaceholder;
-      btn.innerText = isChange ? tt.saveBtn : tt.startBtn;
-      
-      if (isChange) {
-        const currentName = localStorage.getItem(STORAGE.CHILD_NAME) || "";
-        input.value = currentName;
-        btn.disabled = false;
-      } else {
-        btn.disabled = true;
-        input.value = "";
-      }
-      
-      setTimeout(() => input.focus(), 100);
-      
-      const validate = () => {
-        btn.disabled = normalizeName(input.value).length < 2;
-      };
-      
-      input.oninput = validate;
-      input.onkeydown = (e) => {
-        if (e.key === "Enter" && !btn.disabled) btn.click();
-      };
-      
-      btn.onclick = () => {
-        const nm = normalizeName(input.value);
-        if (nm.length < 2) return;
-        localStorage.setItem(STORAGE.CHILD_NAME, nm);
-        gate.classList.remove("show");
-        applyGreeting();
-        
-        if (isChange) {
-          showToast(currentLang === "uz" ? "Ism saqlandi! ✅" : "Name saved! ✅");
-          isChangingName = false;
-        }
-      };
-    }
+  /* ===== APP CONFIG ===== */
+  const CONFIG = {
+    TOTAL_LESSONS: 10,
+    TOTAL_WORDS: 93
+  };
 
-    function applyGreeting() {
-      const tt = T();
-      const name = localStorage.getItem(STORAGE.CHILD_NAME) || "";
-      const child = name ? name : tt.friendFallback;
-      document.getElementById("childNameBig").innerText = child;
-      document.getElementById("helloWord").innerText = tt.helloWord;
-    }
+  const STORAGE = {
+    CHILD_NAME: "childName",
+    LANG: "ui_lang",
+    LEARNED: "learned"
+  };
 
-    function initHeader() {
-      const learned = getLearnedSet().size;
-      
-      renderLessonHeader({
-        mountId: "mainHeader",
-        title: "🌿 Dono Bola",
-        total: CONFIG.TOTAL_WORDS,
-        learned: learned,
-        homeHref: "index.html",
-        lang: currentLang,
-        onLangChange: (lang) => {
-          setLang(lang);
-          applyGreeting();
-          updateUI();
-        }
-      });
+  const UI_TEXT = {
+    en: {
+      helloWord: "Hello,",
+      friendFallback: "Friend!",
+      lessonLabel: (id) => `Lesson ${id}`,
+      nameGateTitle: "What's your name?",
+      nameGateText: "Type your name ✍️",
+      namePlaceholder: "Example: Ali",
+      startBtn: "Start 🚀",
+      changeNameTitle: "Change Name",
+      changeNameText: "Enter a new name ✍️",
+      saveBtn: "Save 💾",
+      dictTitle: "📖 My Words",
+      dictAll: "All",
+      dictLearned: "Learned",
+      dictEmpty: "No words yet. Start learning! 📚"
+    },
+    uz: {
+      helloWord: "Salom,",
+      friendFallback: "Do'st!",
+      lessonLabel: (id) => `${id}-dars`,
+      nameGateTitle: "Isming nima?",
+      nameGateText: "Ismingni yoz ✍️",
+      namePlaceholder: "Masalan: Ali",
+      startBtn: "Boshlaymiz! 🚀",
+      changeNameTitle: "Ismni O'zgartirish",
+      changeNameText: "Yangi ism kiriting ✍️",
+      saveBtn: "Saqlash 💾",
+      dictTitle: "📖 Mening So'zlarim",
+      dictAll: "Barchasi",
+      dictLearned: "O'rganilgan",
+      dictEmpty: "Hali so'z yo'q. Boshlang! 📚"
     }
+  };
 
-    window.addEventListener("load", () => {
-      currentLang = getLang();
-      if (!localStorage.getItem(STORAGE.LANG)) {
-        setLang("en");
-      }
-      
-      initHeader();
-      applyGreeting();
-      updateUI();
-      
-      if (!localStorage.getItem(STORAGE.CHILD_NAME)) {
-        showNameGate(false);
-      }
-      
-      window.addEventListener("pageshow", updateUI);
-      document.addEventListener("visibilitychange", () => {
-        if (!document.hidden) updateUI();
-      });
+  /* ===== DICTIONARY DATA ===== */
+  const DICTIONARY = {
+    1: [
+      {k:"salom", uz:"Salom", en:"Hello", emoji:"👋"},
+      {k:"rahmat", uz:"Rahmat", en:"Thank you", emoji:"🙏"},
+      {k:"iltimos", uz:"Iltimos", en:"Please", emoji:"🌸"},
+      {k:"yaxshi", uz:"Yaxshimisiz?", en:"How are you?", emoji:"🙂"},
+      {k:"xayr", uz:"Xayr", en:"Bye", emoji:"🌙"}
+    ],
+    2: [
+      {k:"bir", uz:"Bir", en:"One", emoji:"1️⃣"},
+      {k:"ikki", uz:"Ikki", en:"Two", emoji:"2️⃣"},
+      {k:"uch", uz:"Uch", en:"Three", emoji:"3️⃣"},
+      {k:"turt", uz:"To'rt", en:"Four", emoji:"4️⃣"},
+      {k:"besh", uz:"Besh", en:"Five", emoji:"5️⃣"},
+      {k:"olti", uz:"Olti", en:"Six", emoji:"6️⃣"},
+      {k:"yetti", uz:"Yetti", en:"Seven", emoji:"7️⃣"},
+      {k:"sakkiz", uz:"Sakkiz", en:"Eight", emoji:"8️⃣"},
+      {k:"tuqqiz", uz:"To'qqiz", en:"Nine", emoji:"9️⃣"},
+      {k:"un", uz:"O'n", en:"Ten", emoji:"🔟"}
+    ],
+    3: [
+      {k:"cat", uz:"Mushuk", en:"Cat", emoji:"🐱"},
+      {k:"dog", uz:"It", en:"Dog", emoji:"🐶"},
+      {k:"bird", uz:"Qush", en:"Bird", emoji:"🐦"},
+      {k:"fish", uz:"Baliq", en:"Fish", emoji:"🐟"},
+      {k:"horse", uz:"Ot", en:"Horse", emoji:"🐴"},
+      {k:"cow", uz:"Sigir", en:"Cow", emoji:"🐮"},
+      {k:"rabbit", uz:"Quyon", en:"Rabbit", emoji:"🐰"},
+      {k:"lion", uz:"Sher", en:"Lion", emoji:"🦁"}
+    ],
+    4: [
+      {k:"qizil", uz:"Qizil", en:"Red", emoji:"🔴"},
+      {k:"kok", uz:"Ko'k", en:"Blue", emoji:"🔵"},
+      {k:"yashil", uz:"Yashil", en:"Green", emoji:"🟢"},
+      {k:"sariq", uz:"Sariq", en:"Yellow", emoji:"🟡"},
+      {k:"qora", uz:"Qora", en:"Black", emoji:"⚫"},
+      {k:"oq", uz:"Oq", en:"White", emoji:"⚪"}
+    ],
+    5: [
+      {k:"olma", uz:"Olma", en:"Apple", emoji:"🍎"},
+      {k:"banan", uz:"Banan", en:"Banana", emoji:"🍌"},
+      {k:"uzum", uz:"Uzum", en:"Grapes", emoji:"🍇"},
+      {k:"apelsin", uz:"Apelsin", en:"Orange", emoji:"🍊"},
+      {k:"shaftoli", uz:"Shaftoli", en:"Peach", emoji:"🍑"}
+    ],
+    6: [
+      {k:"sabzi", uz:"Sabzi", en:"Carrot", emoji:"🥕"},
+      {k:"piyoz", uz:"Piyoz", en:"Onion", emoji:"🧅"},
+      {k:"kartoshka", uz:"Kartoshka", en:"Potato", emoji:"🥔"},
+      {k:"bodring", uz:"Bodring", en:"Cucumber", emoji:"🥒"},
+      {k:"pomidor", uz:"Pomidor", en:"Tomato", emoji:"🍅"}
+    ],
+    7: [
+      {k:"uy", uz:"Uy", en:"Home", emoji:"🏠"},
+      {k:"xona", uz:"Xona", en:"Room", emoji:"🚪"},
+      {k:"oshxona", uz:"Oshxona", en:"Kitchen", emoji:"🍳"},
+      {k:"yotoqxona", uz:"Yotoqxona", en:"Bedroom", emoji:"🛏️"},
+      {k:"hammom", uz:"Hammom", en:"Bathroom", emoji:"🛁"}
+    ],
+    8: [
+      {k:"koylak", uz:"Ko'ylak", en:"Shirt", emoji:"👕"},
+      {k:"shim", uz:"Shim", en:"Pants", emoji:"👖"},
+      {k:"kostyum", uz:"Kostyum", en:"Dress", emoji:"👗"},
+      {k:"poyafzal", uz:"Poyafzal", en:"Shoes", emoji:"👟"},
+      {k:"shapka", uz:"Shapka", en:"Hat", emoji:"🧢"}
+    ],
+    9: [
+      {k:"mashina", uz:"Mashina", en:"Car", emoji:"🚗"},
+      {k:"avtobus", uz:"Avtobus", en:"Bus", emoji:"🚌"},
+      {k:"poyezd", uz:"Poyezd", en:"Train", emoji:"🚂"},
+      {k:"samolyot", uz:"Samolyot", en:"Airplane", emoji:"✈️"},
+      {k:"velosiped", uz:"Velosiped", en:"Bicycle", emoji:"🚲"}
+    ],
+    10: [
+      {k:"ertalab", uz:"Ertalab", en:"Morning", emoji:"🌅"},
+      {k:"tushlik", uz:"Tushlik", en:"Lunch", emoji:"🍽️"},
+      {k:"kechqurun", uz:"Kechqurun", en:"Evening", emoji:"🌆"},
+      {k:"tun", uz:"Tun", en:"Night", emoji:"🌙"},
+      {k:"uxlash", uz:"Uxlash", en:"Sleep", emoji:"😴"}
+    ]
+  };
+
+  const LESSON_NAMES = {
+    1:{en:"Greetings", uz:"Salomlashuv"}, 2:{en:"Numbers", uz:"Sonlar"},
+    3:{en:"Animals", uz:"Hayvonlar"}, 4:{en:"Colors", uz:"Ranglar"},
+    5:{en:"Fruits", uz:"Mevalar"}, 6:{en:"Vegetables", uz:"Sabzavot"},
+    7:{en:"Home", uz:"Uy"}, 8:{en:"Clothes", uz:"Kiyim"},
+    9:{en:"Transport", uz:"Transport"}, 10:{en:"Daily Routine", uz:"Kun tartibi"}
+  };
+
+  /* ===== STATE & HELPERS ===== */
+  let currentLang = "en";
+  let isChangingName = false;
+  let dictActiveFilter = 'all';
+
+  function getLang() {
+    return localStorage.getItem(STORAGE.LANG) === "uz" ? "uz" : "en";
+  }
+  function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem(STORAGE.LANG, lang);
+  }
+  function T() { return UI_TEXT[currentLang]; }
+  function getLearnedSet() {
+    try { return new Set(JSON.parse(localStorage.getItem(STORAGE.LEARNED) || "[]")); }
+    catch { return new Set(); }
+  }
+  function normalizeName(s) {
+    return (s || "").trim().replace(/\s+/g, " ").slice(0, 18);
+  }
+  function showToast(msg, duration = 2500) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(showToast._tm);
+    showToast._tm = setTimeout(() => t.classList.remove("show"), duration);
+  }
+  function goHome() { window.location.href = 'index.html'; }
+  function switchLang(lang) {
+    currentLang = lang;
+    document.getElementById('hdrUZ').classList.toggle('active', lang === 'uz');
+    document.getElementById('hdrEN').classList.toggle('active', lang === 'en');
+    applyGreeting();
+    updateUI();
+  }
+  function changeName() { isChangingName = true; showNameGate(true); }
+
+  /* ===== RENDER LESSONS ===== */
+  function updateUI() {
+    const learned = getLearnedSet().size;
+    if (typeof setHeaderProgress === 'function') {
+      setHeaderProgress({ learned: learned, total: CONFIG.TOTAL_WORDS });
+    }
+    renderLessons();
+  }
+
+  function renderLessons() {
+    const tt = T();
+    const learned = getLearnedSet();
+    const grid = document.getElementById("lessonGrid");
+    grid.innerHTML = "";
+
+    const LESSONS = [
+      {id:1, file:"lesson1.html", icon:"👋", en:"Greetings", uz:"Salomlashuv"},
+      {id:2, file:"lesson2.html", icon:"🔢", en:"Numbers", uz:"Sonlar"},
+      {id:3, file:"lesson3.html", icon:"🐾", en:"Animals", uz:"Hayvonlar"},
+      {id:4, file:"lesson4.html", icon:"🎨", en:"Colors", uz:"Ranglar"},
+      {id:5, file:"lesson5.html", icon:"🍎", en:"Fruits", uz:"Mevalar"},
+      {id:6, file:"lesson6.html", icon:"🥕", en:"Vegetables", uz:"Sabzavot"},
+      {id:7, file:"lesson7.html", icon:"🏠", en:"Home", uz:"Uy"},
+      {id:8, file:"lesson8.html", icon:"👕", en:"Clothes", uz:"Kiyim"},
+      {id:9, file:"lesson9.html", icon:"🚗", en:"Transport", uz:"Transport"},
+      {id:10, file:"lesson10.html", icon:"🌙", en:"Daily Routine", uz:"Kun tartibi"}
+    ];
+
+    const COLORS = [
+      {bg:"rgba(251,113,133,.42)",soft:"rgba(251,113,133,.18)"},
+      {bg:"rgba(251,146,60,.45)",soft:"rgba(251,146,60,.18)"},
+      {bg:"rgba(250,204,21,.45)",soft:"rgba(250,204,21,.18)"},
+      {bg:"rgba(34,197,94,.38)",soft:"rgba(34,197,94,.16)"},
+      {bg:"rgba(20,184,166,.40)",soft:"rgba(20,184,166,.16)"},
+      {bg:"rgba(59,130,246,.40)",soft:"rgba(59,130,246,.16)"},
+      {bg:"rgba(99,102,241,.42)",soft:"rgba(99,102,241,.16)"},
+      {bg:"rgba(168,85,247,.40)",soft:"rgba(168,85,247,.16)"},
+      {bg:"rgba(236,72,153,.38)",soft:"rgba(236,72,153,.16)"},
+      {bg:"rgba(100,116,139,.34)",soft:"rgba(100,116,139,.14)"}
+    ];
+
+    LESSONS.forEach((L, idx) => {
+      const isDone = Array.from(learned).filter(k => k.startsWith("L" + L.id + "_")).length >= 5;
+      const c = COLORS[idx % COLORS.length];
+      const el = document.createElement("a");
+      el.href = L.file;
+      el.className = "tile" + (isDone ? " done" : "");
+      el.style.background = `linear-gradient(180deg, ${c.bg}, rgba(255,255,255,.92))`;
+      el.style.setProperty("--soft", c.soft);
+      const label = isDone ? '✅' : '';
+      el.innerHTML = `
+        <div class="stepDot"></div>
+        <div class="icon">${L.icon}</div>
+        <div class="title">${currentLang === "uz" ? L.uz : L.en}</div>
+        <div class="tagRight">
+          <span class="main">${label}</span>
+          <span class="sub">${tt.lessonLabel(L.id)}</span>
+        </div>
+      `;
+      grid.appendChild(el);
     });
-  </script>
+  }
+
+  /* ===== NAME GATE ===== */
+  function showNameGate(isChange) {
+    const tt = T();
+    const gate = document.getElementById("nameGate");
+    gate.classList.add("show");
+    document.getElementById("nameGateTitle").innerText = isChange ? tt.changeNameTitle : tt.nameGateTitle;
+    document.getElementById("nameGateText").innerText = isChange ? tt.changeNameText : tt.nameGateText;
+    const input = document.getElementById("nameInput");
+    const btn = document.getElementById("startBtn");
+    input.placeholder = tt.namePlaceholder;
+    btn.innerText = isChange ? tt.saveBtn : tt.startBtn;
+    if (isChange) {
+      input.value = localStorage.getItem(STORAGE.CHILD_NAME) || "";
+      btn.disabled = false;
+    } else {
+      btn.disabled = true;
+      input.value = "";
+    }
+    setTimeout(() => input.focus(), 100);
+    input.oninput = () => { btn.disabled = normalizeName(input.value).length < 2; };
+    input.onkeydown = (e) => { if (e.key === "Enter" && !btn.disabled) btn.click(); };
+    btn.onclick = () => {
+      const nm = normalizeName(input.value);
+      if (nm.length < 2) return;
+      localStorage.setItem(STORAGE.CHILD_NAME, nm);
+      gate.classList.remove("show");
+      applyGreeting();
+      if (isChangingName) {
+        showToast(currentLang === "uz" ? "Ism saqlandi! ✅" : "Name saved! ✅");
+        isChangingName = false;
+      }
+    };
+  }
+
+  function applyGreeting() {
+    const tt = T();
+    const name = localStorage.getItem(STORAGE.CHILD_NAME) || "";
+    document.getElementById("childNameBig").innerText = name || tt.friendFallback;
+    document.getElementById("helloWord").innerText = tt.helloWord;
+  }
+
+  /* ===== DICTIONARY ===== */
+  function openDictionary() {
+    const learned = getLearnedSet();
+    const tt = T();
+    document.getElementById("dictOverlay").classList.add("show");
+    document.querySelector(".dict-title").innerText = tt.dictTitle;
+    const totalWords = Object.values(DICTIONARY).flat().length;
+    const learnedCount = learned.size;
+    document.getElementById("dictCount").innerText =
+      currentLang === "uz"
+        ? `${learnedCount} / ${totalWords} ta so'z`
+        : `${learnedCount} / ${totalWords} words`;
+    document.getElementById("dictFilters").innerHTML = `
+      <button class="dict-filter-btn ${dictActiveFilter==='all'?'active':''}" onclick="setDictFilter('all')">${tt.dictAll}</button>
+      <button class="dict-filter-btn ${dictActiveFilter==='learned'?'active':''}" onclick="setDictFilter('learned')">${tt.dictLearned}</button>
+    `;
+    renderDictionary(learned);
+  }
+  function setDictFilter(filter) { dictActiveFilter = filter; openDictionary(); }
+  function closeDictionary() { document.getElementById("dictOverlay").classList.remove("show"); }
+
+  function renderDictionary(learned) {
+    const contentEl = document.getElementById("dictContent");
+    contentEl.innerHTML = "";
+    let hasAny = false;
+    Object.entries(DICTIONARY).forEach(([lessonId, words]) => {
+      const filtered = words.filter(w => dictActiveFilter === 'learned' ? learned.has("L" + lessonId + "_" + w.k) : true);
+      if (filtered.length === 0) return;
+      hasAny = true;
+      const ln = LESSON_NAMES[lessonId];
+      const group = document.createElement("div");
+      group.className = "dict-lesson-group";
+      group.innerHTML = `<div class="dict-lesson-title">${currentLang==="uz"?ln.uz:ln.en}</div>`;
+      filtered.forEach(w => {
+        const isL = learned.has("L" + lessonId + "_" + w.k);
+        const row = document.createElement("div");
+        row.className = "dict-row";
+        row.style.opacity = isL ? "1" : "0.5";
+        row.innerHTML = `<span class="dict-emoji">${w.emoji}</span><span class="dict-uz">${w.uz}</span><span style="color:#94a3b8;margin:0 4px;">—</span><span class="dict-en">${w.en}</span>${isL?'✅':'☆'}`;
+        group.appendChild(row);
+      });
+      contentEl.appendChild(group);
+    });
+    if (!hasAny) contentEl.innerHTML = `<div class="dict-empty">${T().dictEmpty}</div>`;
+  }
+
+  /* ===== INIT ===== */
+  function initHeader() {
+    renderLessonHeader({
+      mountId: "mainHeader",
+      title: "🌿 Dono Bola",
+      total: CONFIG.TOTAL_WORDS,
+      learned: getLearnedSet().size,
+      lang: currentLang,
+      onLangChange: (lang) => { setLang(lang); applyGreeting(); updateUI(); }
+    });
+  }
+
+  window.addEventListener("load", () => {
+    currentLang = getLang();
+    if (!localStorage.getItem(STORAGE.LANG)) setLang("en");
+    initHeader();
+    applyGreeting();
+    updateUI();
+    window.addEventListener("pageshow", updateUI);
+    document.addEventListener("visibilitychange", () => { if (!document.hidden) updateUI(); });
+  });
+
+  /* Service Worker fuer Offline */
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then((reg) => console.log('SW registered:', reg.scope))
+      .catch((err) => console.log('SW error:', err));
+  }
+</script>
 </body>
 </html>
