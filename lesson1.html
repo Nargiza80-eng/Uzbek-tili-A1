@@ -507,7 +507,8 @@
     <div style="display:flex; justify-content:center; flex-wrap:wrap;">
       <button class="mic-btn-huge" style="background:#f1c40f; box-shadow: 0 10px 0 #c49f0a;" onclick="playEchoAudio()">🔊</button>
       <button class="mic-btn-huge" id="micBtn"
-        onpointerdown="startMic()" onpointerup="stopMic()" onpointercancel="stopMic()">
+       ontouchstart="startMic();return false;" ontouchend="stopMic()" ontouchcancel="stopMic()"
+       onmousedown="startMic()" onmouseup="stopMic()">
         🎤
       </button>
     </div>
