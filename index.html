@@ -732,6 +732,11 @@
           <span class="sub">${tt.lessonLabel(L.id)}</span>
         </div>
       `;
+      //wichtig: erzwingt öffnen im gleichen Tab//
+      el.onclick = (e) => {
+        e.preventDefault();
+        window.location.href = L.file;
+      }
       grid.appendChild(el);
     });
   }
