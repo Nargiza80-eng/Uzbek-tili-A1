@@ -201,7 +201,7 @@
   .mode-ico{ font-size: 28px; line-height: 1; }
 
   /* --- SECTIONS --- */
-  #learnSection, #quizSection, #memorySection, #echoSection, #bubbleSection {
+  #learnSection, #quizSection, #memorySection, #saladSection, #bubbleSection {
     display: none; width: 100%; max-width: 520px; text-align: center;
   }
   #learnSection { display: grid; }
@@ -268,19 +268,42 @@
   }
   .sticker-slot.unlocked { opacity: 1; filter: none; background: #fff9e6; border: 3px solid var(--sun); }
 
-  /* --- ECHO --- */
-  .lion-big { font-size: 100px; margin: 10px; transition: 0.3s; display: inline-block; }
-  .talking { animation: mouthMove 0.28s infinite; transform-origin: 50% 70%; }
-  @keyframes mouthMove { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.12); } }
-
-  .mic-btn-huge{
-    width: 110px; height: 110px; border-radius: 50%; border: none;
-    background: #ff4757; color: white; font-size: 44px; cursor: pointer;
-    box-shadow: 0 10px 0 #b33939; margin: 10px;
+  /* --- BUCHSTABENSALAT (Letter Salad) --- */
+  .salad-card {
+    background: white; border-radius: 30px; padding: 20px;
+    box-shadow: 0 10px 0 var(--shadowSoft);
+  }
+  .salad-emoji { font-size: 80px; margin-top: 0; }
+  .salad-slots {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 8px; margin: 16px 0 10px;
+  }
+  .salad-slot {
+    width: 42px; height: 52px; border-radius: 12px;
+    background: #f8fafc; border: 3px dashed #cbd5e1;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 800; color: #1f2937;
+  }
+  .salad-slot.filled { border: 3px solid var(--success); background: #ecfdf5; }
+  .salad-tiles {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 10px; margin-top: 6px;
+  }
+  .salad-tile {
+    width: 52px; height: 52px; border-radius: 14px; border: none;
+    background: var(--primary); color: white;
+    font-size: 24px; font-weight: 800; cursor: pointer;
+    box-shadow: 0 5px 0 #0047b3; user-select: none;
     touch-action: manipulation;
   }
-  .mic-btn-huge:active { transform: translateY(6px); box-shadow: 0 4px 0 #b33939; }
-  .mic-btn-huge.active { background: #2ed573; box-shadow: 0 4px 0 #1c9e54; transform: translateY(6px); }
+  .salad-tile:active { transform: translateY(3px); box-shadow: 0 2px 0 #0047b3; }
+  .salad-tile.used { visibility: hidden; }
+  .salad-tile.wrong { background: var(--error); animation: saladShake 0.4s; }
+  @keyframes saladShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
 
   .banner{
     background:white; padding:12px; border-radius:30px;
@@ -289,19 +312,6 @@
     margin-bottom:10px;
   }
   .small-note{ font-weight:700; color:#334155; font-size:14px; margin-top:6px; }
-  .speech-line{
-    margin-top:10px;
-    padding:10px;
-    border-radius:18px;
-    background:#fff;
-    border:3px dashed #d0d7de;
-    font-weight:700;
-    color:#111827;
-    min-height: 20px;
-    font-size: 15px;
-  }
-  .speech-ok{ border-color:#86efac; background:#ecfdf5; }
-  .speech-bad{ border-color:#fecaca; background:#fef2f2; }
 
   /* --- BUBBLES --- */
   #bubbleArea{
@@ -386,8 +396,8 @@
     .quiz-emoji { font-size: 64px; }
     #qWordMain { font-size: 24px; }
     .memory-card { height: 80px; font-size: 22px; }
-    .lion-big { font-size: 80px; }
-    .mic-btn-huge { width: 95px; height: 95px; font-size: 38px; }
+    .salad-tile { width: 46px; height: 46px; font-size: 20px; }
+    .salad-slot { width: 36px; height: 46px; font-size: 20px; }
     .banner { font-size: 20px; padding: 10px; }
   }
 
@@ -467,7 +477,7 @@
     <button class="mode-btn active" id="btnLearn"  onclick="changeMode('learn')"><span class="mode-ico">📖</span><span id="tLearn">O'rganish</span></button>
     <button class="mode-btn"        id="btnQuiz"   onclick="changeMode('quiz')"><span class="mode-ico">🎯</span><span id="tQuiz">Test</span></button>
     <button class="mode-btn"        id="btnMemory" onclick="changeMode('memory')"><span class="mode-ico">🧠</span><span id="tMemory">O'yin</span></button>
-    <button class="mode-btn"        id="btnEcho"   onclick="changeMode('echo')"><span class="mode-ico">🗣️</span><span id="tEcho">Aks-sado</span></button>
+    <button class="mode-btn"        id="btnSalad" onclick="changeMode('salad')"><span class="mode-ico">🥗</span><span id="tSalad">Harflar salati</span></button>
     <button class="mode-btn"        id="btnBubble" onclick="changeMode('bubble')"><span class="mode-ico">🫧</span><span id="tBubble">Pufakchalar</span></button>
   </div>
 
@@ -496,25 +506,20 @@
     <div class="memory-grid" id="memoryGrid"></div>
   </div>
 
-  <!-- Echo -->
-  <div id="echoSection">
-    <div id="lionChar" class="lion-big">🦁</div>
+  <!-- Buchstabensalat -->
+  <div id="saladSection">
+    <div class="salad-card">
+      <div id="saladEmoji" class="salad-emoji">🥗</div>
 
-    <div id="echoText" class="banner">Eshiting...</div>
-
-    <div style="display:flex; justify-content:center; flex-wrap:wrap;">
-      <button class="mic-btn-huge" style="background:#f1c40f; box-shadow: 0 10px 0 #c49f0a;" onclick="playEchoAudio()">🔊</button>
-      <button class="mic-btn-huge" id="micBtn"
-       ontouchstart="startMic();return false;" ontouchend="stopMic()" ontouchcancel="stopMic()"
-       onmousedown="startMic()" onmouseup="stopMic()">
-        🎤
+      <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="playSaladAudio()">
+        🔊 <span id="saladListenText">Eshitish</span>
       </button>
-    </div>
 
-    <div class="small-note" id="echoHint">🔁 Eshit → ayt → tekshir!</div>
-    <div class="speech-line" id="speechLine">🎙️ ...</div>
-    <div class="small-note" id="echoProgress">⭐ 0 / 5</div>
-    <div class="small-note" id="echoTryLine">🔁 Urinish: 0 / 3</div>
+      <div class="salad-slots" id="saladSlots"></div>
+      <div class="salad-tiles" id="saladTiles"></div>
+    </div>
+    <div class="small-note" id="saladHint">🔊 Eshit → harflarni to'g'ri tartibda bos!</div>
+    <div class="small-note" id="saladScoreLine">⭐ 0 / 5</div>
   </div>
 
   <!-- Bubbles -->
@@ -542,27 +547,25 @@
       learn: "O'rganish",
       quiz: "Test",
       memory: "O'yin",
-      echo: "Aks-sado",
+      salad: "Harflar salati",
       bubble: "Pufakchalar",
       listen: "Eshitish",
       moves: "Urinishlar",
       album: "Mening Stikerlarim",
       close: "Yopish",
-      echoHint: "🔁 Eshit → ayt → tekshir!",
+      saladHint: "🔊 Eshit → harflarni to'g'ri tartibda bos!",
       bubbleHint: "To'g'ri emojini top! ⭐",
       bubbleTask: "Top: ",
       doneQuizTitle: "Barakalla! 🐰",
       doneQuizText: "Test tugadi! Siz quyon stikerini oldingiz!",
       winMemoryTitle: "Zo'r! 🐻",
       winMemoryText: "Memory tugadi! Siz ayiq stikerini oldingiz!",
-      echoWinTitle: "Ajoyib! 🦁",
-      echoWinText: "Aks-sado tugadi! Siz sher stikerini oldingiz!",
+      winSaladTitle: "Ajoyib! 🦁",
+      winSaladText: "Harflar salati tugadi! Siz sher stikerini oldingiz!",
       winBubbleTitle: "Super! 🐠",
       winBubbleText: "Pufakchalar tugadi! Siz baliq stikerini oldingiz!",
       allDoneTitle: "HAMMASI TUGADI! 🎉👏",
-      allDoneText: "Siz 1-dars va hamma o'yinlarni tugatdingiz! YAY! 🎊",
-      sayAgain: "❌ Xato. Yana urinib ko'r!",
-      micNoSupport: "⚠️ Mikrofon yo'q. Chrome ishlating."
+      allDoneText: "Siz 1-dars va hamma o'yinlarni tugatdingiz! YAY! 🎊"
     },
     en: {
       title: "Greetings",
@@ -570,27 +573,25 @@
       learn: "Learn",
       quiz: "Quiz",
       memory: "Game",
-      echo: "Echo",
+      salad: "Letter Salad",
       bubble: "Bubbles",
       listen: "Listen",
       moves: "Moves",
       album: "My Stickers",
       close: "Close",
-      echoHint: "🔁 Listen → say it → check!",
+      saladHint: "🔊 Listen → tap the letters in the right order!",
       bubbleHint: "Find the correct emoji! ⭐",
       bubbleTask: "Tap: ",
       doneQuizTitle: "Well done! 🐰",
       doneQuizText: "Quiz complete! You earned the bunny sticker!",
       winMemoryTitle: "You won! 🐻",
       winMemoryText: "Memory complete! You earned the bear sticker!",
-      echoWinTitle: "Great! 🦁",
-      echoWinText: "Echo complete! You earned the lion sticker!",
+      winSaladTitle: "Great! 🦁",
+      winSaladText: "Letter Salad complete! You earned the lion sticker!",
       winBubbleTitle: "Amazing! 🐠",
       winBubbleText: "Bubbles complete! You earned the fish sticker!",
       allDoneTitle: "ALL DONE! 🎉👏",
-      allDoneText: "You finished Lesson 1 and all games! YAY! 🎊",
-      sayAgain: "❌ Not quite. Try again!",
-      micNoSupport: "⚠️ Mic not supported. Use Chrome."
+      allDoneText: "You finished Lesson 1 and all games! YAY! 🎊"
     }
   };
 
@@ -624,7 +625,7 @@
   const QUIZ_DONE_KEY = "lesson1_quiz_done_v3";
   const STICKERS_KEY = "stickers";
   const DONE_MEMORY_KEY = "lesson1_done_memory_v1";
-  const DONE_ECHO_KEY   = "lesson1_done_echo_v1";
+  const DONE_SALAD_KEY  = "lesson1_done_salad_v1";
   const DONE_BUBBLE_KEY = "lesson1_done_bubble_v1";
   const DONE_ALL_KEY    = "lesson1_done_all_v1";
 
@@ -688,10 +689,10 @@
   function checkAllCompleted(){
     const quizDone = (quizDoneCount() === data.length);
     const memDone  = (localStorage.getItem(DONE_MEMORY_KEY) === "1");
-    const echoDone = (localStorage.getItem(DONE_ECHO_KEY) === "1");
+    const saladDone = (localStorage.getItem(DONE_SALAD_KEY) === "1");
     const bubDone  = (localStorage.getItem(DONE_BUBBLE_KEY) === "1");
 
-    if(quizDone && memDone && echoDone && bubDone){
+    if(quizDone && memDone && saladDone && bubDone){
       if(localStorage.getItem(DONE_ALL_KEY) !== "1"){
         localStorage.setItem(DONE_ALL_KEY, "1");
         unlockNextLessonFlag();
@@ -712,13 +713,14 @@
     document.getElementById("tLearn").innerText = T.learn;
     document.getElementById("tQuiz").innerText = T.quiz;
     document.getElementById("tMemory").innerText = T.memory;
-    document.getElementById("tEcho").innerText = T.echo;
+    document.getElementById("tSalad").innerText = T.salad;
     document.getElementById("tBubble").innerText = T.bubble;
     document.getElementById("listenBtnText").innerText = T.listen;
     document.getElementById("movesLabel").innerText = T.moves;
     document.getElementById("albumTitle").innerText = T.album;
     document.getElementById("closeAlbumBtn").innerText = T.close;
-    document.getElementById("echoHint").innerText = T.echoHint;
+    document.getElementById("saladHint").innerText = T.saladHint;
+    document.getElementById("saladListenText").innerText = T.listen;
     document.getElementById("bubbleHint").innerText = T.bubbleHint;
 
     renderLearn(true);
@@ -727,7 +729,7 @@
     bubbleOrder = [];
     bubbleIdx = 0;
 
-    if(document.getElementById("echoSection").style.display === "block") playEchoAudio();
+    if(document.getElementById("saladSection").style.display === "block") startSalad();
     if(document.getElementById("bubbleSection").style.display === "block") startBubbles();
   }
 
@@ -738,17 +740,16 @@
     document.getElementById('learnSection').style.display = 'none';
     document.getElementById('quizSection').style.display = 'none';
     document.getElementById('memorySection').style.display = 'none';
-    document.getElementById('echoSection').style.display = 'none';
+    document.getElementById('saladSection').style.display = 'none';
     document.getElementById('bubbleSection').style.display = 'none';
 
     stopBubbles();
-    stopRecognition();
-    clearTimeout(echoNextTimer);
+    clearTimeout(saladNextTimer);
 
     if(mode === 'learn'){ document.getElementById('learnSection').style.display='grid'; renderLearn(true); }
     if(mode === 'quiz'){  document.getElementById('quizSection').style.display='block'; loadQuiz(); }
     if(mode === 'memory'){document.getElementById('memorySection').style.display='block'; initMemory(); }
-    if(mode === 'echo'){  document.getElementById('echoSection').style.display='block'; startEchoGame(); }
+    if(mode === 'salad'){ document.getElementById('saladSection').style.display='block'; startSalad(); }
     if(mode === 'bubble'){document.getElementById('bubbleSection').style.display='block'; startBubbles(); }
   }
 
@@ -976,13 +977,6 @@
     });
   }
 
-  let echoOrder = [];
-  let echoIdx = 0;
-  let echoTries = 0;
-  let recognition = null;
-  let isRecognizing = false;
-  let echoNextTimer = null;
-
   function shuffle(arr){
     const a = [...arr];
     for(let i=a.length-1;i>0;i--){
@@ -992,179 +986,106 @@
     return a;
   }
 
-  function startEchoGame(){
-    echoOrder = shuffle(data.map(x=>x.key));
-    echoIdx = 0;
-    echoTries = 0;
-    clearTimeout(echoNextTimer);
-    updateEchoProgress();
-    updateEchoTries();
-    setSpeechLine("🎙️ ...", "");
-    playEchoAudio();
+  /* ===== BUCHSTABENSALAT (Letter Salad) ===== */
+  let saladOrder = [];
+  let saladIdx = 0;
+  let saladItem = null;
+  let saladLetters = "";
+  let saladPos = 0;
+  let saladNextTimer = null;
+
+  function saladCleanWord(word){
+    return (word || "").replace(/[^\p{L}]/gu, "").toUpperCase();
   }
 
-  function currentEchoItem(){
-    if(!echoOrder || echoOrder.length === 0) return null;
-    if(echoIdx < 0 || echoIdx >= echoOrder.length) return null;
-    const key = echoOrder[echoIdx];
-    return data.find(x=>x.key===key) || null;
+  function playSaladAudio(){
+    if(!saladItem) return;
+    playAudio(saladItem.key, 1.0);
   }
 
-  function updateEchoProgress(){
-    const el = document.getElementById("echoProgress");
-    if(!el) return;
-    const total = echoOrder.length || data.length;
-    const current = Math.min(echoIdx + 1, total);
-    el.innerText = `⭐ ${current} / ${total}`;
+  function updateSaladScoreLine(){
+    const el = document.getElementById("saladScoreLine");
+    if(el) el.innerText = `⭐ ${saladIdx} / ${data.length}`;
   }
 
-  function updateEchoTries(){
-    const el = document.getElementById("echoTryLine");
-    if(el) el.innerText = `🔁 Urinish: ${echoTries} / 3`;
+  function startSalad(){
+    clearTimeout(saladNextTimer);
+    saladOrder = shuffle(data.map(x=>x.key));
+    saladIdx = 0;
+    nextSaladWord();
   }
 
-  function setSpeechLine(text, state){
-    const el = document.getElementById("speechLine");
-    el.className =
-      "speech-line" +
-      (state==="ok" ? " speech-ok" : state==="bad" ? " speech-bad" : "");
-    el.innerText = text;
-  }
+  function nextSaladWord(){
+    updateSaladScoreLine();
 
-  function playEchoAudio() {
-    const item = currentEchoItem();
-    if(!item){
-      startEchoGame();
+    if(saladIdx >= saladOrder.length){
+      finishSaladGame();
       return;
     }
-    const word = (currentLang === "en") ? item.en : item.uz;
-    document.getElementById('echoText').innerText = word;
 
-    const lion = document.getElementById('lionChar');
-    lion.classList.add('talking');
+    saladItem = data.find(x=>x.key===saladOrder[saladIdx]);
+    const word = (currentLang === "en") ? saladItem.en : saladItem.uz;
+    saladLetters = saladCleanWord(word);
+    saladPos = 0;
 
-    const a = playAudio(item.key, 0.85);
-    a.onended = () => lion.classList.remove('talking');
+    document.getElementById("saladEmoji").innerText = saladItem.emoji;
+
+    const slots = document.getElementById("saladSlots");
+    slots.innerHTML = "";
+    for(let i=0; i<saladLetters.length; i++){
+      const s = document.createElement("div");
+      s.className = "salad-slot";
+      slots.appendChild(s);
+    }
+
+    const tiles = document.getElementById("saladTiles");
+    tiles.innerHTML = "";
+    const letters = shuffle(saladLetters.split(""));
+    letters.forEach(ch => {
+      const t = document.createElement("button");
+      t.className = "salad-tile";
+      t.type = "button";
+      t.innerText = ch;
+      t.onclick = () => tapSaladTile(t, ch);
+      tiles.appendChild(t);
+    });
+
+    playSaladAudio();
   }
 
-  function normalizeText(s){
-    return (s || "")
-      .toLowerCase()
-      .replace(/[''`]/g, "'")
-      .replace(/\s+/g, " ")
-      .trim();
+  function tapSaladTile(tile, ch){
+    if(tile.classList.contains("used")) return;
+
+    const needed = saladLetters[saladPos];
+    if(ch.toUpperCase() === needed){
+      const slots = document.getElementById("saladSlots").children;
+      slots[saladPos].innerText = ch;
+      slots[saladPos].classList.add("filled");
+      tile.classList.add("used");
+      saladPos++;
+      sfxPop();
+
+      if(saladPos >= saladLetters.length){
+        setStarForKey(saladItem.key, 3);
+        sfxWin();
+        saladIdx++;
+        updateSaladScoreLine();
+        saladNextTimer = setTimeout(nextSaladWord, 900);
+      }
+    } else {
+      tile.classList.add("wrong");
+      sfxFail();
+      setTimeout(() => tile.classList.remove("wrong"), 450);
+    }
   }
 
-  function finishEchoGame(){
-    localStorage.setItem(DONE_ECHO_KEY, "1");
+  function finishSaladGame(){
+    localStorage.setItem(DONE_SALAD_KEY, "1");
     unlockSticker(3);
     const T = UI[currentLang];
-    celebrate(T.echoWinTitle, T.echoWinText, "🦁");
+    celebrate(T.winSaladTitle, T.winSaladText, "🦁");
     checkAllCompleted();
   }
-
-  function goNextEchoWord(reasonText){
-    clearTimeout(echoNextTimer);
-
-    echoIdx++;
-    echoTries = 0;
-
-    updateEchoProgress();
-    updateEchoTries();
-
-    if(echoIdx >= (echoOrder.length || data.length)){
-      finishEchoGame();
-      stopMic();
-      return;
-    }
-
-    if(reasonText) setSpeechLine(reasonText, "bad");
-
-    echoNextTimer = setTimeout(() => {
-      setSpeechLine("🎙️ ...", "");
-      playEchoAudio();
-    }, reasonText ? 1200 : 650);
-  }
-
-  function startMic() {
-    const T = UI[currentLang];
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    if(!SpeechRecognition){
-      echoTries++;
-      updateEchoTries();
-      setSpeechLine(T.micNoSupport, "bad");
-      sfxFail();
-      if(echoTries >= 3) goNextEchoWord((currentLang==="en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
-      return;
-    }
-
-    if(isRecognizing) return;
-
-    recognition = new SpeechRecognition();
-    recognition.lang = (currentLang === "en") ? "en-US" : "uz-UZ";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 3;
-
-    isRecognizing = true;
-    document.getElementById('micBtn').classList.add('active');
-    document.getElementById('lionChar').innerText = "👂";
-    setSpeechLine("🎙️ ...", "");
-
-    recognition.onresult = (event) => {
-      const fresh = currentEchoItem();
-      if(!fresh) return;
-
-      const target = normalizeText((currentLang === "en") ? fresh.en : fresh.uz);
-      const transcript = normalizeText(event.results[0][0].transcript);
-
-      const ok =
-        transcript === target ||
-        transcript.includes(target) ||
-        target.includes(transcript);
-
-      if(ok){
-        setSpeechLine("✅ " + transcript, "ok");
-        sfxWin();
-        goNextEchoWord();
-      } else {
-        echoTries++;
-        updateEchoTries();
-        setSpeechLine(UI[currentLang].sayAgain + " (" + transcript + ")", "bad");
-        sfxFail();
-        if(echoTries >= 3){
-          goNextEchoWord((currentLang==="en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
-        }
-      }
-    };
-
-    recognition.onerror = () => {
-      echoTries++;
-      updateEchoTries();
-      setSpeechLine(UI[currentLang].sayAgain, "bad");
-      sfxFail();
-      if(echoTries >= 3){
-        goNextEchoWord((currentLang==="en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
-      }
-    };
-
-    recognition.onend = () => {
-      isRecognizing = false;
-      document.getElementById('micBtn').classList.remove('active');
-      document.getElementById('lionChar').innerText = "🦁";
-    };
-
-    recognition.start();
-  }
-
-  function stopRecognition(){
-    try{ if(recognition) recognition.stop(); }catch(e){}
-    recognition = null;
-    isRecognizing = false;
-    document.getElementById('micBtn').classList.remove('active');
-    document.getElementById('lionChar').innerText = "🦁";
-  }
-  function stopMic(){ stopRecognition(); }
 
   let bubbleInt = null;
   let bubbleOrder = [];
