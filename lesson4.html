@@ -1097,11 +1097,11 @@
     document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
 
     // Menu button highlighting - swap active class
-    document.querySelectorAll(".mode-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".mode-nav .mode-btn").forEach(b=>b.classList.remove("active"));
     const sectionMap = {"learn":0, "match":1, "balloon":2, "aks":3, "chameleon":4};
     const idx = sectionMap[name];
     if(idx !== undefined){
-      const buttons = document.querySelectorAll(".mode-btn");
+      const buttons = document.querySelectorAll(".mode-nav .mode-btn");
       if(buttons[idx]) buttons[idx].classList.add("active");
     }
 
