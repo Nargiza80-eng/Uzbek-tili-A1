@@ -673,6 +673,51 @@
   }
   function changeName() { isChangingName = true; showNameGate(true); }
 
+  /* ===== PROFILE SYSTEM (Fortschritt pro Kind) ===== */
+  const PROFILE_PREFIX = "profileData_";
+
+  function isProgressKey(key){
+    return key === STORAGE.LEARNED || key === "stickers" || key.startsWith("lesson");
+  }
+
+  function archiveProfile(name){
+    const bundle = {};
+    for(let i = 0; i < localStorage.length; i++){
+      const key = localStorage.key(i);
+      if(isProgressKey(key)) bundle[key] = localStorage.getItem(key);
+    }
+    localStorage.setItem(PROFILE_PREFIX + name, JSON.stringify(bundle));
+  }
+
+  function loadProfile(name){
+    // aktuelle Fortschritts-Daten entfernen
+    const toDelete = [];
+    for(let i = 0; i < localStorage.length; i++){
+      const key = localStorage.key(i);
+      if(isProgressKey(key)) toDelete.push(key);
+    }
+    toDelete.forEach(k => localStorage.removeItem(k));
+
+    // gespeichertes Profil wiederherstellen (falls vorhanden)
+    let bundle = null;
+    try { bundle = JSON.parse(localStorage.getItem(PROFILE_PREFIX + name) || "null"); }
+    catch { bundle = null; }
+    if(bundle){
+      Object.entries(bundle).forEach(([k, v]) => localStorage.setItem(k, v));
+    }
+  }
+
+  function switchProfile(newName){
+    const oldName = localStorage.getItem(STORAGE.CHILD_NAME) || "";
+    if(oldName === newName) return;
+    if(oldName){
+      archiveProfile(oldName);   // Fortschritt des bisherigen Kindes sichern
+      loadProfile(newName);      // Fortschritt des neuen Kindes laden (oder frisch starten)
+    }
+    // kein alter Name = erster Start: aktueller Fortschritt gehoert diesem Kind
+    localStorage.setItem(STORAGE.CHILD_NAME, newName);
+  }
+
   /* ===== RENDER LESSONS ===== */
   function updateUI() {
     const learned = getLearnedSet().size;
@@ -765,11 +810,18 @@
     btn.onclick = () => {
       const nm = normalizeName(input.value);
       if (nm.length < 2) return;
-      localStorage.setItem(STORAGE.CHILD_NAME, nm);
+      const oldName = localStorage.getItem(STORAGE.CHILD_NAME) || "";
+      switchProfile(nm);
       gate.classList.remove("show");
       applyGreeting();
+      updateUI();
       if (isChangingName) {
-        showToast(currentLang === "uz" ? "Ism saqlandi! ✅" : "Name saved! ✅");
+        const switched = (oldName !== "" && oldName !== nm);
+        showToast(
+          switched
+            ? (currentLang === "uz" ? "Profil: " + nm + " ✅" : "Profile: " + nm + " ✅")
+            : (currentLang === "uz" ? "Ism saqlandi! ✅" : "Name saved! ✅")
+        );
         isChangingName = false;
       }
     };
