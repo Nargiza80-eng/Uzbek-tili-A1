@@ -215,7 +215,7 @@
     *{box-sizing:border-box; touch-action:manipulation; font-style:normal; margin:0; padding:0;}
     body{
       margin:0;
-      font-family:system-ui, -apple-system, 'Segoe UI', 'Nunito', 'Quicksand', sans-serif;
+      font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Nunito', 'Quicksand', sans-serif;
       background:linear-gradient(180deg, var(--bg2) 0%, var(--bg) 55%, #fff 100%);
       color:#2d3436;
       padding:12px;
@@ -682,6 +682,29 @@
       margin-left:10px;
     }
     .badge.done{background:#ECFDF5;color:var(--success);}
+
+    /* --- STICKER ALBUM (wie lesson1) --- */
+    .album-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+      z-index: 3000; justify-content: center; align-items: center;
+    }
+    .album-content {
+      background: white; padding: 26px; border-radius: 30px; text-align: center;
+      width: 85%; max-width: 420px;
+    }
+    .sticker-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 14px;
+    }
+    .sticker-slot {
+      width: 60px; height: 60px; background: #eee; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 34px; margin: 0 auto;
+      opacity: 0.35; filter: grayscale(1);
+      border: 2px dashed #bbb;
+    }
+    .sticker-slot.unlocked {
+      opacity: 1; filter: none; background: #fff9e6; border: 3px solid #f59e0b;
+    }
   </style>
 <base target="_blank">
 </head>
@@ -696,6 +719,22 @@
       <div class="celebrate-title" id="celebrateTitle">Barakalla!</div>
       <div class="celebrate-text" id="celebrateText">Zo'r!</div>
       <button class="celebrate-btn" onclick="closeCelebrate()">OK ✅</button>
+    </div>
+  </div>
+
+
+  <!-- Album Overlay (wie lesson1, vom Header-Buch-Button) -->
+  <div id="albumOverlay" class="album-overlay" onclick="toggleAlbum()">
+    <div class="album-content" onclick="event.stopPropagation()">
+      <h3 id="albumTitle" style="margin-top:0;">Mening Stikerlarim</h3>
+      <div class="sticker-grid">
+        <div id="stk_1" class="sticker-slot">🐣</div>
+        <div id="stk_2" class="sticker-slot">🦊</div>
+        <div id="stk_3" class="sticker-slot">🦋</div>
+        <div id="stk_4" class="sticker-slot">🐢</div>
+      </div>
+      <br>
+      <button class="btn primary" onclick="toggleAlbum()" id="closeAlbumBtn" style="width:100%;">Yopish</button>
     </div>
   </div>
 
@@ -720,7 +759,7 @@
           <div class="sub" id="hdrSub">2-dars</div>
         </div>
 
-        <button class="topIcon" onclick="openLearn()" aria-label="Book" type="button">📖</button>
+        <button class="topIcon" onclick="toggleAlbum()" aria-label="Album" type="button">📖</button>
       </div>
 
       <div class="progress-track">
@@ -874,8 +913,15 @@
       wellDoneTitle: "Zo'r! 🎉", wellDoneText: "Siz o'yinni yutdingiz!",
       listenQuiz: "Eshitish", closeQuiz: "Yopish",
       quizHint: "To'g'ri javobni tanlang!",
-      quizWinTitle: "Ajoyib! 🎉",
-      quizWinText: "Test tugadi! Barakalla!"
+      quizWinTitle: "Ajoyib! 🐢",
+      quizWinText: "Test tugadi! Siz toshbaqa stikerini oldingiz!",
+      album: "Mening Stikerlarim", close: "Yopish",
+      winCountTitle: "Zo'r! 🐣",
+      winCountText: "Sanab ko'r tugadi! Siz jo'ja stikerini oldingiz!",
+      winMatchTitle: "Barakalla! 🦊",
+      winMatchText: "Juftini top tugadi! Siz tulki stikerini oldingiz!",
+      winBalloonTitle: "Super! 🦋",
+      winBalloonText: "Pufakchalar tugadi! Siz kapalak stikerini oldingiz!"
     },
     en: {
       learn: "Learn", count: "Counting", match: "Matching", balloon: "Bubbles", quiz: "Quiz",
@@ -886,8 +932,15 @@
       wellDoneTitle: "Great! 🎉", wellDoneText: "You won the game!",
       listenQuiz: "Listen", closeQuiz: "Close",
       quizHint: "Choose the correct answer!",
-      quizWinTitle: "Excellent! 🎉",
-      quizWinText: "Quiz complete! Well done!"
+      quizWinTitle: "Excellent! 🐢",
+      quizWinText: "Quiz complete! You earned the turtle sticker!",
+      album: "My Stickers", close: "Close",
+      winCountTitle: "Great! 🐣",
+      winCountText: "Counting complete! You earned the chick sticker!",
+      winMatchTitle: "Well done! 🦊",
+      winMatchText: "Matching complete! You earned the fox sticker!",
+      winBalloonTitle: "Amazing! 🦋",
+      winBalloonText: "Bubbles complete! You earned the butterfly sticker!"
     }
   };
 
@@ -993,6 +1046,8 @@
     document.getElementById("hintQuiz").innerText = t.quizHint;
     document.getElementById("listenQuizText").innerText = t.listenQuiz;
     document.getElementById("btnCloseQuiz").innerText = t.closeQuiz;
+    document.getElementById("albumTitle").innerText = t.album;
+    document.getElementById("closeAlbumBtn").innerText = t.close;
   }
 
   function closePanels(){
@@ -1334,7 +1389,8 @@
         state.games.g1 = true;
         save();
         updateBadges();
-        setTimeout(() => celebrate("wellDoneTitle", "wellDoneText", "wellDoneEmoji"), 300);
+        unlockSticker(2);
+        setTimeout(() => celebrate("winMatchTitle", "winMatchText", "wellDoneEmoji"), 300);
       }
     } else {
       dropZone.classList.add("bad");
@@ -1415,7 +1471,8 @@
 
     if(countStreak >= COUNT_WIN){
       countStreak = 0;
-      celebrate("wellDoneTitle", "wellDoneText", "wellDoneEmoji");
+      unlockSticker(1);
+      celebrate("winCountTitle", "winCountText", "wellDoneEmoji");
       return;
     }
 
@@ -1517,7 +1574,8 @@
             state.games.g4 = true;
             save();
             updateBadges();
-            celebrate("wellDoneTitle", "wellDoneText", "wellDoneEmoji");
+            unlockSticker(3);
+            celebrate("winBalloonTitle", "winBalloonText", "wellDoneEmoji");
           } else {
             const newTarget = items[Math.floor(Math.random() * items.length)];
             currentTarget = newTarget.n;
@@ -1569,6 +1627,7 @@
     if(quizCurrentIndex >= items.length){
       // All done - show completion
       const T = UI[state.lang];
+      unlockSticker(4);
       celebrate("quizWinTitle", "quizWinText", "wellDoneEmoji");
       document.getElementById("quizChoices").innerHTML =
         '<button class="btn primary" onclick="resetQuiz()">🔁 ' + (state.lang==="uz"?"Qayta boshlash":"Restart") + '</button>';
@@ -1642,8 +1701,31 @@
     startQuizGame();
   }
 
+  /* ===== STICKER ALBUM (wie lesson1) ===== */
+  const STICKERS_KEY = "lesson2_stickers_v1";
+
+  function toggleAlbum() {
+    const album = document.getElementById('albumOverlay');
+    album.style.display = (album.style.display === 'flex') ? 'none' : 'flex';
+
+    const earned = JSON.parse(localStorage.getItem(STICKERS_KEY) || "[]");
+    earned.forEach(id => {
+      const el = document.getElementById('stk_' + id);
+      if(el) el.classList.add('unlocked');
+    });
+  }
+
+  function unlockSticker(id) {
+    let earned = JSON.parse(localStorage.getItem(STICKERS_KEY) || "[]");
+    if(!earned.includes(id)) {
+      earned.push(id);
+      localStorage.setItem(STICKERS_KEY, JSON.stringify(earned));
+    }
+  }
+
   /* ===== INIT ===== */
   document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById('albumOverlay').style.display = 'none';
     load();
     updateUI();
     updateHeader();
