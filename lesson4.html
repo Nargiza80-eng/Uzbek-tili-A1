@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>4-dars: Ranglar</title>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     /* ===== HEADER (Lesson 1 style - INLINE) ===== */
@@ -210,6 +212,7 @@
 
       --blue:#2F6BFF;
       --blueDark:#1E4ED8;
+      --primary:#2F6BFF;
 
       --accent:#FF4D8D;
       --accent2:#22C55E;
@@ -230,7 +233,7 @@
     *{box-sizing:border-box;}
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Quicksand', sans-serif;
       background:var(--bg);
       color:var(--ink);
       padding:12px;
@@ -294,28 +297,17 @@
       box-shadow: inset 0 -8px 0 rgba(0,0,0,0.18), var(--shadowSoft);
     }
 
-    .menuWrap{
-      margin-top:14px;background:#F8ECFF;border-radius:var(--rBig);
-      padding:12px;box-shadow:var(--shadowSoft);
+    .mode-nav{display:flex; gap:10px; margin-top:14px; margin-bottom:14px; width:100%; max-width:520px; flex-wrap:wrap;}
+    .mode-btn{
+      flex:1; padding:14px 10px; border-radius:18px; border:none;
+      background:#fff; font-weight:700; cursor:pointer;
+      box-shadow:0 5px 0 rgba(0,0,0,0.10); font-size:15px; min-width:140px;
+      white-space:nowrap; display:flex; align-items:center; justify-content:center;
+      gap:12px; transition:all 0.15s ease; color:var(--blue); user-select:none;
     }
-    .menu{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:14px;
-    }
-    .menuBtn{
-      height:70px;border-radius:18px;border:none;cursor:pointer;
-      font-weight:1000;font-size:20px;
-      display:flex;align-items:center;justify-content:center;gap:14px;
-      box-shadow:var(--shadowSoft);background:#fff;color:var(--blue);
-      user-select:none;
-    }
-    .menuBtn.primary{
-      background:var(--blue);color:#fff;
-      box-shadow: inset 0 -10px 0 rgba(0,0,0,0.18), var(--shadowSoft);
-    }
-    .menuBtn:active{transform:scale(0.98);}
-    .menuEmoji{font-size:30px}
+    .mode-btn.active{background:var(--blue); color:#fff; box-shadow:0 5px 0 var(--blueDark);}
+    .mode-btn:active{transform:scale(0.98);}
+    .mode-ico{font-size:28px; line-height:1;}
 
     .panel{
       margin-top:16px;background:#fff;border-radius:var(--rBig);
@@ -333,14 +325,14 @@
     @media(max-width:560px){
       .grid{grid-template-columns:1fr;}
       .title{font-size:20px;}
-      .menuBtn{font-size:18px;height:64px;}
+      .mode-btn{font-size:14px; padding:12px 8px;}
       .langBtn{width:120px;}
       .iconBox{font-size:44px;}
     }
     @media screen and (max-width: 375px) {
       body { padding: 8px; }
-      .menuBtn { font-size: 16px; height: 58px; }
-      .menuEmoji { font-size: 24px; }
+      .mode-btn { font-size: 13px; min-width: 140px; padding: 12px 8px; }
+      .mode-ico { font-size: 24px; }
       .title { font-size: 18px; }
       .sub { font-size: 13px; }
       .iconBox { font-size: 40px; width: 56px; height: 56px; }
@@ -349,7 +341,7 @@
       .langBtn { width: 110px; font-size: 14px; padding: 10px 0; }
     }
     @media screen and (min-width: 414px) {
-      .menuBtn { font-size: 18px; padding: 16px 12px; height: 74px; }
+      .mode-btn { font-size: 16px; padding: 16px 12px; }
       .colorCircle { width: 74px; height: 74px; font-size: 40px; }
       .word { font-size: 24px; }
     }
@@ -365,8 +357,8 @@
       font-size:36px;box-shadow:0 6px 18px rgba(0,0,0,0.15);
       border:4px solid white;
     }
-    .word{font-size:22px;font-weight:1000;margin-top:12px;}
-    .stars{margin-top:10px;font-size:18px;font-weight:1000;letter-spacing:2px;color:var(--gold);min-height:22px;}
+    .word{font-size:22px;font-weight:800;margin-top:12px;}
+    .stars{margin-top:10px;font-size:18px;font-weight:800;letter-spacing:2px;color:var(--gold);min-height:22px;}
     .speaker{
       position:absolute;right:14px;top:14px;width:56px;height:56px;border-radius:50%;
       border:none;cursor:pointer;background:var(--yellow);
@@ -592,28 +584,24 @@
     }
     .badge.done{background:#ECFDF5;color:var(--good);}
 
-    /* ====== AKS-SADO ====== */
+    /* ====== RANG ARALASHTIRISH (Mix) ====== */
     .aks-card{
       background:white;border-radius:30px;padding:20px;
       box-shadow:0 10px 0 var(--shadowSoft);text-align:center;
     }
-    .aks-emoji{font-size:80px;margin:0 0 10px;}
-    .aks-word{font-size:28px;font-weight:900;color:var(--primary);margin-bottom:12px;}
-    .aks-audio-btn{
-      width:100%;padding:14px;margin:8px 0;border-radius:20px;
-      border:3px solid var(--yellow);background:var(--yellow);font-size:16px;
-      font-weight:900;cursor:pointer;box-shadow:0 5px 0 #cc7a00;color:var(--ink);
+    .mix-eq{display:flex;align-items:center;justify-content:center;gap:10px;margin:6px 0 12px;}
+    .mix-circle{width:56px;height:56px;border-radius:50%;border:4px solid #fff;box-shadow:0 4px 10px rgba(0,0,0,0.18);}
+    .mix-q{display:flex;align-items:center;justify-content:center;background:#fff;border:4px dashed #d0d7de;color:var(--muted);font-size:26px;font-weight:800;}
+    .mix-op{font-size:26px;font-weight:800;color:var(--ink);}
+    .mix-label{font-size:20px;font-weight:800;color:var(--blue);margin-bottom:12px;}
+    .mix-options{display:flex;justify-content:center;gap:18px;margin:10px 0 6px;flex-wrap:wrap;}
+    .mix-opt{width:74px;height:74px;border-radius:50%;border:5px solid #fff;
+      box-shadow:0 6px 0 rgba(0,0,0,0.10);cursor:pointer;transition:transform 0.12s ease;touch-action:manipulation;
     }
-    .aks-audio-btn:active{transform:translateY(2px);box-shadow:none;}
-    .aks-mic-row{display:flex;justify-content:center;margin:16px 0;}
-    .aks-mic-btn{
-      width:100px;height:100px;border-radius:50%;border:none;
-      background:#ff4757;color:white;font-size:44px;cursor:pointer;
-      box-shadow:0 10px 0 #b33939;touch-action:manipulation;
-    }
-    .aks-mic-btn:active{transform:translateY(6px);box-shadow:0 4px 0 #b33939;}
-    .aks-mic-btn.listening{background:#22c55e;box-shadow:0 4px 0 #15803d;transform:translateY(6px);}
-    .aks-hint{font-weight:700;color:#334155;font-size:14px;margin-top:10px;}
+    .mix-opt:active{transform:scale(0.94);}
+    .mix-opt.correct{outline:5px solid var(--good);transform:scale(1.08);}
+    .mix-opt.wrong{outline:5px solid var(--bad);animation:mixShake 0.35s ease;}
+    @keyframes mixShake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
     .aks-speech-line{
       margin-top:10px;padding:10px;border-radius:18px;background:#fff;
       border:3px dashed #d0d7de;font-weight:700;color:#111827;min-height:20px;font-size:15px;
@@ -695,14 +683,12 @@
 <div class="app">
 
   <div class="top">
-    <div class="menuWrap">
-      <div class="menu">
-        <button class="menuBtn primary" onclick="openSection('learn')"><span class="menuEmoji">📘</span><span id="menuLearn">O'rganish</span></button>
-        <button class="menuBtn" onclick="openSection('match')"><span class="menuEmoji">🔗</span><span id="menuMatch">Juftini top</span></button>
-        <button class="menuBtn" onclick="openSection('balloon')"><span class="menuEmoji">🎈</span><span id="menuBalloon">Shariklar</span></button>
-        <button class="menuBtn" onclick="openSection('aks')"><span class="menuEmoji">🎤</span><span id="menuAks">Aks-sado</span></button>
-        <button class="menuBtn" onclick="openSection('chameleon')"><span class="menuEmoji">🦎</span><span id="menuChameleon">Chameleon</span></button>
-      </div>
+    <div class="mode-nav">
+      <button class="mode-btn active" onclick="openSection('learn')"><span class="mode-ico">📘</span><span id="menuLearn">O'rganish</span></button>
+      <button class="mode-btn" onclick="openSection('match')"><span class="mode-ico">🔗</span><span id="menuMatch">Juftini top</span></button>
+      <button class="mode-btn" onclick="openSection('balloon')"><span class="mode-ico">🎈</span><span id="menuBalloon">Pufakchalar</span></button>
+      <button class="mode-btn" onclick="openSection('aks')"><span class="mode-ico">🎨</span><span id="menuAks">Rang aralashtirish</span></button>
+      <button class="mode-btn" onclick="openSection('chameleon')"><span class="mode-ico">🦎</span><span id="menuChameleon">Chameleon</span></button>
     </div>
   </div>
 
@@ -742,26 +728,25 @@
     </div>
   </div>
 
-  <!-- AKS-SADO -->
+  <!-- RANG ARALASHTIRISH (Mix) -->
   <div class="panel" id="panel-aks">
-    <div class="panelTitle"><span id="panelTitleAks">🔊 Aks-sado</span> <span class="badge" id="gAksStatus">❓</span></div>
-    <p class="hint" id="hintAks">Eshit → ayt → tekshir!</p>
+    <div class="panelTitle"><span id="panelTitleAks">🎨 Rang aralashtirish</span> <span class="badge" id="gAksStatus">❓</span></div>
+    <p class="hint" id="hintAks">Aralashtir → natijani top!</p>
 
     <div class="aks-card">
-      <div class="aks-emoji" id="aksEmoji">🔴</div>
-      <div class="aks-word" id="aksWord">qizil</div>
-      <button class="aks-audio-btn" onclick="playAksAudio()">🔊 Eshitish</button>
-
-      <div class="aks-mic-row">
-        <button class="aks-mic-btn" id="aksMicBtn"
-          onpointerdown="startAksMic()" onpointerup="stopAksMic()" onpointercancel="stopAksMic()">
-          🎤
-        </button>
+      <div class="mix-eq">
+        <div class="mix-circle" id="mixA"></div>
+        <div class="mix-op">+</div>
+        <div class="mix-circle" id="mixB"></div>
+        <div class="mix-op">=</div>
+        <div class="mix-circle mix-q">?</div>
       </div>
+      <div class="mix-label" id="mixLabel">qizil + sariq = ?</div>
 
-      <div class="aks-hint" id="aksHintText">🔊 Eshit → 🎤 ayt → ✅ tekshir!</div>
-      <div class="aks-speech-line" id="aksSpeechLine">🎤 ...</div>
-      <div class="aks-progress" id="aksProgress">⭐ 0 / 8</div>
+      <div class="mix-options" id="mixOptions"></div>
+
+      <div class="aks-speech-line" id="aksSpeechLine">🎨 ...</div>
+      <div class="aks-progress" id="aksProgress">⭐ 0 / 4</div>
       <div class="aks-tries" id="aksTries">🔄 Urinish: 0 / 3</div>
     </div>
 
@@ -907,19 +892,19 @@
       learned: "o'rganildi",
       menuLearn: "O'rganish",
       menuMatch: "Juftini top",
-      menuBalloon: "Shariklar",
-      menuAks: "Aks-sado",
+      menuBalloon: "Pufakchalar",
+      menuAks: "Rang aralashtirish",
       menuChameleon: "Chameleon",
       panelLearn: "📘 O'rganish",
       panelMatch: "🔗 Juftini top",
-      panelBalloon: "🎈 Shariklar",
-      panelAks: "🔊 Aks-sado",
+      panelBalloon: "🎈 Pufakchalar",
+      panelAks: "🎨 Rang aralashtirish",
       hintMatch: "Rangni uning nomiga bog'lang",
-      hintAks: "Eshit → ayt → tekshir!",
+      hintAks: "Aralashtir → natijani top!",
       balloonTaskPrefix: "Top: ",
       balloonScoreLabel: "⭐",
       balloonOf: " / 10",
-      aksProgressOf: " / 8",
+      aksProgressOf: " / 4",
       btnRefresh: "🔄 Yangilash",
       btnStart: "▶ Boshlash",
       btnClose: "✖ Yopish",
@@ -934,13 +919,10 @@
       balloonWinTitle: "Ajoyib! 🎈",
       balloonWinText: "Siz barcha 10 rangni topdingiz!",
       balloonWinEmoji: "🎉",
-      aksWinTitle: "Ajoyib! 🎤",
-      aksWinText: "Siz barcha 8 rangni aytib o'rganib oldingiz!",
+      aksWinTitle: "Ajoyib! 🎨",
+      aksWinText: "Siz barcha ranglarni to'g'ri aralashtirdingiz!",
       aksWinEmoji: "🏆",
-      aksListen: "🔊 Eshitish",
-      aksHintText: "🔁 Eshit → ayt → tekshir!",
       aksSayAgain: "❌ Xato. Yana urinib ko'r!",
-      aksMicNotSupported: "⚠️ Mikrofon yo'q. Chrome ishlating.",
       btnStartAks: "▶ Boshlash",
       btnCloseAks: "✖ Yopish",
       panelChameleon: "🦎 Chameleon",
@@ -965,18 +947,18 @@
       menuLearn: "Learn",
       menuMatch: "Find the Pair",
       menuBalloon: "Balloons",
-      menuAks: "Echo",
+      menuAks: "Color Mix",
       menuChameleon: "Chameleon",
       panelLearn: "📘 Learn",
       panelMatch: "🔗 Find the Pair",
       panelBalloon: "🎈 Balloons",
-      panelAks: "🔊 Echo",
+      panelAks: "🎨 Color Mix",
       hintMatch: "Match the color to its name",
-      hintAks: "Listen → say → check!",
+      hintAks: "Mix → find → check!",
       balloonTaskPrefix: "Tap: ",
       balloonScoreLabel: "⭐",
       balloonOf: " / 10",
-      aksProgressOf: " / 8",
+      aksProgressOf: " / 4",
       btnRefresh: "🔄 Refresh",
       btnStart: "▶ Start",
       btnClose: "✖ Close",
@@ -991,13 +973,10 @@
       balloonWinTitle: "Amazing! 🎈",
       balloonWinText: "You found all 10 colors!",
       balloonWinEmoji: "🎉",
-      aksWinTitle: "Great! 🎤",
-      aksWinText: "You said all 8 colors correctly!",
+      aksWinTitle: "Great! 🎨",
+      aksWinText: "You mixed all the colors correctly!",
       aksWinEmoji: "🏆",
-      aksListen: "🔊 Listen",
-      aksHintText: "🔁 Listen → say → check!",
       aksSayAgain: "❌ Not quite. Try again!",
-      aksMicNotSupported: "⚠️ Mic not supported. Use Chrome.",
       btnStartAks: "▶ Start",
       btnCloseAks: "✖ Close",
       panelChameleon: "🦎 Chameleon",
@@ -1117,13 +1096,13 @@
   function openSection(name){
     document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
 
-    // Menu button highlighting - swap .primary class
-    document.querySelectorAll(".menuBtn").forEach(b=>b.classList.remove("primary"));
+    // Menu button highlighting - swap active class
+    document.querySelectorAll(".mode-btn").forEach(b=>b.classList.remove("active"));
     const sectionMap = {"learn":0, "match":1, "balloon":2, "aks":3, "chameleon":4};
     const idx = sectionMap[name];
     if(idx !== undefined){
-      const buttons = document.querySelectorAll(".menuBtn");
-      if(buttons[idx]) buttons[idx].classList.add("primary");
+      const buttons = document.querySelectorAll(".mode-btn");
+      if(buttons[idx]) buttons[idx].classList.add("active");
     }
 
     const panel = document.getElementById("panel-"+name);
@@ -1165,9 +1144,6 @@
     document.getElementById("hintAks").innerText   = T("hintAks");
     document.getElementById("hintChameleon").innerText = T("hintChameleon");
 
-    document.getElementById("aksHintText").innerText = T("aksHintText");
-    const aksAudioBtn = document.querySelector(".aks-audio-btn");
-    if(aksAudioBtn) aksAudioBtn.innerText = T("aksListen");
     document.getElementById("btnStartAks").innerText  = T("btnStartAks");
     document.getElementById("btnCloseAks").innerText  = T("btnCloseAks");
 
@@ -1487,23 +1463,42 @@
   }
 
 // ==========================================
-// AKS-SADO (Echo)
+// RANG ARALASHTIRISH (Color Mix)
 // ==========================================
+const mixRounds = [
+  { a:"red",    b:"yellow", r:"orange" },
+  { a:"yellow", b:"blue",   r:"green"  },
+  { a:"red",    b:"white",  r:"pink"   },
+  { a:"black",  b:"white",  r:"gray"   }
+];
 let aksOrder = [];
 let aksIdx = 0;
 let aksTries = 0;
-let aksRecognition = null;
-let aksListening = false;
 let aksTimer = null;
 
+function mixItem(k){ return items.find(x => x.k === k) || null; }
+function mixWord(it){ return it ? ((state.lang === "uz") ? it.uz : it.en) : ""; }
+
+function speakItem(key, vol){
+  const it = mixItem(key);
+  if(!it) return;
+  try{
+    const u = new SpeechSynthesisUtterance(mixWord(it));
+    u.lang = (state.lang === "uz") ? "uz-UZ" : "en-US";
+    u.rate = 0.95; u.pitch = 1.05; u.volume = vol || 1;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+
 function startAksGame(){
-  aksOrder = shuffle(items.map(x => x.k));
+  aksOrder = shuffle(mixRounds.map((_, i) => i));
   aksIdx = 0;
   aksTries = 0;
   clearTimeout(aksTimer);
   updateAksProgress();
   updateAksTries();
-  setAksSpeechLine("🎙️ ...", "");
+  setAksSpeechLine("🎨 ...", "");
   nextAksRound();
 }
 
@@ -1512,43 +1507,57 @@ function nextAksRound(){
     finishAksGame();
     return;
   }
-  const item = items.find(x => x.k === aksOrder[aksIdx]);
-  if(!item) return;
+  const round = mixRounds[aksOrder[aksIdx]];
+  const ia = mixItem(round.a), ib = mixItem(round.b);
+  if(!ia || !ib) return;
 
-  document.getElementById("aksEmoji").innerText = item.emoji;
-  const word = (state.lang === "uz") ? item.uz : item.en;
-  document.getElementById("aksWord").innerText = word;
-  setTimeout(() => playAksAudio(), 300);
+  document.getElementById("mixA").style.background = ia.hex;
+  document.getElementById("mixB").style.background = ib.hex;
+  document.getElementById("mixLabel").innerText = mixWord(ia) + " + " + mixWord(ib) + " = ?";
+
+  speakItem(round.a, 0.9);
+  setTimeout(() => speakItem(round.b, 0.9), 900);
+
+  // 3 options: correct + 2 random distractors (not a, b, r)
+  const banned = new Set([round.a, round.b, round.r]);
+  const others = shuffle(items.filter(x => !banned.has(x.k))).slice(0, 2);
+  const opts = shuffle([mixItem(round.r)].concat(others));
+
+  const box = document.getElementById("mixOptions");
+  box.innerHTML = "";
+  opts.forEach(it => {
+    const btn = document.createElement("button");
+    btn.className = "mix-opt";
+    btn.style.background = it.hex;
+    btn.setAttribute("aria-label", mixWord(it));
+    btn.onclick = () => pickMixOption(btn, it.k === round.r, round.r);
+    box.appendChild(btn);
+  });
 }
 
-function currentAksItem(){
-  if(aksIdx < 0 || aksIdx >= aksOrder.length) return null;
-  return items.find(x => x.k === aksOrder[aksIdx]) || null;
-}
-
-function playAksAudio(){
-  const item = currentAksItem();
-  if(!item) return;
-  playAudio(item.key, 0.9);
-}
-
-function playAudio(key, vol){
-  const it = items.find(x => x.k === key);
-  if(!it) return;
-  const text = (state.lang === "uz") ? it.uz : it.en;
-  try{
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = (state.lang === "uz") ? "uz-UZ" : "en-US";
-    u.rate = 0.95; u.pitch = 1.05; u.volume = vol || 1;
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(u);
-  }catch(e){}
+function pickMixOption(btn, ok, resultKey){
+  if(ok){
+    btn.classList.add("correct");
+    beepSuccess();
+    setAksSpeechLine("✅ " + mixWord(mixItem(resultKey)), "ok");
+    speakItem(resultKey, 1);
+    aksTimer = setTimeout(() => goNextAksWord(), 1400);
+  } else {
+    btn.classList.add("wrong");
+    aksTries++;
+    updateAksTries();
+    setAksSpeechLine(T("aksSayAgain"), "bad");
+    beepFail();
+    if(aksTries >= 3){
+      goNextAksWord((state.lang === "en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
+    }
+  }
 }
 
 function updateAksProgress(){
   const el = document.getElementById("aksProgress");
   if(!el) return;
-  el.innerText = "⭐ " + Math.min(aksIdx + 1, items.length) + T("aksProgressOf");
+  el.innerText = "⭐ " + Math.min(aksIdx + 1, mixRounds.length) + T("aksProgressOf");
 }
 
 function updateAksTries(){
@@ -1558,12 +1567,9 @@ function updateAksTries(){
 
 function setAksSpeechLine(text, st){
   const el = document.getElementById("aksSpeechLine");
+  if(!el) return;
   el.className = "aks-speech-line" + (st === "ok" ? " ok" : st === "bad" ? " bad" : "");
   el.innerText = text;
-}
-
-function normalizeText(s){
-  return (s || "").toLowerCase().replace(/[''`]/g, "'").replace(/\s+/g, " ").trim();
 }
 
 function finishAksGame(){
@@ -1573,7 +1579,6 @@ function finishAksGame(){
   unlockSticker(3);
   celebrate("aksWinTitle", "aksWinText", "aksWinEmoji");
   checkAllCompleted();
-  stopAksMic();
 }
 
 function goNextAksWord(reasonText){
@@ -1591,84 +1596,9 @@ function goNextAksWord(reasonText){
   if(reasonText) setAksSpeechLine(reasonText, "bad");
 
   aksTimer = setTimeout(() => {
-    setAksSpeechLine("🎙️ ...", "");
+    setAksSpeechLine("🎨 ...", "");
     nextAksRound();
   }, reasonText ? 1200 : 650);
-}
-
-function startAksMic(){
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-  if(!SpeechRecognition){
-    aksTries++;
-    updateAksTries();
-    setAksSpeechLine(T("aksMicNotSupported"), "bad");
-    beepFail();
-    if(aksTries >= 3){
-      goNextAksWord((state.lang === "en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
-    }
-    return;
-  }
-
-  if(aksListening) return;
-
-  aksRecognition = new SpeechRecognition();
-  aksRecognition.lang = (state.lang === "en") ? "en-US" : "uz-UZ";
-  aksRecognition.interimResults = false;
-  aksRecognition.maxAlternatives = 3;
-
-  aksListening = true;
-  document.getElementById("aksMicBtn").classList.add("listening");
-  setAksSpeechLine("🎙️ ...", "");
-
-  aksRecognition.onresult = (event) => {
-    const item = currentAksItem();
-    if(!item) return;
-
-    const target = normalizeText((state.lang === "en") ? item.en : item.uz);
-    const transcript = normalizeText(event.results[0][0].transcript);
-
-    const ok = transcript === target || transcript.includes(target) || target.includes(transcript);
-
-    if(ok){
-      setAksSpeechLine("✅ " + transcript, "ok");
-      beepSuccess();
-      goNextAksWord();
-    } else {
-      aksTries++;
-      updateAksTries();
-      setAksSpeechLine(T("aksSayAgain") + " (" + transcript + ")", "bad");
-      beepFail();
-      if(aksTries >= 3){
-        goNextAksWord((state.lang === "en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
-      }
-    }
-  };
-
-  aksRecognition.onerror = () => {
-    aksTries++;
-    updateAksTries();
-    setAksSpeechLine(T("aksSayAgain"), "bad");
-    beepFail();
-    if(aksTries >= 3){
-      goNextAksWord((state.lang === "en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
-    }
-  };
-
-  aksRecognition.onend = () => {
-    aksListening = false;
-    document.getElementById("aksMicBtn").classList.remove("listening");
-  };
-
-  aksRecognition.start();
-}
-
-function stopAksMic(){
-  try{ if(aksRecognition) aksRecognition.stop(); }catch(e){}
-  aksRecognition = null;
-  aksListening = false;
-  const btn = document.getElementById("aksMicBtn");
-  if(btn) btn.classList.remove("listening");
 }
 
 // ==========================================
