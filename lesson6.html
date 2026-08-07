@@ -619,7 +619,7 @@
   <!-- QAYSI MEVA YO'QOLDI -->
   <div class="panel" id="panel-missing">
     <div class="panelTitle"><span id="panelTitleMissing">🕵️ Qaysi sabzavot yo'qoldi?</span> <span class="badge" id="gMissStatus">❓</span></div>
-    <p class="hint" id="hintMissing">Sabzavotni yodlab ol!</p>
+    <p class="hint" id="hintMissing">Sabzavotlarni yodlab ol!</p>
     <div class="missStage">
       <div class="quizQ" id="missQ">Sabzavotlarni yodlab ol... 🧠</div>
       <div class="missRow" id="missRow"></div>
@@ -737,7 +737,7 @@
       }
       const setLangUI = (lang) => {
         uzBtn?.classList.toggle("active", lang === "uz");
-        enBtn?.classList.toggle("active", lang === "en")
+        enBtn?.classList.toggle("active", lang === "en");
       };
       uzBtn?.addEventListener("click", () => {
         setLangUI("uz");
