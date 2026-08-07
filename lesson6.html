@@ -537,6 +537,11 @@
     .tfBtn.yes{background:var(--good);color:#fff;box-shadow:inset 0 -8px 0 rgba(0,0,0,0.15),var(--shadowSoft);}
     .tfBtn.no{background:var(--bad);color:#fff;box-shadow:inset 0 -8px 0 rgba(0,0,0,0.15),var(--shadowSoft);}
     .tfBtn:active{transform:scale(.96);}
+
+    /* ====== SOYA / SALAT ====== */
+    .soyaImg{filter:brightness(0);}
+    .saladBowl{font-size:56px;text-align:center;margin-top:10px;transition:transform .2s ease;}
+    .saladBowl.filled{transform:scale(1.2);}
   </style>
 </head>
 <body>
@@ -575,10 +580,10 @@
   <div class="top">
     <div class="mode-nav">
       <button class="mode-btn active" onclick="openSection('learn')"><span class="mode-ico">📘</span><span id="menuLearn">O'rganish</span></button>
-      <button class="mode-btn" onclick="openSection('memory')"><span class="mode-ico">🧠</span><span id="menuMemory">O'yin</span></button>
       <button class="mode-btn" onclick="openSection('test')"><span class="mode-ico">🎯</span><span id="menuTest">Test</span></button>
-      <button class="mode-btn" onclick="openSection('missing')"><span class="mode-ico">🕵️</span><span id="menuMissing">Qaysi sabzavot yo'qoldi?</span></button>
-      <button class="mode-btn" onclick="openSection('truefalse')"><span class="mode-ico">✔️</span><span id="menuTrueFalse">To'g'ri yoki noto'g'ri</span></button>
+      <button class="mode-btn" onclick="openSection('soya')"><span class="mode-ico">🖤</span><span id="menuSoya">Soya</span></button>
+      <button class="mode-btn" onclick="openSection('where')"><span class="mode-ico">🌱</span><span id="menuWhere">Qayerda o'sadi?</span></button>
+      <button class="mode-btn" onclick="openSection('salad')"><span class="mode-ico">🥗</span><span id="menuSalad">Salat tayyorla</span></button>
     </div>
   </div>
 
@@ -588,15 +593,19 @@
     <div class="grid" id="vocabGrid"></div>
   </div>
 
-  <!-- MEMORY -->
-  <div class="panel" id="panel-memory">
-    <div class="panelTitle"><span id="panelTitleMemory">🧠 O'yin</span> <span class="badge" id="gMemStatus">❓</span></div>
-    <p class="hint" id="hintMemory">Kartalarni aylantir va juftlarni top!</p>
-    <div class="memGrid" id="memGrid"></div>
-    <div class="memScore" id="memScore">⭐ 0 / 6</div>
+  <!-- SOYA -->
+  <div class="panel" id="panel-soya">
+    <div class="panelTitle"><span id="panelTitleSoya">🖤 Soya</span> <span class="badge" id="gSoyaStatus">❓</span></div>
+    <p class="hint" id="hintSoya">Soyaga qara va to'g'ri nomni tanla!</p>
+    <div class="quizImgBox">
+      <img class="quizImg soyaImg" id="soyaImg" src="" alt="soya">
+      <div class="quizQ" id="soyaQ">Bu qanday sabzavot soyasi?</div>
+    </div>
+    <div class="choiceRow" id="soyaOptions"></div>
+    <div class="quizProgress" id="soyaProgress">⭐ 0 / 10</div>
     <div class="btnRow">
-      <button class="btn primary" onclick="startMemoryGame()" id="btnRefreshMem">🔄 Yangilash</button>
-      <button class="btn soft" onclick="closePanels()" id="btnCloseMem">✖ Yopish</button>
+      <button class="btn primary" onclick="startSoyaGame()" id="btnRefreshSoya">🔄 Yangilash</button>
+      <button class="btn soft" onclick="closePanels()" id="btnCloseSoya">✖ Yopish</button>
     </div>
   </div>
 
@@ -616,41 +625,39 @@
     </div>
   </div>
 
-  <!-- QAYSI MEVA YO'QOLDI -->
-  <div class="panel" id="panel-missing">
-    <div class="panelTitle"><span id="panelTitleMissing">🕵️ Qaysi sabzavot yo'qoldi?</span> <span class="badge" id="gMissStatus">❓</span></div>
-    <p class="hint" id="hintMissing">Sabzavotlarni yodlab ol!</p>
-    <div class="missStage">
-      <div class="quizQ" id="missQ">Sabzavotlarni yodlab ol... 🧠</div>
-      <div class="missRow" id="missRow"></div>
-      <div class="btnRow">
-        <button class="btn primary" onclick="missReady()" id="btnMissReady">✅ Tayyor!</button>
-      </div>
-      <div class="missRow" id="missOptions"></div>
+  <!-- QAYERDA O'SADI -->
+  <div class="panel" id="panel-where">
+    <div class="panelTitle"><span id="panelTitleWhere">🌱 Qayerda o'sadi?</span> <span class="badge" id="gWhereStatus">❓</span></div>
+    <p class="hint" id="hintWhere">Bu sabzavot qayerda o'sadi?</p>
+    <div class="tfCard" id="whereCard">
+      <img class="tfImg" id="whereImg" src="" alt="sabzavot">
+      <div class="tfWord" id="whereWord">piyoz</div>
     </div>
-    <div class="quizProgress" id="missProgress">⭐ 0 / 5</div>
+    <div class="tfBtns">
+      <button class="tfBtn yes" onclick="answerWhere(true)" id="btnUnder">🕳️ Yer ostida</button>
+      <button class="tfBtn no" onclick="answerWhere(false)" id="btnAbove">☀️ Yer ustida</button>
+    </div>
+    <div class="quizProgress" id="whereProgress">⭐ 0 / 10</div>
     <div class="btnRow">
-      <button class="btn primary" onclick="startMissingGame()" id="btnRefreshMiss">🔄 Yangilash</button>
-      <button class="btn soft" onclick="closePanels()" id="btnCloseMiss">✖ Yopish</button>
+      <button class="btn primary" onclick="startWhereGame()" id="btnRefreshWhere">🔄 Yangilash</button>
+      <button class="btn soft" onclick="closePanels()" id="btnCloseWhere">✖ Yopish</button>
     </div>
   </div>
 
-  <!-- TO'G'RI YOKI NOTO'G'RI -->
-  <div class="panel" id="panel-truefalse">
-    <div class="panelTitle"><span id="panelTitleTrueFalse">✔️ To'g'ri yoki noto'g'ri</span> <span class="badge" id="gTFStatus">❓</span></div>
-    <p class="hint" id="hintTrueFalse">Rasm va so'z bir xilmi?</p>
-    <div class="tfCard" id="tfCard">
-      <img class="tfImg" id="tfImg" src="" alt="sabzavot">
-      <div class="tfWord" id="tfWord">piyoz</div>
+  <!-- SALAT TAYYORLA -->
+  <div class="panel" id="panel-salad">
+    <div class="panelTitle"><span id="panelTitleSalad">🥗 Salat tayyorla</span> <span class="badge" id="gSaladStatus">❓</span></div>
+    <p class="hint" id="hintSalad">Retsept uchun to'g'ri 3 sabzavotni tanla!</p>
+    <div class="missStage" id="saladStage">
+      <div class="quizQ" id="recipeBox">🥗 Salat</div>
+      <div class="saladBowl" id="saladBowl">🥗</div>
+      <div class="missRow" id="pickedRow"></div>
+      <div class="missRow" id="saladChoices"></div>
     </div>
-    <div class="tfBtns">
-      <button class="tfBtn yes" onclick="answerTF(true)" id="btnTrue">✔️ To'g'ri</button>
-      <button class="tfBtn no" onclick="answerTF(false)" id="btnFalse">❌ Noto'g'ri</button>
-    </div>
-    <div class="quizProgress" id="tfProgress">⭐ 0 / 10</div>
+    <div class="quizProgress" id="saladProgress">⭐ 0 / 5</div>
     <div class="btnRow">
-      <button class="btn primary" onclick="startTFGame()" id="btnRefreshTF">🔄 Yangilash</button>
-      <button class="btn soft" onclick="closePanels()" id="btnCloseTF">✖ Yopish</button>
+      <button class="btn primary" onclick="startSaladGame()" id="btnRefreshSalad">🔄 Yangilash</button>
+      <button class="btn soft" onclick="closePanels()" id="btnCloseSalad">✖ Yopish</button>
     </div>
   </div>
 
@@ -767,48 +774,46 @@
       if(fill) fill.style.width = pct + "%";
     };
   })();
-  const LESSON_ID = "lesson6_sabzavot_v1";
+  const LESSON_ID = "lesson6_sabzavot_v2";
   const UI = {
     uz: {
       title: "Sabzavotlar",
       subtitle: "6-dars",
       learned: "o'rganildi",
       menuLearn: "O'rganish",
-      menuMemory: "O'yin",
       menuTest: "Test",
-      menuMissing: "Qaysi sabzavot yo'qoldi?",
-      menuTrueFalse: "To'g'ri yoki noto'g'ri",
+      menuSoya: "Soya",
+      menuWhere: "Qayerda o'sadi?",
+      menuSalad: "Salat tayyorla",
       panelLearn: "📘 O'rganish",
-      panelMemory: "🧠 O'yin",
       panelTest: "🎯 Test",
-      panelMissing: "🕵️ Qaysi sabzavot yo'qoldi?",
-      panelTrueFalse: "✔️ To'g'ri yoki noto'g'ri",
-      hintMemory: "Kartalarni aylantir va juftlarni top!",
+      panelSoya: "🖤 Soya",
+      panelWhere: "🌱 Qayerda o'sadi?",
+      panelSalad: "🥗 Salat tayyorla",
       hintTest: "Rasmga qara va to'g'ri nomni tanla!",
-      hintMissing: "Sabzavotlarni yodlab ol!",
-      hintTrueFalse: "Rasm va so'z bir xilmi?",
+      hintSoya: "Soyaga qara va to'g'ri nomni tanla!",
+      hintWhere: "Bu sabzavot qayerda o'sadi?",
+      hintSalad: "Retsept uchun to'g'ri 3 sabzavotni tanla!",
       testQ: "Bu qanday sabzavot?",
-      missMemorize: "Sabzavotlarni yodlab ol... 🧠",
-      missWhich: "Qaysi sabzavot yo'qoldi? 🕵️",
-      btnReady: "✅ Tayyor!",
-      btnTrue: "✔️ To'g'ri",
-      btnFalse: "❌ Noto'g'ri",
+      soyaQ: "Bu qanday sabzavot soyasi?",
+      btnUnder: "🕳️ Yer ostida",
+      btnAbove: "☀️ Yer ustida",
       btnRefresh: "🔄 Yangilash",
       btnClose: "✖ Yopish",
       badgeDone: "✅ Bajarildi",
       badgeUnknown: "❓",
-      memWinTitle: "Zo'r! 🧠",
-      memWinText: "Siz barcha juftlarni topdingiz!",
-      memWinEmoji: "🎉",
       testWinTitle: "Ajoyib! 🎯",
       testWinText: "Siz testni muvaffaqiyatli tugatdingiz!",
       testWinEmoji: "🏆",
-      missWinTitle: "Ajoyib! 🕵️",
-      missWinText: "Siz barcha yo'qolgan sabzavotlarni topdingiz!",
-      missWinEmoji: "🎉",
-      tfWinTitle: "Ajoyib! ✔️",
-      tfWinText: "Siz hamma savolga to'g'ri javob berdingiz!",
-      tfWinEmoji: "🏆",
+      soyaWinTitle: "Ajoyib! 🖤",
+      soyaWinText: "Siz barcha soyalarni to'g'ri topdingiz!",
+      soyaWinEmoji: "🎉",
+      whereWinTitle: "Ajoyib! 🌱",
+      whereWinText: "Siz barcha sabzavotlarni to'g'ri joyladingiz!",
+      whereWinEmoji: "🏆",
+      saladWinTitle: "Ajoyib! 🥗",
+      saladWinText: "Siz barcha salatlarni tayyorladingiz!",
+      saladWinEmoji: "🎉",
       learnWinTitle: "Ajoyib! 📘",
       learnWinText: "Siz barcha 10 sabzavotni o'rganib oldingiz!",
       learnWinEmoji: "📚",
@@ -823,41 +828,39 @@
       subtitle: "Lesson 6",
       learned: "learned",
       menuLearn: "Learn",
-      menuMemory: "Memory",
       menuTest: "Quiz",
-      menuMissing: "Which is missing?",
-      menuTrueFalse: "True or false",
+      menuSoya: "Shadow",
+      menuWhere: "Where does it grow?",
+      menuSalad: "Make a salad",
       panelLearn: "📘 Learn",
-      panelMemory: "🧠 Memory",
       panelTest: "🎯 Quiz",
-      panelMissing: "🕵️ Which vegetable disappeared?",
-      panelTrueFalse: "✔️ True or false",
-      hintMemory: "Flip the cards and find the pairs!",
+      panelSoya: "🖤 Guess the shadow",
+      panelWhere: "🌱 Where does it grow?",
+      panelSalad: "🥗 Make a salad",
       hintTest: "Look at the picture and pick the correct name!",
-      hintMissing: "Memorize the vegetables!",
-      hintTrueFalse: "Do the picture and the word match?",
+      hintSoya: "Look at the shadow and pick the correct name!",
+      hintWhere: "Where does this vegetable grow?",
+      hintSalad: "Pick the right 3 vegetables for the recipe!",
       testQ: "Which vegetable is this?",
-      missMemorize: "Memorize the vegetables... 🧠",
-      missWhich: "Which vegetable disappeared? 🕵️",
-      btnReady: "✅ Ready!",
-      btnTrue: "✔️ True",
-      btnFalse: "❌ False",
+      soyaQ: "Which vegetable is this shadow?",
+      btnUnder: "🕳️ Under the ground",
+      btnAbove: "☀️ Above the ground",
       btnRefresh: "🔄 Refresh",
       btnClose: "✖ Close",
       badgeDone: "✅ Done",
       badgeUnknown: "❓",
-      memWinTitle: "Great! 🧠",
-      memWinText: "You found all the pairs!",
-      memWinEmoji: "🎉",
       testWinTitle: "Amazing! 🎯",
       testWinText: "You finished the test successfully!",
       testWinEmoji: "🏆",
-      missWinTitle: "Amazing! 🕵️",
-      missWinText: "You found all the missing vegetables!",
-      missWinEmoji: "🎉",
-      tfWinTitle: "Amazing! ✔️",
-      tfWinText: "You answered all questions correctly!",
-      tfWinEmoji: "🏆",
+      soyaWinTitle: "Amazing! 🖤",
+      soyaWinText: "You guessed all the shadows!",
+      soyaWinEmoji: "🎉",
+      whereWinTitle: "Amazing! 🌱",
+      whereWinText: "You placed all the vegetables correctly!",
+      whereWinEmoji: "🏆",
+      saladWinTitle: "Amazing! 🥗",
+      saladWinText: "You made all the salads!",
+      saladWinEmoji: "🎉",
       learnWinTitle: "Excellent! 📘",
       learnWinText: "You learned all 10 vegetables!",
       learnWinEmoji: "📚",
@@ -882,7 +885,16 @@
     {k:"shalgom",   img:IMG_shalgom,   uz:"shalgom",   en:"turnip"},
   ];
 
-  let state = { lang:"uz", stars:{}, learned:{}, games:{gMemory:false,gTest:false,gMissing:false,gTF:false}, learnCelebrated:false };
+  // Salad recipes: each recipe needs 3 specific vegetables
+  const recipes = [
+    {name:{uz:"Achichuk",en:"Achichuk"},          needed:["pomidor","bodring","piyoz"]},
+    {name:{uz:"Mashxurda",en:"Mashxurda"},        needed:["kartoshka","sabzi","piyoz"]},
+    {name:{uz:"Baqjon salat",en:"Eggplant salad"},needed:["baqlajon","pomidor","qalampir"]},
+    {name:{uz:"Qovoq salat",en:"Pumpkin salad"},  needed:["qovoq","sabzi","karam"]},
+    {name:{uz:"Shalgom salat",en:"Turnip salad"}, needed:["shalgom","bodring","qalampir"]},
+  ];
+
+  let state = { lang:"uz", stars:{}, learned:{}, games:{gTest:false,gSoya:false,gWhere:false,gSalad:false}, learnCelebrated:false };
 
   function save(){ localStorage.setItem(LESSON_ID, JSON.stringify(state)); }
   function load(){
@@ -893,7 +905,7 @@
       state.lang = s.lang || "uz";
       state.stars = s.stars || {};
       state.learned = s.learned || {};
-      state.games = Object.assign({gMemory:false,gTest:false,gMissing:false,gTF:false}, s.games || {});
+      state.games = Object.assign({gTest:false,gSoya:false,gWhere:false,gSalad:false}, s.games || {});
       state.learnCelebrated = s.learnCelebrated || false;
     }catch(e){}
   }
@@ -922,7 +934,7 @@
   }
 
   function checkAllCompleted(){
-    if(state.games.gMemory && state.games.gTest && state.games.gMissing && state.games.gTF){
+    if(state.games.gTest && state.games.gSoya && state.games.gWhere && state.games.gSalad){
       const ALL_DONE_KEY = LESSON_ID + "_all_done";
       if(localStorage.getItem(ALL_DONE_KEY) !== "1"){
         localStorage.setItem(ALL_DONE_KEY, "1");
@@ -934,7 +946,7 @@
     return false;
   }
 
-  const STICKERS_KEY = "lesson6_stickers_v1";
+  const STICKERS_KEY = "lesson6_stickers_v2";
   function unlockSticker(id){
     let earned = JSON.parse(localStorage.getItem(STICKERS_KEY) || "[]");
     if(!earned.includes(id)){
@@ -965,7 +977,7 @@
 
     // Menu button highlighting - swap active class
     document.querySelectorAll(".mode-nav .mode-btn").forEach(b=>b.classList.remove("active"));
-    const sectionMap = {"learn":0, "memory":1, "test":2, "missing":3, "truefalse":4};
+    const sectionMap = {"learn":0, "test":1, "soya":2, "where":3, "salad":4};
     const idx = sectionMap[name];
     if(idx !== undefined){
       const buttons = document.querySelectorAll(".mode-nav .mode-btn");
@@ -975,10 +987,10 @@
     const panel = document.getElementById("panel-"+name);
     if(panel) panel.classList.add("show");
 
-    if(name==="memory") startMemoryGame();
     if(name==="test") startTestGame();
-    if(name==="missing") startMissingGame();
-    if(name==="truefalse") startTFGame();
+    if(name==="soya") startSoyaGame();
+    if(name==="where") startWhereGame();
+    if(name==="salad") startSaladGame();
 
     panel?.scrollIntoView({behavior:"smooth", block:"start"});
   }
@@ -995,34 +1007,34 @@
     updateHeaderProgress();
 
     document.getElementById("menuLearn").innerText      = T("menuLearn");
-    document.getElementById("menuMemory").innerText     = T("menuMemory");
     document.getElementById("menuTest").innerText       = T("menuTest");
-    document.getElementById("menuMissing").innerText    = T("menuMissing");
-    document.getElementById("menuTrueFalse").innerText  = T("menuTrueFalse");
+    document.getElementById("menuSoya").innerText       = T("menuSoya");
+    document.getElementById("menuWhere").innerText      = T("menuWhere");
+    document.getElementById("menuSalad").innerText      = T("menuSalad");
 
     document.getElementById("panelTitleLearn").innerText     = T("panelLearn");
-    document.getElementById("panelTitleMemory").innerText    = T("panelMemory");
     document.getElementById("panelTitleTest").innerText      = T("panelTest");
-    document.getElementById("panelTitleMissing").innerText   = T("panelMissing");
-    document.getElementById("panelTitleTrueFalse").innerText = T("panelTrueFalse");
+    document.getElementById("panelTitleSoya").innerText      = T("panelSoya");
+    document.getElementById("panelTitleWhere").innerText     = T("panelWhere");
+    document.getElementById("panelTitleSalad").innerText     = T("panelSalad");
 
-    document.getElementById("hintMemory").innerText    = T("hintMemory");
     document.getElementById("hintTest").innerText      = T("hintTest");
-    document.getElementById("hintMissing").innerText   = T("hintMissing");
-    document.getElementById("hintTrueFalse").innerText = T("hintTrueFalse");
+    document.getElementById("hintSoya").innerText      = T("hintSoya");
+    document.getElementById("hintWhere").innerText     = T("hintWhere");
+    document.getElementById("hintSalad").innerText     = T("hintSalad");
 
-    document.getElementById("btnRefreshMem").innerText  = T("btnRefresh");
-    document.getElementById("btnRefreshTest").innerText = T("btnRefresh");
-    document.getElementById("btnRefreshMiss").innerText = T("btnRefresh");
-    document.getElementById("btnRefreshTF").innerText   = T("btnRefresh");
-    document.getElementById("btnCloseMem").innerText  = T("btnClose");
-    document.getElementById("btnCloseTest").innerText = T("btnClose");
-    document.getElementById("btnCloseMiss").innerText = T("btnClose");
-    document.getElementById("btnCloseTF").innerText   = T("btnClose");
-    document.getElementById("btnMissReady").innerText = T("btnReady");
-    document.getElementById("btnTrue").innerText  = T("btnTrue");
-    document.getElementById("btnFalse").innerText = T("btnFalse");
+    document.getElementById("btnRefreshTest").innerText  = T("btnRefresh");
+    document.getElementById("btnRefreshSoya").innerText  = T("btnRefresh");
+    document.getElementById("btnRefreshWhere").innerText = T("btnRefresh");
+    document.getElementById("btnRefreshSalad").innerText = T("btnRefresh");
+    document.getElementById("btnCloseTest").innerText  = T("btnClose");
+    document.getElementById("btnCloseSoya").innerText  = T("btnClose");
+    document.getElementById("btnCloseWhere").innerText = T("btnClose");
+    document.getElementById("btnCloseSalad").innerText = T("btnClose");
+    document.getElementById("btnUnder").innerText = T("btnUnder");
+    document.getElementById("btnAbove").innerText = T("btnAbove");
     document.getElementById("quizQ").innerText = T("testQ");
+    document.getElementById("soyaQ").innerText = T("soyaQ");
 
     const albumTitle = document.getElementById("albumTitle");
     if(albumTitle) albumTitle.innerText = T("album");
@@ -1043,10 +1055,10 @@
     save();
     updateAllTexts();
     renderVocab();
-    if(document.getElementById("panel-memory").classList.contains("show")) startMemoryGame();
     if(document.getElementById("panel-test").classList.contains("show")) startTestGame();
-    if(document.getElementById("panel-missing").classList.contains("show")) startMissingGame();
-    if(document.getElementById("panel-truefalse").classList.contains("show")) nextTFRound();
+    if(document.getElementById("panel-soya").classList.contains("show")) startSoyaGame();
+    if(document.getElementById("panel-where").classList.contains("show")) nextWhereRound();
+    if(document.getElementById("panel-salad").classList.contains("show")) startSaladGame();
   }
 
   function starsText(n){
@@ -1065,10 +1077,10 @@
       el.classList.toggle("done", !!done);
       el.innerText = done ? T("badgeDone") : T("badgeUnknown");
     };
-    setBadge("gMemStatus",  state.games.gMemory);
-    setBadge("gTestStatus", state.games.gTest);
-    setBadge("gMissStatus", state.games.gMissing);
-    setBadge("gTFStatus",   state.games.gTF);
+    setBadge("gTestStatus",  state.games.gTest);
+    setBadge("gSoyaStatus",  state.games.gSoya);
+    setBadge("gWhereStatus", state.games.gWhere);
+    setBadge("gSaladStatus", state.games.gSalad);
   }
 
   let audioCtx=null;
@@ -1194,81 +1206,66 @@
   }
 
   // ==========================================
-  // MEMORY SPIEL
+  // SOYA (Schatten raten)
   // ==========================================
-  let memDeck = [], memOpen = [], memLock = false, memFound = 0;
-  const MEM_PAIRS = 6;
+  let soyaOrder = [], soyaIdx = 0, soyaLock = false;
 
-  function startMemoryGame(){
-    const picks = shuffle(items).slice(0, MEM_PAIRS);
-    const cards = [];
-    picks.forEach(it => {
-      cards.push({k: it.k, type: "img"});
-      cards.push({k: it.k, type: "word"});
+  function startSoyaGame(){
+    soyaOrder = shuffle(items.map(x => x.k));
+    soyaIdx = 0; soyaLock = false;
+    updateSoyaProgress();
+    nextSoyaQuestion();
+  }
+
+  function nextSoyaQuestion(){
+    if(soyaIdx >= soyaOrder.length){ finishSoyaGame(); return; }
+    soyaLock = false;
+    const it = items.find(x => x.k === soyaOrder[soyaIdx]);
+    document.getElementById("soyaImg").src = it.img;
+    document.getElementById("soyaQ").innerText = T("soyaQ");
+
+    const others = shuffle(items.filter(x => x.k !== it.k)).slice(0, 3);
+    const opts = shuffle([it].concat(others));
+    const row = document.getElementById("soyaOptions");
+    row.innerHTML = "";
+    opts.forEach(o => {
+      const b = document.createElement("button");
+      b.className = "choiceBtn";
+      b.innerText = (state.lang === "uz") ? o.uz : o.en;
+      b.onclick = () => pickSoyaOption(b, o.k === it.k);
+      row.appendChild(b);
     });
-    memDeck = shuffle(cards);
-    memOpen = []; memFound = 0; memLock = false;
-    updateMemScore();
-    renderMemBoard();
   }
 
-  function renderMemBoard(){
-    const grid = document.getElementById("memGrid");
-    grid.innerHTML = "";
-    memDeck.forEach((c, idx) => {
-      const d = document.createElement("div");
-      d.className = "memCard";
-      d.innerHTML = "?";
-      d.onclick = () => flipMemCard(d, c);
-      grid.appendChild(d);
-    });
-  }
-
-  function memCardHTML(c){
-    const it = items.find(x => x.k === c.k);
-    if(c.type === "img") return `<img src="${it.img}" alt="">`;
-    const w = (state.lang === "uz") ? it.uz : it.en;
-    return `<span class="memWord">${w}</span>`;
-  }
-
-  function flipMemCard(d, c){
-    if(memLock || d.classList.contains("open") || d.classList.contains("done")) return;
-    d.classList.add("open");
-    d.innerHTML = memCardHTML(c);
-    memOpen.push({d, c});
-    if(memOpen.length === 2){
-      const a = memOpen[0], b = memOpen[1];
-      memLock = true;
-      if(a.c.k === b.c.k){
-        setTimeout(() => {
-          a.d.classList.remove("open"); b.d.classList.remove("open");
-          a.d.classList.add("done");  b.d.classList.add("done");
-          memOpen = []; memLock = false;
-          memFound++;
-          beepSuccess();
-          speakItem(a.c.k, 1);
-          updateMemScore();
-          if(memFound === MEM_PAIRS){
-            state.games.gMemory = true; save(); updateBadges();
-            unlockSticker(1);
-            celebrate("memWinTitle", "memWinText", "memWinEmoji");
-            checkAllCompleted();
-          }
-        }, 350);
-      } else {
-        beepFail();
-        setTimeout(() => {
-          a.d.classList.remove("open"); a.d.innerHTML = "?";
-          b.d.classList.remove("open"); b.d.innerHTML = "?";
-          memOpen = []; memLock = false;
-        }, 800);
-      }
+  function pickSoyaOption(btn, ok){
+    if(soyaLock) return;
+    if(ok){
+      soyaLock = true;
+      btn.classList.add("good");
+      beepSuccess();
+      speakItem(soyaOrder[soyaIdx], 1);
+      setTimeout(() => {
+        soyaIdx++;
+        updateSoyaProgress();
+        nextSoyaQuestion();
+      }, 900);
+    } else {
+      btn.classList.add("bad");
+      beepFail();
+      setTimeout(() => btn.classList.remove("bad"), 500);
     }
   }
 
-  function updateMemScore(){
-    const el = document.getElementById("memScore");
-    if(el) el.innerText = "⭐ " + memFound + " / " + MEM_PAIRS;
+  function updateSoyaProgress(){
+    const el = document.getElementById("soyaProgress");
+    if(el) el.innerText = "⭐ " + Math.min(soyaIdx, soyaOrder.length) + " / " + soyaOrder.length;
+  }
+
+  function finishSoyaGame(){
+    state.games.gSoya = true; save(); updateBadges();
+    unlockSticker(2);
+    celebrate("soyaWinTitle", "soyaWinText", "soyaWinEmoji");
+    checkAllCompleted();
   }
 
   // ==========================================
@@ -1329,160 +1326,142 @@
 
   function finishTestGame(){
     state.games.gTest = true; save(); updateBadges();
-    unlockSticker(2);
+    unlockSticker(1);
     celebrate("testWinTitle", "testWinText", "testWinEmoji");
     checkAllCompleted();
   }
 
   // ==========================================
-  // QAYSI MEVA YO'QOLDI? (Welche Frucht fehlt?)
+  // QAYERDA O'SADI? (Wo waechst es?)
   // ==========================================
-  let missSet = [], missGone = null, missRound = 0, missPhase = "show", missLock = false;
-  const MISS_ROUNDS = 5;
+  const UNDER_GROUND = ["piyoz", "sabzi", "kartoshka", "shalgom"];
+  let whereOrder = [], whereIdx = 0, whereLock = false;
 
-  function startMissingGame(){
-    missRound = 0; missLock = false;
-    updateMissProgress();
-    nextMissingRound();
+  function startWhereGame(){
+    whereOrder = shuffle(items.map(x => x.k));
+    whereIdx = 0; whereLock = false;
+    updateWhereProgress();
+    nextWhereRound();
   }
 
-  function nextMissingRound(){
-    if(missRound >= MISS_ROUNDS){ finishMissingGame(); return; }
-    missPhase = "show"; missLock = false;
-    missSet = shuffle(items).slice(0, 4);
-    missGone = null;
-
-    const row = document.getElementById("missRow");
-    row.innerHTML = "";
-    missSet.forEach(it => {
-      const d = document.createElement("div");
-      d.className = "missItem";
-      d.innerHTML = `<img src="${it.img}" alt="">`;
-      row.appendChild(d);
-    });
-    document.getElementById("missOptions").innerHTML = "";
-    document.getElementById("btnMissReady").style.display = "";
-    document.getElementById("missQ").innerText = T("missMemorize");
+  function nextWhereRound(){
+    if(whereIdx >= whereOrder.length){ finishWhereGame(); return; }
+    whereLock = false;
+    const it = items.find(x => x.k === whereOrder[whereIdx]);
+    document.getElementById("whereImg").src = it.img;
+    document.getElementById("whereWord").innerText = (state.lang === "uz") ? it.uz : it.en;
   }
 
-  function missReady(){
-    if(missPhase !== "show") return;
-    missGone = missSet[Math.floor(Math.random() * missSet.length)];
-    const row = document.getElementById("missRow");
-    [...row.children].forEach((d, i) => {
-      if(missSet[i].k === missGone.k) d.classList.add("gone");
-    });
-    document.getElementById("btnMissReady").style.display = "none";
-    document.getElementById("missQ").innerText = T("missWhich");
-
-    const box = document.getElementById("missOptions");
-    box.innerHTML = "";
-    shuffle(missSet).forEach(it => {
-      const d = document.createElement("div");
-      d.className = "missItem missOpt";
-      d.innerHTML = `<img src="${it.img}" alt="">`;
-      d.onclick = () => pickMissing(d, it.k === missGone.k);
-      box.appendChild(d);
-    });
-    missPhase = "guess";
-  }
-
-  function pickMissing(d, ok){
-    if(missPhase !== "guess" || missLock) return;
-    if(ok){
-      missLock = true;
-      d.classList.add("good");
+  function answerWhere(saidUnder){
+    if(whereLock) return;
+    const isUnder = UNDER_GROUND.includes(whereOrder[whereIdx]);
+    if(saidUnder === isUnder){
+      whereLock = true;
       beepSuccess();
-      speakItem(missGone.k, 1);
+      speakItem(whereOrder[whereIdx], 1);
       setTimeout(() => {
-        missRound++;
-        updateMissProgress();
-        nextMissingRound();
-      }, 1000);
-    } else {
-      d.classList.add("bad");
-      beepFail();
-      setTimeout(() => d.classList.remove("bad"), 500);
-    }
-  }
-
-  function updateMissProgress(){
-    const el = document.getElementById("missProgress");
-    if(el) el.innerText = "⭐ " + Math.min(missRound, MISS_ROUNDS) + " / " + MISS_ROUNDS;
-  }
-
-  function finishMissingGame(){
-    state.games.gMissing = true; save(); updateBadges();
-    unlockSticker(3);
-    celebrate("missWinTitle", "missWinText", "missWinEmoji");
-    checkAllCompleted();
-  }
-
-  // ==========================================
-  // TO'G'RI YOKI NOTO'G'RI (Richtig oder falsch)
-  // ==========================================
-  let tfRounds = [], tfIdx = 0, tfLock = false;
-  const TF_TOTAL = 10;
-
-  function startTFGame(){
-    tfRounds = [];
-    const keys = shuffle(items.map(x => x.k));
-    for(let i = 0; i < TF_TOTAL; i++){
-      const imgK = keys[i % keys.length];
-      let wordK, ok;
-      if(i % 2 === 0){
-        wordK = imgK; ok = true;
-      } else {
-        const others = items.filter(x => x.k !== imgK);
-        wordK = others[Math.floor(Math.random() * others.length)].k; ok = false;
-      }
-      tfRounds.push({imgK, wordK, ok});
-    }
-    tfRounds = shuffle(tfRounds);
-    tfIdx = 0; tfLock = false;
-    updateTFProgress();
-    nextTFRound();
-  }
-
-  function nextTFRound(){
-    if(tfIdx >= tfRounds.length){ finishTFGame(); return; }
-    tfLock = false;
-    const r = tfRounds[tfIdx];
-    const imgIt = items.find(x => x.k === r.imgK);
-    const wordIt = items.find(x => x.k === r.wordK);
-    document.getElementById("tfImg").src = imgIt.img;
-    document.getElementById("tfWord").innerText = (state.lang === "uz") ? wordIt.uz : wordIt.en;
-  }
-
-  function answerTF(saidYes){
-    if(tfLock) return;
-    const r = tfRounds[tfIdx];
-    if(saidYes === r.ok){
-      tfLock = true;
-      beepSuccess();
-      speakItem(r.imgK, 1);
-      setTimeout(() => {
-        tfIdx++;
-        updateTFProgress();
-        nextTFRound();
+        whereIdx++;
+        updateWhereProgress();
+        nextWhereRound();
       }, 800);
     } else {
       beepFail();
-      const card = document.getElementById("tfCard");
+      const card = document.getElementById("whereCard");
       card.classList.add("shake");
       setTimeout(() => card.classList.remove("shake"), 500);
     }
   }
 
-  function updateTFProgress(){
-    const el = document.getElementById("tfProgress");
-    if(el) el.innerText = "⭐ " + Math.min(tfIdx, tfRounds.length) + " / " + TF_TOTAL;
+  function updateWhereProgress(){
+    const el = document.getElementById("whereProgress");
+    if(el) el.innerText = "⭐ " + Math.min(whereIdx, whereOrder.length) + " / " + whereOrder.length;
   }
 
-  function finishTFGame(){
-    state.games.gTF = true; save(); updateBadges();
+  function finishWhereGame(){
+    state.games.gWhere = true; save(); updateBadges();
+    unlockSticker(3);
+    celebrate("whereWinTitle", "whereWinText", "whereWinEmoji");
+    checkAllCompleted();
+  }
+
+  // ==========================================
+  // SALAT TAYYORLA (Salat kochen)
+  // ==========================================
+  let saladOrder = [], saladIdx = 0, saladPicked = [];
+
+  function startSaladGame(){
+    saladOrder = shuffle([0,1,2,3,4]);
+    saladIdx = 0;
+    updateSaladProgress();
+    loadSaladRecipe();
+  }
+
+  function loadSaladRecipe(){
+    if(saladIdx >= saladOrder.length){ finishSaladGame(); return; }
+    const rec = recipes[saladOrder[saladIdx]];
+    const recName = (state.lang === "uz") ? rec.name.uz : rec.name.en;
+    document.getElementById("recipeBox").innerText = "🥗 " + recName;
+    document.getElementById("pickedRow").innerHTML = "";
+    renderSaladChoices(rec.needed);
+  }
+
+  function renderSaladChoices(needed){
+    saladPicked = [];
+    const box = document.getElementById("saladChoices");
+    box.innerHTML = "";
+    const opts = new Set(needed);
+    while(opts.size < 6){ opts.add(items[Math.floor(Math.random() * items.length)].k); }
+    shuffle([...opts]).forEach(optKey => {
+      const optItem = items.find(x => x.k === optKey);
+      const d = document.createElement("div");
+      d.className = "missItem missOpt";
+      d.innerHTML = `<img src="${optItem.img}" alt="">`;
+      d.onclick = () => pickSaladIngredient(d, optItem);
+      box.appendChild(d);
+    });
+  }
+
+  function pickSaladIngredient(d, optItem){
+    if(d.dataset.used === "1" || saladPicked.length >= 3) return;
+    d.dataset.used = "1";
+    d.classList.add("good");
+    saladPicked.push(optItem.k);
+    beepSuccess();
+    speakItem(optItem.k, 1);
+    const picked = document.createElement("div");
+    picked.className = "missItem";
+    picked.innerHTML = `<img src="${optItem.img}" alt="">`;
+    document.getElementById("pickedRow").appendChild(picked);
+    if(saladPicked.length === 3){
+      const rec = recipes[saladOrder[saladIdx]];
+      const isCorrect = rec.needed.every(k => saladPicked.includes(k));
+      if(isCorrect){
+        saladIdx++;
+        updateSaladProgress();
+        setTimeout(() => loadSaladRecipe(), 900);
+      } else {
+        beepFail();
+        const stage = document.getElementById("saladStage");
+        stage.classList.add("shake");
+        setTimeout(() => stage.classList.remove("shake"), 500);
+        setTimeout(() => {
+          document.querySelectorAll("#saladChoices .missItem").forEach(el => { el.classList.remove("good"); el.dataset.used = ""; });
+          saladPicked = [];
+          document.getElementById("pickedRow").innerHTML = "";
+        }, 700);
+      }
+    }
+  }
+
+  function updateSaladProgress(){
+    const el = document.getElementById("saladProgress");
+    if(el) el.innerText = "⭐ " + Math.min(saladIdx, 5) + " / 5";
+  }
+
+  function finishSaladGame(){
+    state.games.gSalad = true; save(); updateBadges();
     unlockSticker(4);
-    celebrate("tfWinTitle", "tfWinText", "tfWinEmoji");
+    celebrate("saladWinTitle", "saladWinText", "saladWinEmoji");
     checkAllCompleted();
   }
 
