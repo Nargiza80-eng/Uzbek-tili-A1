@@ -783,6 +783,7 @@
     const DEFAULTS = {
       mountId: "lessonHeader",
       title: "Dars",
+      subtitle: "",
       total: 10,
       learned: 0,
       homeHref: "index.html",
@@ -814,7 +815,7 @@
               <button class="topIcon" id="hdrHomeBtn" aria-label="Home" type="button">&#127968;</button>
               <div class="titleWrap">
                 <h1 class="title" id="hdrTitle">${opts.title}</h1>
-                <div class="sub" id="hdrSub">${learned} / ${opts.total} ${opts.learnedText || "o'rganildi"}</div>
+                <div class="sub" id="hdrSub">${opts.subtitle || ""}</div>
               </div>
               <button class="topIcon" id="hdrBookBtn" aria-label="Book" type="button">&#128214;</button>
             </div>
@@ -872,11 +873,8 @@
       const t = total ?? Number(header.getAttribute("data-total") || 10);
       const l = clamp(Number(learned ?? 0), 0, t);
       const pct = t ? (l / t) * 100 : 0;
-      const sub = header.querySelector("#hdrSub");
       const mini = header.querySelector("#hdrMini");
       const fill = header.querySelector("#hdrFill");
-      const label = learnedText || "o'rganildi";
-      if(sub) sub.textContent = `${l} / ${t} ${label}`;
       if(mini) mini.textContent = `${l} / ${t}`;
       if(fill) fill.style.width = pct + "%";
     };
@@ -945,6 +943,7 @@
     },
     en: {
       title: "Colors",
+      subtitle: "Lesson 4",
       learned: "learned",
       menuLearn: "Learn",
       menuMatch: "Find the Pair",
@@ -1129,6 +1128,8 @@
     // Update header
     const hTitle = document.getElementById("hdrTitle");
     if(hTitle) hTitle.innerText = T("title");
+    const hSub = document.getElementById("hdrSub");
+    if(hSub) hSub.innerText = T("subtitle") || "";
     updateHeaderProgress();
 
     document.getElementById("menuLearn").innerText    = T("menuLearn");
@@ -1725,6 +1726,7 @@ function initHeader(){
   renderLessonHeader({
     mountId: "lessonHeader",
     title: UI[state.lang].title,
+    subtitle: UI[state.lang].subtitle || "",
     total: items.length,
     learned: Object.values(state.learned).filter(Boolean).length,
     learnedText: UI[state.lang].learned || "o'rganildi",
