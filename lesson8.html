@@ -567,6 +567,20 @@
     .shkafLabel{font-weight:1000;font-size:15px;text-align:center;color:#9A3412;margin-bottom:8px;}
     .shkafItems{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
     .shkafPlaced img{width:40px;height:40px;object-fit:contain;}
+  
+    /* ====== KIYINISH PUPPE (Anzieh-Puppe) ====== */
+    .dollWrap{display:flex;flex-direction:column;align-items:center;gap:8px;background:linear-gradient(180deg,#FDF4FF,#FAE8FF);border:4px solid #fff;border-radius:22px;box-shadow:var(--shadowSoft);padding:14px;margin-top:14px;}
+    .dollZone{width:100%;min-height:76px;border:3px dashed #C4B5FD;border-radius:18px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:8px;cursor:pointer;transition:background .15s ease;}
+    .dollZone.hint{border-color:#F59E0B;background:rgba(245,158,11,0.10);}
+    .dollHead{font-size:54px;line-height:1;}
+    .dollTorso{width:82px;height:76px;background:linear-gradient(180deg,#BFDBFE,#93C5FD);border-radius:24px 24px 30px 30px;position:relative;}
+    .dollTorso::before,.dollTorso::after{content:"";position:absolute;top:12px;width:24px;height:52px;background:#93C5FD;border-radius:14px;}
+    .dollTorso::before{left:-19px;transform:rotate(14deg);}
+    .dollTorso::after{right:-19px;transform:rotate(-14deg);}
+    .dollLegs{display:flex;gap:14px;}
+    .dollLegs span{width:24px;height:42px;background:#93C5FD;border-radius:12px;display:block;}
+    .dollWorn{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;}
+    .dollWornItem img{width:52px;height:52px;object-fit:contain;background:#fff;border-radius:50%;border:3px solid #A78BFA;padding:2px;}
   </style>
 </head>
 <body>
@@ -621,16 +635,22 @@
   <!-- ANZIEHEN / KIYINISH -->
   <div class="panel" id="panel-kiy">
     <div class="panelTitle"><span id="panelTitleKiy">👗 Kiyinish!</span> <span class="badge" id="gKiyStatus">❓</span></div>
-    <p class="hint" id="hintKiy">Bu kiyim qayerga kiyiladi?</p>
-    <div class="tfCard" id="kiyCard">
-      <img class="tfImg" id="kiyImg" src="" alt="kiyim">
-      <div class="tfWord" id="kiyWord">doppi</div>
+    <p class="hint" id="hintKiy">Kiyimni qo'g'irchoqning to'g'ri joyiga torting!</p>
+    <div class="dollWrap">
+      <div class="dollZone" data-cat="bosh" id="doll-bosh">
+        <div class="dollHead">🧒</div>
+        <div class="dollWorn" id="worn-bosh"></div>
+      </div>
+      <div class="dollZone" data-cat="tana" id="doll-tana">
+        <div class="dollTorso"></div>
+        <div class="dollWorn" id="worn-tana"></div>
+      </div>
+      <div class="dollZone" data-cat="oyoq" id="doll-oyoq">
+        <div class="dollLegs"><span></span><span></span></div>
+        <div class="dollWorn" id="worn-oyoq"></div>
+      </div>
     </div>
-    <div class="tfBtns">
-      <button class="tfBtn yes" onclick="answerKiy('bosh')" id="btnHead">🧢 Bosh</button>
-      <button class="tfBtn mid" onclick="answerKiy('tana')" id="btnBody">👕 Tana</button>
-      <button class="tfBtn no" onclick="answerKiy('oyoq')" id="btnFeet">👢 Oyoq</button>
-    </div>
+    <div class="missRow" id="dollTray"></div>
     <div class="quizProgress" id="kiyProgress">⭐ 0 / 10</div>
     <div class="btnRow">
       <button class="btn primary" onclick="startKiyGame()" id="btnRefreshKiy">🔄 Yangilash</button>
@@ -821,7 +841,7 @@
       panelKir: "🧺 Kir yuvish",
       panelShkaf: "🪄 Sehrli shkaf",
       hintTest: "Rasmga qara va to'g'ri nomni tanla!",
-      hintKiy: "Bu kiyim qayerga kiyiladi?",
+      hintKiy: "Kiyimni qo'g'irchoqning to'g'ri joyiga torting!",
       hintKir: "To'g'ri kiyimni kir yuvish mashinasiga olib boring!",
       hintShkaf: "Kiyimlarni to'g'ri savatga joyla!",
       testQ: "Bu nima?",
@@ -840,7 +860,7 @@
       testWinText: "Siz testni muvaffaqiyatli tugatdingiz!",
       testWinEmoji: "🏆",
       kiyWinTitle: "Ajoyib! 👗",
-      kiyWinText: "Siz barcha kiyimlarni to'g'ri kiydingiz!",
+      kiyWinText: "Siz qo'g'irchoqni chiroyli kiyintirdingiz!",
       kiyWinEmoji: "🎉",
       kirWinTitle: "Ajoyib! 🧺",
       kirWinText: "Barcha kiyimlar toza bo'ldi!",
@@ -872,7 +892,7 @@
       panelKir: "🧺 Laundry",
       panelShkaf: "🪄 Magic wardrobe",
       hintTest: "Look at the picture and pick the correct name!",
-      hintKiy: "Where do you wear this?",
+      hintKiy: "Drag the clothes onto the doll!",
       hintKir: "Drag the right clothes into the washing machine!",
       hintShkaf: "Put the clothes into the right baskets!",
       testQ: "What is this?",
@@ -891,7 +911,7 @@
       testWinText: "You finished the test successfully!",
       testWinEmoji: "🏆",
       kiyWinTitle: "Amazing! 👗",
-      kiyWinText: "You put on all the clothes correctly!",
+      kiyWinText: "You dressed the doll nicely!",
       kiyWinEmoji: "🎉",
       kirWinTitle: "Amazing! 🧺",
       kirWinText: "All the clothes are clean now!",
@@ -1067,9 +1087,6 @@
     document.getElementById("btnCloseKiy").innerText   = T("btnClose");
     document.getElementById("btnCloseKir").innerText   = T("btnClose");
     document.getElementById("btnCloseShkaf").innerText = T("btnClose");
-    document.getElementById("btnHead").innerText = T("btnHead");
-    document.getElementById("btnBody").innerText = T("btnBody");
-    document.getElementById("btnFeet").innerText = T("btnFeet");
     document.getElementById("basketLabelBosh").innerText = T("basketHead");
     document.getElementById("basketLabelTana").innerText = T("basketBody");
     document.getElementById("basketLabelOyoq").innerText = T("basketFeet");
@@ -1246,45 +1263,87 @@
   }
 
   // ==========================================
-  // ANZIEHEN / KIYINISH (Wohin gehoert das Kleidungsstueck?)
+  // ANZIEHEN / KIYINISH (Puppe ankleiden)
   // ==========================================
-  let kiyOrder = [], kiyIdx = 0, kiyLock = false;
+  let kiyPlaced = 0, kiySelected = null;
 
   function startKiyGame(){
-    kiyOrder = shuffle(items.map(x => x.k));
-    kiyIdx = 0; kiyLock = false;
+    kiyPlaced = 0; kiySelected = null;
+    ["bosh","tana","oyoq"].forEach(c=>{
+      const w = document.getElementById("worn-"+c);
+      if(w) w.innerHTML = "";
+      const z = document.getElementById("doll-"+c);
+      if(z){
+        z.classList.remove("hint");
+        z.onclick = ()=>{ if(kiySelected) tryDollDrop(kiySelected, c); };
+      }
+    });
     updateKiyProgress();
-    nextKiyRound();
+    const tray = document.getElementById("dollTray");
+    tray.innerHTML = "";
+    shuffle(items.slice()).forEach(o=>{
+      const d = document.createElement("div");
+      d.className = "missItem dollItem";
+      d.dataset.k = o.k;
+      const im = document.createElement("img");
+      im.src = o.img; im.alt = "";
+      d.appendChild(im);
+      makeDraggable(d, dropOnDoll);
+      tray.appendChild(d);
+    });
   }
 
   function updateKiyProgress(){
     const el = document.getElementById("kiyProgress");
-    if(el) el.innerText = "⭐ " + Math.min(kiyIdx, kiyOrder.length) + " / " + kiyOrder.length;
+    if(el) el.innerText = "⭐ " + kiyPlaced + " / " + items.length;
   }
 
-  function nextKiyRound(){
-    if(kiyIdx >= kiyOrder.length){ finishKiyGame(); return; }
-    kiyLock = false;
-    const it = items.find(x => x.k === kiyOrder[kiyIdx]);
-    document.getElementById("kiyImg").src = it.img;
-    document.getElementById("kiyWord").innerText = (state.lang==="uz") ? it.uz : it.en;
-    speakItem(it.k, 1);
+  function dropOnDoll(el, x, y, isTap){
+    if(el.dataset.done === "1") return;
+    if(isTap){
+      if(kiySelected === el){
+        el.classList.remove("selected");
+        kiySelected = null;
+        ["bosh","tana","oyoq"].forEach(c=>document.getElementById("doll-"+c).classList.remove("hint"));
+      } else {
+        if(kiySelected) kiySelected.classList.remove("selected");
+        kiySelected = el;
+        el.classList.add("selected");
+        ["bosh","tana","oyoq"].forEach(c=>document.getElementById("doll-"+c).classList.add("hint"));
+      }
+      return;
+    }
+    const under = document.elementFromPoint(x, y);
+    const zone = under ? under.closest(".dollZone") : null;
+    if(!zone) return;
+    tryDollDrop(el, zone.dataset.cat);
   }
 
-  function answerKiy(picked){
-    if(kiyLock) return;
-    const correct = CAT[kiyOrder[kiyIdx]];
-    if(picked === correct){
-      kiyLock = true;
+  function tryDollDrop(el, cat){
+    if(el.dataset.done === "1") return;
+    if(CAT[el.dataset.k] === cat){
       beepSuccess();
-      const it = items.find(x => x.k === kiyOrder[kiyIdx]);
-      speakItem(it.k, 1);
-      setTimeout(()=>{ kiyIdx++; updateKiyProgress(); nextKiyRound(); }, 900);
+      el.dataset.done = "1";
+      el.classList.remove("selected", "dragging");
+      el.style.transform = "";
+      const it = items.find(z => z.k === el.dataset.k);
+      const mini = document.createElement("div");
+      mini.className = "dollWornItem";
+      mini.innerHTML = '<img src="' + it.img + '" alt="">';
+      document.getElementById("worn-" + cat).appendChild(mini);
+      el.style.display = "none";
+      if(kiySelected === el){
+        kiySelected = null;
+        ["bosh","tana","oyoq"].forEach(c=>document.getElementById("doll-"+c).classList.remove("hint"));
+      }
+      speakItem(el.dataset.k, 1);
+      kiyPlaced++;
+      updateKiyProgress();
+      if(kiyPlaced >= items.length) finishKiyGame();
     } else {
       beepFail();
-      const card = document.getElementById("kiyCard");
-      card.classList.add("shake");
-      setTimeout(()=>card.classList.remove("shake"), 500);
+      const z = document.getElementById("doll-" + cat);
+      if(z){ z.classList.add("shake"); setTimeout(()=>z.classList.remove("shake"), 500); }
     }
   }
 
