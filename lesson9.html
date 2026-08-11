@@ -546,20 +546,6 @@
     .door img{width:64px;height:64px;object-fit:contain;}
       .tfBtn.mid{background:linear-gradient(180deg,#60A5FA,#3B82F6);color:#fff;box-shadow:inset 0 -8px 0 rgba(0,0,0,0.15),var(--shadowSoft);}
 
-    /* ====== QAYERDA YURYAPTI (Zonen) ====== */
-    .zonaStage{display:flex;justify-content:center;margin-top:14px;min-height:120px;align-items:center;}
-    .zonaCard{flex-direction:column;width:110px;height:110px;border-radius:24px;padding:6px;}
-    .zonaCard img{width:64px;height:64px;object-fit:contain;}
-    .zonaWord{font-size:16px;font-weight:1000;color:var(--blue);margin-top:2px;}
-    .zonaZones{display:flex;gap:12px;justify-content:center;margin-top:14px;flex-wrap:wrap;}
-    .zonaZone{flex:1;min-width:100px;max-width:170px;border-radius:22px;border:4px solid #fff;box-shadow:var(--shadowSoft);padding:10px;min-height:120px;cursor:pointer;}
-    .zonaZone.sky{background:#E0F2FE;}
-    .zonaZone.road{background:#E5E7EB;}
-    .zonaZone.water{background:#DBEAFE;}
-    .zonaLabel{font-weight:1000;font-size:15px;text-align:center;color:#1E3A8A;margin-bottom:8px;}
-    .zonaItems{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
-    .zonaPlaced img{width:40px;height:40px;object-fit:contain;}
-
     /* ====== SAYOHAT (Reisen) ====== */
     .sayScenario{font-size:19px;font-weight:800;color:var(--ink);line-height:1.4;}
     /* ====== SEHRLI SHKAF (Sortieren) ====== */
@@ -589,9 +575,9 @@
       <h3 id="albumTitle" style="margin-top:0;">Mening Stikerlarim</h3>
       <div class="sticker-grid">
         <div id="stk_1" class="sticker-slot" style="--stk-color:#FEE2E2">🚌</div>
-        <div id="stk_2" class="sticker-slot" style="--stk-color:#EDE9FE">🌍</div>
-        <div id="stk_3" class="sticker-slot" style="--stk-color:#DCFCE7">🏁</div>
-        <div id="stk_4" class="sticker-slot" style="--stk-color:#FCE7F3">🧳</div>
+        <div id="stk_2" class="sticker-slot" style="--stk-color:#EDE9FE">🏁</div>
+        <div id="stk_3" class="sticker-slot" style="--stk-color:#DCFCE7">🧳</div>
+        <div id="stk_4" class="sticker-slot" style="--stk-color:#FCE7F3">🏆</div>
       </div>
       <br>
       <button class="mode-btn" onclick="toggleAlbum()" id="closeAlbumBtn">Yopish</button>
@@ -607,7 +593,6 @@
     <div class="mode-nav">
       <button class="mode-btn active" onclick="openSection('learn')"><span class="mode-ico">📘</span><span id="menuLearn">O'rganish</span></button>
       <button class="mode-btn" onclick="openSection('test')"><span class="mode-ico">🎯</span><span id="menuTest">Test</span></button>
-      <button class="mode-btn" onclick="openSection('zona')"><span class="mode-ico">🌍</span><span id="menuZona">Qayerda yuryapti?</span></button>
       <button class="mode-btn" onclick="openSection('garaj')"><span class="mode-ico">🏁</span><span id="menuGaraj">Garajga joyla!</span></button>
       <button class="mode-btn" onclick="openSection('sayohat')"><span class="mode-ico">🧳</span><span id="menuSayohat">Sayohatga chiqamiz!</span></button>
     </div>
@@ -617,23 +602,6 @@
   <div class="panel show" id="panel-learn">
     <div class="panelTitle" id="panelTitleLearn">📘 O'rganish</div>
     <div class="grid" id="vocabGrid"></div>
-  </div>
-
-  <!-- QAYERDA YURYAPTI -->
-  <div class="panel" id="panel-zona">
-    <div class="panelTitle"><span id="panelTitleZona">🌍 Qayerda yuryapti?</span> <span class="badge" id="gZonaStatus">❓</span></div>
-    <p class="hint" id="hintZona">Transportni to'g'ri joyga olib boring!</p>
-    <div class="zonaStage" id="zonaStage"></div>
-    <div class="zonaZones">
-      <div class="zonaZone sky" data-zone="osmon" id="zone-osmon"><div class="zonaLabel" id="zoneLabelOsmon">☁️ Osmon</div><div class="zonaItems"></div></div>
-      <div class="zonaZone road" data-zone="yol" id="zone-yol"><div class="zonaLabel" id="zoneLabelYol">🛣️ Yo'l</div><div class="zonaItems"></div></div>
-      <div class="zonaZone water" data-zone="suv" id="zone-suv"><div class="zonaLabel" id="zoneLabelSuv">🌊 Suv</div><div class="zonaItems"></div></div>
-    </div>
-    <div class="quizProgress" id="zonaProgress">⭐ 0 / 10</div>
-    <div class="btnRow">
-      <button class="btn primary" onclick="startZonaGame()" id="btnRefreshZona">🔄 Yangilash</button>
-      <button class="btn soft" onclick="closePanels()" id="btnCloseZona">✖ Yopish</button>
-    </div>
   </div>
 
   <!-- TEST -->
@@ -806,16 +774,13 @@
       learned: "o'rganildi",
       menuLearn: "O'rganish",
       menuTest: "Test",
-      menuZona: "Qayerda yuryapti?",
       menuGaraj: "Garajga joyla!",
       menuSayohat: "Sayohatga chiqamiz!",
       panelLearn: "📘 O'rganish",
       panelTest: "🎯 Test",
-      panelZona: "🌍 Qayerda yuryapti?",
       panelGaraj: "🏁 Garajga joyla!",
       panelSayohat: "🧳 Sayohatga chiqamiz!",
       hintTest: "Rasmga qara va to'g'ri nomni tanla!",
-      hintZona: "Transportni to'g'ri joyga olib boring!",
       hintGaraj: "Har bir transportni o'z garajiga joyla!",
       hintSayohat: "Eng yaxshi transportni tanla!",
       testQ: "Bu nima?",
@@ -833,9 +798,6 @@
       testWinTitle: "Ajoyib! 🎯",
       testWinText: "Siz testni muvaffaqiyatli tugatdingiz!",
       testWinEmoji: "🏆",
-      zonaWinTitle: "Ajoyib! 🌍",
-      zonaWinText: "Siz barcha transportlarni to'g'ri joyga qo'ydingiz!",
-      zonaWinEmoji: "🎉",
       garajWinTitle: "Ajoyib! 🏁",
       garajWinText: "Barcha transportlar o'z garajida!",
       garajWinEmoji: "🏆",
@@ -857,16 +819,13 @@
       learned: "learned",
       menuLearn: "Learn",
       menuTest: "Quiz",
-      menuZona: "Where does it go?",
       menuGaraj: "Park it!",
       menuSayohat: "Let's travel!",
       panelLearn: "📘 Learn",
       panelTest: "🎯 Quiz",
-      panelZona: "🌍 Where does it go?",
       panelGaraj: "🏁 Park it!",
       panelSayohat: "🧳 Let's travel!",
       hintTest: "Look at the picture and pick the correct name!",
-      hintZona: "Drag the vehicle to the right place!",
       hintGaraj: "Park every vehicle in its garage!",
       hintSayohat: "Pick the best vehicle!",
       testQ: "What is this?",
@@ -884,9 +843,6 @@
       testWinTitle: "Amazing! 🎯",
       testWinText: "You finished the test successfully!",
       testWinEmoji: "🏆",
-      zonaWinTitle: "Amazing! 🌍",
-      zonaWinText: "You put every vehicle in the right place!",
-      zonaWinEmoji: "🎉",
       garajWinTitle: "Amazing! 🏁",
       garajWinText: "All vehicles are in their garages!",
       garajWinEmoji: "🏆",
@@ -918,10 +874,6 @@
   ];
 
   // Vehicle groups for the games
-  const ZONE = {
-    samolyot:"osmon", vertolyot:"osmon", kema:"suv",
-    mashina:"yol", avtobus:"yol", poyezd:"yol", velosiped:"yol", metro:"yol", taksi:"yol", tramvay:"yol"
-  };
   const GARAGE = {
     poyezd:"temir", tramvay:"temir", metro:"temir",
     mashina:"shahar", avtobus:"shahar", taksi:"shahar", velosiped:"shahar",
@@ -956,7 +908,7 @@
     {k:"mashina",   uz:"Oila bilan dam olishga boramiz.", en:"The family goes on a weekend trip."}
   ];
 
-  let state = { lang:"uz", stars:{}, learned:{}, games:{gTest:false,gZona:false,gGaraj:false,gSayohat:false}, learnCelebrated:false };
+  let state = { lang:"uz", stars:{}, learned:{}, games:{gTest:false,gGaraj:false,gSayohat:false}, learnCelebrated:false };
 
   function save(){ localStorage.setItem(LESSON_ID, JSON.stringify(state)); }
   function load(){
@@ -967,7 +919,7 @@
       state.lang = s.lang || "uz";
       state.stars = s.stars || {};
       state.learned = s.learned || {};
-      state.games = Object.assign({gTest:false,gZona:false,gGaraj:false,gSayohat:false}, s.games || {});
+      state.games = Object.assign({gTest:false,gGaraj:false,gSayohat:false}, s.games || {});
       state.learnCelebrated = s.learnCelebrated || false;
     }catch(e){}
   }
@@ -996,10 +948,11 @@
   }
 
   function checkAllCompleted(){
-    if(state.games.gTest && state.games.gZona && state.games.gGaraj && state.games.gSayohat){
+    if(state.games.gTest && state.games.gGaraj && state.games.gSayohat){
       const ALL_DONE_KEY = LESSON_ID + "_all_done";
       if(localStorage.getItem(ALL_DONE_KEY) !== "1"){
         localStorage.setItem(ALL_DONE_KEY, "1");
+        unlockSticker(4);
         unlockNextLessonFlag();
         celebrate("allDoneTitle", "allDoneText", "🏆");
       }
@@ -1039,7 +992,7 @@
 
     // Menu button highlighting - swap active class
     document.querySelectorAll(".mode-nav .mode-btn").forEach(b=>b.classList.remove("active"));
-    const sectionMap = {"learn":0, "test":1, "zona":2, "garaj":3, "sayohat":4};
+    const sectionMap = {"learn":0, "test":1, "garaj":2, "sayohat":3};
     const idx = sectionMap[name];
     if(idx !== undefined){
       const buttons = document.querySelectorAll(".mode-nav .mode-btn");
@@ -1050,7 +1003,6 @@
     if(panel) panel.classList.add("show");
 
     if(name==="test") startTestGame();
-    if(name==="zona") startZonaGame();
     if(name==="garaj") startGarajGame();
     if(name==="sayohat") startSayohatGame();
 
@@ -1070,32 +1022,24 @@
 
     document.getElementById("menuLearn").innerText      = T("menuLearn");
     document.getElementById("menuTest").innerText       = T("menuTest");
-    document.getElementById("menuZona").innerText       = T("menuZona");
     document.getElementById("menuGaraj").innerText      = T("menuGaraj");
     document.getElementById("menuSayohat").innerText    = T("menuSayohat");
 
     document.getElementById("panelTitleLearn").innerText     = T("panelLearn");
     document.getElementById("panelTitleTest").innerText      = T("panelTest");
-    document.getElementById("panelTitleZona").innerText      = T("panelZona");
     document.getElementById("panelTitleGaraj").innerText     = T("panelGaraj");
     document.getElementById("panelTitleSayohat").innerText   = T("panelSayohat");
 
     document.getElementById("hintTest").innerText      = T("hintTest");
-    document.getElementById("hintZona").innerText      = T("hintZona");
     document.getElementById("hintGaraj").innerText     = T("hintGaraj");
     document.getElementById("hintSayohat").innerText   = T("hintSayohat");
 
     document.getElementById("btnRefreshTest").innerText  = T("btnRefresh");
-    document.getElementById("btnRefreshZona").innerText    = T("btnRefresh");
     document.getElementById("btnRefreshGaraj").innerText   = T("btnRefresh");
     document.getElementById("btnRefreshSayohat").innerText = T("btnRefresh");
     document.getElementById("btnCloseTest").innerText  = T("btnClose");
-    document.getElementById("btnCloseZona").innerText    = T("btnClose");
     document.getElementById("btnCloseGaraj").innerText   = T("btnClose");
     document.getElementById("btnCloseSayohat").innerText = T("btnClose");
-    document.getElementById("zoneLabelOsmon").innerText = T("zoneOsmon");
-    document.getElementById("zoneLabelYol").innerText = T("zoneYol");
-    document.getElementById("zoneLabelSuv").innerText = T("zoneSuv");
     document.getElementById("garajLabelTemir").innerText = T("garajTemir");
     document.getElementById("garajLabelShahar").innerText = T("garajShahar");
     document.getElementById("garajLabelSuvhavo").innerText = T("garajSuvhavo");
@@ -1122,7 +1066,6 @@
     updateAllTexts();
     renderVocab();
     if(document.getElementById("panel-test").classList.contains("show")) startTestGame();
-    if(document.getElementById("panel-zona").classList.contains("show")) startZonaGame();
     if(document.getElementById("panel-garaj").classList.contains("show")) startGarajGame();
     if(document.getElementById("panel-sayohat").classList.contains("show")) startSayohatGame();
   }
@@ -1144,7 +1087,6 @@
       el.innerText = done ? T("badgeDone") : T("badgeUnknown");
     };
     setBadge("gTestStatus",  state.games.gTest);
-    setBadge("gZonaStatus",    state.games.gZona);
     setBadge("gGarajStatus",   state.games.gGaraj);
     setBadge("gSayohatStatus", state.games.gSayohat);
   }
@@ -1269,90 +1211,6 @@
 
   function closeCelebrate(){
     document.getElementById("celebrateOverlay").classList.remove("show");
-  }
-
-  // ==========================================
-  // QAYERDA YURYAPTI? (Wo faehrt es?)
-  // ==========================================
-  let zonaOrder = [], zonaIdx = 0, zonaLock = false, zonaKey = "";
-
-  function startZonaGame(){
-    zonaOrder = shuffle(items.map(x => x.k));
-    zonaIdx = 0; zonaLock = false;
-    ["osmon","yol","suv"].forEach(z=>{
-      const box = document.querySelector("#zone-" + z + " .zonaItems");
-      if(box) box.innerHTML = "";
-      const el = document.getElementById("zone-" + z);
-      if(el) el.onclick = ()=>tryZonaDrop(z);
-    });
-    updateZonaProgress();
-    nextZonaRound();
-  }
-
-  function updateZonaProgress(){
-    const el = document.getElementById("zonaProgress");
-    if(el) el.innerText = "⭐ " + Math.min(zonaIdx, zonaOrder.length) + " / " + zonaOrder.length;
-  }
-
-  function nextZonaRound(){
-    if(zonaIdx >= zonaOrder.length){ finishZonaGame(); return; }
-    zonaLock = false;
-    const it = items.find(x => x.k === zonaOrder[zonaIdx]);
-    zonaKey = it.k;
-    speakItem(it.k, 1);
-    const stage = document.getElementById("zonaStage");
-    stage.innerHTML = "";
-    const d = document.createElement("div");
-    d.className = "missItem zonaCard";
-    d.dataset.k = it.k;
-    const im = document.createElement("img");
-    im.src = it.img; im.alt = "";
-    d.appendChild(im);
-    const w = document.createElement("div");
-    w.className = "zonaWord";
-    w.innerText = (state.lang==="uz") ? it.uz : it.en;
-    d.appendChild(w);
-    makeDraggable(d, dropOnZona);
-    stage.appendChild(d);
-  }
-
-  function dropOnZona(el, x, y, isTap){
-    if(zonaLock) return;
-    if(isTap) return; // Tippen auf eine Zone genuegt
-    const under = document.elementFromPoint(x, y);
-    const zone = under ? under.closest(".zonaZone") : null;
-    if(!zone) return;
-    tryZonaDrop(zone.dataset.zone);
-  }
-
-  function tryZonaDrop(zone){
-    if(zonaLock || !zonaKey) return;
-    if(ZONE[zonaKey] === zone){
-      zonaLock = true;
-      beepSuccess();
-      speakItem(zonaKey, 1);
-      const it = items.find(z => z.k === zonaKey);
-      const mini = document.createElement("div");
-      mini.className = "zonaPlaced";
-      mini.innerHTML = '<img src="' + it.img + '" alt="">';
-      document.querySelector("#zone-" + zone + " .zonaItems").appendChild(mini);
-      const stage = document.getElementById("zonaStage");
-      stage.innerHTML = "";
-      setTimeout(()=>{ zonaIdx++; updateZonaProgress(); nextZonaRound(); }, 900);
-    } else {
-      beepFail(); // lustiges Hupen
-      const b = document.getElementById("zone-" + zone);
-      if(b){ b.classList.add("shake"); setTimeout(()=>b.classList.remove("shake"), 500); }
-      const card = document.querySelector(".zonaCard");
-      if(card){ card.classList.add("shake"); setTimeout(()=>card.classList.remove("shake"), 500); }
-    }
-  }
-
-  function finishZonaGame(){
-    state.games.gZona = true; save(); updateBadges();
-    unlockSticker(2);
-    celebrate("zonaWinTitle", "zonaWinText", "zonaWinEmoji");
-    checkAllCompleted();
   }
 
   // ==========================================
@@ -1527,7 +1385,7 @@
 
   function finishGarajGame(){
     state.games.gGaraj = true; save(); updateBadges();
-    unlockSticker(3);
+    unlockSticker(2);
     celebrate("garajWinTitle", "garajWinText", "garajWinEmoji");
     checkAllCompleted();
   }
@@ -1591,7 +1449,7 @@
 
   function finishSayohatGame(){
     state.games.gSayohat = true; save(); updateBadges();
-    unlockSticker(4);
+    unlockSticker(3);
     celebrate("sayohatWinTitle", "sayohatWinText", "sayohatWinEmoji");
     checkAllCompleted();
   }
