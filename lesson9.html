@@ -554,6 +554,18 @@
     .shkafLabel{font-weight:1000;font-size:15px;text-align:center;color:#9A3412;margin-bottom:8px;}
     .shkafItems{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
     .shkafPlaced img{width:40px;height:40px;object-fit:contain;}
+
+    /* ====== OVOZIDAN TOP (Sound-Ritter) ====== */
+    .ovozStage{position:relative;background:#0B1026;border-radius:22px;overflow:hidden;border:4px solid #fff;box-shadow:var(--shadowSoft);margin-top:12px;min-height:170px;padding:20px 10px;}
+    .ovozFog{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:56px;background:radial-gradient(circle at 30% 40%,rgba(148,163,184,.55),rgba(15,23,42,.96) 72%),linear-gradient(180deg,#334155,#0F172A);transition:opacity .8s ease;z-index:5;animation:fogMove 3s ease-in-out infinite;}
+    .ovozFog.lift{opacity:0;pointer-events:none;}
+    @keyframes fogMove{0%,100%{filter:brightness(1);}50%{filter:brightness(1.3);}}
+    .ovozOpt{background:#fff;border-radius:20px;border:4px solid #E5E7EB;padding:10px;cursor:pointer;width:118px;box-shadow:0 8px 18px rgba(0,0,0,.25);transition:transform .15s ease;touch-action:manipulation;}
+    .ovozOpt img{width:96px;height:96px;object-fit:contain;display:block;margin:0 auto;}
+    .ovozOpt:active{transform:scale(.95);}
+    .ovozOpt.good{border-color:var(--good);background:#ECFDF5;animation:ovozFly .8s ease;}
+    .ovozOpt.bad{border-color:var(--bad);background:#FEF2F2;}
+    @keyframes ovozFly{0%{transform:scale(1);}50%{transform:scale(1.3) translateY(-16px) rotate(-4deg);}100%{transform:scale(1.12);}}
   </style>
 </head>
 <body>
@@ -578,6 +590,7 @@
         <div id="stk_2" class="sticker-slot" style="--stk-color:#EDE9FE">🏁</div>
         <div id="stk_3" class="sticker-slot" style="--stk-color:#DCFCE7">🧳</div>
         <div id="stk_4" class="sticker-slot" style="--stk-color:#FCE7F3">🏆</div>
+        <div id="stk_5" class="sticker-slot" style="--stk-color:#DBEAFE">🔊</div>
       </div>
       <br>
       <button class="mode-btn" onclick="toggleAlbum()" id="closeAlbumBtn">Yopish</button>
@@ -595,6 +608,7 @@
       <button class="mode-btn" onclick="openSection('test')"><span class="mode-ico">🎯</span><span id="menuTest">Test</span></button>
       <button class="mode-btn" onclick="openSection('garaj')"><span class="mode-ico">🏁</span><span id="menuGaraj">Garajga joyla!</span></button>
       <button class="mode-btn" onclick="openSection('sayohat')"><span class="mode-ico">🧳</span><span id="menuSayohat">Sayohatga chiqamiz!</span></button>
+      <button class="mode-btn" onclick="openSection('ovoz')"><span class="mode-ico">🔊</span><span id="menuOvoz">Ovozidan top!</span></button>
     </div>
   </div>
 
@@ -650,6 +664,24 @@
     <div class="btnRow">
       <button class="btn primary" onclick="startSayohatGame()" id="btnRefreshSayohat">🔄 Yangilash</button>
       <button class="btn soft" onclick="closePanels()" id="btnCloseSayohat">✖ Yopish</button>
+    </div>
+  </div>
+
+  <!-- OVOZIDAN TOP (Sound-Ritter) -->
+  <div class="panel" id="panel-ovoz">
+    <div class="panelTitle"><span id="panelTitleOvoz">🔊 Ovozidan top!</span> <span class="badge" id="gOvozStatus">❓</span></div>
+    <p class="hint" id="hintOvoz">Ovozni eshit va to'g'ri transportni top!</p>
+    <div class="ovozStage" id="ovozStage">
+      <div class="choiceRow" id="ovozOptions" style="margin-top:2px;"></div>
+      <div class="ovozFog" id="ovozFog">👂</div>
+    </div>
+    <div class="btnRow">
+      <button class="btn soft" onclick="ovozReplay()" id="btnOvozReplay" style="min-width:150px;">🔁 Ovoz</button>
+    </div>
+    <div class="quizProgress" id="ovozProgress">⭐ 0 / 6</div>
+    <div class="btnRow">
+      <button class="btn primary" onclick="startOvozGame()" id="btnRefreshOvoz">🔄 Yangilash</button>
+      <button class="btn soft" onclick="closePanels()" id="btnCloseOvoz">✖ Yopish</button>
     </div>
   </div>
 
@@ -776,13 +808,16 @@
       menuTest: "Test",
       menuGaraj: "Garajga joyla!",
       menuSayohat: "Sayohatga chiqamiz!",
+      menuOvoz: "Ovozidan top!",
       panelLearn: "📘 O'rganish",
       panelTest: "🎯 Test",
       panelGaraj: "🏁 Garajga joyla!",
       panelSayohat: "🧳 Sayohatga chiqamiz!",
+      panelOvoz: "🔊 Ovozidan top!",
       hintTest: "Rasmga qara va to'g'ri nomni tanla!",
       hintGaraj: "Har bir transportni o'z garajiga joyla!",
       hintSayohat: "Eng yaxshi transportni tanla!",
+      hintOvoz: "Ovozni eshit va to'g'ri transportni top!",
       testQ: "Bu nima?",
       zoneOsmon: "☁️ Osmon",
       zoneYol: "🛣️ Yo'l",
@@ -793,6 +828,7 @@
       sayohatQ: "Biz nimada boramiz?",
       btnRefresh: "🔄 Yangilash",
       btnClose: "✖ Yopish",
+      btnOvozReplay: "🔁 Ovoz",
       badgeDone: "✅ Bajarildi",
       badgeUnknown: "❓",
       testWinTitle: "Ajoyib! 🎯",
@@ -804,6 +840,9 @@
       sayohatWinTitle: "Ajoyib! 🧳",
       sayohatWinText: "Siz barcha sayohatlarni to'g'ri rejalashtirdingiz!",
       sayohatWinEmoji: "✈️",
+      ovozWinTitle: "Ajoyib! 🔊",
+      ovozWinText: "Siz barcha ovozlarni to'g'ri topdingiz!",
+      ovozWinEmoji: "🎧",
       learnWinTitle: "Ajoyib! 📘",
       learnWinText: "Siz barcha 10 transportni o'rganib oldingiz!",
       learnWinEmoji: "📚",
@@ -821,13 +860,16 @@
       menuTest: "Quiz",
       menuGaraj: "Park it!",
       menuSayohat: "Let's travel!",
+      menuOvoz: "Guess the sound!",
       panelLearn: "📘 Learn",
       panelTest: "🎯 Quiz",
       panelGaraj: "🏁 Park it!",
       panelSayohat: "🧳 Let's travel!",
+      panelOvoz: "🔊 Guess the sound!",
       hintTest: "Look at the picture and pick the correct name!",
       hintGaraj: "Park every vehicle in its garage!",
       hintSayohat: "Pick the best vehicle!",
+      hintOvoz: "Listen and tap the right vehicle!",
       testQ: "What is this?",
       zoneOsmon: "☁️ Sky",
       zoneYol: "🛣️ Road",
@@ -838,6 +880,7 @@
       sayohatQ: "How do we get there?",
       btnRefresh: "🔄 Refresh",
       btnClose: "✖ Close",
+      btnOvozReplay: "🔁 Sound",
       badgeDone: "✅ Done",
       badgeUnknown: "❓",
       testWinTitle: "Amazing! 🎯",
@@ -849,6 +892,9 @@
       sayohatWinTitle: "Amazing! 🧳",
       sayohatWinText: "You planned all the trips correctly!",
       sayohatWinEmoji: "✈️",
+      ovozWinTitle: "Amazing! 🔊",
+      ovozWinText: "You found all the sounds!",
+      ovozWinEmoji: "🎧",
       learnWinTitle: "Excellent! 📘",
       learnWinText: "You learned all 10 vehicles!",
       learnWinEmoji: "📚",
@@ -908,7 +954,7 @@
     {k:"mashina",   uz:"Oila bilan dam olishga boramiz.", en:"The family goes on a weekend trip."}
   ];
 
-  let state = { lang:"uz", stars:{}, learned:{}, games:{gTest:false,gGaraj:false,gSayohat:false}, learnCelebrated:false };
+  let state = { lang:"uz", stars:{}, learned:{}, games:{gTest:false,gGaraj:false,gSayohat:false,gOvoz:false}, learnCelebrated:false };
 
   function save(){ localStorage.setItem(LESSON_ID, JSON.stringify(state)); }
   function load(){
@@ -919,7 +965,7 @@
       state.lang = s.lang || "uz";
       state.stars = s.stars || {};
       state.learned = s.learned || {};
-      state.games = Object.assign({gTest:false,gGaraj:false,gSayohat:false}, s.games || {});
+      state.games = Object.assign({gTest:false,gGaraj:false,gSayohat:false,gOvoz:false}, s.games || {});
       state.learnCelebrated = s.learnCelebrated || false;
     }catch(e){}
   }
@@ -948,7 +994,7 @@
   }
 
   function checkAllCompleted(){
-    if(state.games.gTest && state.games.gGaraj && state.games.gSayohat){
+    if(state.games.gTest && state.games.gGaraj && state.games.gSayohat && state.games.gOvoz){
       const ALL_DONE_KEY = LESSON_ID + "_all_done";
       if(localStorage.getItem(ALL_DONE_KEY) !== "1"){
         localStorage.setItem(ALL_DONE_KEY, "1");
@@ -992,7 +1038,7 @@
 
     // Menu button highlighting - swap active class
     document.querySelectorAll(".mode-nav .mode-btn").forEach(b=>b.classList.remove("active"));
-    const sectionMap = {"learn":0, "test":1, "garaj":2, "sayohat":3};
+    const sectionMap = {"learn":0, "test":1, "garaj":2, "sayohat":3, "ovoz":4};
     const idx = sectionMap[name];
     if(idx !== undefined){
       const buttons = document.querySelectorAll(".mode-nav .mode-btn");
@@ -1005,6 +1051,7 @@
     if(name==="test") startTestGame();
     if(name==="garaj") startGarajGame();
     if(name==="sayohat") startSayohatGame();
+    if(name==="ovoz") startOvozGame();
 
     panel?.scrollIntoView({behavior:"smooth", block:"start"});
   }
@@ -1024,22 +1071,28 @@
     document.getElementById("menuTest").innerText       = T("menuTest");
     document.getElementById("menuGaraj").innerText      = T("menuGaraj");
     document.getElementById("menuSayohat").innerText    = T("menuSayohat");
+    document.getElementById("menuOvoz").innerText       = T("menuOvoz");
 
     document.getElementById("panelTitleLearn").innerText     = T("panelLearn");
     document.getElementById("panelTitleTest").innerText      = T("panelTest");
     document.getElementById("panelTitleGaraj").innerText     = T("panelGaraj");
     document.getElementById("panelTitleSayohat").innerText   = T("panelSayohat");
+    document.getElementById("panelTitleOvoz").innerText      = T("panelOvoz");
 
     document.getElementById("hintTest").innerText      = T("hintTest");
     document.getElementById("hintGaraj").innerText     = T("hintGaraj");
     document.getElementById("hintSayohat").innerText   = T("hintSayohat");
+    document.getElementById("hintOvoz").innerText      = T("hintOvoz");
 
     document.getElementById("btnRefreshTest").innerText  = T("btnRefresh");
     document.getElementById("btnRefreshGaraj").innerText   = T("btnRefresh");
     document.getElementById("btnRefreshSayohat").innerText = T("btnRefresh");
+    document.getElementById("btnRefreshOvoz").innerText    = T("btnRefresh");
     document.getElementById("btnCloseTest").innerText  = T("btnClose");
     document.getElementById("btnCloseGaraj").innerText   = T("btnClose");
     document.getElementById("btnCloseSayohat").innerText = T("btnClose");
+    document.getElementById("btnCloseOvoz").innerText    = T("btnClose");
+    document.getElementById("btnOvozReplay").innerText   = T("btnOvozReplay");
     document.getElementById("garajLabelTemir").innerText = T("garajTemir");
     document.getElementById("garajLabelShahar").innerText = T("garajShahar");
     document.getElementById("garajLabelSuvhavo").innerText = T("garajSuvhavo");
@@ -1068,6 +1121,7 @@
     if(document.getElementById("panel-test").classList.contains("show")) startTestGame();
     if(document.getElementById("panel-garaj").classList.contains("show")) startGarajGame();
     if(document.getElementById("panel-sayohat").classList.contains("show")) startSayohatGame();
+    if(document.getElementById("panel-ovoz").classList.contains("show")) startOvozGame();
   }
 
   function starsText(n){
@@ -1089,6 +1143,7 @@
     setBadge("gTestStatus",  state.games.gTest);
     setBadge("gGarajStatus",   state.games.gGaraj);
     setBadge("gSayohatStatus", state.games.gSayohat);
+    setBadge("gOvozStatus",    state.games.gOvoz);
   }
 
   let audioCtx=null;
@@ -1451,6 +1506,173 @@
     state.games.gSayohat = true; save(); updateBadges();
     unlockSticker(3);
     celebrate("sayohatWinTitle", "sayohatWinText", "sayohatWinEmoji");
+    checkAllCompleted();
+  }
+
+  // ==========================================
+  // OVOZIDAN TOP! (Erkenne das Geraeusch / Sound-Ritter)
+  // ==========================================
+  const OVOZ_KEYS = ["poyezd","velosiped","mashina","samolyot","kema","vertolyot"];
+  let ovozOrder=[], ovozIdx=0, ovozLock=false, ovozKey="", ovozTimer=null;
+
+  function actx(){
+    if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==="suspended") audioCtx.resume();
+    return audioCtx;
+  }
+  function ovozNoiseBuf(c){
+    const b=c.createBuffer(1, c.sampleRate*2, c.sampleRate);
+    const d=b.getChannelData(0);
+    for(let i=0;i<d.length;i++) d[i]=Math.random()*2-1;
+    return b;
+  }
+  function ovozTone(freq,dur,type,when,vol,slideTo){
+    try{
+      const c=actx(), t=c.currentTime+when;
+      const o=c.createOscillator(), g=c.createGain();
+      o.type=type||"sine";
+      o.frequency.setValueAtTime(freq,t);
+      if(slideTo) o.frequency.exponentialRampToValueAtTime(slideTo,t+dur);
+      g.gain.setValueAtTime(0.0001,t);
+      g.gain.exponentialRampToValueAtTime(vol||0.25,t+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+      o.connect(g); g.connect(c.destination);
+      o.start(t); o.stop(t+dur+0.05);
+    }catch(e){}
+  }
+  function ovozNoise(dur,when,vol,fFreq,q){
+    try{
+      const c=actx(), t=c.currentTime+when;
+      const src=c.createBufferSource(); src.buffer=ovozNoiseBuf(c);
+      const f=c.createBiquadFilter(); f.type="bandpass"; f.frequency.value=fFreq||800; f.Q.value=q||1;
+      const g=c.createGain();
+      g.gain.setValueAtTime(0.0001,t);
+      g.gain.exponentialRampToValueAtTime(vol||0.3,t+0.03);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+      src.connect(f); f.connect(g); g.connect(c.destination);
+      src.start(t); src.stop(t+dur+0.05);
+    }catch(e){}
+  }
+
+  // Synthetische Geraeusche (Platzhalter bis echte Aufnahmen kommen)
+  function ovozPlaySound(key){
+    if(key==="poyezd"){            // Zug: Pfeife + Rattern
+      ovozTone(740,0.35,"sine",0,0.22); ovozTone(932,0.35,"sine",0,0.16);
+      for(let i=0;i<5;i++){ ovozNoise(0.12,0.5+i*0.3,0.4,500,2); ovozNoise(0.09,0.65+i*0.3,0.25,300,2); }
+    }
+    else if(key==="velosiped"){    // Fahrradklingel: ding-ding
+      for(let i=0;i<2;i++){ ovozTone(1760,0.26,"sine",i*0.62,0.3); ovozTone(1760,0.26,"sine",i*0.62+0.3,0.3); }
+    }
+    else if(key==="mashina"){      // Autohupe: tuut-tuut-tuuut
+      ovozTone(370,0.2,"square",0,0.18); ovozTone(370,0.2,"square",0.32,0.18); ovozTone(294,0.55,"square",0.68,0.18);
+    }
+    else if(key==="samolyot"){     // Flugzeug: Triebwerk-Rauschen
+      try{
+        const c=actx(), t=c.currentTime;
+        const src=c.createBufferSource(); src.buffer=ovozNoiseBuf(c);
+        const f=c.createBiquadFilter(); f.type="lowpass";
+        f.frequency.setValueAtTime(400,t);
+        f.frequency.exponentialRampToValueAtTime(1800,t+1.8);
+        const g=c.createGain();
+        g.gain.setValueAtTime(0.0001,t);
+        g.gain.exponentialRampToValueAtTime(0.3,t+0.4);
+        g.gain.exponentialRampToValueAtTime(0.0001,t+2);
+        src.connect(f); f.connect(g); g.connect(c.destination);
+        src.start(t); src.stop(t+2.1);
+      }catch(e){}
+    }
+    else if(key==="kema"){         // Schiffshorn: tief, zwei Stoesse
+      ovozTone(98,0.7,"sawtooth",0,0.3); ovozTone(147,0.7,"sawtooth",0,0.14);
+      ovozTone(98,0.7,"sawtooth",0.95,0.3); ovozTone(147,0.7,"sawtooth",0.95,0.14);
+    }
+    else if(key==="vertolyot"){    // Hubschrauber: Rotor-Hacken
+      try{
+        const c=actx(), t=c.currentTime;
+        const o=c.createOscillator(); o.type="triangle"; o.frequency.value=82;
+        const lfo=c.createOscillator(); lfo.type="square"; lfo.frequency.value=11;
+        const lg=c.createGain(); lg.gain.value=0.22;
+        const g=c.createGain(); g.gain.setValueAtTime(0.26,t);
+        lfo.connect(lg); lg.connect(g.gain);
+        o.connect(g); g.connect(c.destination);
+        o.start(t); lfo.start(t); o.stop(t+1.9); lfo.stop(t+1.9);
+        ovozNoise(1.9,0,0.07,1200,0.7);
+      }catch(e){}
+    }
+  }
+
+  function startOvozGame(){
+    if(ovozTimer){ clearTimeout(ovozTimer); ovozTimer=null; }
+    ovozOrder=shuffle(OVOZ_KEYS); ovozIdx=0; ovozLock=false;
+    updateOvozProgress();
+    nextOvozRound();
+  }
+
+  function updateOvozProgress(){
+    const el=document.getElementById("ovozProgress");
+    if(el) el.innerText="⭐ "+Math.min(ovozIdx,ovozOrder.length)+" / "+ovozOrder.length;
+  }
+
+  function nextOvozRound(){
+    if(ovozIdx>=ovozOrder.length){ finishOvozGame(); return; }
+    ovozLock=true;
+    ovozKey=ovozOrder[ovozIdx];
+    const fog=document.getElementById("ovozFog");
+    fog.classList.remove("lift");
+    document.getElementById("ovozOptions").innerHTML="";
+    ovozPlaySound(ovozKey);
+    // Nach 2 Sekunden Sound klappt der Nebel auf
+    ovozTimer=setTimeout(()=>{
+      const it=items.find(x=>x.k===ovozKey);
+      const others=shuffle(items.filter(x=>x.k!==ovozKey)).slice(0,2);
+      const opts=shuffle([it].concat(others));
+      const row=document.getElementById("ovozOptions");
+      row.innerHTML="";
+      opts.forEach(o=>{
+        const b=document.createElement("button");
+        b.className="ovozOpt";
+        b.innerHTML='<img src="'+o.img+'" alt="'+((state.lang==="uz")?o.uz:o.en)+'">';
+        b.onclick=()=>pickOvozOption(b, o.k===ovozKey);
+        row.appendChild(b);
+      });
+      fog.classList.add("lift");
+      ovozLock=false;
+    }, 2000);
+  }
+
+  function ovozReplay(){
+    if(ovozKey && ovozIdx<ovozOrder.length && !ovozLock) ovozPlaySound(ovozKey);
+  }
+
+  function pickOvozOption(btn, ok){
+    if(ovozLock) return;
+    if(ok){
+      ovozLock=true;
+      btn.classList.add("good");
+      beepSuccess();
+      ovozPlaySound(ovozKey);   // hupt noch einmal
+      const it=items.find(x=>x.k===ovozKey);
+      markGlobalLearned(ovozKey);
+      try{
+        const u1=new SpeechSynthesisUtterance((state.lang==="uz") ? ("Bu – "+it.uz+"!") : ("This is the "+it.en+"!"));
+        u1.lang=(state.lang==="uz")?"uz-UZ":"en-US"; u1.rate=0.95;
+        const u2=new SpeechSynthesisUtterance((state.lang==="uz") ? "Topdingiz! Ofarin!" : "You got it! Great!");
+        u2.lang=(state.lang==="uz")?"uz-UZ":"en-US"; u2.rate=0.95;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(u1);
+        window.speechSynthesis.speak(u2);
+      }catch(e){}
+      ovozTimer=setTimeout(()=>{ ovozIdx++; updateOvozProgress(); nextOvozRound(); }, 2200);
+    } else {
+      btn.classList.add("bad");
+      beepFail();
+      setTimeout(()=>btn.classList.remove("bad"),500);
+    }
+  }
+
+  function finishOvozGame(){
+    state.games.gOvoz=true; save(); updateBadges();
+    unlockSticker(5);
+    celebrate("ovozWinTitle","ovozWinText","ovozWinEmoji");
     checkAllCompleted();
   }
 
