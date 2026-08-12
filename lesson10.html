@@ -628,9 +628,9 @@
     <div class="mode-nav">
       <button class="mode-btn active" onclick="openSection('learn')"><span class="mode-ico">📘</span><span id="menuLearn">O'rganish</span></button>
       <button class="mode-btn" onclick="openSection('test')"><span class="mode-ico">🎯</span><span id="menuTest">Test</span></button>
-      <button class="mode-btn" onclick="openSection('runner')"><span class="mode-ico">🏃</span><span id="menuRunner">Erta labdan kechgacha</span></button>
-      <button class="mode-btn" onclick="openSection('fener')"><span class="mode-ico">🔦</span><span id="menuFener">Kim nima qilyapti?</span></button>
       <button class="mode-btn" onclick="openSection('soat')"><span class="mode-ico">🕰️</span><span id="menuSoat">Sehrli soat</span></button>
+      <button class="mode-btn" onclick="openSection('runner')"><span class="mode-ico">🏃</span><span id="menuRunner">Ertalabdan kechgacha</span></button>
+      <button class="mode-btn" onclick="openSection('fener')"><span class="mode-ico">🔦</span><span id="menuFener">Kim nima qilyapti?</span></button>
     </div>
   </div>
 
@@ -658,7 +658,7 @@
 
   <!-- ERTA LABDAN KECHGACHA (Runner) -->
   <div class="panel" id="panel-runner">
-    <div class="panelTitle"><span id="panelTitleRunner">🏃 Erta labdan kechgacha</span> <span class="badge" id="gRunnerStatus">❓</span></div>
+    <div class="panelTitle"><span id="panelTitleRunner">🏃 Ertalabdan kechgacha</span> <span class="badge" id="gRunnerStatus">❓</span></div>
     <p class="hint" id="hintRunner">To'g'ri narsani yig'ing, noto'g'risidan qoching!</p>
     <div class="runStage ph0" id="runStage">
       <div class="runSky" id="runPhaseName">Ertalab ☀️</div>
@@ -835,12 +835,12 @@
       learned: "o'rganildi",
       menuLearn: "O'rganish",
       menuTest: "Test",
-      menuRunner: "Erta labdan kechgacha",
+      menuRunner: "Ertalabdan kechgacha",
       menuFener: "Kim nima qilyapti?",
       menuSoat: "Sehrli soat",
       panelLearn: "📘 O'rganish",
       panelTest: "🎯 Test",
-      panelRunner: "🏃 Erta labdan kechgacha",
+      panelRunner: "🏃 Ertalabdan kechgacha",
       panelFener: "🔦 Kim nima qilyapti?",
       panelSoat: "🕰️ Sehrli soat",
       hintTest: "Rasmga qara va to'g'ri nomni tanla!",
@@ -1071,16 +1071,18 @@
   function goHome(){ window.location.href="index.html"; }
 
   function closePanels(){
+    stopRunner();
     document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
     window.scrollTo({top:0, behavior:"smooth"});
   }
 
   function openSection(name){
+    stopRunner();
     document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
 
     // Menu button highlighting - swap active class
     document.querySelectorAll(".mode-nav .mode-btn").forEach(b=>b.classList.remove("active"));
-    const sectionMap = {"learn":0, "test":1, "runner":2, "fener":3, "soat":4};
+    const sectionMap = {"learn":0, "test":1, "soat":2, "runner":3, "fener":4};
     const idx = sectionMap[name];
     if(idx !== undefined){
       const buttons = document.querySelectorAll(".mode-nav .mode-btn");
@@ -1345,6 +1347,7 @@
   let testOrder = [], testIdx = 0, testLock = false;
 
   function startTestGame(){
+    state.games.gTest=false; save(); updateBadges();
     testOrder = shuffle(items.map(x => x.k));
     testIdx = 0; testLock = false;
     updateTestProgress();
@@ -1409,6 +1412,7 @@
 
   function startRunnerGame(){
     stopRunner();
+    state.games.gRunner=false; save(); updateBadges();
     runPhase=0; runGot=0; runLane=0; runItems=[]; runLock=false;
     const st=document.getElementById("runStage");
     st.className="runStage ph0";
@@ -1532,6 +1536,7 @@
   let fenOrder=[], fenIdx=0, fenLock=false;
 
   function startFenerGame(){
+    state.games.gFener=false; save(); updateBadges();
     fenOrder=shuffle(FENER_ROUNDS.map((x,i)=>i));
     fenIdx=0; fenLock=false;
     updateFenerProgress();
@@ -1608,6 +1613,7 @@
   let soatIdx=0, soatLock=false, soatSky="", soatAct="";
 
   function startSoatGame(){
+    state.games.gSoat=false; save(); updateBadges();
     soatIdx=0; soatLock=false;
     updateSoatProgress();
     nextSoatRound();
