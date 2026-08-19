@@ -340,6 +340,7 @@
       .grid { grid-template-columns: repeat(3, 1fr); }
     }
   </style>
+<base target="_blank">
 </head>
 <body>
   <div class="app">
@@ -502,7 +503,7 @@
   /* ===== APP CONFIG ===== */
   const CONFIG = {
     TOTAL_LESSONS: 10,
-    TOTAL_WORDS: 93
+    TOTAL_WORDS: 148
   };
 
   const STORAGE = {
@@ -735,6 +736,7 @@
     grid.innerHTML = "";
 
     const LESSONS = [
+      {id:0, file:"lesson0.html", icon:"🔤", en:"Alphabet", uz:"Alifbe"},
       {id:1, file:"lesson1.html", icon:"👋", en:"Greetings", uz:"Salomlashuv"},
       {id:2, file:"lesson2.html", icon:"🔢", en:"Numbers", uz:"Sonlar"},
       {id:3, file:"lesson3.html", icon:"🐾", en:"Animals", uz:"Hayvonlar"},
