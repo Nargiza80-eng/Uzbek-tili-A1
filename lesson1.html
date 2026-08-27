@@ -656,7 +656,7 @@
   function speakTask(text){
     try{
       if(!text) return;
-      const clean = String(text).replace(/[􀀀-􏿿☀-➿⬀-⯿️←-⇿]/gu, '').trim();
+      const clean = String(text).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{2190}-\u{21FF}]/gu, '').trim();
       if(!clean) return;
       const u = new SpeechSynthesisUtterance(clean);
       u.lang = (currentLang === "en") ? "en-US" : "uz-UZ";
