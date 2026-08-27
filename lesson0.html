@@ -310,8 +310,11 @@
     /* ====== ALIFBE (Buchstabenkarten) ====== */
     .alphaGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px;}
     @media(min-width:480px){.alphaGrid{grid-template-columns:repeat(4,1fr);}}
-    .letterCard{position:relative;background:#fff;border:none;border-top:6px solid var(--lc,#EF4444);border-radius:22px;box-shadow:0 8px 0 rgba(0,0,0,0.08);padding:18px 6px 14px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-family:inherit;touch-action:manipulation;transition:transform .12s ease;user-select:none;}
-    .letterCard:active{transform:scale(.94);}
+    .letterCard{position:relative;background:#fff;border:none;border-top:6px solid var(--lc,#EF4444);border-radius:22px;box-shadow:0 8px 0 rgba(0,0,0,0.08);padding:8px 6px 6px;display:flex;flex-direction:column;align-items:center;user-select:none;}
+    .lcPart{display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;background:transparent;border:none;cursor:pointer;font-family:inherit;padding:8px 2px;border-radius:14px;touch-action:manipulation;transition:transform .12s ease;}
+    .lcPart:active{transform:scale(.94);}
+    .lcPart.playing{background:#EFF6FF;}
+    .lcBottom{border-top:2px dashed #E5E7EB;margin-top:2px;}
     .letterCard.pop{animation:lcPop .35s ease;}
     @keyframes lcPop{0%{transform:scale(1);}50%{transform:scale(1.12) rotate(-2deg);}100%{transform:scale(1);}}
     .lcUp{font-size:44px;font-weight:1000;color:var(--lc);line-height:1;}
@@ -482,7 +485,7 @@
   };
 
   const LETTERS_UZ = [{"u": "A", "l": "a", "w": "Anor", "e": "🍎", "c": "#EF4444"}, {"u": "B", "l": "b", "w": "Baliq", "e": "🐟", "c": "#10B981"}, {"u": "D", "l": "d", "w": "Darvoza", "e": "🚪", "c": "#F59E0B"}, {"u": "E", "l": "e", "w": "Eshek", "e": "🐴", "c": "#3B82F6"}, {"u": "F", "l": "f", "w": "Futbol", "e": "⚽", "c": "#8B5CF6"}, {"u": "G", "l": "g", "w": "Gilos", "e": "🍒", "c": "#EC4899"}, {"u": "H", "l": "h", "w": "Hovli", "e": "🏡", "c": "#EF4444"}, {"u": "I", "l": "i", "w": "It", "e": "🐕", "c": "#10B981"}, {"u": "J", "l": "j", "w": "Jo'ja", "e": "🐤", "c": "#F59E0B"}, {"u": "K", "l": "k", "w": "Kema", "e": "🚢", "c": "#3B82F6"}, {"u": "L", "l": "l", "w": "Lola", "e": "🌷", "c": "#8B5CF6"}, {"u": "M", "l": "m", "w": "Mashina", "e": "🚗", "c": "#EC4899"}, {"u": "N", "l": "n", "w": "Non", "e": "🍞", "c": "#EF4444"}, {"u": "O", "l": "o", "w": "Olma", "e": "🍏", "c": "#10B981"}, {"u": "P", "l": "p", "w": "Poyezd", "e": "🚂", "c": "#F59E0B"}, {"u": "Q", "l": "q", "w": "Qalam", "e": "✏️", "c": "#3B82F6"}, {"u": "R", "l": "r", "w": "Rasm", "e": "🖼️", "c": "#8B5CF6"}, {"u": "S", "l": "s", "w": "Samolyot", "e": "✈️", "c": "#EC4899"}, {"u": "T", "l": "t", "w": "Tuya", "e": "🐫", "c": "#EF4444"}, {"u": "U", "l": "u", "w": "Uy", "e": "🏠", "c": "#10B981"}, {"u": "V", "l": "v", "w": "Velosiped", "e": "🚲", "c": "#F59E0B"}, {"u": "X", "l": "x", "w": "Xat", "e": "✉️", "c": "#3B82F6"}, {"u": "Y", "l": "y", "w": "Yomg'ir", "e": "🌧️", "c": "#8B5CF6"}, {"u": "Z", "l": "z", "w": "Zanjir", "e": "⛓️", "c": "#EC4899"}, {"u": "Oʻ", "l": "oʻ", "w": "O't", "e": "🌿", "c": "#EF4444"}, {"u": "Gʻ", "l": "gʻ", "w": "G'oz", "e": "🦆", "c": "#10B981"}, {"u": "Sh", "l": "sh", "w": "Sher", "e": "🦁", "c": "#F59E0B"}, {"u": "Ch", "l": "ch", "w": "Chiroq", "e": "💡", "c": "#3B82F6"}, {"u": "Ng", "l": "ng", "w": "Tong", "e": "🌅", "c": "#8B5CF6"}];
-  const LETTERS_EN = [{"u": "A", "l": "a", "w": "Apple", "e": "🍎", "c": "#EF4444"}, {"u": "B", "l": "b", "w": "Ball", "e": "⚽", "c": "#10B981"}, {"u": "C", "l": "c", "w": "Cat", "e": "🐱", "c": "#F59E0B"}, {"u": "D", "l": "d", "w": "Dog", "e": "🐕", "c": "#3B82F6"}, {"u": "E", "l": "e", "w": "Egg", "e": "🥚", "c": "#8B5CF6"}, {"u": "F", "l": "f", "w": "Fish", "e": "🐟", "c": "#EC4899"}, {"u": "G", "l": "g", "w": "Grapes", "e": "🍇", "c": "#EF4444"}, {"u": "H", "l": "h", "w": "House", "e": "🏠", "c": "#10B981"}, {"u": "I", "l": "i", "w": "Ice cream", "e": "🍦", "c": "#F59E0B"}, {"u": "J", "l": "j", "w": "Juice", "e": "🧃", "c": "#3B82F6"}, {"u": "K", "l": "k", "w": "Kite", "e": "🪁", "c": "#8B5CF6"}, {"u": "L", "l": "l", "w": "Lion", "e": "🦁", "c": "#EC4899"}, {"u": "M", "l": "m", "w": "Mouse", "e": "🐭", "c": "#EF4444"}, {"u": "N", "l": "n", "w": "Nose", "e": "👃", "c": "#10B981"}, {"u": "O", "l": "o", "w": "Orange", "e": "🍊", "c": "#F59E0B"}, {"u": "P", "l": "p", "w": "Pig", "e": "🐷", "c": "#3B82F6"}, {"u": "Q", "l": "q", "w": "Queen", "e": "👑", "c": "#8B5CF6"}, {"u": "R", "l": "r", "w": "Rabbit", "e": "🐰", "c": "#EC4899"}, {"u": "S", "l": "s", "w": "Sun", "e": "☀️", "c": "#EF4444"}, {"u": "T", "l": "t", "w": "Train", "e": "🚂", "c": "#10B981"}, {"u": "U", "l": "u", "w": "Umbrella", "e": "☂️", "c": "#F59E0B"}, {"u": "V", "l": "v", "w": "Violin", "e": "🎻", "c": "#3B82F6"}, {"u": "W", "l": "w", "w": "Watch", "e": "⌚", "c": "#8B5CF6"}, {"u": "X", "l": "x", "w": "Xylophone", "e": "🎶", "c": "#EC4899"}, {"u": "Y", "l": "y", "w": "Yo-yo", "e": "🪀", "c": "#EF4444"}, {"u": "Z", "l": "z", "w": "Zebra", "e": "🦓", "c": "#10B981"}];
+  const LETTERS_EN = [{"u": "A", "l": "a", "w": "Apple", "e": "🍎", "c": "#EF4444", "af": "Apple"}, {"u": "B", "l": "b", "w": "Ball", "e": "⚽", "c": "#10B981", "af": "Ball"}, {"u": "C", "l": "c", "w": "Cat", "e": "🐱", "c": "#F59E0B", "af": "Cat"}, {"u": "D", "l": "d", "w": "Dog", "e": "🐕", "c": "#3B82F6", "af": "Dog"}, {"u": "E", "l": "e", "w": "Elephant", "e": "🐘", "c": "#8B5CF6", "af": "Elephant"}, {"u": "F", "l": "f", "w": "Fish", "e": "🐟", "c": "#EC4899", "af": "Fish"}, {"u": "G", "l": "g", "w": "Grapes", "e": "🍇", "c": "#EF4444", "af": "Grape"}, {"u": "H", "l": "h", "w": "House", "e": "🏠", "c": "#10B981", "af": "House"}, {"u": "I", "l": "i", "w": "Igloo", "e": "🛖", "c": "#F59E0B", "af": "Igloo"}, {"u": "J", "l": "j", "w": "Juice", "e": "🧃", "c": "#3B82F6", "af": "Juice"}, {"u": "K", "l": "k", "w": "Kite", "e": "🪁", "c": "#8B5CF6", "af": "Kite"}, {"u": "L", "l": "l", "w": "Lion", "e": "🦁", "c": "#EC4899", "af": "Lion"}, {"u": "M", "l": "m", "w": "Monkey", "e": "🐵", "c": "#EF4444", "af": "Monkey"}, {"u": "N", "l": "n", "w": "Nest", "e": "🪹", "c": "#10B981", "af": "Nest"}, {"u": "O", "l": "o", "w": "Orange", "e": "🍊", "c": "#F59E0B", "af": "Orange"}, {"u": "P", "l": "p", "w": "Pencil", "e": "✏️", "c": "#3B82F6", "af": "Pencil"}, {"u": "Q", "l": "q", "w": "Queen", "e": "👑", "c": "#8B5CF6", "af": "Queen"}, {"u": "R", "l": "r", "w": "Rabbit", "e": "🐰", "c": "#EC4899", "af": "Rabbit"}, {"u": "S", "l": "s", "w": "Sun", "e": "☀️", "c": "#EF4444", "af": "Sun"}, {"u": "T", "l": "t", "w": "Tree", "e": "🌳", "c": "#10B981", "af": "Tree"}, {"u": "U", "l": "u", "w": "Umbrella", "e": "☂️", "c": "#F59E0B", "af": "Umbrella"}, {"u": "V", "l": "v", "w": "Violin", "e": "🎻", "c": "#3B82F6", "af": "Violin"}, {"u": "W", "l": "w", "w": "Water", "e": "💧", "c": "#8B5CF6", "af": "Water"}, {"u": "X", "l": "x", "w": "Xylophone", "e": "🎶", "c": "#EC4899", "af": "Xylophone"}, {"u": "Y", "l": "y", "w": "Yo-yo", "e": "🪀", "c": "#EF4444", "af": "Yo_yo"}, {"u": "Z", "l": "z", "w": "Zebra", "e": "🦓", "c": "#10B981", "af": "Zebra"}];
 
   let state = { lang:"uz", heard:{}, celebrated:{} };
 
@@ -535,9 +538,22 @@
     }catch(e){}
   }
 
-  function speakLetter(L){
+  let curAudio = null;
+  function playAudioFile(url, fallbackFn){
     try{
-      const u = new SpeechSynthesisUtterance(L.u + ". " + L.w + "!");
+      if(curAudio){ curAudio.pause(); curAudio = null; }
+      const a = new Audio(url);
+      curAudio = a;
+      let failed = false;
+      const onFail = () => { if(!failed){ failed = true; fallbackFn(); } };
+      a.addEventListener("error", onFail);
+      const p = a.play();
+      if(p && p.catch) p.catch(onFail);
+    }catch(e){ fallbackFn(); }
+  }
+  function speakText(text){
+    try{
+      const u = new SpeechSynthesisUtterance(text);
       u.lang = (state.lang === "uz") ? "uz-UZ" : "en-US";
       u.rate = 0.9; u.pitch = 1.05;
       window.speechSynthesis.cancel();
@@ -549,24 +565,47 @@
     const grid = document.getElementById("alphaGrid");
     grid.innerHTML = "";
     letters().forEach((L, idx) => {
-      const b = document.createElement("button");
-      b.className = "letterCard" + (state.heard[heardKey(L)] ? " heard" : "");
-      b.style.setProperty("--lc", L.c);
-      b.innerHTML = '<span class="lcStar">⭐</span>' +
-        '<span class="lcUp">' + L.u + '</span>' +
-        '<span class="lcLow">' + L.l + '</span>' +
-        '<span class="lcEmoji">' + L.e + '</span>' +
+      const card = document.createElement("div");
+      card.className = "letterCard" + (state.heard[heardKey(L)] ? " heard" : "");
+      card.style.setProperty("--lc", L.c);
+
+      const star = document.createElement("span");
+      star.className = "lcStar";
+      star.innerText = "⭐";
+
+      const top = document.createElement("button");
+      top.className = "lcPart lcTop";
+      top.type = "button";
+      top.innerHTML = '<span class="lcUp">' + L.u + '</span>' +
+        '<span class="lcLow">' + L.l + '</span>';
+      top.addEventListener("click", () => tapLetterPart(idx, "letter", card));
+
+      const bottom = document.createElement("button");
+      bottom.className = "lcPart lcBottom";
+      bottom.type = "button";
+      bottom.innerHTML = '<span class="lcEmoji">' + L.e + '</span>' +
         '<span class="lcWord">' + L.w + '</span>';
-      b.addEventListener("click", () => tapLetter(idx, b));
-      grid.appendChild(b);
+      bottom.addEventListener("click", () => tapLetterPart(idx, "word", card));
+
+      card.appendChild(star);
+      card.appendChild(top);
+      card.appendChild(bottom);
+      grid.appendChild(card);
     });
   }
 
-  function tapLetter(idx, card){
+  function tapLetterPart(idx, part, card){
     const L = letters()[idx];
     if(!L) return;
-    speakLetter(L);
-    beepSuccess();
+    if(state.lang === "en"){
+      if(part === "letter"){
+        playAudioFile("audio/en/" + L.u + ".mp3", () => speakText(L.u));
+      } else {
+        playAudioFile("audio/en/" + L.af + ".mp3", () => speakText(L.w));
+      }
+    } else {
+      speakText(part === "letter" ? L.u : L.w);
+    }
     card.classList.add("heard");
     card.classList.remove("pop");
     void card.offsetWidth;
