@@ -1073,6 +1073,9 @@
     if(name==="balloon") startBalloonGame();
     if(name==="quiz") startQuizGame();
 
+    if(name==="count") setTimeout(()=>speakTask(UI[state.lang].hintCount), 400);
+    if(name==="match") setTimeout(()=>speakTask(UI[state.lang].hintDrag), 400);
+
     // Kein scrollIntoView - Seite bleibt beim Header
   }
 
@@ -1249,7 +1252,6 @@
 
     state.learned[key]=true;
     state.stars[key]=Math.min(3,(state.stars[key]||0)+1);
-    beepSuccess();
     save();
 
     renderVocab();
@@ -1266,6 +1268,27 @@
       window.speechSynthesis.speak(u);
     }catch(e){}
   }
+
+  function speakTask(text){
+    try{
+      if(!text) return;
+      const clean = String(text).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{2190}-\u{21FF}]/gu, '').trim();
+      if(!clean) return;
+      const u = new SpeechSynthesisUtterance(clean);
+      u.lang = (state.lang === "uz") ? "uz-UZ" : "en-US";
+      u.rate = 0.95; u.pitch = 1.05;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(u);
+    }catch(e){}
+  }
+
+  function announceTargetWord(it){
+    if(!it) return;
+    const path = buildAudioPath(it.k);
+    if(path) tryPlayAudio(path, 0, getWord(it));
+    else speakTask(getWord(it));
+  }
+
 
   /* ===== LERN-KARTEN ===== */
   function renderVocab(){
@@ -1379,7 +1402,6 @@
       if(dragEl) dragEl.classList.add("matched");
 
       matchesCorrect++;
-      beepSuccess();
 
       if(matchesCorrect === matchesTotal) {
         state.games.g1 = true;
@@ -1390,7 +1412,6 @@
       }
     } else {
       dropZone.classList.add("bad");
-      beepFail();
       setTimeout(() => dropZone.classList.remove("bad"), 500);
     }
   }
@@ -1487,7 +1508,6 @@
       btn.onclick = () => {
         if(opt === target){
           btn.classList.add("good");
-          beepSuccess();
           countStreak++;
           state.games.g3 = true;
           save();
@@ -1499,7 +1519,6 @@
           }
         } else {
           btn.classList.add("bad");
-          beepFail();
           countStreak = 0;
           setTimeout(() => btn.classList.remove("bad"), 240);
         }
@@ -1531,6 +1550,8 @@
 
     const targetWord = getWord(targetItem);
     task.innerText = UI[state.lang].find + " " + targetWord;
+    speakTask(UI[state.lang].hintBalloon);
+    setTimeout(()=>announceTargetWord(targetItem), 1700);
 
     balloonInterval = setInterval(() => {
       const b = document.createElement("div");
@@ -1562,7 +1583,6 @@
           b.innerText = "⭐";
           b.style.background = "#2ed573";
           b.style.borderColor = "#fff";
-          beepSuccess();
           balloonScore++;
 
           if(balloonScore >= needed){
@@ -1577,9 +1597,9 @@
             currentTarget = newTarget.n;
             const newWord = getWord(newTarget);
             task.innerText = UI[state.lang].find + " " + newWord;
+            announceTargetWord(newTarget);
           }
         } else {
-          beepFail();
           b.style.background = "#ffcccc";
           b.innerText = "💨";
           setTimeout(() => { if(b.parentNode) b.remove(); }, 150);
@@ -1644,6 +1664,7 @@
     const questionWord = state.lang === "uz" ? item.uz : item.en;
     const askForWord = state.lang === "uz" ? item.en : item.uz;
     document.getElementById("quizQuestion").innerText = item.n + " - " + askForWord;
+    speakTask(item.n + " - " + askForWord);
 
     // Create 3 choices: correct + 2 random wrong
     const correct = getWord(item);  // the word in current language
@@ -1661,7 +1682,6 @@
       btn.onclick = () => {
         if(choice === correct){
           btn.classList.add("good");
-          beepSuccess();
 
           // Mark as learned
           state.learned[item.k] = true;
@@ -1683,7 +1703,6 @@
           }, 500);
         } else {
           btn.classList.add("bad");
-          beepFail();
           setTimeout(() => btn.classList.remove("bad"), 600);
         }
       };
