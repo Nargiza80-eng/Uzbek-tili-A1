@@ -645,6 +645,7 @@
       album: "Mening Stikerlarim",
       close: "Yopish",
       bubbleHint: "Emoji top! ⭐",
+      memoryHint: "Juftliklarni top!",
       bubbleTask: "Top: ",
       doneQuizTitle: "Barakalla! 🐰",
       doneQuizText: "Test tugadi! Siz quyon stikerini oldingiz!",
@@ -675,6 +676,7 @@
       album: "My Stickers",
       close: "Close",
       bubbleHint: "Find the correct emoji! ⭐",
+      memoryHint: "Find the pairs!",
       bubbleTask: "Tap: ",
       doneQuizTitle: "Well done! 🐰",
       doneQuizText: "Quiz complete! You earned the bunny sticker!",
@@ -740,6 +742,20 @@
     if(a){ a.currentTime = 0; a.play().catch(()=>{}); }
     else { playSound("cheer.mp3"); }
   }
+
+  function speakTask(text){
+    try{
+      if(!text) return;
+      const clean = String(text).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{2190}-\u{21FF}]/gu, '').trim();
+      if(!clean) return;
+      const u = new SpeechSynthesisUtterance(clean);
+      u.lang = (currentLang === "en") ? "en-US" : "uz-UZ";
+      u.rate = 0.9; u.pitch = 1.05;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(u);
+    }catch(e){}
+  }
+
 
   function loadStars(){ try { return JSON.parse(localStorage.getItem(STARS_KEY) || "{}"); } catch { return {}; } }
   function saveStars(st){ localStorage.setItem(STARS_KEY, JSON.stringify(st)); }
@@ -861,6 +877,9 @@
     if(mode === 'memory'){document.getElementById('memorySection').style.display='block'; initMemory(); }
     if(mode === 'salad'){ document.getElementById('saladSection').style.display='block'; initSalad(); }
     if(mode === 'bubble'){document.getElementById('bubbleSection').style.display='block'; startBubbles(); }
+    const __T = UI[currentLang];
+    const __hints = { memory: __T.memoryHint, salad: __T.saladInstruction, bubble: __T.bubbleHint };
+    if(__hints[mode]) setTimeout(()=>speakTask(__hints[mode]), 400);
   }
 
   // ===== NUR DIESE FUNKTION GEAENDERT: Audio-Pfade fuer audiolesson3/ =====
@@ -970,6 +989,7 @@
 
     const qWord = (currentLang === "en") ? item.en : item.uz;
     document.getElementById('qWordMain').innerText = qWord;
+    speakTask(qWord);
 
     const correct = (currentLang === "en") ? item.uz : item.en;
     const pool = data.map(x => (currentLang === "en") ? x.uz : x.en);
@@ -1016,7 +1036,6 @@
           }, 420);
         } else {
           btn.style.background = 'var(--error)'; btn.style.color = 'white';
-          sfxFail();
           setTimeout(() => { btn.style.background = 'white'; btn.style.color = '#2d3436'; }, 600);
         }
       };
@@ -1070,7 +1089,6 @@
               if(flippedCards[0].id === flippedCards[1].id) {
                 flippedCards.forEach(f => f.div.classList.add('matched'));
                 matches++;
-                sfxWin();
                 if(matches === data.length) {
                   localStorage.setItem(DONE_MEMORY_KEY, "1");
                   unlockSticker(2);
@@ -1079,7 +1097,6 @@
                   checkAllCompleted();
                 }
               } else {
-                sfxFail();
                 flippedCards.forEach(f => {
                   f.div.classList.remove('flipped');
                   f.div.innerText = "❓";
@@ -1218,7 +1235,6 @@
     if(answer === word){
       slots.forEach(s=>s.classList.add("correct"));
       document.querySelectorAll(".salad-letter.used").forEach(t=>t.classList.add("correct-tile"));
-      sfxWin();
       setStarForKey(item.key, Math.min(3, (loadStars()[item.key]||0)+1));
       markGlobalLearned(item.key);
 
@@ -1235,7 +1251,6 @@
     } else {
       slots.forEach(s=>s.classList.add("wrong"));
       document.querySelectorAll(".salad-letter.used").forEach(t=>t.classList.add("wrong-tile"));
-      sfxFail();
 
       saladTimer = setTimeout(()=>{
         resetSalad();
@@ -1322,16 +1337,17 @@
     area.innerHTML = "";
     updateBubbleScoreLine();
 
+    let bubbleSpawnN = 0;
     bubbleInt = setInterval(() => {
       const b = document.createElement('div');
-      const randomItem = data[Math.floor(Math.random() * data.length)];
+      bubbleSpawnN++;
+      const randomItem = (bubbleSpawnN % 3 === 0) ? bubbleTarget : data[Math.floor(Math.random() * data.length)];
 
       b.className = 'bubble';
       b.innerText = randomItem.emoji;
       b.style.left = (Math.random() * 70 + 10) + '%';
 
       b.onclick = () => {
-        sfxPop();
 
         if(randomItem.key === bubbleTarget.key) {
           b.innerText = '⭐';
