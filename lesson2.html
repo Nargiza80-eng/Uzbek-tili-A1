@@ -300,7 +300,8 @@
       overflow:hidden;
     }
     .celebrate-emoji{font-size:64px; margin-bottom:8px;}
-    .celebrate-title{font-size:26px; font-weight:900; color:#1F2937;}
+    .celebrate-title{font-size:26px; 
+font-weight:900; color:#1F2937;}
     .celebrate-text{color:#6B7280; font-weight:700; margin-top:10px; font-size:16px;}
     .celebrate-btn{
       margin-top:20px;
@@ -802,7 +803,9 @@
     <!-- Sanab ko'r -->
     <div class="panel" id="panel-count">
       <div class="quiz-card">
-        <p class="hint" id="hintCount">Nechta olma bor?</p>
+        <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="speakTask(UI[state.lang].hintCount)">
+          🔊 <span id="hintCount">Nechta olma bor?</span>
+        </button>
         <div class="quiz-emoji" id="emojiArea"></div>
         <div class="choiceRow" id="countChoices"></div>
         <div class="btnRow">
@@ -820,7 +823,9 @@
           🔗 <span id="titleMatch">Juftini top</span>
           <span class="badge" id="g1Status">❓</span>
         </h2>
-        <p class="hint" id="hintDrag">Raqamni ushlab so'zga olib boring</p>
+        <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="speakTask(UI[state.lang].hintDrag)">
+          🔊 <span id="hintDrag">Raqamni ushlab so'zga olib boring</span>
+        </button>
         <div class="matchingBox">
           <div class="col" id="dragNums"></div>
           <div class="col" id="dropWords"></div>
@@ -843,7 +848,9 @@
           💥 <span id="titleBalloon">Pufakchalar</span>
           <span class="badge" id="g4Status">❓</span>
         </h2>
-        <p class="hint" id="hintBalloon">To'g'ri raqamni top!</p>
+        <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="speakTask(UI[state.lang].hintBalloon)">
+          🔊 <span id="hintBalloon">To'g'ri raqamni top!</span>
+        </button>
         <div id="balloonTask">5</div>
         <div id="balloonArea"></div>
         <div class="btnRow">
@@ -864,7 +871,9 @@
           🎯 <span id="titleQuiz">Test</span>
           <span class="badge" id="g5Status">❓</span>
         </h2>
-        <p class="hint" id="hintQuiz">To'g'ri javobni tanlang!</p>
+        <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="speakTask(UI[state.lang].quizHint)">
+          🔊 <span id="hintQuiz">To'g'ri javobni tanlang!</span>
+        </button>
         <div class="quiz-card">
           <div id="quizEmoji" class="quiz-emoji">🥇</div>
           <h2 id="quizQuestion" style="margin: 6px 0 8px; font-size: 28px;">bir</h2>
@@ -1073,9 +1082,6 @@
     if(name==="balloon") startBalloonGame();
     if(name==="quiz") startQuizGame();
 
-    if(name==="count") setTimeout(()=>speakTask(UI[state.lang].hintCount), 400);
-    if(name==="match") setTimeout(()=>speakTask(UI[state.lang].hintDrag), 400);
-
     // Kein scrollIntoView - Seite bleibt beim Header
   }
 
@@ -1189,7 +1195,7 @@
   };
 
   function sanitizeForFilename(word){
-    return word.toLowerCase().replace(/['']/g, "").replace(/\s+/g, "_");
+    return word.toLowerCase().replace(/['’]/g, "").replace(/\s+/g, "_");
   }
 
   // Versuche verschiedene Basis-URLs (lokal zuerst, dann GitHub)
@@ -1550,8 +1556,7 @@
 
     const targetWord = getWord(targetItem);
     task.innerText = UI[state.lang].find + " " + targetWord;
-    speakTask(UI[state.lang].hintBalloon);
-    setTimeout(()=>announceTargetWord(targetItem), 1700);
+    setTimeout(()=>announceTargetWord(targetItem), 400);
 
     balloonInterval = setInterval(() => {
       const b = document.createElement("div");
@@ -1664,7 +1669,6 @@
     const questionWord = state.lang === "uz" ? item.uz : item.en;
     const askForWord = state.lang === "uz" ? item.en : item.uz;
     document.getElementById("quizQuestion").innerText = item.n + " - " + askForWord;
-    speakTask(item.n + " - " + askForWord);
 
     // Create 3 choices: correct + 2 random wrong
     const correct = getWord(item);  // the word in current language
