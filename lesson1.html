@@ -505,7 +505,6 @@
     </button>
     <div id="memStats" style="margin-bottom:10px; font-weight:800; font-size:14px;">
       <span id="movesLabel">Urinishlar</span>: <span id="moves">0</span>
-
     </div>
     <div class="memory-grid" id="memoryGrid"></div>
   </div>
@@ -657,7 +656,7 @@
   function speakTask(text){
     try{
       if(!text) return;
-      const clean = String(text).replace(/[􀀀-􏿿☀-➿⬀-⯿️←-⇿]/gu, '').trim();
+      const clean = String(text).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{2190}-\u{21FF}]/gu, '').trim();
       if(!clean) return;
       const u = new SpeechSynthesisUtterance(clean);
       u.lang = (currentLang === "en") ? "en-US" : "uz-UZ";
