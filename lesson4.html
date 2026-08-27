@@ -1115,6 +1115,10 @@
     if(name==="aks") startAksGame();
     if(name==="chameleon") startChameleonGame();
 
+    const __hintIds = {"match":"hintMatch","aks":"hintAks","chameleon":"hintChameleon"};
+    const __hEl = document.getElementById(__hintIds[name] || "");
+    if(__hEl) setTimeout(()=>speakTask(__hEl.textContent), 400);
+
     panel?.scrollIntoView({behavior:"smooth", block:"start"});
   }
 
@@ -1254,7 +1258,6 @@
     }catch(e){}
     state.learned[key]=true;
     state.stars[key]=Math.min(3,(state.stars[key]||0)+1);
-    beepSuccess();
     save();
     renderVocab();
     updateProgress();
@@ -1328,14 +1331,14 @@
           if(dz.classList.contains("matched")){ dz.classList.remove("over"); return; }
           dz.classList.add("matched");
           dz.innerText = T("matchedPrefix") + dz.innerText.replace(T("matchedPrefix"), "");
-          matchesCorrect++; beepSuccess();
+          matchesCorrect++;
           if(matchesCorrect===matchesTotal){
             state.games.g1=true; save(); updateBadges();
             unlockSticker(1);
             celebrate("matchWinTitle", "matchWinText", "matchWinEmoji");
             checkAllCompleted();
           }
-        }else{ dz.classList.add("bad"); beepFail(); setTimeout(()=>dz.classList.remove("bad"), 260); }
+        }else{ dz.classList.add("bad"); setTimeout(()=>dz.classList.remove("bad"), 260); }
         dz.classList.remove("over");
       };
       nCol.appendChild(dz);
@@ -1390,6 +1393,7 @@
     if(!balloonTarget) return;
     const word = (state.lang === "uz") ? balloonTarget.uz : balloonTarget.en;
     document.getElementById("balloonTask").innerText = T("balloonTaskPrefix") + word;
+    speakItem(balloonTarget.k);
   }
 
   function updateBalloonScore(){
@@ -1421,8 +1425,10 @@
     document.getElementById("balloonArea").querySelectorAll(".balloon").forEach(b=>b.remove());
 
     // SCHNELLER: 650ms statt 1400ms, Ballons steigen in 3.5s
+    let balloonSpawnN = 0;
     balloonInt = setInterval(() => {
-      const item = items[Math.floor(Math.random()*items.length)];
+      balloonSpawnN++;
+      const item = (balloonSpawnN % 3 === 0 && balloonTarget) ? balloonTarget : items[Math.floor(Math.random()*items.length)];
 
       const b = document.createElement("div");
       b.className = "balloon";
@@ -1444,7 +1450,6 @@
           b.innerHTML = "⭐";
           b.style.background = "var(--good)";
           b.style.borderColor = "var(--good)";
-          beepSuccess();
 
           balloonIdx++;
           balloonScore++;
@@ -1461,7 +1466,6 @@
           b.innerHTML = "💥";
           b.style.background = "var(--bad)";
           b.style.borderColor = "var(--bad)";
-          beepFail();
         }
       };
 
@@ -1498,6 +1502,20 @@ function speakItem(key, vol){
     window.speechSynthesis.speak(u);
   }catch(e){}
 }
+
+function speakTask(text){
+  try{
+    if(!text) return;
+    const clean = String(text).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{2190}-\u{21FF}]/gu, '').trim();
+    if(!clean) return;
+    const u = new SpeechSynthesisUtterance(clean);
+    u.lang = (state.lang === "uz") ? "uz-UZ" : "en-US";
+    u.rate = 0.95; u.pitch = 1.05;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+
 
 function startAksGame(){
   aksOrder = shuffle(mixRounds.map((_, i) => i));
@@ -1546,7 +1564,6 @@ function nextAksRound(){
 function pickMixOption(btn, ok, resultKey){
   if(ok){
     btn.classList.add("correct");
-    beepSuccess();
     setAksSpeechLine("✅ " + mixWord(mixItem(resultKey)), "ok");
     speakItem(resultKey, 1);
     aksTimer = setTimeout(() => goNextAksWord(), 1400);
@@ -1555,7 +1572,6 @@ function pickMixOption(btn, ok, resultKey){
     aksTries++;
     updateAksTries();
     setAksSpeechLine(T("aksSayAgain"), "bad");
-    beepFail();
     if(aksTries >= 3){
       goNextAksWord((state.lang === "en") ? "3 tries → next ✅" : "3 urinish → keyingi ✅");
     }
@@ -1681,7 +1697,6 @@ function nextChameleonRound(){
         fly.classList.add("pop");
         fly.innerHTML = "⭐";
         box.classList.add("happy");
-        beepSuccess();
         chamScore++;
         chamIdx++;
         updateChamScore();
@@ -1693,7 +1708,6 @@ function nextChameleonRound(){
         fly.style.background = "#ffcccc";
         fly.innerHTML = "❌";
         box.classList.add("shake");
-        beepFail();
         setTimeout(() => {
           box.classList.remove("shake");
           fly.style.backgroundColor = color.hex;
