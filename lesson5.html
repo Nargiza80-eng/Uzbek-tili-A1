@@ -980,6 +980,10 @@
     if(name==="missing") startMissingGame();
     if(name==="truefalse") startTFGame();
 
+    const __hintIds = {"memory":"hintMemory","test":"hintTest","missing":"hintMissing","truefalse":"hintTrueFalse"};
+    const __hEl = document.getElementById(__hintIds[name] || "");
+    if(__hEl) setTimeout(()=>speakTask(__hEl.textContent), 400);
+
     panel?.scrollIntoView({behavior:"smooth", block:"start"});
   }
 
@@ -1112,7 +1116,6 @@
     }catch(e){}
     state.learned[key]=true;
     state.stars[key]=Math.min(3,(state.stars[key]||0)+1);
-    beepSuccess();
     save();
     renderVocab();
     updateProgress();
@@ -1137,6 +1140,20 @@
       window.speechSynthesis.speak(u);
     }catch(e){}
   }
+
+  function speakTask(text){
+    try{
+      if(!text) return;
+      const clean = String(text).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{2190}-\u{21FF}]/gu, '').trim();
+      if(!clean) return;
+      const u = new SpeechSynthesisUtterance(clean);
+      u.lang = (state.lang === "uz") ? "uz-UZ" : "en-US";
+      u.rate = 0.95; u.pitch = 1.05;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(u);
+    }catch(e){}
+  }
+
 
   function renderVocab(){
     const grid=document.getElementById("vocabGrid");
@@ -1245,7 +1262,6 @@
           a.d.classList.add("done");  b.d.classList.add("done");
           memOpen = []; memLock = false;
           memFound++;
-          beepSuccess();
           speakItem(a.c.k, 1);
           updateMemScore();
           if(memFound === MEM_PAIRS){
@@ -1256,7 +1272,6 @@
           }
         }, 350);
       } else {
-        beepFail();
         setTimeout(() => {
           a.d.classList.remove("open"); a.d.innerHTML = "?";
           b.d.classList.remove("open"); b.d.innerHTML = "?";
@@ -1308,7 +1323,6 @@
     if(ok){
       testLock = true;
       btn.classList.add("good");
-      beepSuccess();
       speakItem(testOrder[testIdx], 1);
       setTimeout(() => {
         testIdx++;
@@ -1317,7 +1331,6 @@
       }, 900);
     } else {
       btn.classList.add("bad");
-      beepFail();
       setTimeout(() => btn.classList.remove("bad"), 500);
     }
   }
@@ -1392,7 +1405,6 @@
     if(ok){
       missLock = true;
       d.classList.add("good");
-      beepSuccess();
       speakItem(missGone.k, 1);
       setTimeout(() => {
         missRound++;
@@ -1401,7 +1413,6 @@
       }, 1000);
     } else {
       d.classList.add("bad");
-      beepFail();
       setTimeout(() => d.classList.remove("bad"), 500);
     }
   }
@@ -1459,7 +1470,6 @@
     const r = tfRounds[tfIdx];
     if(saidYes === r.ok){
       tfLock = true;
-      beepSuccess();
       speakItem(r.imgK, 1);
       setTimeout(() => {
         tfIdx++;
@@ -1467,7 +1477,6 @@
         nextTFRound();
       }, 800);
     } else {
-      beepFail();
       const card = document.getElementById("tfCard");
       card.classList.add("shake");
       setTimeout(() => card.classList.remove("shake"), 500);
