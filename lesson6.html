@@ -992,6 +992,10 @@
     if(name==="where") startWhereGame();
     if(name==="salad") startSaladGame();
 
+    const __hintIds = {"test":"hintTest","soya":"hintSoya","where":"hintWhere","salad":"hintSalad"};
+    const __hEl = document.getElementById(__hintIds[name] || "");
+    if(__hEl) setTimeout(()=>speakTask(__hEl.textContent), 400);
+
     panel?.scrollIntoView({behavior:"smooth", block:"start"});
   }
 
@@ -1124,7 +1128,6 @@
     }catch(e){}
     state.learned[key]=true;
     state.stars[key]=Math.min(3,(state.stars[key]||0)+1);
-    beepSuccess();
     save();
     renderVocab();
     updateProgress();
@@ -1149,6 +1152,20 @@
       window.speechSynthesis.speak(u);
     }catch(e){}
   }
+
+  function speakTask(text){
+    try{
+      if(!text) return;
+      const clean = String(text).replace(/[􀀀-􏿿☀-➿⬀-⯿️←-⇿]/gu, '').trim();
+      if(!clean) return;
+      const u = new SpeechSynthesisUtterance(clean);
+      u.lang = (state.lang === "uz") ? "uz-UZ" : "en-US";
+      u.rate = 0.95; u.pitch = 1.05;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(u);
+    }catch(e){}
+  }
+
 
   function renderVocab(){
     const grid=document.getElementById("vocabGrid");
@@ -1242,7 +1259,6 @@
     if(ok){
       soyaLock = true;
       btn.classList.add("good");
-      beepSuccess();
       speakItem(soyaOrder[soyaIdx], 1);
       setTimeout(() => {
         soyaIdx++;
@@ -1251,7 +1267,6 @@
       }, 900);
     } else {
       btn.classList.add("bad");
-      beepFail();
       setTimeout(() => btn.classList.remove("bad"), 500);
     }
   }
@@ -1305,7 +1320,6 @@
     if(ok){
       testLock = true;
       btn.classList.add("good");
-      beepSuccess();
       speakItem(testOrder[testIdx], 1);
       setTimeout(() => {
         testIdx++;
@@ -1314,7 +1328,6 @@
       }, 900);
     } else {
       btn.classList.add("bad");
-      beepFail();
       setTimeout(() => btn.classList.remove("bad"), 500);
     }
   }
@@ -1357,7 +1370,6 @@
     const isUnder = UNDER_GROUND.includes(whereOrder[whereIdx]);
     if(saidUnder === isUnder){
       whereLock = true;
-      beepSuccess();
       speakItem(whereOrder[whereIdx], 1);
       setTimeout(() => {
         whereIdx++;
@@ -1365,7 +1377,6 @@
         nextWhereRound();
       }, 800);
     } else {
-      beepFail();
       const card = document.getElementById("whereCard");
       card.classList.add("shake");
       setTimeout(() => card.classList.remove("shake"), 500);
@@ -1426,7 +1437,6 @@
     d.dataset.used = "1";
     d.classList.add("good");
     saladPicked.push(optItem.k);
-    beepSuccess();
     speakItem(optItem.k, 1);
     const picked = document.createElement("div");
     picked.className = "missItem";
@@ -1440,7 +1450,6 @@
         updateSaladProgress();
         setTimeout(() => loadSaladRecipe(), 900);
       } else {
-        beepFail();
         const stage = document.getElementById("saladStage");
         stage.classList.add("shake");
         setTimeout(() => stage.classList.remove("shake"), 500);
