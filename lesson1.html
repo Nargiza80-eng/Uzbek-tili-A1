@@ -491,7 +491,7 @@
       <h2 id="qWordMain" style="margin: 6px 0 8px; font-size: 28px;">Salom</h2>
 
       <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="playCurrentQuizAudio()">
-        🔊 <span id="listenBtnText">Eshitish</span>
+        🔊 <span id="listenBtnText">Eshit → to'g'ri javobni tanlang!</span>
       </button>
 
       <div id="optionsBox"></div>
@@ -500,8 +500,12 @@
 
   <!-- Memory -->
   <div id="memorySection">
+    <button class="option-btn" style="background:var(--sun); border-color:#f39c12; margin-bottom:10px;" onclick="speakTask(UI[currentLang].memoryHint)">
+      🔊 <span id="memoryHintBtn">Juftliklarni top!</span>
+    </button>
     <div id="memStats" style="margin-bottom:10px; font-weight:800; font-size:14px;">
       <span id="movesLabel">Urinishlar</span>: <span id="moves">0</span>
+
     </div>
     <div class="memory-grid" id="memoryGrid"></div>
   </div>
@@ -509,6 +513,9 @@
   <!-- Buchstabensalat -->
   <div id="saladSection">
     <div class="salad-card">
+      <button class="option-btn" style="background:var(--sun); border-color:#f39c12; margin-bottom:10px;" onclick="speakTask(UI[currentLang].saladHint)">
+        🔊 <span id="saladHint">Eshit → harflarni to'g'ri tartibda bos!</span>
+      </button>
       <div id="saladEmoji" class="salad-emoji">🥗</div>
 
       <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="playSaladAudio()">
@@ -518,15 +525,16 @@
       <div class="salad-slots" id="saladSlots"></div>
       <div class="salad-tiles" id="saladTiles"></div>
     </div>
-    <div class="small-note" id="saladHint">🔊 Eshit → harflarni to'g'ri tartibda bos!</div>
     <div class="small-note" id="saladScoreLine">⭐ 0 / 5</div>
   </div>
 
   <!-- Bubbles -->
   <div id="bubbleSection">
+    <button class="option-btn" style="background:var(--sun); border-color:#f39c12; margin-bottom:10px;" onclick="speakTask(UI[currentLang].bubbleHint)">
+      🔊 <span id="bubbleHint">To'g'ri emojini top! ⭐</span>
+    </button>
     <div id="bubbleTask" class="banner">Top: ...</div>
     <div id="bubbleArea"></div>
-    <div class="small-note" id="bubbleHint">Emoji top! ⭐</div>
     <div class="small-note" id="bubbleScoreLine">⭐ 0 / 5</div>
   </div>
 
@@ -550,10 +558,11 @@
       salad: "Harflar salati",
       bubble: "Pufakchalar",
       listen: "Eshitish",
+      quizHint: "Eshit → to'g'ri javobni tanlang!",
       moves: "Urinishlar",
       album: "Mening Stikerlarim",
       close: "Yopish",
-      saladHint: "🔊 Eshit → harflarni to'g'ri tartibda bos!",
+      saladHint: "Eshit → harflarni to'g'ri tartibda bos!",
       bubbleHint: "To'g'ri emojini top! ⭐",
       memoryHint: "Juftliklarni top!",
       bubbleTask: "Top: ",
@@ -577,10 +586,11 @@
       salad: "Letter Salad",
       bubble: "Bubbles",
       listen: "Listen",
+      quizHint: "Listen → Choose the correct answer!",
       moves: "Moves",
       album: "My Stickers",
       close: "Close",
-      saladHint: "🔊 Listen → tap the letters in the right order!",
+      saladHint: "Listen → tap the letters in the right order!",
       bubbleHint: "Find the correct emoji! ⭐",
       memoryHint: "Find the pairs!",
       bubbleTask: "Tap: ",
@@ -647,7 +657,7 @@
   function speakTask(text){
     try{
       if(!text) return;
-      const clean = String(text).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{2190}-\u{21FF}]/gu, '').trim();
+      const clean = String(text).replace(/[􀀀-􏿿☀-➿⬀-⯿️←-⇿]/gu, '').trim();
       if(!clean) return;
       const u = new SpeechSynthesisUtterance(clean);
       u.lang = (currentLang === "en") ? "en-US" : "uz-UZ";
@@ -731,12 +741,13 @@
     document.getElementById("tMemory").innerText = T.memory;
     document.getElementById("tSalad").innerText = T.salad;
     document.getElementById("tBubble").innerText = T.bubble;
-    document.getElementById("listenBtnText").innerText = T.listen;
+    document.getElementById("listenBtnText").innerText = T.quizHint;
     document.getElementById("movesLabel").innerText = T.moves;
 
     document.getElementById("albumTitle").innerText = T.album;
     document.getElementById("closeAlbumBtn").innerText = T.close;
     document.getElementById("saladHint").innerText = T.saladHint;
+    document.getElementById("memoryHintBtn").innerText = T.memoryHint;
     document.getElementById("saladListenText").innerText = T.listen;
     document.getElementById("bubbleHint").innerText = T.bubbleHint;
 
@@ -768,9 +779,6 @@
     if(mode === 'memory'){document.getElementById('memorySection').style.display='block'; initMemory(); }
     if(mode === 'salad'){ document.getElementById('saladSection').style.display='block'; startSalad(); }
     if(mode === 'bubble'){document.getElementById('bubbleSection').style.display='block'; startBubbles(); }
-    const __T = UI[currentLang];
-    const __hints = { memory: __T.memoryHint, salad: __T.saladHint, bubble: __T.bubbleHint };
-    if(__hints[mode]) setTimeout(()=>speakTask(__hints[mode]), 400);
   }
 
   function audioPath(key){ return currentLang === "en" ? `en/${key}.mp3` : `a/${key}.mp3`; }
@@ -872,7 +880,6 @@
 
     const qWord = (currentLang === "en") ? item.en : item.uz;
     document.getElementById('qWordMain').innerText = qWord;
-    speakTask(qWord);
 
     const correct = (currentLang === "en") ? item.uz : item.en;
     const pool = data.map(x => (currentLang === "en") ? x.uz : x.en);
@@ -1067,8 +1074,6 @@
       t.onclick = () => tapSaladTile(t, ch);
       tiles.appendChild(t);
     });
-
-    playSaladAudio();
   }
 
   function tapSaladTile(tile, ch){
