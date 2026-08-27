@@ -513,7 +513,7 @@
   <div id="saladSection">
     <div class="salad-card">
       <button class="option-btn" style="background:var(--sun); border-color:#f39c12; margin-bottom:10px;" onclick="speakTask(UI[currentLang].saladHint)">
-        🔊 <span id="saladHint">Eshit → harflarni to'g'ri tartibda bos!</span>
+        🔊 <span id="saladHint">Eshit → harflarni to'g'ri tartibda yoz!</span>
       </button>
       <div id="saladEmoji" class="salad-emoji">🥗</div>
 
@@ -561,7 +561,7 @@
       moves: "Urinishlar",
       album: "Mening Stikerlarim",
       close: "Yopish",
-      saladHint: "Eshit → harflarni to'g'ri tartibda bos!",
+      saladHint: "Eshit → harflarni to'g'ri tartibda yoz!",
       bubbleHint: "To'g'ri emojini top! ⭐",
       memoryHint: "Juftliklarni top!",
       bubbleTask: "Top: ",
@@ -656,7 +656,7 @@
   function speakTask(text){
     try{
       if(!text) return;
-      const clean = String(text).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{2190}-\u{21FF}]/gu, '').trim();
+      const clean = String(text).replace(/[􀀀-􏿿☀-➿⬀-⯿️←-⇿]/gu, '').trim();
       if(!clean) return;
       const u = new SpeechSynthesisUtterance(clean);
       u.lang = (currentLang === "en") ? "en-US" : "uz-UZ";
