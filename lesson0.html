@@ -599,9 +599,9 @@
     if(!L) return;
     if(state.lang === "en"){
       if(part === "letter"){
-        playAudioFile("audio/en/" + L.u + ".mp3", () => speakText(L.u));
+        playAudioFile("ABC/eng/" + L.u + ".mp3", () => speakText(L.u));
       } else {
-        playAudioFile("audio/en/" + L.af + ".mp3", () => speakText(L.w));
+        playAudioFile("ABC/eng/" + L.af + ".mp3", () => speakText(L.w));
       }
     } else {
       speakText(part === "letter" ? L.u : L.w);
