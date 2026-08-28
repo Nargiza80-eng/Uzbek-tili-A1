@@ -802,7 +802,7 @@
     <!-- Sanab ko'r -->
     <div class="panel" id="panel-count">
       <div class="quiz-card">
-        <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="speakTask(UI[state.lang].hintCount)">
+        <button class="option-btn" style="background:var(--sun); border-color:#f39c12; display:block; margin:10px auto;" onclick="speakTask(UI[state.lang].hintCount)">
           🔊 <span id="hintCount">Nechta olma bor?</span>
         </button>
         <div class="quiz-emoji" id="emojiArea"></div>
@@ -822,7 +822,7 @@
           🔗 <span id="titleMatch">Juftini top</span>
           <span class="badge" id="g1Status">❓</span>
         </h2>
-        <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="speakTask(UI[state.lang].hintDrag)">
+        <button class="option-btn" style="background:var(--sun); border-color:#f39c12; display:block; margin:10px auto;" onclick="speakTask(UI[state.lang].hintDrag)">
           🔊 <span id="hintDrag">Raqamni ushlab so'zga olib boring</span>
         </button>
         <div class="matchingBox">
@@ -847,7 +847,7 @@
           💥 <span id="titleBalloon">Pufakchalar</span>
           <span class="badge" id="g4Status">❓</span>
         </h2>
-        <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="speakTask(UI[state.lang].hintBalloon)">
+        <button class="option-btn" style="background:var(--sun); border-color:#f39c12; display:block; margin:10px auto;" onclick="speakTask(UI[state.lang].hintBalloon)">
           🔊 <span id="hintBalloon">To'g'ri raqamni top!</span>
         </button>
         <div id="balloonTask">5</div>
@@ -870,7 +870,7 @@
           🎯 <span id="titleQuiz">Test</span>
           <span class="badge" id="g5Status">❓</span>
         </h2>
-        <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="speakTask(UI[state.lang].quizHint)">
+        <button class="option-btn" style="background:var(--sun); border-color:#f39c12; display:block; margin:10px auto;" onclick="speakTask(UI[state.lang].quizHint)">
           🔊 <span id="hintQuiz">To'g'ri javobni tanlang!</span>
         </button>
         <div class="quiz-card">
@@ -1632,7 +1632,15 @@
 
   function playCurrentQuizAudio(){
     const item = items[quizCurrentIndex];
-    if(item) speakWord(item.k);
+    if(!item) return;
+
+    // Audio passend zum angezeigten Frage-Wort abspielen (andere Sprache)
+    const qLang = (state.lang === "uz") ? "en" : "uz";
+    const text = (qLang === "uz") ? item.uz : item.en;
+    const map = (qLang === "uz") ? UZ_AUDIO_MAP : EN_AUDIO_MAP;
+    const fileName = map[text] || sanitizeForFilename(text);
+    const path = `audio/lesson2/${qLang}/${fileName}.mp3`;
+    tryPlayAudio(path, 0, text);
   }
 
   function startQuizGame(){
