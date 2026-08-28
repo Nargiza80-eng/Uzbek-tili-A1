@@ -324,6 +324,13 @@
   .memory-card.flipped { background: white; color: #2d3436; box-shadow: 0 6px 0 var(--shadowBtn); }
   .memory-card.matched { visibility: hidden; }
 
+  .search-stage{position:relative;background:#0B1026;border-radius:22px;overflow:hidden;border:4px solid #fff;box-shadow:0 10px 0 var(--shadowSoft);margin-top:12px;touch-action:none;height:320px;}
+  .search-house{position:absolute;inset:0;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:14px;}
+  .search-cell{background:#16213E;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:56px;cursor:pointer;border:3px solid rgba(255,255,255,0.15);}
+  .search-cell.good{background:var(--success);border-color:#fff;}
+  .search-cell.bad{background:var(--error);border-color:#fff;}
+  #searchLight{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle 110px at 50% 40%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.93) 100%);}
+
   .salad-card {
     background: white; border-radius: 30px; padding: 20px;
     box-shadow: 0 10px 0 var(--shadowSoft); text-align: center;
@@ -572,7 +579,7 @@
   <div class="mode-nav">
     <button class="mode-btn active" id="btnLearn"  onclick="changeMode('learn')"><span class="mode-ico">📖</span><span id="tLearn">O'rganish</span></button>
     <button class="mode-btn"        id="btnQuiz"   onclick="changeMode('quiz')"><span class="mode-ico">🎯</span><span id="tQuiz">Test</span></button>
-    <button class="mode-btn"        id="btnMemory" onclick="changeMode('memory')"><span class="mode-ico">🧠</span><span id="tMemory">O'yin</span></button>
+    <button class="mode-btn"        id="btnMemory" onclick="changeMode('memory')"><span class="mode-ico">🔦</span><span id="tMemory">Hayvonni top!</span></button>
     <button class="mode-btn"        id="btnBubble" onclick="changeMode('bubble')"><span class="mode-ico">🫧</span><span id="tBubble">Pufakchalar</span></button>
     <button class="mode-btn"        id="btnSalad"  onclick="changeMode('salad')"><span class="mode-ico">🔤</span><span id="tSalad">Harflardan söz tuzing</span></button>
   </div>
@@ -581,6 +588,9 @@
 
   <div id="quizSection">
     <div class="quiz-card">
+      <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="speakTask(UI[currentLang].quizHint)">
+        🔊 <span id="quizHintBtn">Eshit → to'g'ri javobni tanlang!</span>
+      </button>
       <div id="qEmoji" class="quiz-emoji">🐱</div>
       <h2 id="qWordMain" style="margin: 6px 0 8px; font-size: 28px;">Mushuk</h2>
       <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="playCurrentQuizAudio()">
@@ -591,17 +601,29 @@
   </div>
 
   <div id="memorySection">
-    <div id="memStats" style="margin-bottom:10px; font-weight:800; font-size:14px;">
-      <span id="movesLabel">Urinishlar</span>: <span id="moves">0</span>
+    <div class="quiz-card">
+      <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="speakTask(UI[currentLang].searchHint)">
+        🔊 <span id="searchHintBtn">Chiroq bilan hayvonni top!</span>
+      </button>
+      <div id="searchTask" class="banner">Top: ...</div>
+      <div class="search-stage" id="searchStage">
+        <div class="search-house" id="searchHouse"></div>
+        <div id="searchLight"></div>
+      </div>
+      <div class="small-note" id="searchScoreLine">⭐ 0 / 8</div>
+      <div class="salad-btn-row" style="justify-content:center; margin-top:10px;">
+        <button class="salad-btn salad-btn-audio" id="searchReplayBtn" onclick="replaySearchAudio()">🔊 Nochmal hören</button>
+      </div>
     </div>
-    <div class="memory-grid" id="memoryGrid"></div>
   </div>
 
   <div id="saladSection">
     <div class="salad-card">
+      <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="speakTask(UI[currentLang].saladInstruction)">
+        🔊 <span id="saladHintBtn">Buchstaben in Reihenfolge antippen!</span>
+      </button>
       <div class="salad-emoji" id="saladEmoji">🐱</div>
       <div class="salad-word" id="saladWord">Mushuk</div>
-      <div class="salad-instruction" id="saladInstruction">Buchstaben in Reihenfolge antippen!</div>
       <div class="salad-slots" id="saladSlots"></div>
       <div class="salad-letters" id="saladLetters"></div>
       <div class="salad-btn-row">
@@ -613,9 +635,11 @@
   </div>
 
   <div id="bubbleSection">
+    <button class="option-btn" style="background:var(--sun); border-color:#f39c12;" onclick="speakTask(UI[currentLang].bubbleHint)">
+      🔊 <span id="bubbleHintBtn">Emoji top! ⭐</span>
+    </button>
     <div id="bubbleTask" class="banner">Top: ...</div>
     <div id="bubbleArea"></div>
-    <div class="small-note" id="bubbleHint">Emoji top! ⭐</div>
     <div class="small-note" id="bubbleScoreLine">⭐ 0 / 8</div>
   </div>
 
@@ -637,7 +661,7 @@
       subtitle: "3-dars",
       learn: "O'rganish",
       quiz: "Test",
-      memory: "O'yin",
+      memory: "Hayvonni top!",
       salad: "Harflardan söz tuzing",
       bubble: "Pufakchalar",
       listen: "Eshitish",
@@ -646,11 +670,13 @@
       close: "Yopish",
       bubbleHint: "Emoji top! ⭐",
       memoryHint: "Juftliklarni top!",
+      quizHint: "Eshit → to'g'ri javobni tanlang!",
+      searchHint: "Chiroq bilan yashiringan hayvonni top!",
       bubbleTask: "Top: ",
       doneQuizTitle: "Barakalla! 🐰",
       doneQuizText: "Test tugadi! Siz quyon stikerini oldingiz!",
       winMemoryTitle: "Zo'r! 🐻",
-      winMemoryText: "Memory tugadi! Siz ayiq stikerini oldingiz!",
+      winMemoryText: "Hayvonni top tugadi! Siz ayiq stikerini oldingiz!",
       saladWinTitle: "Ajoyib! 🦁",
       saladWinText: "Buchstaben-Salat tugadi! Siz sher stikerini oldingiz!",
       winBubbleTitle: "Super! 🐠",
@@ -668,7 +694,7 @@
       subtitle: "Lesson 3",
       learn: "Learn",
       quiz: "Quiz",
-      memory: "Memory",
+      memory: "Find the animal!",
       salad: "Letter Salad",
       bubble: "Bubbles",
       listen: "Listen",
@@ -677,11 +703,13 @@
       close: "Close",
       bubbleHint: "Find the correct emoji! ⭐",
       memoryHint: "Find the pairs!",
+      quizHint: "Listen → Choose the correct answer!",
+      searchHint: "Find the hidden animal with the flashlight!",
       bubbleTask: "Tap: ",
       doneQuizTitle: "Well done! 🐰",
       doneQuizText: "Quiz complete! You earned the bunny sticker!",
       winMemoryTitle: "You won! 🐻",
-      winMemoryText: "Memory complete! You earned the bear sticker!",
+      winMemoryText: "Find the animal complete! You earned the bear sticker!",
       saladWinTitle: "Great! 🦁",
       saladWinText: "Letter Salad complete! You earned the lion sticker!",
       winBubbleTitle: "Amazing! 🐠",
@@ -844,10 +872,12 @@
     document.getElementById("tSalad").innerText = T.salad;
     document.getElementById("tBubble").innerText = T.bubble;
     document.getElementById("listenBtnText").innerText = T.listen;
-    document.getElementById("movesLabel").innerText = T.moves;
     document.getElementById("albumTitle").innerText = T.album;
     document.getElementById("closeAlbumBtn").innerText = T.close;
-    document.getElementById("bubbleHint").innerText = T.bubbleHint;
+    document.getElementById("quizHintBtn").innerText = T.quizHint;
+    document.getElementById("searchHintBtn").innerText = T.searchHint;
+    document.getElementById("searchReplayBtn").innerText = T.saladAudio;
+    document.getElementById("bubbleHintBtn").innerText = T.bubbleHint;
 
     renderLearn(true);
     loadQuiz();
@@ -871,15 +901,13 @@
 
     stopBubbles();
     clearTimeout(saladTimer);
+    clearTimeout(searchTimer);
 
     if(mode === 'learn'){ document.getElementById('learnSection').style.display='grid'; renderLearn(true); }
     if(mode === 'quiz'){  document.getElementById('quizSection').style.display='block'; loadQuiz(); }
     if(mode === 'memory'){document.getElementById('memorySection').style.display='block'; initMemory(); }
     if(mode === 'salad'){ document.getElementById('saladSection').style.display='block'; initSalad(); }
     if(mode === 'bubble'){document.getElementById('bubbleSection').style.display='block'; startBubbles(); }
-    const __T = UI[currentLang];
-    const __hints = { memory: __T.memoryHint, salad: __T.saladInstruction, bubble: __T.bubbleHint };
-    if(__hints[mode]) setTimeout(()=>speakTask(__hints[mode]), 400);
   }
 
   // ===== NUR DIESE FUNKTION GEAENDERT: Audio-Pfade fuer audiolesson3/ =====
@@ -887,7 +915,7 @@
     const item = data.find(x => x.key === key);
     if(!item) return "";
     const folder = (currentLang === "en") ? "en" : "uz";
-    const fileName = (currentLang === "en") ? item.en.toLowerCase() : item.uz.toLowerCase().replace(/[\'']/g, "");
+    const fileName = (currentLang === "en") ? item.en.toLowerCase() : item.uz.toLowerCase().replace(/[\'\']/g, "");
     return `audiolesson3/${folder}/${fileName}.mp3`;
   }
 
@@ -989,7 +1017,6 @@
 
     const qWord = (currentLang === "en") ? item.en : item.uz;
     document.getElementById('qWordMain').innerText = qWord;
-    speakTask(qWord);
 
     const correct = (currentLang === "en") ? item.uz : item.en;
     const pool = data.map(x => (currentLang === "en") ? x.uz : x.en);
@@ -1051,65 +1078,91 @@
     loadQuiz();
   }
 
-  let flippedCards = [];
-  let moves = 0;
-  let matches = 0;
+  // ===== HAYVONNI TOP (Taschenlampen-Suchspiel, wie "Kim nima qilyapti?" in lesson10) =====
+  let searchOrder = [];
+  let searchIdx = 0;
+  let searchTarget = null;
+  let searchLock = false;
+  let searchTimer = null;
 
-  function initMemory() {
-    const grid = document.getElementById('memoryGrid');
-    grid.innerHTML = '';
-    moves = 0; matches = 0;
-    flippedCards = [];
-    document.getElementById('moves').innerText = moves;
+  function initMemory(){ startSearchGame(); }
 
-    let cards = [];
-    data.forEach(item => {
-      const word = (currentLang === "en") ? item.en : item.uz;
-      cards.push({ id: item.key, val: item.emoji });
-      cards.push({ id: item.key, val: word });
+  function startSearchGame(){
+    searchOrder = shuffle(data.map(x=>x.key));
+    searchIdx = 0;
+    updateSearchScoreLine();
+    nextSearchRound();
+  }
+
+  function updateSearchScoreLine(){
+    const el = document.getElementById("searchScoreLine");
+    if(el) el.innerText = `⭐ ${searchIdx} / ${data.length}`;
+  }
+
+  function nextSearchRound(){
+    if(searchIdx >= data.length){ finishSearchGame(); return; }
+    searchLock = false;
+    const key = searchOrder[searchIdx];
+    searchTarget = data.find(x=>x.key===key);
+
+    const T = UI[currentLang];
+    const taskWord = (currentLang === "en") ? searchTarget.en : searchTarget.uz;
+    document.getElementById('searchTask').innerText = T.bubbleTask + taskWord;
+    searchTimer = setTimeout(()=>{
+      if(document.getElementById('memorySection').style.display === 'block') playAudio(searchTarget.key, 1.0);
+    }, 400);
+
+    // 4 versteckte Felder: das richtige Tier + 3 zufaellige andere
+    const others = shuffle(data.filter(x=>x.key!==key)).slice(0,3);
+    const cells = shuffle([searchTarget].concat(others));
+    const house = document.getElementById('searchHouse');
+    house.innerHTML = "";
+    cells.forEach(w=>{
+      const d = document.createElement('div');
+      d.className = 'search-cell';
+      d.innerText = w.emoji;
+      d.onclick = ()=>pickSearchCell(d, w.key===searchTarget.key);
+      house.appendChild(d);
     });
-    cards.sort(() => Math.random() - 0.5);
 
-    cards.forEach(c => {
-      const div = document.createElement('div');
-      div.className = 'memory-card';
-      div.innerText = "❓";
+    // Lichtkegel folgt dem Zeiger (wie in lesson10)
+    const stage = document.getElementById('searchStage');
+    const light = document.getElementById('searchLight');
+    stage.onpointermove = (ev)=>{
+      const r = stage.getBoundingClientRect();
+      const x = ev.clientX - r.left, y = ev.clientY - r.top;
+      light.style.background = "radial-gradient(circle 110px at "+x+"px "+y+"px, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.93) 100%)";
+    };
+  }
 
-      div.onclick = () => {
-        if(flippedCards.length < 2 && !div.classList.contains('flipped') && !div.classList.contains('matched')) {
-          div.classList.add('flipped');
-          div.innerText = c.val;
-          flippedCards.push({ div, id: c.id });
+  function replaySearchAudio(){
+    if(searchTarget) playAudio(searchTarget.key, 1.0);
+  }
 
-          if(flippedCards.length === 2) {
-            moves++;
-            document.getElementById('moves').innerText = moves;
+  function pickSearchCell(el, ok){
+    if(searchLock) return;
+    if(ok){
+      searchLock = true;
+      el.classList.add('good');
+      setStarForKey(searchTarget.key, Math.min(3, (loadStars()[searchTarget.key]||0)+1));
+      markGlobalLearned(searchTarget.key);
+      searchIdx++;
+      updateSearchScoreLine();
+      searchTimer = setTimeout(()=>{
+        if(document.getElementById('memorySection').style.display === 'block') nextSearchRound();
+      }, 1000);
+    } else {
+      el.classList.add('bad');
+      setTimeout(()=>el.classList.remove('bad'), 500);
+    }
+  }
 
-            setTimeout(() => {
-              if(flippedCards[0].id === flippedCards[1].id) {
-                flippedCards.forEach(f => f.div.classList.add('matched'));
-                matches++;
-                if(matches === data.length) {
-                  localStorage.setItem(DONE_MEMORY_KEY, "1");
-                  unlockSticker(2);
-                  const T = UI[currentLang];
-                  celebrate(T.winMemoryTitle, T.winMemoryText, "🐻");
-                  checkAllCompleted();
-                }
-              } else {
-                flippedCards.forEach(f => {
-                  f.div.classList.remove('flipped');
-                  f.div.innerText = "❓";
-                });
-              }
-              flippedCards = [];
-            }, 800);
-          }
-        }
-      };
-
-      grid.appendChild(div);
-    });
+  function finishSearchGame(){
+    localStorage.setItem(DONE_MEMORY_KEY, "1");
+    unlockSticker(2);
+    const T = UI[currentLang];
+    celebrate(T.winMemoryTitle, T.winMemoryText, "🐻");
+    checkAllCompleted();
   }
 
   let saladOrder = [];
@@ -1160,7 +1213,7 @@
 
     document.getElementById("saladEmoji").innerText = item.emoji;
     document.getElementById("saladWord").innerText = word;
-    document.getElementById("saladInstruction").innerText = T.saladInstruction;
+    document.getElementById("saladHintBtn").innerText = T.saladInstruction;
     document.querySelector(".salad-btn-reset").innerText = T.saladReset;
     document.querySelector(".salad-btn-audio").innerText = T.saladAudio;
     document.getElementById("saladProgress").innerText = `⭐ ${saladIdx + 1} / ${data.length}`;
@@ -1188,8 +1241,6 @@
       tile.onclick = () => selectSaladLetter(idx);
       lettersEl.appendChild(tile);
     });
-
-    setTimeout(()=>playSaladAudio(), 400);
   }
 
   function playSaladAudio(){
